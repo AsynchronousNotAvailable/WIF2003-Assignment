@@ -76,74 +76,31 @@ function Seller_Chat() {
     
 
     return (
-        <div className="ml-64 mt-[60px] ">
-            <div className="flex flex-row h-[91vh]">
-                <div className="flex flex-col w-72 bg-slate-100 border-r-[1px] border-gray-200">
-                    {/* <div className="flex flex-row items-center gap-2 border-b-[1px] px-4 py-2 border-gray-200">
-                        <img
-                            className="h-14 w-14 mr-4 object-cover rounded-full"
-                            src={require("../../assets/customer_pfp.jpg")}
-                            alt="Chatbot Logo"
-                        />
-                        <div className="flex flex-col">
-                            <h3 className="font-inter font-medium">
-                                Wen Thing
-                            </h3>
-                            <p className="font-inter font-thin text-sm">
-                                How much is the battery charger?
-                            </p>
-                        </div>
+        <>
+            <Seller_NavSidebar />
+            <div className="ml-64 mt-[60px] ">
+                <div className="flex flex-row h-[91vh]">
+                    <div className="flex flex-col w-72 bg-slate-100 border-r-[1px] border-gray-200">
+                        {chatList.map((chat, index) => (
+                            <ChatList
+                                active={activeChat === chat.name}
+                                key={index}
+                                pfp={chat.pfp}
+                                name={chat.name}
+                                last_message={chat.last_message}
+                                handleChangeChat={handleChangeChat}
+                            />
+                        ))}
                     </div>
-                    <div className="flex flex-row items-center gap-2 border-b-[1px] px-4 py-2 border-gray-200">
-                        <img
-                            className="h-14 w-14 mr-4 object-cover rounded-full"
-                            src={require("../../assets/customer_pfp.jpg")}
-                            alt="Chatbot Logo"
+                    {activeChat && (
+                        <Chat_Content
+                            responses={activeChatContent}
+                            customer={activeChat}
                         />
-                        <div className="flex flex-col">
-                            <h3 className="font-inter font-medium">
-                                Wen Thing
-                            </h3>
-                            <p className="font-inter font-thin text-sm">
-                                How much is the battery charger?
-                            </p>
-                        </div>
-                    </div>
-                    <div className="flex flex-row items-center gap-2 border-b-[1px] px-4 py-2 border-gray-200">
-                        <img
-                            className="h-14 w-14 mr-4 object-cover rounded-full"
-                            src={require("../../assets/customer_pfp.jpg")}
-                            alt="Chatbot Logo"
-                        />
-                        <div className="flex flex-col">
-                            <h3 className="font-inter font-medium">
-                                Wen Thing
-                            </h3>
-                            <p className="font-inter font-thin text-sm">
-                                How much is the battery charger?
-                            </p>
-                        </div>
-                    </div> */}
-                    {chatList.map((chat, index) => (
-                        <ChatList
-                            active={activeChat === chat.name}
-                            key={index}
-                            pfp={chat.pfp}
-                            name={chat.name}
-                            last_message={chat.last_message}
-                            handleChangeChat={handleChangeChat}
-                        />
-                    ))}
+                    )}
                 </div>
-                {activeChat && (
-                    <Chat_Content
-                        responses={activeChatContent}
-                        customer={activeChat}
-                        
-                    />
-                )}
             </div>
-        </div>
+        </>
     );
 }
 

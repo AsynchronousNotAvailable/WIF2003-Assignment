@@ -7,6 +7,10 @@ function Customer_Navbar() {
     const handleLogout = () => {
         navigation("/login");
     };
+
+    const goToChat = () => {
+        navigation("/customer_chat");
+    };
     return (
         <nav class="bg-[#5489FC] fixed w-full z-20 top-0 start-0 border-b border-gray-200">
             <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -24,14 +28,15 @@ function Customer_Navbar() {
                     </span>
                 </a>
                 <div class="flex md:order-2 space-x-3 md:space-x-3 rtl:space-x-reverse items-center">
-                    <div class="cursor-pointer px-2 py-1 hover:bg-slate-500 rounded-lg">
-                        <i class="fa-regular fa-bell text-white"></i>
+                    <div
+                        class="cursor-pointer px-2 py-1 hover:bg-[#45b9dc] rounded-lg"
+                        onClick={goToChat}
+                    >
+                        <i class="fa-regular fa-comment text-white"></i>
                     </div>
 
-                    <div class="cursor-pointer px-2 py-1 hover:bg-slate-500 rounded-lg">
-                        <i
-                            class="fa-regular fa-cart-shopping text-white"
-                        ></i>
+                    <div class="cursor-pointer px-2 py-1 hover:bg-[#45b9dc] rounded-lg">
+                        <i class="fa-regular fa-cart-shopping text-white"></i>
                     </div>
 
                     <button
