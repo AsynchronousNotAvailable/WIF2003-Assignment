@@ -11,7 +11,7 @@ import Customer_Navbar from "../components/customer_navbar";
 import Seller_Chat from "../pages/seller/seller_chat";
 import Seller_NavSidebar from "../components/seller_sidebar";
 import Customer_Chat from "../pages/customer/customer_chat";
-import Marketplace from "../pages/general/marketplace";
+import MarketplaceAnalysis from "../pages/general/marketplaceAnalysis";
 import SellerAnalysis from "../pages/seller/sellerAnalysis";
 import ProductListing from "../pages/general/productListing";
 
@@ -25,7 +25,7 @@ function AppNav() {
                     <Route path="/" element={<Landing />} />
                     <Route
                         path="/marketplace/analysis"
-                        element={<Marketplace />}
+                        element={<MarketplaceAnalysis />}
                     />
                     <Route path="/login" element={<Login />} />
                     <Route path="/products" element={<ProductListing />} />
