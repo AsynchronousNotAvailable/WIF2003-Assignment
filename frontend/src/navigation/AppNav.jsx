@@ -8,20 +8,26 @@ import Login from "../pages/general/login";
 import SignUp from "../pages/general/signup";
 import Seller_Home from "../pages/seller/seller_home";
 import Customer_Navbar from "../components/customer_navbar";
+import Seller_Chat from "../pages/seller/seller_chat";
+import Seller_NavSidebar from "../components/seller_sidebar";
 
 function AppNav() {
     const { isAuth, isSeller } = useContext(GlobalContext);
 
     return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<Landing />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/customer" element={<Customer_Home />} />
-                <Route path="/seller" element={<Seller_Home />} />
-            </Routes>
-            {/* {!isAuth ? (
+        <>
+            <Router>
+                <Seller_NavSidebar />
+
+                <Routes>
+                    <Route path="/" element={<Landing />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<SignUp />} />
+                    <Route path="/customer" element={<Customer_Home />} />
+                    <Route path="/seller" element={<Seller_Home />} />
+                    <Route path="/seller_chat" element={<Seller_Chat />} />
+                </Routes>
+                {/* {!isAuth ? (
                 <Routes>
                     <Route path="/" element={<Landing />} />
                     <Route path="/login" element={<Login />} />
@@ -37,7 +43,8 @@ function AppNav() {
                     <Route path="/customer" element={<Customer_Home />} />
                 </Routes>
             )} */}
-        </Router>
+            </Router>
+        </>
     );
 }
 

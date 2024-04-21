@@ -1,14 +1,19 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+
 function Seller_NavSidebar() {
     const navigation = useNavigate();
     const handleLogout = () => {
         navigation("/login");
     };
+
+    const goToChat = () => {
+        navigation("/seller_chat");
+    };
     return (
         <div class="font-inter">
-            <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+            <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 ">
                 <div class="px-3 py-3 lg:px-5 lg:pl-3">
                     <div
                         class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
@@ -67,7 +72,10 @@ function Seller_NavSidebar() {
                             <div class="cursor-pointer px-2 py-1 hover:bg-[#B8A3F9] rounded-lg">
                                 <i class="fa-regular fa-bell text-[#7450DF]"></i>
                             </div>
-                            <div class="cursor-pointer px-2 py-1 hover:bg-[#B8A3F9] rounded-lg">
+                            <div
+                                class="cursor-pointer px-2 py-1 hover:bg-[#B8A3F9] rounded-lg"
+                                onClick={goToChat}
+                            >
                                 <i class="fa-regular fa-comment text-[#7450DF]"></i>
                             </div>
 
@@ -85,7 +93,7 @@ function Seller_NavSidebar() {
 
             <aside
                 id="logo-sidebar"
-                class="fixed top-0 left-0 z-40 w-64 h-screen pt-5 transition-transform -translate-x-full bg-[#7450DF] border-r border-gray-200 sm:translate-x-0"
+                class="fixed top-0 left-0 z-50 w-64 h-screen pt-5 transition-transform -translate-x-full bg-[#7450DF] border-r border-gray-200 sm:translate-x-0"
                 aria-label="Sidebar"
             >
                 <div class="flex items-center justify-between px-4 ">
@@ -98,7 +106,7 @@ function Seller_NavSidebar() {
                             class="h-8"
                             alt="Flowbite Logo"
                         ></img>
-                        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+                        <span class="self-center text-2xl text-white font-semibold whitespace-nowrap ">
                             Syopi
                         </span>
                     </a>

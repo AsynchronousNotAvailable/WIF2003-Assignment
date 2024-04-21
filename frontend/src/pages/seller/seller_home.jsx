@@ -7,7 +7,7 @@ function Seller_Home() {
   return (
       <div>
    
-      <Seller_NavSidebar/>
+      
       This is seller page
       
        <div class="z-99 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
