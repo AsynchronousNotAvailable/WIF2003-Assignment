@@ -8,6 +8,9 @@ import Login from "../pages/general/login";
 import SignUp from "../pages/general/signup";
 import Seller_Home from "../pages/seller/seller_home";
 import Customer_Navbar from "../components/customer_navbar";
+import Seller_Chat from "../pages/seller/seller_chat";
+import Seller_NavSidebar from "../components/seller_sidebar";
+import Customer_Chat from "../pages/customer/customer_chat";
 import Marketplace from "../pages/general/marketplace"
 import SellerAnalysis from "../pages/seller/sellerAnalysis"
 import ProductListing from "../pages/general/productListing"
@@ -16,19 +19,22 @@ function AppNav() {
     const { isAuth, isSeller } = useContext(GlobalContext);
 
     return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<Landing />} />
+        <>
+            <Router>
+                <Routes>
+                    <Route path="/" element={<Landing />} />
                 <Route path ="/marketplace" element = {<Marketplace />}/>
-                <Route path="/login" element={<Login />} />
+                    <Route path="/login" element={<Login />} />
                 <Route path = "/products" element = {<ProductListing />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/customer" element={<Customer_Home />} />
-                <Route path="/seller" element={<Seller_Home />} />
+                    <Route path="/signup" element={<SignUp />} />
+                    <Route path="/customer" element={<Customer_Home />} />
+                    <Route path="/customer_chat" element={<Customer_Chat />} />
+                    <Route path="/seller" element={<Seller_Home />} />
                 <Route path = "/seller/analysis" element = {<SellerAnalysis />} />
 
-            </Routes>
-            {/* {!isAuth ? (
+                    <Route path="/seller_chat" element={<Seller_Chat />} />
+                </Routes>
+                {/* {!isAuth ? (
                 <Routes>
                     <Route path="/" element={<Landing />} />
                     <Route path="/login" element={<Login />} />
@@ -44,7 +50,8 @@ function AppNav() {
                     <Route path="/customer" element={<Customer_Home />} />
                 </Routes>
             )} */}
-        </Router>
+            </Router>
+        </>
     );
 }
 

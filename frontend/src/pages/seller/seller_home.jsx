@@ -1,12 +1,16 @@
 
-import Seller_Navbar from '../../components/seller_navbar';
+
 import React from 'react'
+import Seller_NavSidebar from '../../components/seller_sidebar';
 
 function Seller_Home() {
   return (
       <div>
-          <Seller_Navbar/>
-          This is seller page
+        <Seller_NavSidebar/>
+      
+      
+      
+      
       </div>
   );
 }
