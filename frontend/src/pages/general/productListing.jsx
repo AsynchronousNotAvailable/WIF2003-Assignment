@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Customer_Navbar from '../../components/customer_navbar';
+import { useNavigate } from 'react-router-dom';
+import { GlobalContext } from '../../context';
 
 const ProductListing = () => {
+    const { cartItems, setCartItems } = useContext(GlobalContext);
+    console.log('PRODCUT', cartItems);
+    const navigation = useNavigate();
     const [productListing, setProductListing] = useState([
         {
             id: 0,
@@ -34,7 +39,8 @@ const ProductListing = () => {
     ]);
 
     const handleClick = (product) => {
-        console.log(product);
+        navigation(`/customer/product/${product.id}`, { state: { product } });
+        
     };
 
     return (
