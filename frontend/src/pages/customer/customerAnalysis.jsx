@@ -52,10 +52,10 @@ const xLabels = [
 ];
     return (
         <>
-        <Seller_NavSidebar/>
-        <section className = "flex flex-col p-14 ml-64 mt-[10px] gap-8">
+        <Customer_Navbar/>
+        <section className = "flex flex-col p-14  mt-[50px] gap-8">
             <section className = " w-full font-sans font-bold text-2xl">
-               <header className = "">Seller Analysis</header>
+               <header className = "">Customer Analysis</header>
             </section>
             <section className = "flex-1  flex flex-col w-full gap-10 h-full">
                 <section className = "flex flex-row w-full gap-5 h-[280px]">

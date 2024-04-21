@@ -7,7 +7,7 @@ import { Typography, Stack } from "@mui/material";
 import { BarChart } from "@mui/x-charts/BarChart";
 import Seller_NavSidebar from "../../components/seller_sidebar";
 
-function Marketplace() {
+function MarketplaceAnalysis() {
     const ExistingUsers = {
         data: [1000, 3000, 2000, 1500, 4000, 3050, 2300],
         label: "Existing Users",
@@ -148,4 +148,4 @@ function Marketplace() {
     );
 }
 
-export default Marketplace;
+export default MarketplaceAnalysis;
