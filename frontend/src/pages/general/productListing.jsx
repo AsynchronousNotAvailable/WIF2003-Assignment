@@ -40,7 +40,7 @@ const ProductListing = () => {
     return (
         <div>
             <Customer_Navbar />
-            <main className="mt-8">
+            <main className="mt-36">
                 <div className="flex flex-row">
                     {productListing.map(product => (
                         <div key={product.id} className="product-card" onClick={() => handleClick(product)}>

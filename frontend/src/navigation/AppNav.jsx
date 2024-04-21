@@ -27,7 +27,6 @@ function AppNav() {
                         path="/marketplace/analysis"
                         element={<Marketplace />}
                     />
-
                     <Route path="/login" element={<Login />} />
                     <Route path="/products" element={<ProductListing />} />
                     <Route path="/signup" element={<SignUp />} />

@@ -116,6 +116,17 @@ function Seller_NavSidebar() {
                         <li>
                             <a
                                 href="/marketplace/analysis"
+                                class="flex items-center p-2 my-4 text-white rounded-md hover:bg-gray-700"
+                            >
+                                <i class="w-5 fa-regular fa-boxes-stacked fa-lg text=[#B197FC]"></i>
+                                <span class="ms-3 font-inter font-medium">
+                                    Dashboard
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="/marketplace/analysis"
                                 class="flex border-white border-2 items-center p-2 my-4 text-white rounded-md hover:bg-gray-700"
                             >
                                 <i class="w-5 fa-regular fa-boxes-stacked fa-lg text=[#B197FC]"></i>
