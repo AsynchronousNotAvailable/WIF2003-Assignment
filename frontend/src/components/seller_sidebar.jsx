@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-
 function Seller_NavSidebar() {
     const navigation = useNavigate();
     const handleLogout = () => {
@@ -116,7 +115,7 @@ function Seller_NavSidebar() {
                     <ul class="space-y-2 font-medium">
                         <li>
                             <a
-                                href="#"
+                                href="/marketplace/analysis"
                                 class="flex border-white border-2 items-center p-2 my-4 text-white rounded-md hover:bg-gray-700"
                             >
                                 <i class="w-5 fa-regular fa-boxes-stacked fa-lg text=[#B197FC]"></i>
@@ -138,7 +137,7 @@ function Seller_NavSidebar() {
                         </li>
                         <li>
                             <a
-                                href="#"
+                                href="/seller/analysis"
                                 class="flex items-center p-2 my-4 text-white rounded-lg hover:bg-gray-700"
                             >
                                 <i class="w-5 fa-solid fa-magnifying-glass-chart fa-lg text-white"></i>

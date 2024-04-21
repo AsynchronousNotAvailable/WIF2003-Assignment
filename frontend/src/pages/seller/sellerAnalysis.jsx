@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { GlobalContext } from "../../context";
 import Customer_Navbar from '../../components/customer_navbar';
 import { useNavigate } from "react-router-dom";
-import Seller_Navbar from '../../components/seller_navbar';
+import Seller_NavSidebar from '../../components/seller_sidebar';
 import { ChartContainer, ResponsiveChartContainer } from '@mui/x-charts';
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
