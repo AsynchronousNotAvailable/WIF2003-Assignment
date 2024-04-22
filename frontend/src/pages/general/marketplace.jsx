@@ -54,7 +54,7 @@ function Marketplace() {
         },
     ]);
 
-    const [productListing, setProductListing] = useState([
+    const [recommendProduct, setRecommendProduct] = useState([
         {
             id: 0,
             name: "Milo 3 in 1",
@@ -92,15 +92,26 @@ function Marketplace() {
         },
     ]);
 
-    const { shopsItemListing } = useContext(GlobalContext);
+    const { shopsItemListing, productListing } = useContext(GlobalContext);
     const navigation = useNavigate();
 
     const navigateToShop = (seller) => {
         navigation(`/customer/shop/${seller}`, {
-            state: { seller: seller},
+            state: { seller: seller },
         });
     };
 
+    const navigateToProductDetails = (productId) => {
+        
+        const product = productListing.find(
+            (p) => p.id === productId
+        );
+      
+        // Navigate to the product details page with the targeted product
+        navigation(`/customer/product/${productId}`, {
+            state: { product },
+        });
+    };
     return (
         <>
             <Customer_Navbar />
@@ -157,10 +168,10 @@ function Marketplace() {
                                         className="flex flex-col border-red-600 border-2 w-[175px] h-[218px] justify-center items-center"
                                         onClick={() => navigateToShop(sellers)}
                                     >
-                                        {/* <img
+                                        <img
                                             src={shopsItemListing[sellers][0]}
                                             className="border-gray-500 border-2 w-[110px] h-[110px] rounded-full object-contain"
-                                        /> */}
+                                        />
                                         <p>{sellers}</p>
                                     </section>
                                 );
@@ -174,9 +185,12 @@ function Marketplace() {
                         Just For You
                     </p>
                     <section className="flex flex-row  gap-5 ">
-                        {productListing.map((product) => {
+                        {recommendProduct.map((product) => {
                             return (
                                 <section
+                                    onClick={() =>
+                                        navigateToProductDetails(product.id)
+                                    }
                                     key={product.id}
                                     className="flex flex-col w-[350px] border border-gray-300 p-2"
                                 >

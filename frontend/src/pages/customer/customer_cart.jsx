@@ -4,10 +4,16 @@ import { GlobalContext } from "../../context";
 import Cart_Item_List from "./components/Cart_Item_List";
 
 function Customer_Cart() {
-    const { cartItems, setCartItems } = useContext(GlobalContext);
-    // console.log("CART", cartItems);
+    const {
+        cartItems,
+        setCartItems,
+        totalCheckoutPrice,
+        setTotalCheckoutPrice,
+    } = useContext(GlobalContext);
+    
     const [dict, setDict] = useState({});
     useEffect(() => {
+        
         const updatedDict = {};
         cartItems.forEach((cartItem) => {
             if (!updatedDict[cartItem.seller]) {
@@ -52,6 +58,8 @@ function Customer_Cart() {
         const updatedCartItems = cartItems.filter((item) => item.id !== cartItem.id);
         setCartItems(updatedCartItems);
     };
+
+    
 
     return (
         <>
@@ -113,6 +121,8 @@ function Customer_Cart() {
                                 cartItems={dict}
                                 seller={seller}
                                 deleteItem={deleteItem}
+                                setTotalCheckoutPrice={setTotalCheckoutPrice}
+                                totalCheckoutPrice={totalCheckoutPrice}
                             />
                         );
                     })}
@@ -127,7 +137,7 @@ function Customer_Cart() {
 
                         <div className="flex flex-row gap-10 ">
                             <h4>Total Item</h4>
-                            <h4>RM 0.00</h4>
+                            <h4>RM {totalCheckoutPrice}</h4>
                             <h4>Check Out</h4>
                         </div>
                     </div>

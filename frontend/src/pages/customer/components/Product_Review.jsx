@@ -15,9 +15,9 @@ function Product_Review({ product, setProduct }) {
             if (p.id === product.id) {
                 // If it matches, create a new review object and add it to the reviews array
                 const newReview = {
-                    pfp: "pfp",
-                    username: product.username, // Assuming product.username is defined
-                    stars: product.stars, // Assuming product.stars is defined
+                    pfp: '/customer_pfp.jpg',
+                    username: "Xopher", // Assuming product.username is defined
+                    stars: 5, // Assuming product.stars is defined
                     description: review,
                 };
                 // Create a copy of the product with the new review added to its reviews array
@@ -25,7 +25,7 @@ function Product_Review({ product, setProduct }) {
                     ...p,
                     reviews: [...p.reviews, newReview],
                 };
-                return(updatedProduct);
+                return updatedProduct;
             } else {
                 // If the id doesn't match, return the original product without changes
                 return p;
@@ -37,26 +37,49 @@ function Product_Review({ product, setProduct }) {
     };
     return (
         <>
-            <div className="flex flex-col">
-                Leave a review
-                <div className="flex flex-row">
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-row gap-3 justify-between">
                     <input
+                        className="flex flex-1 px-2 py-3 rounded-md"
                         type="textarea"
+                        placeholder="Write a review..."
                         value={review}
                         onChange={(e) => setReview(e.target.value)}
                     />
-                    <button onClick={submitReview}>Submit Review</button>
+                    <button
+                        onClick={submitReview}
+                        className="px-4 py-1 rounded-2xl hover:bg-[#7dc7d8] cursor-pointer"
+                    >
+                        <i className="fa-solid fa-paper-plane text-[#5489FC]"></i>
+                    </button>
                 </div>
             </div>
             {product.reviews.map((review) => {
                 return (
-                    <div className="flex-col p-6 bg-slate-400">
-                        <div className="flex flex-row gap-10">
-                            <div className="flex">{review.pfp}</div>
-                            <div className="flex flex-col gap-3">
-                                <h4>{review.username}</h4>
-                                <h4>{review.stars}</h4>
-                                <h4>{review.description}</h4>
+                    <div className="flex-col p-6 bg-slate-100  rounded-md">
+                        <div className="flex flex-row items-center gap-10">
+                           
+                            <img src={review.pfp} alt="" className=" object-cover rounded-full w-20 h-20"/>
+                            <div className="flex flex-col gap-3 items-start">
+                                <div className="flex flex-col gap-1">
+                                    <h4 className="font-sans font-medium text-md">
+                                        {review.username}
+                                    </h4>
+                                    <div className="flex flex-row">
+                                        {Array.from(
+                                            { length: review.stars },
+                                            (_, index) => (
+                                                <i
+                                                    key={index}
+                                                    className="fa-solid fa-star text-[#FFD43B]"
+                                                ></i>
+                                            )
+                                        )}
+                                    </div>
+                                </div>
+                                <h4 className="font-sans font-light text-sm">
+                                    {review.description}
+                                </h4>
                             </div>
                         </div>
                     </div>
