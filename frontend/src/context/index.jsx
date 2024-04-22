@@ -61,6 +61,8 @@ function GlobalState({ children }) {
                 img: "/milothreeproduct.jpg",
                 seller: "Milo_Seller",
                 reviews: [],
+                variations: ["Original", "Chocolate", "Vanilla"],
+
             },
         ],
         Horlicks_Seller: [
@@ -73,6 +75,8 @@ function GlobalState({ children }) {
                 img: "/horlickproduct.jpg",
                 seller: "Horlicks_Seller",
                 reviews: [],
+                variations: ["Original", "Chocolate", "Vanilla"],
+
             },
         ],
         Builder_Seller: [
@@ -97,6 +101,7 @@ function GlobalState({ children }) {
                 rating: 5,
                 img: "/milotwoproduct.jpg",
                 seller: "Milo_2_Seller",
+                variations: ["Original", "Chocolate", "Vanilla"],
                 reviews: [],
             },
         ],

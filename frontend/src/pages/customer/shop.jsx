@@ -11,9 +11,11 @@ function Shop() {
     const [shopItems, setShopItems] = useState(shopsItemListing[seller]);
     const navigation = useNavigate();
     const selectProduct = (product) => {
+        console.log(product)
         navigation(`/customer/product/${product.id}`, { state: { product } });
     };
     return (
+
         <div>
             <Customer_Navbar />
 

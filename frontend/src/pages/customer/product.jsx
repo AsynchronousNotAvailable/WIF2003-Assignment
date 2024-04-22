@@ -10,7 +10,7 @@ function Product() {
     const navigation = useNavigate();
     const location = useLocation();
     const [product, setProduct] = useState(location.state.product);
-    console.log(product); //not really right
+    // console.log(product); //not really right
     const [variation, setVariation] = useState("");
     const [quantity, setQuantity] = useState(0);
 
@@ -41,7 +41,7 @@ function Product() {
         setQuantity(quantity + 1);
     };
 
-    console.log("PROLlLLLLLLLLL", productListing);
+    // console.log("PROLlLLLLLLLLL", productListing);
 
     // Function to toggle selection of a variation
     const toggleSelection = (v) => {
