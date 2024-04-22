@@ -4,6 +4,7 @@ import Checkout_Item_List from "../payment/components/Checkout_Item_List";
 import { GlobalContext } from "../../context";
 import { useContext } from "react";
 import styled from "styled-components";
+import { useState } from "react";
 
 const Container = styled.div`
     display: flex;
@@ -50,12 +51,27 @@ const PaymentButton = styled.button`
     padding: 10px 20px;
     cursor: pointer;
     margin-left: 20px;
+    background-color: ${({ selected }) => (selected ? "#0F60FF" : "transparent")};
+    color: ${({ selected }) => (selected ? "#FFFFFF" : "#0F60FF")};
 `
+
+const PaymentContent = styled.div`
+    width: 100%;
+    display: ${({ selected }) => (selected ? "flex" : "none")};
+    flex-direction: column;
+    align-items: center;
+`;
 
 export default function Checkout() {
     const { cartItems } = useContext(GlobalContext);
     const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
     const orderTotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
+
+    const handlePaymentMethodClick = (method) => {
+        setSelectedPaymentMethod(method);
+    };
 
     const CheckoutList = () => {
         return (
@@ -99,11 +115,31 @@ export default function Checkout() {
             <CheckoutList />
             <Wrapper style={{ display: "flex", alignItems: "center"}}>
                 <Column width="15%"><Text style={{ marginRight: "auto", fontSize: "16px" }}><Light>Payment Method</Light></Text></Column>
-                <PaymentButton>Online Banking</PaymentButton>
-                <PaymentButton>Credit/Debit Card</PaymentButton>
-                <PaymentButton>TnG E-Wallet</PaymentButton>
-                <PaymentButton>Cash On Delivery</PaymentButton>
+                <PaymentButton selected={selectedPaymentMethod === "Online Banking"} onClick={() => handlePaymentMethodClick("Online Banking")}>Online Banking</PaymentButton>
+                <PaymentButton selected={selectedPaymentMethod === "Credit/Debit Card"} onClick={() => handlePaymentMethodClick("Credit/Debit Card")}>Credit/Debit Card</PaymentButton>
+                <PaymentButton selected={selectedPaymentMethod === "TnG E-Wallet"} onClick={() => handlePaymentMethodClick("TnG E-Wallet")}>TnG E-Wallet</PaymentButton>
+                <PaymentButton selected={selectedPaymentMethod === "Cash On Delivery"} onClick={() => handlePaymentMethodClick("Cash On Delivery")}>Cash On Delivery</PaymentButton>
             </Wrapper>
+            <PaymentContent selected={selectedPaymentMethod === "Online Banking"}>
+                <Wrapper>
+                    <Text>Content for Online Banking payment method goes here...</Text>
+                </Wrapper>
+            </PaymentContent>
+            <PaymentContent selected={selectedPaymentMethod === "Credit/Debit Card"}>
+                <Wrapper>
+                    <Text>Content for Credit/Debit Card payment method goes here...</Text>
+                </Wrapper>
+            </PaymentContent>
+            <PaymentContent selected={selectedPaymentMethod === "TnG E-Wallet"}>
+                <Wrapper>
+                    <Text>Content for TnG E-Wallet payment method goes here...</Text>
+                </Wrapper>
+            </PaymentContent>
+            <PaymentContent selected={selectedPaymentMethod === "Cash On Delivery"}>
+                <Wrapper>
+                    <Text>Content for Cash On Delivery payment method goes here...</Text>
+                </Wrapper>
+            </PaymentContent>
         </Container>
     )
 }
