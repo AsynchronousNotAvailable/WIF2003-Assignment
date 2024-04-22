@@ -2,6 +2,7 @@
 import React, { useContext, useState } from "react";
 import { GlobalContext } from "../../context";
 import { useNavigate } from "react-router-dom";
+import CustomInput from "./CustomInput";
 import styled from "styled-components";
 
 const TagLine = styled.h1`
@@ -10,17 +11,26 @@ const TagLine = styled.h1`
     color: #7450DF;
 `
 
+const SmallText = styled.p`
+    font-size: 18px;
+    // font inter, with 60% opacitym, black in color
+    font-family: Inter;
+    font-weight: 300;
+    opacity: 0.6;
+`
+
 function Login() {
-    const [username, setUsername] = useState("");
+    const [emailAddress, setEmailAddress] = useState("");
+    const [password, setPassword] = useState("");
     const { setIsAuth, setIsSeller } = useContext(GlobalContext);
     const navigation = useNavigate();
     const handleLogin = () => {
-        if (username === "seller") {
+        if (emailAddress === "seller") {
             setIsSeller(true);
             setIsAuth(true);
             navigation("/seller")
 
-        } else if (username === "customer") {
+        } else if (emailAddress === "customer") {
             setIsAuth(true);
             navigation("/customer");
         } else {
@@ -31,12 +41,8 @@ function Login() {
     const LoginForm = () => {
         return (
             <div>
-                <input
-                    style={{ border: "1px solid black" }}
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
+                <CustomInput title="Email Address" type="text" value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} placeholder="Enter your email address" />
+                <CustomInput title="Password" type="text" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password" />
                 <button onClick={handleLogin}>Login</button>
             </div>
         );
@@ -46,14 +52,8 @@ function Login() {
         <div>
             <img src="/SyopiLogo.png" alt="logo" />
             <TagLine>Empowering Campus Commerce: <br/> Connect, Sell, Shop, Thrive! </TagLine>
+            <SmallText>Welcome back! Please login to your account.</SmallText>
             <LoginForm />
-            <input
-                style={{ border: "1px solid black" }}
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-            />
-            <button onClick={handleLogin}>Login</button>
         </div>
     );
 }
