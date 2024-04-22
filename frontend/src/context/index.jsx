@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 
 export const GlobalContext = createContext(null);
+export const CheckoutContext = createContext(null);
 
 function GlobalState({ children }) {
     const [isAuth, setIsAuth] = useState(false);
@@ -82,6 +83,22 @@ function GlobalState({ children }) {
             },
         ],
     });
+
+    const [selectedItems, setSelectedItems] = useState([
+        {
+            id: 0,
+            name: "Milo 3 in 1",
+            price: 13,
+            quantity: 4,
+        },
+        {
+            id: 1,
+            name: "Milo 3 in 1",
+            price: 13,
+            quantity: 4,
+        },
+    ]);
+
     return (
         <GlobalContext.Provider
             value={{
@@ -97,7 +114,9 @@ function GlobalState({ children }) {
                 setShopItemListing,
             }}
         >
-            {children}
+            <CheckoutContext.Provider value={{ selectedItems, setSelectedItems }}>
+                {children}
+            </CheckoutContext.Provider>
         </GlobalContext.Provider>
     );
 }
