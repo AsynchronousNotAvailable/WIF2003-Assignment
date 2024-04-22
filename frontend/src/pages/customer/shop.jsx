@@ -1,14 +1,18 @@
 import React, { useContext, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../context";
 import Customer_Navbar from "../../components/customer_navbar";
+
 
 function Shop() {
     const location = useLocation();
     const { shopsItemListing, setShopsItemListing } = useContext(GlobalContext);
     const [seller, setSeller] = useState(location.state.seller);
     const [shopItems, setShopItems] = useState(shopsItemListing[seller]);
-
+    const navigation = useNavigate();
+    const selectProduct = (product) => {
+        navigation(`/customer/product/${product.id}`, { state: { product } });
+    };
     return (
         <div>
             <Customer_Navbar />
@@ -19,7 +23,7 @@ function Shop() {
                         <div
                             key={product.id}
                             className="product-card"
-                            // onClick={() => handleClick(product)}
+                            onClick={() => selectProduct(product)}
                         >
                             {location.state.seller}'s Shop
                             <img

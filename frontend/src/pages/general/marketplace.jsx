@@ -54,7 +54,7 @@ function Marketplace() {
         },
     ]);
 
-    const [productListing, setProductListing] = useState([
+    const [recommendProduct, setRecommendProduct] = useState([
         {
             id: 0,
             name: "Milo 3 in 1",
@@ -88,26 +88,29 @@ function Marketplace() {
             sold : "1.8k"
 
         },
-        {
-            id: 4,
-            name: "Milo 3 in 1",
-            price: 13,
-            rating: 4,
-            img: "/milothreeproduct.jpg",
-            sold : "1.8k"
-
-        },
+        
     ]);
 
-    const { shopsItemListing } = useContext(GlobalContext);
+    const { shopsItemListing, productListing } = useContext(GlobalContext);
     const navigation = useNavigate();
 
     const navigateToShop = (seller) => {
         navigation(`/customer/shop/${seller}`, {
-            state: { seller: seller},
+            state: { seller: seller },
         });
     };
 
+    const navigateToProductDetails = (productId) => {
+        
+        const product = productListing.find(
+            (p) => p.id === productId
+        );
+      
+        // Navigate to the product details page with the targeted product
+        navigation(`/customer/product/${productId}`, {
+            state: { product },
+        });
+    };
     return (
         <>
             <Customer_Navbar />
@@ -162,8 +165,8 @@ function Marketplace() {
                                         className="flex flex-col border-2 w-[175px] h-[218px] justify-center items-center"
                                         onClick={() => navigateToShop(sellers)}
                                     >
-                                        <img></img>
-                                        <p></p>
+                                      
+                                        <p>{sellers}</p>
                                     </section>
                                 );
                             })}
@@ -171,27 +174,40 @@ function Marketplace() {
                     </section>
                 </section>
 
-                <section className = "flex flex-col ">
-                <p className = "text-xl items-start mb-10 mt-20 font-sans font-semibold ml-[300px]">
-                    Just For You
-                </p>
-                <section className="flex flex-row gap-5 items-center justify-center">
-    {productListing.map((product) => {
-        return (
-            <section key={product.id} className="flex flex-col w-[250px] h-[370px] border border-gray-300 p-2">
-                <img src={product.img} className="h-full object-cover object-center border-b border-gray-200 mb-[10px]" alt={product.name} />
-                <p className = "font-sans font-semibold text-lg">{product.name}</p>
-                <p className="font-sans">
-                    <span className="inline-block border text-[#FF6869] text-[12px] border-orange-500 rounded px-1 mb-[5px]">Selling Fast</span>
-                </p>
-               
-                <p className = "font-sans text-[#7450DF]">RM{product.price}</p>
-                <section className = "flex flex-row justify-between">
-                <section className = "flex flex-row">
-                    <p className = "font-sans font-semibold">{product.rating}</p>
-                    <img className = "w-[20px] h-[20px] items-center"src = "/starIcon.png"/>
-                    </section>
-                <p>{product.old} sold</p>
+                <section className="flex flex-col p-10  ">
+                    <p className="font-sans font-semibold text-lg">
+                        Just For You
+                    </p>
+                    <section className="flex flex-row  gap-5 ">
+                        {recommendProduct.map((product) => {
+                            return (
+                                <section
+                                    onClick={() =>
+                                        navigateToProductDetails(product.id)
+                                    }
+                                    key={product.id}
+                                    className="flex flex-col w-[350px] border border-gray-300 p-2"
+                                >
+                                    <img
+                                        src={product.img}
+                                        className="h-full object-cover object-center"
+                                        alt={product.name}
+                                    />
+                                    <p className="font-sans font-semibold text-lg">
+                                        {product.name}
+                                    </p>
+                                    <p className="font-sans">
+                                        <span className="inline-block border text-[#FF6869] text-[12px] border-orange-500 rounded px-1">
+                                            Selling Fast
+                                        </span>
+                                    </p>
+                                    <p className="font-sans text-[#7450DF]">
+                                        RM{product.price}
+                                    </p>
+                                    <p>{product.rating} stars</p>
+                                </section>
+                            );
+                        })}
                     </section>
             </section>
         )

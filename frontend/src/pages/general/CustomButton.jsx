@@ -12,13 +12,15 @@ const StyledButton = styled.button`
     margin-left: 10px;
 `
 
-const CustomButton = ({ text, backgroundColor, borderColor, textColor, width }) => {
+const CustomButton = ({ text, backgroundColor, borderColor, textColor, width, handleLogin }) => {
     return (
         <StyledButton
             backgroundColor={backgroundColor}
             borderColor={borderColor}
             textColor={textColor}
             width={width}
+            onClick={handleLogin}
+            
         >
             {text}
         </StyledButton>
