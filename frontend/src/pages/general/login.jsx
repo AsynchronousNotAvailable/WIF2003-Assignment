@@ -6,6 +6,33 @@ import CustomInput from "./CustomInput";
 import CustomButton from "./CustomButton";
 import styled from "styled-components";
 
+const Container = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+`
+
+const Content = styled.div`
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-left: 3%;
+    margin-top: 5%;
+    background-color: white;
+`
+
+const Graphic = styled.img`
+    flex-shrink: 0;
+    width: 50%;
+    height: 100vh;
+    background-color: #E5E5E5;
+`
+
 const StyledLogo = styled.img`
     width: 269px;
     height: 77px;
@@ -50,22 +77,27 @@ function Login() {
 
     const LoginForm = () => {
         return (
-            <div>
-                <CustomInput title="Email Address" type="text" value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} placeholder="Enter your email address" size="35%"/>
-                <CustomInput title="Password" type="text" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password" size="35%" />
-                <CustomButton text="Login" backgroundColor="#7450DF" borderColor="#7450DF" textColor="white" width="10%" onClick={handleLogin} />
-                <CustomButton text="Sign Up" backgroundColor="white" borderColor="#7450DF" textColor="#7450DF" width="10%" onClick={handleSignUp} />
+            <div style={{ width: "80%"}}>
+                <CustomInput title="Email Address" type="text" value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} placeholder="Enter your email address" size="100%"/>
+                <CustomInput title="Password" type="text" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password" size="100%" />
+                <SmallText style={{ }}>Forgot Password?</SmallText>
+                <CustomButton text="Login" backgroundColor="#7450DF" borderColor="#7450DF" textColor="white" width="20%" onClick={handleLogin} />
+                <CustomButton text="Sign Up" backgroundColor="white" borderColor="#7450DF" textColor="#7450DF" width="20%" onClick={handleSignUp} />
             </div>
         );
     }
 
     return (
-        <div>
-            <StyledLogo src="/SyopiLogo.png" alt="logo" />
-            <TagLine>Empowering Campus Commerce: <br/> Connect, Sell, Shop, Thrive! </TagLine>
-            <SmallText>Welcome back! Please login to your account.</SmallText>
-            <LoginForm />
-        </div>
+        <Container>
+            <Content>
+                <StyledLogo src="/SyopiLogo.png" alt="logo" />
+                <TagLine>Empowering Campus Commerce: <br/> Connect, Sell, Shop, Thrive! </TagLine>
+                <SmallText>Welcome back! Please login to your account.</SmallText>
+                <LoginForm />
+                <SmallText>Or login with</SmallText>
+            </Content>
+            <Graphic src="/SyopiGraphic.png" alt="graphic" />
+        </Container>
     );
 }
 
