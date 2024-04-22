@@ -7,52 +7,20 @@ import styled from "styled-components";
 
 const Container = styled.div`
     display: flex;
-    justify-content: flex-start;
-    align-items: stretch;
+    justify-content: center;
+    align-items: center;
     padding: 0;
     margin: 0;
     overflow: hidden;
     height: 100vh;
 `
 
-const StyledLogo = styled.img`
-    width: 439px;
-    height: 391px;
-    margin-bottom: 20px;
-`
-
-const TagLine = styled.h1`
-    font-size: 36px;
-    font-weight: bold;
-    color: #7450DF;
-    margin-bottom: 15px;
-`
-
-const TagLineContent = styled.div`
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-end;
-    margin-right: 0;
-    margin-top: 10%;
-    background-color: white;
-`
-const FormContainer  = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 60%;
-`
-
 const FormWrapper = styled.div`
-    width: 80%;
-    height: 70%;
-    padding: 50px;
+    width: 55%;
+    height: 80%;
+    padding: 30px 70px;
     border-radius: 24px;
-    box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.25);
-    border-left: 30px solid #C8B6FF;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.15);
 `;
 
 const SmallText = styled.p`
@@ -64,33 +32,25 @@ const SmallText = styled.p`
     opacity: ${({ withOpacity }) => withOpacity ? '0.6' : '1.0'};
 `
 
-const LoginLink = styled.a`
-    text-decoration: underline;
-    cursor: pointer;
-
-    &:hover {
-        font-weight: bold;
-    }
-`;
-
-const TogglePassword = styled.input`
-`;
-
-const PasswordLabel = styled.label`
-    font-size: 14px;
-    margin-left: 5px;
-`;
-
 function EditProfile() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [emailAddress, setEmailAddress] = useState("");
-  const [password, setPassword] = useState("");
-  const [contactNumber, setContactNumber] = useState("");
-  const [shippingAddress, setShippingAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const navigation = useNavigate();
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [emailAddress, setEmailAddress] = useState("");
+    const [password, setPassword] = useState("");
+    const [contactNumber, setContactNumber] = useState("");
+    const [shippingAddress, setShippingAddress] = useState("");
+    const [city, setCity] = useState("");
+    const [state, setState] = useState("");
+    const navigation = useNavigate();
+
+    const handleSave = () => {
+        alert("Profile updated successfully");  
+        navigation("/customer");
+    }
+
+    const handleCancel = () => {
+        navigation("/customer");
+    }
 
     const EditProfileForm = () => {
       return (
@@ -116,6 +76,10 @@ function EditProfile() {
           <FormWrapper>
             <SmallText style={{ fontSize: "32px", fontWeight: "medium" }}>Edit profile</SmallText>
             <EditProfileForm/>
+            <div style={{ display: "flex", justifyContent: "center", width: "100%", marginBottom: "30px", marginTop: "30px" }}>
+                <CustomButton text="Save" backgroundColor="#7450DF" borderColor="#7450DF" textColor="white" width="20%" onClick={handleSave} />
+                <CustomButton text="Cancel" backgroundColor="white" borderColor="#7450DF" textColor="#7450DF" width="20%" onClick={handleCancel} />
+            </div>
           </FormWrapper>
       </Container>
     )
