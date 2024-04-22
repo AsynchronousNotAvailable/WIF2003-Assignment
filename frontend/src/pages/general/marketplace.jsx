@@ -169,7 +169,7 @@ const Marketplace = () => {
                 <section className="flex flex-row gap-5 items-center justify-center">
     {productListing.map((product) => {
         return (
-            <section key={product.id} className="flex flex-col w-[350px] border border-gray-300 p-2">
+            <section key={product.id} className="flex flex-col w-[250px] h-[365px] border border-gray-300 p-2">
                 <img src={product.img} className="h-full object-cover object-center border-b border-gray-200 mb-[10px]" alt={product.name} />
                 <p className = "font-sans font-semibold text-lg">{product.name}</p>
                 <p className="font-sans">
