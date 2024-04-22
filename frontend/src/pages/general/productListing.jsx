@@ -6,7 +6,7 @@ import { GlobalContext } from "../../context";
 const ProductListing = () => {
     const { cartItems, setCartItems, productListing, setProductListing } =
         useContext(GlobalContext);
-    console.log("PRODCUT", cartItems);
+    
     const navigation = useNavigate();
 
     const handleClick = (product) => {

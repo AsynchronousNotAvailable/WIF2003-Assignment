@@ -15,7 +15,7 @@ function Login() {
 
         } else if (username === "customer") {
             setIsAuth(true);
-            navigation("/customer/products");
+            navigation("/marketplace");
         } else {
             alert("Invalid username");
         }
