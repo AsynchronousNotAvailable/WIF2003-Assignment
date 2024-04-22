@@ -1,14 +1,90 @@
 import { useTable, useSortBy, usePagination} from 'react-table'
-import React, { useMemo, useState} from 'react'
-import MOCK_DATA from './MOCK_DATA.json'
-import { ORDER_COLUMNS } from './order_columns'
+import React, { useMemo, useState, useEffect} from 'react'
+import cleaned_data from './cleaned_data.json'
 import {ReactPaginate} from 'react-paginate'
 
-
+let renderCount = 0
 export const SortingTable = () => {
+    const [data, setData] = useState(cleaned_data);
+    useEffect(() => {
+        console.log('data:', data)
+    }, [data])
+    const ORDER_COLUMNS = [
+        {
+            Header: 'Order ID',
+            Footer: 'Order ID',
+            accessor: 'order_id',
+        },
+        {
+            Header: 'Product',
+            Footer: 'Product',
+            accessor: 'product'
+    
+        },
+        {
+            Header: 'Date',
+            Footer: 'Date',
+            accessor: 'date',
+        },
+        {
+            Header: 'Customer',
+            Footer: 'Customer',
+            accessor: 'customer',
+        },
+        {
+            Header: 'Total',
+            Footer: 'Total',
+            accessor: 'total',
+        },
+        {
+            Header: 'Payment',
+            Footer: 'Payment',
+            accessor: 'payment',
+        },
+        {
+            Header: 'Status',
+            Footer: 'Status',
+            accessor: 'status',
+        },
+        {
+            Header: 'Action',
+            Footer: 'Action',
+            accessor: 'action',
+            Cell: ({cell}) => {
+                return (
+                <div className='flex'>
+                    <button className='mx-2' onClick={handleEditData}>
+                        Edit
+                    </button>
+                    <button className='mx-2' onClick={handleHideData}>
+                        Hide 
+                    </button>
+                        <button className='mx-2 mr-0' onClick={() => handleDeleteData(cell.row.index)}>
+                        Delete
+                    </button>
+                </div>  
+            )}
+        }
+    ]
     const columns = useMemo(() => ORDER_COLUMNS, [])      
+    function handleEditData(){
 
-    const data = useMemo(() => MOCK_DATA, [])
+    }
+    
+    function handleDeleteData(index){
+        console.log(data)
+        const updatedData = data.filter((_,i) => i !== index);
+        console.log(updatedData)
+        setData(updatedData);
+        console.log(data)
+    }
+    
+    function handleHideData(){
+        
+    }
+
+    
+    
 
     const tableInstance = useTable({
         columns: columns,
@@ -35,9 +111,10 @@ export const SortingTable = () => {
     } = tableInstance
     
     const {pageIndex} = state
-
+    renderCount++
     return (
         <div className='flex-auto w-full'>
+            <h1>Youtube Form {renderCount/2}</h1>
          <table className='flex-1 w-full mb-5'{...getTableProps()}>
             <thead className='border-b-2 border-border-grey content-start text-left'>
                 {headerGroups.map((headerGroup) => (

@@ -1,48 +1,8 @@
 import {format} from 'date-fns'
+import React, {useState, useRef, useImperativeHandle, } from 'react'
+import OrderManagement from '../../pages/seller/order_management'
+import { SortingTable } from './sorting_table'
 
-export const ORDER_COLUMNS = [
-    {
-        Header: 'Order ID',
-        Footer: 'Order ID',
-        accessor: 'order_id',
-    },
-    {
-        Header: 'Product',
-        Footer: 'Product',
-        accessor: 'product'
-
-    },
-    {
-        Header: 'Date',
-        Footer: 'Date',
-        accessor: 'date',
-    },
-    {
-        Header: 'Customer',
-        Footer: 'Customer',
-        accessor: 'customer',
-    },
-    {
-        Header: 'Total',
-        Footer: 'Total',
-        accessor: 'total',
-    },
-    {
-        Header: 'Payment',
-        Footer: 'Payment',
-        accessor: 'payment',
-    },
-    {
-        Header: 'Status',
-        Footer: 'Status',
-        accessor: 'status',
-    },
-    {
-        Header: 'Action',
-        Footer: 'Action',
-        accessor: 'action',
-    }
-]
 
 export const GROUPED_COLUMNS = [
     {
