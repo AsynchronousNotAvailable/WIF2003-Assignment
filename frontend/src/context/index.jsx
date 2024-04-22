@@ -42,6 +42,7 @@ function GlobalState({ children }) {
             img: "/builderproduct.png",
             seller: "Builder_Seller",
             reviews: [],
+            sellerpfp : "/seller6.pfp"
         },
     ]);
 
@@ -55,6 +56,8 @@ function GlobalState({ children }) {
                 img: "/milothreeproduct.jpg",
                 seller: "Milo Seller",
                 reviews: [],
+                sellerpfp : "/seller3.png"
+
             },
         ],
         "Horlicks_Seller": [
@@ -67,6 +70,8 @@ function GlobalState({ children }) {
                 img: "/horlickproduct.jpg",
                 seller: "Horlicks Seller",
                 reviews: [],
+                sellerpfp : "/seller4.png",
+
             },
         ],
         "Builder_Seller": [
@@ -79,6 +84,8 @@ function GlobalState({ children }) {
                 img: "/builderproduct.png",
                 seller: "Builder Seller",
                 reviews: [],
+                sellerpfp : "/seller5.png"
+
             },
         ],
     });
