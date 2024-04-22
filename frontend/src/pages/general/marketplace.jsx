@@ -9,6 +9,23 @@ import Seller_NavSidebar from "../../components/seller_sidebar";
 
 
 const Marketplace = () => {
+
+    const [sellers, setSellers] = useState([
+        {
+            img : "/seller3.png",
+            name : "Ali"
+        },
+
+        {
+            img : "/seller4.png",
+            name : "Abu"
+        },
+
+        {
+            img : "/seller5.png",
+            name : "Ahaha"
+        },
+    ])
     const [productCategorySetOne, setProductCategorySO] = useState([
         {
             name : "Books & Stationery",
@@ -61,36 +78,34 @@ const Marketplace = () => {
             name: "Milo 3 in 1",
             price: 13,
             rating: 4,
-            img: "/milothreeproduct.jpg"
+            img: "/milothreeproduct.jpg",
+            qtySold : '1.8k'
         },
         {
             id: 1,
             name: "Milo 3 in 1",
             price: 13,
             rating: 4,
-            img: "/milothreeproduct.jpg"
+            img: "/milothreeproduct.jpg",
+            qtySold : '1.8k'
         },
         {
             id: 2,
             name: "Milo 3 in 1",
             price: 13,
             rating: 4,
-            img: "/milothreeproduct.jpg"
+            img: "/milothreeproduct.jpg",
+            qtySold : '1.8k'
         },
         {
             id: 3,
             name: "Milo 3 in 1",
             price: 13,
             rating: 4,
-            img: "/milothreeproduct.jpg"
+            img: "/milothreeproduct.jpg",
+            qtySold : '1.8k'
         },
-        {
-            id : 4,
-            name: "Milo 3 in 1",
-            price: 13,
-            rating: 4,
-            img: "/milothreeproduct.jpg"
-        }
+    
     ]);
     return(
         <>
@@ -118,7 +133,7 @@ const Marketplace = () => {
                     <section className = "flex flex-row">
                         {productCategorySetTwo.map((product) => {
                             return(
-                                <section className = "flex flex-col border-red-600 border-2 w-[175px] h-[218px] justify-center items-center">
+                                <section className = "flex flex-col border-2 w-[175px] h-[218px] justify-center items-center">
                                     <img src = {product.img} className = "border-gray-500 border-2 w-[110px] h-[110px] rounded-full object-contain"/>
                                     <p>{product.name}</p>
                                     </section>
@@ -129,21 +144,46 @@ const Marketplace = () => {
                 </section>
             </section>
 
-            <section className = "flex flex-col p-10  ">
-                <p className = "font-sans font-semibold text-lg">
+            <section className = "flex flex-col">
+                <span className = "text-xl items-start mb-10 mt-20 font-sans font-semibold ml-[300px]">Top Sellers of This Week</span>
+                <section className = "flex flex-col items-center">
+                <section className = "flex flex-row gap-5 ">
+        
+                    {sellers.map((seller) => {
+                        return(
+                            <section className = "flex flex-col border-2 w-[175px] h-[218px] justify-center items-center">
+                                <img src = {seller.img} className = "border-gray-300 border-2 w-[110px] h-[110px] rounded-full object-right"/>
+                                <p className = "">{seller.name}</p>
+                                </section>
+                        )
+                    })}
+    </section>
+                </section>
+            </section>
+
+            
+            <section className = "flex flex-col ">
+                <p className = "text-xl items-start mb-10 mt-20 font-sans font-semibold ml-[300px]">
                     Just For You
                 </p>
-                <section className="flex flex-row  gap-5 ">
+                <section className="flex flex-row gap-5 items-center justify-center">
     {productListing.map((product) => {
         return (
             <section key={product.id} className="flex flex-col w-[350px] border border-gray-300 p-2">
-                <img src={product.img} className="h-full object-cover object-center" alt={product.name} />
+                <img src={product.img} className="h-full object-cover object-center border-b border-gray-200 mb-[10px]" alt={product.name} />
                 <p className = "font-sans font-semibold text-lg">{product.name}</p>
                 <p className="font-sans">
-                    <span className="inline-block border text-[#FF6869] text-[12px] border-orange-500 rounded px-1">Selling Fast</span>
+                    <span className="inline-block border text-[#FF6869] text-[12px] border-orange-500 rounded px-1 mb-[5px]">Selling Fast</span>
                 </p>
+               
                 <p className = "font-sans text-[#7450DF]">RM{product.price}</p>
-                <p>{product.rating} stars</p>
+                <section className = "flex flex-row justify-between">
+                <section className = "flex flex-row">
+                    <p className = "font-sans font-semibold">{product.rating}</p>
+                    <img className = "w-[20px] h-[20px] items-center"src = "/starIcon.png"/>
+                    </section>
+                <p>{product.qtySold} sold</p>
+                    </section>
             </section>
         )
     })}
