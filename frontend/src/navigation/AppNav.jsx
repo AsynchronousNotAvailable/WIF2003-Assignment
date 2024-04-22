@@ -34,7 +34,7 @@ function AppNav() {
                     <Route path = "/marketplace" element = {<Marketplace/>} />
                     <Route path="/login" element={<Login />} />
                     <Route
-                        path="/customer/customer/products"
+                        path="/customer/products"
                         element={<ProductListing />}
                     />
                     <Route path="/customer/product/:id" element={<Product />} />
