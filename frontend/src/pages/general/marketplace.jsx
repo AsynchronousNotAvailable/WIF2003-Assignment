@@ -244,8 +244,20 @@ import { PieChart } from "@mui/x-charts/PieChart";
 import { Typography, Stack } from "@mui/material";
 import { BarChart } from "@mui/x-charts/BarChart";
 import Seller_NavSidebar from "../../components/seller_sidebar";
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
 
 function Marketplace() {
+    const { shopsItemListing, productListing } = useContext(GlobalContext);
+    console.log(shopsItemListing) //time to map the value of the name, given the key 
+    const options = productListing.map((option) => {
+        const firstLetter = option.name[0].toUpperCase();
+        return {
+          firstLetter: /[0-9]/.test(firstLetter) ? '0-9' : firstLetter,
+          ...option,
+        };
+      });
+
     const [productCategorySetOne, setProductCategorySO] = useState([
         {
             name: "Books & Stationery",
@@ -331,9 +343,38 @@ function Marketplace() {
             variations: ["Original", "Chocolate", "Vanilla"],
         },
     ]);
+    const [userSearchInput, setUserSearchInput] = useState("");
+    const [displayedProducts , setDisplayedProducts] = useState([]);
 
-    const { shopsItemListing, productListing } = useContext(GlobalContext);
+    // const handleSearchChange = (e) => {
+    
+    //     const userInput = e.target.value.toLowerCase();
+    //     setUserSearchInput(userInput)
+    //     const matchedProducts = productListing.filter((product) => 
+    //         product.name.toLowerCase().includes(userInput)
+    //     )
+    //     setDisplayedProducts(matchedProducts)
+    // }
+    const handleSearchChange = (event) => {
+        if(event.target.innerText){
+            const userInput = (event.target.innerText).toLowerCase();
+            setUserSearchInput(userInput)
+            const matchedProducts = productListing.filter((product) => product.name.toLowerCase().includes(userInput))
+            setDisplayedProducts(matchedProducts)
+        }
+        else {
+            const userInput = event.target.value.toLowerCase();
+            setUserSearchInput(userInput)
+            const matchedProducts = productListing.filter((product) => product.name.toLowerCase().includes(userInput))
+            setDisplayedProducts(matchedProducts)
+        }
+    };
+    
     const navigation = useNavigate();
+
+    const onSearchButtonClick = () => {
+        navigation((`/customer/products`), {state : {displayedProducts}})
+    }
 
     const navigateToShop = (seller) => {
         navigation(`/customer/shop/${seller}`, {
@@ -355,12 +396,53 @@ function Marketplace() {
     return (
         <>
             <Customer_Navbar />
-            <main className="mt-36 flex flex-col">
+            <main className="mt-36 flex flex-col gap-5">
+                <section className = "flex flex-row w-full gap-2 justify-center">
+                <Autocomplete
+                            id="free-solo-demo"
+                            freeSolo
+                            sx={{ width:600 }}
+                            onChange = {(event, newValue) => {
+                                console.log(newValue)
+                            }}
+                            inputValue = {userSearchInput}
+                            value = {userSearchInput}
+                            onInputChange = {(newInputValue) => handleSearchChange(newInputValue)}
+                            options={productListing.map((option) => option.name)}
+                            renderInput={(params) => <TextField {...params} label="Search" />}
+                        />
+
+                <button onClick={onSearchButtonClick}>
+                <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+
+                </section>
                 <section className="flex flex-row justify-center  ">
                     <img className=" object-cover " src="/setelbanner.png" />
                 </section>
-
                 <section className="flex flex-col ">
+                    <section className = "flex flex-row">
+                    {/* <Stack spacing={2} sx={{ width: 300 }}>
+                        
+                        <Autocomplete
+                            freeSolo
+                            id="free-solo-2-demo"
+                            disableClearable
+                            onInputChange = {(newInputValue) => handleSearchChange(newInputValue)}
+                            options={productListing.map((option) => option.name)}
+                            renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                label="Search input"
+                                InputProps={{
+                                ...params.InputProps,
+                                type: 'search',
+                                }}
+                            />
+                            )}
+                        />
+                        </Stack>                       */}
+                    </section>
                     <span className="text-xl items-start mb-10 mt-20 font-sans font-semibold ml-[300px]">
                         Category
                     </span>
@@ -382,7 +464,7 @@ function Marketplace() {
                             <section className="flex flex-row">
                                 {productCategorySetTwo.map((product) => {
                                     return (
-                                        <section className="flex flex-col border-red-600 border-2 w-[175px] h-[218px] justify-center items-center">
+                                        <section className="flex flex-col  w-[175px] h-[218px] justify-center items-center">
                                             <img
                                                 src={product.img}
                                                 className="border-gray-500 border-2 w-[110px] h-[110px] rounded-full object-contain"
@@ -420,11 +502,11 @@ function Marketplace() {
                     </section>
                 </section>
 
-                <section className="flex flex-col p-10  ">
-                    <p className="font-sans font-semibold text-lg">
+                <section className="flex flex-col  ">
+                    <p className="ftext-xl items-start mb-10 mt-20 font-sans font-semibold ml-[300px]">
                         Just For You
                     </p>
-                    <section className="flex flex-row  gap-5 ">
+                    <section className="flex flex-row items-center justify-center gap-5 ">
                         {recommendProduct.map((product) => {
                             return (
                                 <section
@@ -432,7 +514,7 @@ function Marketplace() {
                                         navigateToProductDetails(product.id)
                                     }
                                     key={product.id}
-                                    className="flex flex-col w-[350px] border border-gray-300 p-2"
+                                    className="flex flex-col w-[350px] border border-gray-300 p-2 justify-center"
                                 >
                                     <img
                                         src={product.img}
