@@ -3,9 +3,14 @@ const flowbite = require("flowbite-react/tailwind");
 module.exports = {
     content: ["./src/**/*.{js,jsx,ts,tsx}", flowbite.content()],
     theme: {
+        fontFamily : {
+            'sans': ['Inter', 'sans-serif'],
+        },
+       
         extend: {
-            fontFamily: {
-                inter: ["Inter", "sans-serif"],
+            colors : {
+                myCyan : '#0FB7FF',
+                myGreen : '#1EB564'
             }
         },
     },

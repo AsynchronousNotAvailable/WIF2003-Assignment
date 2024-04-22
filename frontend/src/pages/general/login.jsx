@@ -96,7 +96,7 @@ function Login() {
 
         } else if (emailAddress === "customer") {
             setIsAuth(true);
-            navigation("/customer");
+            navigation("/marketplace");
         } else {
             alert("Invalid username");
         }
