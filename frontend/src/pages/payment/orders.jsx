@@ -90,7 +90,7 @@ export default function Orders() {
 
     const CheckoutList = () => {
         return (
-            <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "30px"}}>
+            <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center"}}>
                 <Wrapper style={{ display: "flex"}}>
                     <Column width="40%"><Text style={{ marginRight: "auto" }}><Light>Product</Light></Text></Column>
                     <Column width="20%"><Text style={{ marginRight: "auto" }}><Light>Unit Price</Light></Text></Column>
@@ -103,16 +103,6 @@ export default function Orders() {
                         checkoutItems={cartItems}
                     />
                 </Wrapper>
-                <Wrapper style={{ display: "flex"}}>
-                    <Column width="60%"></Column>
-                    <Column width="20%"><Text style={{ marginRight: "auto" }}><Bold>Doorstep Delivery</Bold></Text></Column>
-                    <Column width="20%"><Text style={{ marginRight: "auto" }}><Light>RM 5.00</Light></Text></Column>
-                </Wrapper>
-                <Wrapper style={{ display: "flex"}}>
-                    <Column width="60%"></Column>
-                    <Column width="20%"><Text style={{ marginRight: "auto" }}><Bold>Order Total ({totalItems} item)</Bold></Text></Column>
-                    <Column width="20%"><Text style={{ marginRight: "auto" }}><Light>RM {orderTotal.toFixed(2)}</Light></Text></Column>
-                </Wrapper>
             </div>
         )
     }
@@ -123,45 +113,12 @@ export default function Orders() {
             <div style={{ width: "90%", marginTop: "8%"}} >
                 <Text style={{ fontSize: "32px", fontWeight: "bold", marginRight: "auto", marginBottom: "30px" }}>Orders</Text>       
             </div>
-            <Wrapper style={{ marginBottom: "30px"}}>
-                <Text style={{ marginRight: "auto", color: "#0F60FF" }}>Delivery Address</Text>
-                <Text style={{ marginRight: "auto" }}> <Bold>Tan Jun Xian (+60) 132068030</Bold> 121, Jalan 17/14, Seksyen 17, Petaling Jaya, 46400 Selangor. </Text>  
-            </Wrapper>
             <CheckoutList />
-            <Wrapper style={{ display: "flex", alignItems: "center"}}>
-                <Column width="15%"><Text style={{ marginRight: "auto", fontSize: "16px" }}><Light>Payment Method</Light></Text></Column>
-                <PaymentButton selected={selectedPaymentMethod === "Online Banking"} onClick={() => handlePaymentMethodClick("Online Banking")}>Online Banking</PaymentButton>
-                <PaymentButton selected={selectedPaymentMethod === "Credit/Debit Card"} onClick={() => handlePaymentMethodClick("Credit/Debit Card")}>Credit/Debit Card</PaymentButton>
-                <PaymentButton selected={selectedPaymentMethod === "TnG E-Wallet"} onClick={() => handlePaymentMethodClick("TnG E-Wallet")}>TnG E-Wallet</PaymentButton>
-                <PaymentButton selected={selectedPaymentMethod === "Cash On Delivery"} onClick={() => handlePaymentMethodClick("Cash On Delivery")}>Cash On Delivery</PaymentButton>
-            </Wrapper>
-            <PaymentContent selected={selectedPaymentMethod === "Online Banking"}>
-                <Wrapper>
-                    <OnlineBankingOptions />
-                </Wrapper>
-            </PaymentContent>
-            <PaymentContent selected={selectedPaymentMethod === "Credit/Debit Card"}>
-                <Wrapper>
-                    <CreditDebitCard />
-                </Wrapper>
-            </PaymentContent>
-            <PaymentContent selected={selectedPaymentMethod === "TnG E-Wallet"}>
-                <Wrapper>
-                    <Text>Connecting to TnG E-Wallet sandbox...</Text>
-                </Wrapper>
-            </PaymentContent>
-            <PaymentContent selected={selectedPaymentMethod === "Cash On Delivery"}>
-                <Wrapper>
-                    <Text>Cash On Delivery payment method selected. You will pay for your order on delivery.</Text>
-                </Wrapper>
-            </PaymentContent>
-            <Wrapper style={{ display: "flex", alignItems: "center" }}>
-                <Column width="80%"></Column>
-                <Column width="20%"><Text style={{ marginRight: "auto", color: "#0F60FF", fontSize: "38px" }}>RM {(orderTotal + 5).toFixed(2)}</Text></Column>
-            </Wrapper>
-            <Wrapper style={{ display: "flex", alignItems: "center"}}>
-                <Column width="80%"></Column>
-                <Column width="20%"><PaymentButton style={{ backgroundColor: "#0F60FF", color: "white", width: "90%", margin: "0"}} onClick={() => handlePlaceOrder()}>Place Order</PaymentButton></Column>
+            <Wrapper style={{ display: "flex" }}>
+                <Column width="70%"></Column>
+                <Column width="10%"><Text style={{ marginRight: "auto", marginTop: "15px" }}><Bold>Order Total</Bold></Text></Column>
+                <Column width="20%"><Text style={{ marginRight: "auto", color: "#0F60FF", fontSize: "38px" }}>RM {(orderTotal + 5).toFixed(2)}</Text>
+                <PaymentButton style={{ backgroundColor: "#0F60FF", color: "white", width: "90%", margin: "0"}} onClick={() => handlePlaceOrder()}>Order Received</PaymentButton></Column>
             </Wrapper>
         </Container>
     )
