@@ -83,13 +83,7 @@ function Marketplace() {
             rating: 4,
             img: "/milothreeproduct.jpg",
         },
-        {
-            id: 4,
-            name: "Milo 3 in 1",
-            price: 13,
-            rating: 4,
-            img: "/milothreeproduct.jpg",
-        },
+        
     ]);
 
     const { shopsItemListing, productListing } = useContext(GlobalContext);

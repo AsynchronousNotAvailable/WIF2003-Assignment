@@ -55,6 +55,10 @@ function Product() {
         }
     };
 
+    const addReview = () => {
+
+    }
+
     return (
         <>
             <Customer_Navbar />
@@ -194,10 +198,13 @@ function Product() {
                                         <h2 className="font-sans font-semibold text-2xl">
                                             Reviews
                                         </h2>
-
+                                    
+                                        
                                         <Product_Review
                                             product={product}
                                             setProduct={setProduct}
+                                            productListing={productListing}
+                                            setProductListing={setProductListing}
                                         />
                                     </div>
                                 </div>

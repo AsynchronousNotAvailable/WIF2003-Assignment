@@ -2,10 +2,10 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../../context";
 
-function Product_Review({ product, setProduct }) {
+function Product_Review({ product, setProduct, productListing, setProductListing }) {
     const [review, setReview] = useState("");
-    const { productListing, setProductListing } = useContext(GlobalContext);
-    console.log(product);
+    
+    
 
     const submitReview = () => {
         let updatedProduct = {};
@@ -15,7 +15,7 @@ function Product_Review({ product, setProduct }) {
             if (p.id === product.id) {
                 // If it matches, create a new review object and add it to the reviews array
                 const newReview = {
-                    pfp: '/customer_pfp.jpg',
+                    pfp: "/customer_pfp.jpg",
                     username: "Xopher", // Assuming product.username is defined
                     stars: 5, // Assuming product.stars is defined
                     description: review,
@@ -58,8 +58,11 @@ function Product_Review({ product, setProduct }) {
                 return (
                     <div className="flex-col p-6 bg-slate-100  rounded-md">
                         <div className="flex flex-row items-center gap-10">
-                           
-                            <img src={review.pfp} alt="" className=" object-cover rounded-full w-20 h-20"/>
+                            <img
+                                src={review.pfp}
+                                alt=""
+                                className=" object-cover rounded-full w-20 h-20"
+                            />
                             <div className="flex flex-col gap-3 items-start">
                                 <div className="flex flex-col gap-1">
                                     <h4 className="font-sans font-medium text-md">
