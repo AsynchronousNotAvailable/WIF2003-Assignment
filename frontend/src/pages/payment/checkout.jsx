@@ -5,6 +5,8 @@ import { GlobalContext } from "../../context";
 import { useContext } from "react";
 import styled from "styled-components";
 import { useState } from "react";
+import OnlineBankingOptions from "./components/OnlineBanking";
+import CreditDebitCard from "./components/CreditDebit";
 
 const Container = styled.div`
     display: flex;
@@ -122,24 +124,28 @@ export default function Checkout() {
             </Wrapper>
             <PaymentContent selected={selectedPaymentMethod === "Online Banking"}>
                 <Wrapper>
-                    <Text>Content for Online Banking payment method goes here...</Text>
+                    <OnlineBankingOptions />
                 </Wrapper>
             </PaymentContent>
             <PaymentContent selected={selectedPaymentMethod === "Credit/Debit Card"}>
                 <Wrapper>
-                    <Text>Content for Credit/Debit Card payment method goes here...</Text>
+                    <CreditDebitCard />
                 </Wrapper>
             </PaymentContent>
             <PaymentContent selected={selectedPaymentMethod === "TnG E-Wallet"}>
                 <Wrapper>
-                    <Text>Content for TnG E-Wallet payment method goes here...</Text>
+                    <Text>Connecting to TnG E-Wallet sandbox...</Text>
                 </Wrapper>
             </PaymentContent>
             <PaymentContent selected={selectedPaymentMethod === "Cash On Delivery"}>
                 <Wrapper>
-                    <Text>Content for Cash On Delivery payment method goes here...</Text>
+                    <Text>Cash On Delivery payment method selected. You will pay for your order on delivery.</Text>
                 </Wrapper>
             </PaymentContent>
+            <Wrapper style={{ display: "flex", alignItems: "center" }}>
+                <Column width="80%"></Column>
+                <Column width="20%"><Text style={{ marginRight: "auto", color: "#0F60FF", fontSize: "38px" }}>RM {(orderTotal + 5).toFixed(2)}</Text></Column>
+            </Wrapper>
         </Container>
     )
 }
