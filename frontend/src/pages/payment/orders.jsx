@@ -5,8 +5,6 @@ import { GlobalContext } from "../../context";
 import { useContext } from "react";
 import styled from "styled-components";
 import { useState } from "react";
-import OnlineBankingOptions from "./components/OnlineBanking";
-import CreditDebitCard from "./components/CreditDebit";
 import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
@@ -70,22 +68,10 @@ export default function Orders() {
     const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
     const orderTotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
-    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
-
     const navigation = useNavigate();
 
-    const handlePaymentMethodClick = (method) => {
-        setSelectedPaymentMethod(method);
-    };
-
-    const handlePlaceOrder = () => {
-        if (selectedPaymentMethod === null) {
-            alert("Please select a payment method to proceed.");
-        }
-        else {
-            alert("Order placed successfully!");
-            navigation("/customers/orders");
-        }
+    const handleOrderReceived = () => {
+            navigation("/customer/products");
     };
 
     const CheckoutList = () => {
@@ -118,7 +104,7 @@ export default function Orders() {
                 <Column width="70%"></Column>
                 <Column width="10%"><Text style={{ marginRight: "auto", marginTop: "15px" }}><Bold>Order Total</Bold></Text></Column>
                 <Column width="20%"><Text style={{ marginRight: "auto", color: "#0F60FF", fontSize: "38px" }}>RM {(orderTotal + 5).toFixed(2)}</Text>
-                <PaymentButton style={{ backgroundColor: "#0F60FF", color: "white", width: "90%", margin: "0"}} onClick={() => handlePlaceOrder()}>Order Received</PaymentButton></Column>
+                <PaymentButton style={{ backgroundColor: "#0F60FF", color: "white", width: "90%", margin: "0"}} onClick={() => handleOrderReceived()}>Order Received</PaymentButton></Column>
             </Wrapper>
         </Container>
     )
