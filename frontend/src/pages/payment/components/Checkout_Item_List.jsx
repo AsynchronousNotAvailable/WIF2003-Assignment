@@ -12,12 +12,17 @@ const SmallText = styled.p`
 
 const RowWrapper = styled.div`
     display: flex;
-    align-items: center; /* Align items vertically */
+    align-items: center; 
     justify-content: space-between;
-    width: 55%;
+    width: 100%;
     height: 80%;
-    padding: 30px 70px;
-    border-bottom: 1px solid #ccc; /* Add border to create table-like rows */
+    padding: 5px 0;
+    position: relative;
+`;
+
+const Column = styled.div`
+    width: ${({ width }) => width};
+    flex-shrink: 0;
 `;
 
 const Image = styled.img`
@@ -34,12 +39,21 @@ function Checkout_Item_List({checkoutItems}) {
                 return (
                     <div>
                         <RowWrapper>
-                            <Image src={checkoutItem.img} alt="Product Image" />
-                            <SmallText>{checkoutItem.name}</SmallText>
-                            <SmallText>RM {checkoutItem.price}</SmallText>
-                            <SmallText>{checkoutItem.quantity}</SmallText>
-                            <SmallText>RM {checkoutItem.price * checkoutItem.quantity}</SmallText>
+                            <Column width="40%" style={{ display: "flex", alignItems: "center"}}>
+                                <Image src={checkoutItem.img} alt="Product Image" />
+                                <SmallText>{checkoutItem.name}</SmallText>
+                            </Column>
+                            <Column width="20%">
+                                <SmallText>RM {checkoutItem.price.toFixed(2)}</SmallText>
+                            </Column>
+                            <Column width="20%">
+                                <SmallText>{checkoutItem.quantity}</SmallText>
+                            </Column>
+                            <Column width="20%">
+                                <SmallText>RM {(checkoutItem.price * checkoutItem.quantity).toFixed(2)}</SmallText>
+                            </Column>
                         </RowWrapper>
+                        
                     </div>
                 );
                 })
