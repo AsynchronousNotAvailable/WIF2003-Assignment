@@ -65,7 +65,7 @@ const PaymentContent = styled.div`
     align-items: center;
 `;
 
-export default function Checkout() {
+export default function Orders() {
     const { cartItems } = useContext(GlobalContext);
     const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
     const orderTotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
@@ -84,7 +84,7 @@ export default function Checkout() {
         }
         else {
             alert("Order placed successfully!");
-            navigation("/customer/orders");
+            navigation("/customers/orders");
         }
     };
 
@@ -121,7 +121,7 @@ export default function Checkout() {
         <Container>
             <Customer_Navbar />
             <div style={{ width: "90%", marginTop: "8%"}} >
-                <Text style={{ fontSize: "32px", fontWeight: "bold", marginRight: "auto", marginBottom: "30px" }}>Checkout</Text>       
+                <Text style={{ fontSize: "32px", fontWeight: "bold", marginRight: "auto", marginBottom: "30px" }}>Orders</Text>       
             </div>
             <Wrapper style={{ marginBottom: "30px"}}>
                 <Text style={{ marginRight: "auto", color: "#0F60FF" }}>Delivery Address</Text>
