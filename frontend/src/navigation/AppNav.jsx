@@ -8,6 +8,10 @@ import Login from "../pages/general/login";
 import SignUp from "../pages/general/signup";
 import Seller_Home from "../pages/seller/seller_home";
 import Customer_Navbar from "../components/customer_navbar";
+import OrderManagement from "../pages/seller/order_management";
+import ProductManagement from "../pages/seller/product_management";
+import AddProduct from "../pages/seller/add_product";
+
 
 function AppNav() {
     const { isAuth, isSeller } = useContext(GlobalContext);
@@ -20,6 +24,9 @@ function AppNav() {
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/customer" element={<Customer_Home />} />
                 <Route path="/seller" element={<Seller_Home />} />
+                <Route path="/order_management" element={<OrderManagement/>}/>
+                <Route path="/product_management" element={<ProductManagement/>}/>
+                <Route path="/add_product_page" element={<AddProduct/>}/>
             </Routes>
             {/* {!isAuth ? (
                 <Routes>
@@ -70,4 +77,7 @@ function CustomerRoutes() {
         </>
     );
 }
+
+
+
 export default AppNav;

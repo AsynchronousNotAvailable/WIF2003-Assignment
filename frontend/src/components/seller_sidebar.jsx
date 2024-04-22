@@ -6,6 +6,12 @@ function Seller_NavSidebar() {
     const handleLogout = () => {
         navigation("/login");
     };
+    const toOrderManagement = () => {
+        navigation("/order_management");
+    }
+    const toProductManagement = () => {
+        navigation("/product_management");
+    }
     return (
         <div class="font-inter">
             <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -106,7 +112,7 @@ function Seller_NavSidebar() {
 
                 <div class="h-full mt-5 px-3 pb-4 bg-[#7450DF] ">
                     <ul class="space-y-2 font-medium">
-                        <li>
+                        <li onClick={toProductManagement}>
                             <a
                                 href="#"
                                 class="flex border-white border-2 items-center p-2 my-4 text-white rounded-md hover:bg-gray-700"
@@ -117,7 +123,7 @@ function Seller_NavSidebar() {
                                 </span>
                             </a>
                         </li>
-                        <li>
+                        <li onClick={toOrderManagement}>
                             <a
                                 href="#"
                                 class="flex items-center p-2 my-4 text-white rounded-lg hover:bg-gray-700"
@@ -128,7 +134,7 @@ function Seller_NavSidebar() {
                                 </span>
                             </a>
                         </li>
-                        <li>
+                        <li >
                             <a
                                 href="#"
                                 class="flex items-center p-2 my-4 text-white rounded-lg hover:bg-gray-700"
