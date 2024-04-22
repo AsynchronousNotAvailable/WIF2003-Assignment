@@ -9,48 +9,52 @@ import Seller_NavSidebar from "../../components/seller_sidebar";
 
 
 const Marketplace = () => {
-    const [productCategory, setProductCategory] = useState([
+    const [productCategorySetOne, setProductCategorySO] = useState([
         {
             name : "Books & Stationery",
-            img : "/ph--books.png"
+            img : "/booksIcon.png"
         },
         {
-            name : "Electronics",
-            img : "/map--electronics-store.png"
+            name : "Babies & Toys",
+            img : "/toysIcon.png"
         },
         {
-            name : "Fashion",
-            img : "/icon-park-outline--clothes-suit.png"
+            name : "TV & Home Appliances",
+            img : "/tvIcon.png"
         },
         {
-            name : "Sports Equipments",
-            img : "/solar--football-bold.png"
+            name : "Home & Lifestyle",
+            img : "/homeIcon.png"
+        },
+        {
+            name : "Groceries",
+            img : "/groceryIcon.png"
+        },
+    ])
+
+    const [productCategorySetTwo , setProductCategoryST] = useState([
+        {
+            name : "Electronic Accessories",
+            img : "/electronicAcc.png"
+        },
+        {
+            name : "Electronics Devices",
+            img : "/electronicDev.png"
+        },
+        {
+            name : "Women's Fashion",
+            img : "/womenFashion.png"
+        },
+        {
+            name : "Men's Fashion",
+            img : "/menFashion.png"
         },
         {
             name : "Health & Supplements",
-            img : "/solar--health-bold.png"
-        },
-        {
-            name : "Books & Stationery",
-            img : "/ph--books.png"
-        },
-        {
-            name : "Books & Stationery",
-            img : "/ph--books.png"
-        },
-        {
-            name : "Books & Stationery",
-            img : "/ph--books.png"
-        },
-        {
-            name : "Books & Stationery",
-            img : "/ph--books.png"
-        },
-        {
-            name : "Books & Stationery",
-            img : "/ph--books.png"
+            img : "/healthIcon.png"
         },
     ])
+
     const [productListing, setProductListing] = useState([
         {
             id: 0,
@@ -91,78 +95,38 @@ const Marketplace = () => {
     return(
         <>
          <Customer_Navbar />
-        <main className="mt-36 flex flex-col p-5 ">
-            <section className = "flex flex-row justify-center">
-                <img className = "w-full object-cover "src = "/setelbanner.png"/>
+        <main className="mt-36 flex flex-col">
+            <section className = "flex flex-row justify-center  ">
+                <img className = " object-cover "src = "/setelbanner.png"/>
             </section>
 
-            <section className = "flex flex-col  p-10">
-                <section className = "mb-10 font-sans font-semibold text-lg">Category</section>
-                <section className = "flex flex-col justify-center  align-middle items-center">
-                <section className = "flex flex-row  ">
-                    <section className = "flex flex-col border-2 border-gray-400 w-[100px] h-[150px] ">
-                        <img className = "h-[40px] w-[40px] border-4 rounded-full border-gray-300" src = "/map--electronics-store.png"/>
-                        <p>Electronics</p>
-                    </section>
-
-                    <section className = "flex flex-col border-2 border-gray-400 w-[100px]">
-                        <img className = "h-[40px] w-[40px] border-4 rounded-full border-gray-300" src = "/solar--health-bold.png"/>
-                        <p>Health & Wellness</p>
-                    </section>
-
-                    <section className = "flex flex-col border-2 border-gray-400 w-[100px] ">
-                        <img className = "h-[40px] w-[40px] border-4 rounded-full border-gray-300" src = "/solar--football-bold.png"/>
-                        <p>Sports Equipments</p>
-                    </section>
-
-                    <section className = "flex flex-col border-2 border-gray-500 w-[100px]">
-                        <img className = "h-[40px] w-[40px] border-4 rounded-full border-gray-300 align-middle" src = "/ph--books.png"/>
-                        <p className = "">Books & Stationery</p>
-                    </section>
-
-                    <section className = "flex flex-col border-2 border-gray-400 w-[100px] ">
-                        <img className = "h-[40px] w-[40px] border-4 rounded-full border-gray-300" src = "/tdesign--milk.png"/>
-                        <p>Groceries</p>
-                    </section>
-
-                    <section className = "flex flex-col border-2 border-gray-400 w-[100px] ">
-                        <img className = "h-[40px] w-[40px] border-4 rounded-full border-gray-300" src = "/icon-park-outline--clothes-suit.png"/>
-                        <p>Fashion</p>
-                    </section>
+            <section className = "flex flex-col ">
+                <span className = "text-xl items-start mb-10 mt-20 font-sans font-semibold ml-[300px]">Category</span>
+                <section className = "flex flex-col justify-center items-center">
+                <section className = "flex flex-row ">
+        
+                    {productCategorySetOne.map((product) => {
+                        return(
+                            <section className = "flex flex-col border-2 w-[175px] h-[218px] justify-center items-center">
+                                <img src = {product.img} className = "border-gray-300 border-2 w-[110px] h-[110px] rounded-full object-right"/>
+                                <p className = "">{product.name}</p>
+                                </section>
+                        )
+                    })}
                 </section>
-                <section className = "flex flex-row justify-center">
-                    <section className = "flex flex-col border-2 border-gray-400 w-[100px] h-[150px] ">
-                        <img className = "h-[40px] w-[40px] border-4 rounded-full border-gray-300" src = "/map--electronics-store.png"/>
-                        <p>Electronics</p>
-                    </section>
-
-                    <section className = "flex flex-col border-2 border-gray-400 w-[100px]">
-                        <img className = "h-[40px] w-[40px] border-4 rounded-full border-gray-300" src = "/solar--health-bold.png"/>
-                        <p>Health & Wellness</p>
-                    </section>
-
-                    <section className = "flex flex-col border-2 border-gray-400 w-[100px] ">
-                        <img className = "h-[40px] w-[40px] border-4 rounded-full border-gray-300" src = "/solar--football-bold.png"/>
-                        <p>Sports Equipments</p>
-                    </section>
-
-                    <section className = "flex flex-col border-2 border-gray-500 w-[100px]">
-                        <img className = "h-[40px] w-[40px] border-4 rounded-full border-gray-300 align-middle" src = "/ph--books.png"/>
-                        <p className = "">Books & Stationery</p>
-                    </section>
-
-                    <section className = "flex flex-col border-2 border-gray-400 w-[100px] ">
-                        <img className = "h-[40px] w-[40px] border-4 rounded-full border-gray-300" src = "/tdesign--milk.png"/>
-                        <p>Groceries</p>
-                    </section>
-
-                    <section className = "flex flex-col border-2 border-gray-400 w-[100px] ">
-                        <img className = "h-[40px] w-[40px] border-4 rounded-full border-gray-300" src = "/icon-park-outline--clothes-suit.png"/>
-                        <p>Fashion</p>
+                <section className = "flex flex-row">
+                    <section className = "flex flex-row">
+                        {productCategorySetTwo.map((product) => {
+                            return(
+                                <section className = "flex flex-col border-red-600 border-2 w-[175px] h-[218px] justify-center items-center">
+                                    <img src = {product.img} className = "border-gray-500 border-2 w-[110px] h-[110px] rounded-full object-contain"/>
+                                    <p>{product.name}</p>
+                                    </section>
+                            )
+                        })}
                     </section>
                 </section>
                 </section>
-                
             </section>
 
             <section className = "flex flex-col p-10  ">

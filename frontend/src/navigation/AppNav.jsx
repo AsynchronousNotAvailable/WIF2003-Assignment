@@ -2,7 +2,6 @@
 import React, { useContext } from "react";
 import { GlobalContext } from "../context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Customer_Home from "../pages/customer/customer_home";
 import Landing from "../pages/general/landing";
 import Login from "../pages/general/login";
 import SignUp from "../pages/general/signup";
@@ -34,12 +33,11 @@ function AppNav() {
                     <Route path = "/marketplace" element = {<Marketplace/>} />
                     <Route path="/login" element={<Login />} />
                     <Route
-                        path="/customer/customer/products"
+                        path="/customer/products"
                         element={<ProductListing />}
                     />
                     <Route path="/customer/product/:id" element={<Product />} />
                     <Route path="/signup" element={<SignUp />} />
-                    <Route path="/customer" element={<Customer_Home />} />
                     <Route path="/customer/cart" element={<Customer_Cart />} />
                     <Route path = "/customer/analysis" element = {<CustomerAnalysis />} />
                     <Route path="/customer_chat" element={<Customer_Chat />} />
@@ -96,8 +94,8 @@ function SellerRoutes() {
 function CustomerRoutes() {
     return (
         <>
-            <Route path="/" element={<Customer_Home />} />
-            {/* Add more customer-specific routes here */}
+            <Route path="/" element={<Marketplace />} />
+
         </>
     );
 }

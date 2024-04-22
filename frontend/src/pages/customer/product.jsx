@@ -9,7 +9,7 @@ function Product() {
         useContext(GlobalContext);
     const navigation = useNavigate();
     const location = useLocation();
-    const [product, setProduct] = useState(location.state.product);
+    const [product, setProduct] = useState(location.state.product); //not really right
     const [variation, setVariation] = useState("");
     const [quantity, setQuantity] = useState(0);
 
