@@ -10,6 +10,7 @@ import ProgressBar from 'react-bootstrap/ProgressBar';
 import { PieChart } from '@mui/x-charts/PieChart';
 import { LineChart } from '@mui/x-charts/LineChart';
 
+
 import {
   LinePlot,
   MarkPlot,
@@ -38,17 +39,12 @@ const App = () => {
       ];
       
 const [ratingValue, setRatingValue] = useState(4);
-const returningVisitor = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
-const newVisitor = [1000,2300,1500,7000,7200,3070,4350]
-const xLabels = [
-  'Phillipines',
-  'Indonesia',
-  'Korea',
-  'Japan',
-  'Malaysia',
-  'Singapore',
-  'China',
-];
+
+
+
+const purchaseHistoryData = [200,100,150,500,20,50,200,10,300,400,132,12]
+const months = ['Jan', 'Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec']
+
     return (
         <>
         <Seller_NavSidebar/>
@@ -58,22 +54,24 @@ const xLabels = [
             </section>
             <section className = "flex-1  flex flex-col w-full gap-10 h-full">
                 <section className = "flex flex-row w-full gap-5 h-[280px]">
-                    <section className = "flex-1 shadow-[0_3px_10px_rgb(0,0,0,0.2)]  p-5 rounded-xl">
-                    <LineChart
-      xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
-      series={[
-        {
-          data: [2, 5.5, 2, 8.5, 1.5, 5],
-        },
-      ]}
-      width={500}
-      height={300}
-    />
+                    <section className = "flex-1 shadow-[0_3px_10px_rgb(0,0,0,0.2)]  p-5 rounded-xl flex flex-col">
+                        <p className = "font-sans font-bold">Frequency of Purchase</p>
+                        <section className = "flex flex-row">
+                        <LineChart
+                                width={500}
+                                height={200}
+                                series={[
+                                    { data: purchaseHistoryData, label: 'Purchase Amount (RM)' }
+                                ]}
+                                xAxis={[{ scaleType: 'point', data: months }]}
+                                />
 
+                        </section>
+                       
                     </section>
                     <section className ="flex flex-col shadow-[0_3px_10px_rgb(0,0,0,0.2)] w-1/3 p-5 rounded-xl">
                         <section className = "flex flex-row justify-between">
-                            <p className = "font-sans text-lg font-semibold">Customer Review</p>
+                            <p className = "font-sans text-lg font-semibold">Seller Review</p>
                             <img src = "/sync-outline.png"/>
                         </section>
                         <section className = "flex flex-col justify-between h-full">
@@ -165,17 +163,17 @@ const xLabels = [
 
                 <section className = "flex flex-row  justify- h-[200px] items-center gap-10 justify-between ">
                     <section className = "flex flex-col w-1/4  shadow-[0_3px_10px_rgb(0,0,0,0.2)]  rounded-xl h-full justify-center items-center ">
-                        <img src = "/CustomerIcon.png" style = {{width : '50px'}}/>
-                        <p className = "font-sans font-semibold mt-[20px]">Total Customers</p> </section>
+                        <img src = "/deliveryIcon.png" style = {{width : '80px'}}/>
+                        <p className = "font-sans font-semibold mt-[20px]">Order Status</p> </section>
 
                     <section className = "flex flex-col w-1/4 shadow-[0_3px_10px_rgb(0,0,0,0.2)]  rounded-xl h-full justify-center items-center">
                         <img src = "/OrderIcon.png" style = {{width : '50px'}}/>
-                        <p className = "font-sans font-semibold mt-[20px]">Order Summary</p>
+                        <p className = "font-sans font-semibold mt-[20px]">Wishlist </p>
                     </section>
 
                     <section className = "flex flex-col w-1/4 shadow-[0_3px_10px_rgb(0,0,0,0.2)]  rounded-xl h-full justify-center items-center">
                         <img src = "/SalesIcon.png" style = {{width : '50px'}}/>
-                        <p className = "font-semibold font-sans mt-[20px]">Sales Growth</p>
+                        <p className = "font-semibold font-sans mt-[20px]">Purchase History</p>
                     </section>
 
                 </section>
