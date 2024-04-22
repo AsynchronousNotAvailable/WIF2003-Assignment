@@ -9,7 +9,7 @@ const StyledLabel = styled.label`
     margin-bottom: 5px;
 `
 const StyledInput = styled.input`
-    border-radius: 5px;
+    border-radius: 12px;
     border: 1px solid #666666;
     opacity: 0.35;
     padding: 10px;
