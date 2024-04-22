@@ -18,6 +18,11 @@ const StyledInput = styled.input`
 const CustomInputContainer = styled.div`
     width: ${(props) => props.size};
     margin-bottom: 10px;
+    margin-right: 10px;
+
+    &:last-child {
+        margin-right: 0;
+    }
 `
 
 const CustomInput = ({ title, type, value, onChange, placeholder, size }) => {  
