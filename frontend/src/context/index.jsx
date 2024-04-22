@@ -7,6 +7,8 @@ function GlobalState({ children }) {
     const [isSeller, setIsSeller] = useState(false);
     const [cartItems, setCartItems] = useState([]);
     const [totalCheckoutPrice, setTotalCheckoutPrice] = useState(0);
+    
+    // for marketplace
     const [productListing, setProductListing] = useState([
         {
             id: 0,
@@ -24,7 +26,7 @@ function GlobalState({ children }) {
             price: 10,
             rating: 5,
             img: "/milotwoproduct.jpg",
-            seller: "Milo_2_Seller",
+            seller: "Milo_Seller",
             reviews: [],
             variations: ["Original", "Chocolate", "Vanilla"],
         },
@@ -38,8 +40,9 @@ function GlobalState({ children }) {
             reviews: [],
             variations: ["Original", "Chocolate", "Vanilla"],
         },
+
         {
-            id: 3,
+            id: 4,
             name: "Builder",
             price: 13,
             rating: 2,
@@ -48,11 +51,98 @@ function GlobalState({ children }) {
             reviews: [],
             variations: ["Original", "Chocolate", "Vanilla"],
         },
+
+        {
+            id: 6,
+            name: "Nice Notebook",
+            price: 13,
+            rating: 4,
+            img: "/notebook.jpeg",
+            seller: "Nice",
+            reviews: [],
+            variations: ["Brown", "Khaki", "Grey"],
+        },
+
+        {
+            id: 7,
+            name: "Nice Pen",
+            price: 13,
+            rating: 4,
+            img: "/pen.jpeg",
+            seller: "Nice",
+            reviews: [],
+            variations: ["0.38mm", "0.5mm", "0.7mm"],
+        },
+        {
+            id: 8,
+            name: "Nice Pencil Case",
+            price: 13,
+            rating: 4,
+            img: "/pencil_case.jpeg",
+            seller: "Nice",
+            reviews: [],
+            variations: ["White", "Brown", "Grey"],
+        },
+        {
+            id: 9,
+            name: "Nice Wallet",
+            price: 13,
+            rating: 4,
+            img: "/wallet.jpeg",
+            seller: "Nice",
+            reviews: [],
+            variations: ["Black", "Brown", "White"],
+        },
     ]);
 
+
+    // for each shops
     const [shopsItemListing, setShopItemListing] = useState({
-        Milo_Seller: [
+        Nice: [
             "/seller3.png",
+            {
+                id: 6,
+                name: "Nice Notebook",
+                price: 13,
+                rating: 4,
+                img: "/notebook.jpeg",
+                seller: "Nice",
+                reviews: [],
+                variations: ["Brown", "Khaki", "Grey"],
+            },
+            {
+                id: 7,
+                name: "Nice Pen",
+                price: 13,
+                rating: 4,
+                img: "/pen.jpeg",
+                seller: "Nice",
+                reviews: [],
+                variations: ["0.38mm", "0.5mm", "0.7mm"],
+            },
+            {
+                id: 8,
+                name: "Nice Pencil Case",
+                price: 13,
+                rating: 4,
+                img: "/pencil_case.jpeg",
+                seller: "Nice",
+                reviews: [],
+                variations: ["White", "Brown", "Grey"],
+            },
+            {
+                id: 9,
+                name: "Nice Wallet",
+                price: 13,
+                rating: 4,
+                img: "/wallet.jpeg",
+                seller: "Nice",
+                reviews: [],
+                variations: ["Black", "Brown", "White"],
+            },
+        ],
+        Milo_Seller: [
+            "/seller4.png",
             {
                 id: 0,
                 name: "Milo 3 in 1",
@@ -62,11 +152,20 @@ function GlobalState({ children }) {
                 seller: "Milo_Seller",
                 reviews: [],
                 variations: ["Original", "Chocolate", "Vanilla"],
-
+            },
+            {
+                id: 1,
+                name: "Milo 2 in 1",
+                price: 10,
+                rating: 5,
+                img: "/milotwoproduct.jpg",
+                seller: "Milo_2_Seller",
+                reviews: [],
+                variations: ["Original", "Chocolate", "Vanilla"],
             },
         ],
         Horlicks_Seller: [
-            "/seller3.png",
+            "/seller5.png",
             {
                 id: 2,
                 name: "Horlicks",
@@ -76,13 +175,12 @@ function GlobalState({ children }) {
                 seller: "Horlicks_Seller",
                 reviews: [],
                 variations: ["Original", "Chocolate", "Vanilla"],
-
             },
         ],
         Builder_Seller: [
-            "/seller4.png",
+            "/seller1.png",
             {
-                id: 3,
+                id: 4,
                 name: "Builder",
                 price: 13,
                 rating: 2,
@@ -90,19 +188,6 @@ function GlobalState({ children }) {
                 seller: "Builder_Seller",
                 reviews: [],
                 variations: ["Original", "Chocolate", "Vanilla"],
-            },
-        ],
-        Milo_2_Seller: [
-            "/seller5.png",
-            {
-                id: 1,
-                name: "Milo 2 in 1",
-                price: 10,
-                rating: 5,
-                img: "/milotwoproduct.jpg",
-                seller: "Milo_2_Seller",
-                variations: ["Original", "Chocolate", "Vanilla"],
-                reviews: [],
             },
         ],
     });

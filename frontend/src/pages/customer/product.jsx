@@ -15,15 +15,27 @@ function Product() {
     const [quantity, setQuantity] = useState(0);
 
     const addToCart = () => {
-        const cartItem = {
-            ...product,
-            quantity,
-            variation,
-        };
+        // Check if the product already exists in the cart items
+        const existingCartItemIndex = cartItems.findIndex(
+            (item) => item.id === product.id && item.variation === variation
+        );
 
-        setCartItems((prev) => [...prev, cartItem]);
+        if (existingCartItemIndex !== -1) {
+            // If the product exists in the cart, update its quantity
+            const updatedCartItems = [...cartItems];
+            updatedCartItems[existingCartItemIndex].quantity += quantity;
+            setCartItems(updatedCartItems);
+        } else {
+            // If the product doesn't exist in the cart, add it as a new item
+            const cartItem = {
+                ...product,
+                quantity,
+                variation,
+            };
+            setCartItems((prev) => [...prev, cartItem]);
+        }
+
         navigation("/customer/cart");
-        
     };
     const buyNow = () => {
         navigation("/customer/buyNow", { state: { product } });
