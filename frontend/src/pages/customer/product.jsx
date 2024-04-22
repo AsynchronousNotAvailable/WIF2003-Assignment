@@ -2,14 +2,17 @@ import React, { useContext, useState } from "react";
 import Customer_Navbar from "../../components/customer_navbar";
 import { useLocation, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../context";
+import Product_Review from "./components/Product_Review";
 
 function Product() {
-    const { cartItems, setCartItems } = useContext(GlobalContext);
+    const { cartItems, setCartItems, productListing, setProductListing } =
+        useContext(GlobalContext);
     const navigation = useNavigate();
     const location = useLocation();
-    const product = location.state.product;
+    const [product, setProduct] = useState(location.state.product);
     const [variation, setVariation] = useState("");
     const [quantity, setQuantity] = useState(0);
+
     const addToCart = () => {
         const cartItem = {
             ...product,
@@ -38,6 +41,7 @@ function Product() {
     const addQuantity = () => {
         setQuantity(quantity + 1);
     };
+
     return (
         <>
             <Customer_Navbar />
@@ -49,7 +53,7 @@ function Product() {
                 {product.img} */}
 
                 <div className="w-full bg-gray-200 h-[92vh] px-16 py-8">
-                    <div className="flex flex-row">
+                    <div className="flex flex-row gap-10">
                         <div className="flex flex-col items-center gap-4">
                             <div className="w-96 h-[64vh] border-black border-2">
                                 Big pic
@@ -121,6 +125,11 @@ function Product() {
                                     >
                                         Buy Now
                                     </button>
+                                </div>
+
+                                <div className="flex flex-col">
+                                    Reviews
+                                    <Product_Review product={product} setProduct={setProduct} />
                                 </div>
                             </div>
                         </div>
