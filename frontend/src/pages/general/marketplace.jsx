@@ -8,6 +8,18 @@ import { BarChart } from "@mui/x-charts/BarChart";
 import Seller_NavSidebar from "../../components/seller_sidebar";
 
 function Marketplace() {
+    const [userSearch, setUserSearch] = useState("");
+    const [displayedProducts, setDisplayedProducts] = useState([]);
+    const handleUserSearchChange = (event) => {
+        const userInput = event.target.value.toLowerCase();
+        setUserSearch(userInput);
+    };
+
+    // const matchedProducts = products.filter((product) =>
+    //     product.name.toLowerCase().includes(userSearch)
+    // );
+    // setDisplayedProducts(matchedProducts);
+
     const [productCategorySetOne, setProductCategorySO] = useState([
         {
             name: "Books & Stationery",
@@ -83,7 +95,6 @@ function Marketplace() {
             rating: 4,
             img: "/milothreeproduct.jpg",
         },
-        
     ]);
 
     const { shopsItemListing, productListing } = useContext(GlobalContext);
@@ -96,11 +107,8 @@ function Marketplace() {
     };
 
     const navigateToProductDetails = (productId) => {
-        
-        const product = productListing.find(
-            (p) => p.id === productId
-        );
-      
+        const product = productListing.find((p) => p.id === productId);
+
         // Navigate to the product details page with the targeted product
         navigation(`/customer/product/${productId}`, {
             state: { product },
@@ -109,17 +117,27 @@ function Marketplace() {
     return (
         <>
             <Customer_Navbar />
-            <main className="mt-36 flex flex-col">
+            <main className="mt-32 flex flex-col">
+                <div className="flex flex-col mb-10 items-center mx-48">
+                    <input
+                        className="flex border-0 rounded-lg shadow-lg shadow-neutral-500 py-4 px-4 w-full"
+                        type="text"
+                        value={userSearch}
+                        placeholder="Search for products"
+                        onChange={handleUserSearchChange}
+                    ></input>
+                </div>
+
                 <section className="flex flex-row justify-center  ">
-                    <img className=" object-cover " src="/setelbanner.png" />
+                    <img className=" object-cover shadow-2xl rounded-3xl" src="/setelbanner.png" />
                 </section>
 
                 <section className="flex flex-col ">
                     <span className="text-xl items-start mb-10 mt-20 font-sans font-semibold ml-[300px]">
                         Category
                     </span>
-                    <section className="flex flex-col justify-center items-center">
-                        <section className="flex flex-row ">
+                    <section className="flex flex-col gap-5 justify-center items-center">
+                        <section className="flex flex-row gap-3">
                             {productCategorySetOne.map((product) => {
                                 return (
                                     <section className="flex flex-col border-2 w-[175px] h-[218px] justify-center items-center">
@@ -132,11 +150,11 @@ function Marketplace() {
                                 );
                             })}
                         </section>
-                        <section className="flex flex-row">
-                            <section className="flex flex-row">
+                        <section className="flex flex-row gap-5">
+                            <section className="flex flex-row gap-3">
                                 {productCategorySetTwo.map((product) => {
                                     return (
-                                        <section className="flex flex-col border-red-600 border-2 w-[175px] h-[218px] justify-center items-center">
+                                        <section className="flex flex-col rounded-md shadow-lg px-4 py-4 w-[175px] h-[218px] justify-center items-center">
                                             <img
                                                 src={product.img}
                                                 className="border-gray-500 border-2 w-[110px] h-[110px] rounded-full object-contain"
