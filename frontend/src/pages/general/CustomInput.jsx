@@ -16,16 +16,16 @@ const StyledInput = styled.input`
     width: 100%;
 `
 const CustomInputContainer = styled.div`
-    width: 35%;
+    width: ${(props) => props.size};
     margin-bottom: 10px;
 `
 
-const CustomInput = ({ title, type, value, onChange, placeholder }) => {  
+const CustomInput = ({ title, type, value, onChange, placeholder, size }) => {  
     return (
-        <CustomInputContainer>
+        <CustomInputContainer
+            size={size}>
             <StyledLabel>{title}</StyledLabel>
             <StyledInput
-                style={{ border: "1px solid black" }}
                 type={type}
                 value={value}
                 onChange={onChange}

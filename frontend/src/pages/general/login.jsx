@@ -5,6 +5,12 @@ import { useNavigate } from "react-router-dom";
 import CustomInput from "./CustomInput";
 import styled from "styled-components";
 
+const StyledLogo = styled.img`
+    width: 269px;
+    height: 77px;
+    margin-bottom: 20px;
+`
+
 const TagLine = styled.h1`
     font-size: 36px;
     font-weight: bold;
@@ -41,8 +47,8 @@ function Login() {
     const LoginForm = () => {
         return (
             <div>
-                <CustomInput title="Email Address" type="text" value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} placeholder="Enter your email address" />
-                <CustomInput title="Password" type="text" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password" />
+                <CustomInput title="Email Address" type="text" value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} placeholder="Enter your email address" size="35%"/>
+                <CustomInput title="Password" type="text" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password" size="35%" />
                 <button onClick={handleLogin}>Login</button>
             </div>
         );
@@ -50,7 +56,7 @@ function Login() {
 
     return (
         <div>
-            <img src="/SyopiLogo.png" alt="logo" />
+            <StyledLogo src="/SyopiLogo.png" alt="logo" />
             <TagLine>Empowering Campus Commerce: <br/> Connect, Sell, Shop, Thrive! </TagLine>
             <SmallText>Welcome back! Please login to your account.</SmallText>
             <LoginForm />
