@@ -15,7 +15,7 @@ function Login() {
 
         } else if (username === "customer") {
             setIsAuth(true);
-            navigation("/customer");
+            navigation("/customer/products");
         } else {
             alert("Invalid username");
         }

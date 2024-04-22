@@ -14,6 +14,8 @@ import Customer_Chat from "../pages/customer/customer_chat";
 import MarketplaceAnalysis from "../pages/general/marketplaceAnalysis";
 import SellerAnalysis from "../pages/seller/sellerAnalysis";
 import ProductListing from "../pages/general/productListing";
+import Product from "../pages/customer/product";
+import Customer_Cart from "../pages/customer/customer_cart";
 import CustomerAnalysis from "../pages/customer/customerAnalysis"
 import Marketplace from "../pages/general/marketplace"
 
@@ -31,9 +33,14 @@ function AppNav() {
                     />
                     <Route path = "/marketplace" element = {<Marketplace/>} />
                     <Route path="/login" element={<Login />} />
-                    <Route path="/customer/products" element={<ProductListing />} />
+                    <Route
+                        path="/customer/customer/products"
+                        element={<ProductListing />}
+                    />
+                    <Route path="/customer/product/:id" element={<Product />} />
                     <Route path="/signup" element={<SignUp />} />
                     <Route path="/customer" element={<Customer_Home />} />
+                    <Route path="/customer/cart" element={<Customer_Cart />} />
                     <Route path = "/customer/analysis" element = {<CustomerAnalysis />} />
                     <Route path="/customer_chat" element={<Customer_Chat />} />
                     <Route path="/seller" element={<Seller_Home />} />
