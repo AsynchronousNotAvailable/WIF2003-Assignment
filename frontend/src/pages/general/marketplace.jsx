@@ -61,7 +61,6 @@ function Marketplace() {
             price: 13,
             rating: 4,
             img: "/milothreeproduct.jpg",
-            sold : "1.8k"
         },
         {
             id: 1,
@@ -69,14 +68,12 @@ function Marketplace() {
             price: 13,
             rating: 4,
             img: "/milothreeproduct.jpg",
-            sold : "1.8k"
         },
         {
             id: 2,
             name: "Milo 3 in 1",
             price: 13,
             rating: 4,
-            sold : "1.8k",
             img: "/milothreeproduct.jpg",
         },
         {
@@ -85,8 +82,6 @@ function Marketplace() {
             price: 13,
             rating: 4,
             img: "/milothreeproduct.jpg",
-            sold : "1.8k"
-
         },
         
     ]);
@@ -114,7 +109,7 @@ function Marketplace() {
     return (
         <>
             <Customer_Navbar />
-            <main className="mt-36 flex flex-col p-5">
+            <main className="mt-36 flex flex-col">
                 <section className="flex flex-row justify-center  ">
                     <img className=" object-cover " src="/setelbanner.png" />
                 </section>
@@ -141,7 +136,7 @@ function Marketplace() {
                             <section className="flex flex-row">
                                 {productCategorySetTwo.map((product) => {
                                     return (
-                                        <section className="flex flex-col border-2 w-[175px] h-[218px] justify-center items-center">
+                                        <section className="flex flex-col border-red-600 border-2 w-[175px] h-[218px] justify-center items-center">
                                             <img
                                                 src={product.img}
                                                 className="border-gray-500 border-2 w-[110px] h-[110px] rounded-full object-contain"
@@ -156,16 +151,21 @@ function Marketplace() {
                 </section>
 
                 <section className="flex flex-col ">
-                <span className = "text-xl items-start mb-10 mt-20 font-sans font-semibold ml-[300px]">Top Sellers of This Week</span>
-                    <section className="flex flex-col  items-center">
+                    <span className="text-xl items-start mb-10 mt-20 font-sans font-semibold ml-[300px]">
+                        Top Sellers
+                    </span>
+                    <section className="flex flex-col justify-center items-center">
                         <section className="flex flex-row gap-10">
                             {Object.keys(shopsItemListing).map((sellers) => {
                                 return (
                                     <section
-                                        className="flex flex-col border-2 w-[175px] h-[218px] justify-center items-center"
+                                        className="flex flex-col border-red-600 border-2 w-[175px] h-[218px] justify-center items-center"
                                         onClick={() => navigateToShop(sellers)}
                                     >
-                                      
+                                        <img
+                                            src={shopsItemListing[sellers][0]}
+                                            className="border-gray-500 border-2 w-[110px] h-[110px] rounded-full object-contain"
+                                        />
                                         <p>{sellers}</p>
                                     </section>
                                 );
@@ -209,12 +209,7 @@ function Marketplace() {
                             );
                         })}
                     </section>
-            </section>
-        )
-    })}
-</section>
-            </section>
-
+                </section>
             </main>
         </>
     );
