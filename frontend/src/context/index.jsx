@@ -108,21 +108,6 @@ function GlobalState({ children }) {
         ],
     });
 
-    const [selectedItems, setSelectedItems] = useState([
-        {
-            id: 0,
-            name: "Milo 3 in 1",
-            price: 13,
-            quantity: 4,
-        },
-        {
-            id: 1,
-            name: "Milo 3 in 1",
-            price: 13,
-            quantity: 4,
-        },
-    ]);
-
     return (
         <GlobalContext.Provider
             value={{
@@ -140,9 +125,7 @@ function GlobalState({ children }) {
                 setTotalCheckoutPrice,
             }}
         >
-            <CheckoutContext.Provider value={{ selectedItems, setSelectedItems }}>
                 {children}
-            </CheckoutContext.Provider>
         </GlobalContext.Provider>
     );
 }

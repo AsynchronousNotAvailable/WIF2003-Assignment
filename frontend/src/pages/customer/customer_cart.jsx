@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Customer_Navbar from "../../components/customer_navbar";
 import { GlobalContext } from "../../context";
 import Cart_Item_List from "./components/Cart_Item_List";
+import { useNavigate } from "react-router-dom";
 
 function Customer_Cart() {
     const {
@@ -10,7 +11,7 @@ function Customer_Cart() {
         totalCheckoutPrice,
         setTotalCheckoutPrice,
     } = useContext(GlobalContext);
-    
+    const navigation = useNavigate();
     const [dict, setDict] = useState({});
     useEffect(() => {
         
@@ -40,7 +41,11 @@ function Customer_Cart() {
         setCartItems(updatedCartItems);
     };
 
-    
+    const handleCheckout = () => {
+        // save to cartItems using setcartItems and then navigate to checkout page
+        setCartItems(cartItems);
+        navigation("/customer/checkout");
+    }
 
     return (
         <>
@@ -112,7 +117,7 @@ function Customer_Cart() {
                         <div className="flex flex-row gap-10 ">
                             <h4>Total Item</h4>
                             <h4>RM {totalCheckoutPrice}</h4>
-                            <h4>Check Out</h4>
+                            <h4 onClick={handleCheckout}>Check Out</h4>
                         </div>
                     </div>
                 </div>
