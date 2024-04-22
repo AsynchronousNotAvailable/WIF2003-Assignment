@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import { GlobalContext } from "../../context";
 import { useNavigate } from "react-router-dom";
 import CustomInput from "./CustomInput";
+import CustomButton from "./CustomButton";
 import styled from "styled-components";
 
 const StyledLogo = styled.img`
@@ -43,13 +44,17 @@ function Login() {
             alert("Invalid username");
         }
     };
+    const handleSignUp = () => {
+        navigation("/signup");
+    };
 
     const LoginForm = () => {
         return (
             <div>
                 <CustomInput title="Email Address" type="text" value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} placeholder="Enter your email address" size="35%"/>
                 <CustomInput title="Password" type="text" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password" size="35%" />
-                <button onClick={handleLogin}>Login</button>
+                <CustomButton text="Login" backgroundColor="#7450DF" borderColor="#7450DF" textColor="white" width="10%" onClick={handleLogin} />
+                <CustomButton text="Sign Up" backgroundColor="white" borderColor="#7450DF" textColor="#7450DF" width="10%" onClick={handleSignUp} />
             </div>
         );
     }
