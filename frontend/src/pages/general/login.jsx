@@ -1,5 +1,5 @@
 // Login.jsx
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import { GlobalContext } from "../../context";
 import { useNavigate } from "react-router-dom";
 import CustomInput from "./CustomInput";
@@ -88,6 +88,7 @@ function Login() {
     const [password, setPassword] = useState("");
     const { setIsAuth, setIsSeller } = useContext(GlobalContext);
     const navigation = useNavigate();
+   
     const handleLogin = () => {
         if (emailAddress === "seller") {
             setIsSeller(true);
@@ -109,8 +110,10 @@ function Login() {
     }
 
     const LoginForm = () => {
+        
         return (
             <div style={{ width: "80%"}}>
+                {/* <input type = "text" value = {emailAddress} onChange={(e) => setEmailAddress(e.target.value)}/> */}
                 <CustomInput title="Email Address" type="text" value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} placeholder="Enter your email address" size="100%"/>
                 <CustomInput title="Password" type="text" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password" size="100%" />
                 <div style={{ textAlign: "right"}}>

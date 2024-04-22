@@ -25,19 +25,30 @@ const CustomInputContainer = styled.div`
     }
 `
 
-const CustomInput = ({ title, type, value, onChange, placeholder, size }) => {  
+const CustomInput = ({
+    title,
+    type,
+    value,
+    setValue,
+    placeholder,
+    size,
+}) => {
+    const handleChange = (e) => {
+        // Call the setValue function with the new value
+        setValue(e.target.value);
+    };
+    
     return (
-        <CustomInputContainer
-            size={size}>
+        <CustomInputContainer size={size}>
             <StyledLabel>{title}</StyledLabel>
             <StyledInput
                 type={type}
                 value={value}
-                onChange={onChange}
+                onChange={handleChange} // Updated to use setValue
                 placeholder={placeholder}
             />
         </CustomInputContainer>
     );
-}
+};
 
 export default CustomInput;

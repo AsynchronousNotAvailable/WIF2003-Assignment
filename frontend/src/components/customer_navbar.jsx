@@ -17,7 +17,7 @@ function Customer_Navbar() {
     };
 
     const goToProductList = () => {
-        navigation("/customer/products");
+        navigation("/marketplace");
     }
     return (
         <nav class="bg-[#5489FC] fixed w-full z-20 top-0 start-0 border-b border-gray-200">
