@@ -11,6 +11,7 @@ import Customer_Navbar from "../components/customer_navbar";
 import Seller_Chat from "../pages/seller/seller_chat";
 import Seller_NavSidebar from "../components/seller_sidebar";
 import Customer_Chat from "../pages/customer/customer_chat";
+import EditProfile from "../pages/general/EditProfile";
 
 function AppNav() {
     const { isAuth, isSeller } = useContext(GlobalContext);
@@ -22,6 +23,7 @@ function AppNav() {
                     <Route path="/" element={<Landing />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<SignUp />} />
+                    <Route path="/editprofile" element={<EditProfile />} />
                     <Route path="/customer" element={<Customer_Home />} />
                     <Route path="/customer_chat" element={<Customer_Chat />} />
                     <Route path="/seller" element={<Seller_Home />} />
