@@ -306,6 +306,16 @@ function Marketplace() {
 
     const [recommendProduct, setRecommendProduct] = useState([
         {
+            id: 6,
+            name: "Nice Notebook",
+            price: 13,
+            rating: 4,
+            img: "/notebook.jpeg",
+            seller: "Nice",
+            reviews: [],
+            variations: ["Brown", "Khaki", "Grey"],
+        },
+        {
             id: 0,
             name: "Milo 3 in 1",
             price: 13,
@@ -313,27 +323,25 @@ function Marketplace() {
             img: "/milothreeproduct.jpg",
         },
         {
-            id: 1,
-            name: "Milo 3 in 1",
+            id: 4,
+            name: "Builder",
             price: 13,
-            rating: 4,
-            img: "/milothreeproduct.jpg",
+            rating: 2,
+            img: "/builderproduct.png",
+            seller: "Builder_Seller",
+            reviews: [],
+            variations: ["Original", "Chocolate", "Vanilla"],
         },
         {
             id: 2,
-            name: "Milo 3 in 1",
-            price: 13,
-            rating: 4,
-            img: "/milothreeproduct.jpg",
+            name: "Horlicks",
+            price: 8,
+            rating: 3,
+            img: "/horlickproduct.jpg",
+            seller: "Horlicks_Seller",
+            reviews: [],
+            variations: ["Original", "Chocolate", "Vanilla"],
         },
-        {
-            id: 3,
-            name: "Milo 3 in 1",
-            price: 13,
-            rating: 4,
-            img: "/milothreeproduct.jpg",
-        },
-        
     ]);
     const [userSearchInput, setUserSearchInput] = useState("");
     const [displayedProducts , setDisplayedProducts] = useState([]);
@@ -479,7 +487,7 @@ function Marketplace() {
                             {Object.keys(shopsItemListing).map((sellers) => {
                                 return (
                                     <section
-                                        className="flex flex-col  w-[175px] h-[218px] justify-center items-center"
+                                        className="flex flex-col rounded-lg shadow-lg w-[175px] h-[218px] justify-center items-center"
                                         onClick={() => navigateToShop(sellers)}
                                     >
                                         <img
