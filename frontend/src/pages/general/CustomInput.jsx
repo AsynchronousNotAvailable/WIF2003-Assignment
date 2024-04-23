@@ -29,7 +29,7 @@ const CustomInput = ({
     title,
     type,
     value,
-    onChange,
+    setValue,
     placeholder,
     size,
 }) => {
