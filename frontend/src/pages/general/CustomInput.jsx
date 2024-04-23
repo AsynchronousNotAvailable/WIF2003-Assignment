@@ -29,22 +29,18 @@ const CustomInput = ({
     title,
     type,
     value,
-    setValue,
+    onChange,
     placeholder,
     size,
 }) => {
-    const handleChange = (e) => {
-        // Call the setValue function with the new value
-        setValue(e.target.value);
-    };
-    
+
     return (
         <CustomInputContainer size={size}>
             <StyledLabel>{title}</StyledLabel>
             <StyledInput
                 type={type}
-                value={value}
-                onChange={handleChange} // Updated to use setValue
+                defaultValue={value}
+                onChange={onChange} // Updated to use setValue
                 placeholder={placeholder}
             />
         </CustomInputContainer>

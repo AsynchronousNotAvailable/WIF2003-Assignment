@@ -85,6 +85,7 @@ const SocialLink = styled.a`
 
 function Login() {
     const [emailAddress, setEmailAddress] = useState("");
+    console.log(emailAddress)
     const [password, setPassword] = useState("");
     const { setIsAuth, setIsSeller } = useContext(GlobalContext);
     const navigation = useNavigate();
@@ -112,9 +113,9 @@ function Login() {
     const LoginForm = () => {
         
         return (
+            
             <div style={{ width: "80%"}}>
-                {/* <input type = "text" value = {emailAddress} onChange={(e) => setEmailAddress(e.target.value)}/> */}
-                <CustomInput title="Email Address" type="text" value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} placeholder="Enter your email address" size="100%"/>
+                <CustomInput title="Email Address" type="text" value={emailAddress} onChange = {(e) => {setEmailAddress(e.target.value)}} placeholder="Enter your email address" size="100%"/>
                 <CustomInput title="Password" type="text" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password" size="100%" />
                 <div style={{ textAlign: "right"}}>
                     <SmallText withOpacity onClick={handleForgotPassword} style={{ display: "inline-block", marginLeft: "auto", cursor: "pointer" }}>Forgot Password?</SmallText>
