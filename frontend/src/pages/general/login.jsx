@@ -109,13 +109,15 @@ function Login() {
         navigation("/forgot-password");
     }
 
-    const LoginForm = () => {
-        
-        return (
-            <div style={{ width: "80%"}}>
-                {/* <input type = "text" value = {emailAddress} onChange={(e) => setEmailAddress(e.target.value)}/> */}
-                <CustomInput title="Email Address" type="text" value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} placeholder="Enter your email address" size="100%"/>
-                <CustomInput title="Password" type="text" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password" size="100%" />
+    return (
+        <Container>
+            <Content>
+                <StyledLogo src="/SyopiLogo.png" alt="logo" />
+                <TagLine>Empowering Campus Commerce: <br/> Connect, Sell, Shop, Thrive! </TagLine>
+                <SmallText withOpacity>Welcome back! Please login to your account.</SmallText>
+                <div style={{ width: "80%"}}>
+                <CustomInput title="Email Address" type="text" value={emailAddress} setValue={setEmailAddress} placeholder="Enter your email address" size="100%"/>
+                <CustomInput title="Password" type="password" value={password} setValue={setPassword} placeholder="Enter your password" size="100%" />
                 <div style={{ textAlign: "right"}}>
                     <SmallText withOpacity onClick={handleForgotPassword} style={{ display: "inline-block", marginLeft: "auto", cursor: "pointer" }}>Forgot Password?</SmallText>
                 </div>
@@ -124,16 +126,6 @@ function Login() {
                     <CustomButton text="Sign Up" backgroundColor="white" borderColor="#7450DF" textColor="#7450DF" width="45%" onClick={handleSignUp} />
                 </div>
             </div>
-        );
-    }
-
-    return (
-        <Container>
-            <Content>
-                <StyledLogo src="/SyopiLogo.png" alt="logo" />
-                <TagLine>Empowering Campus Commerce: <br/> Connect, Sell, Shop, Thrive! </TagLine>
-                <SmallText withOpacity>Welcome back! Please login to your account.</SmallText>
-                <LoginForm />
                 <div>
                     <SmallText>Or login with <SocialLink>Facebook</SocialLink> <SocialLink>Google</SocialLink> </SmallText>
                 </div>
@@ -146,3 +138,13 @@ function Login() {
 }
 
 export default Login;
+
+function debounce(func, delay) {
+    let timer;
+    return function (...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            func.apply(this, args);
+        }, delay);
+    };
+}

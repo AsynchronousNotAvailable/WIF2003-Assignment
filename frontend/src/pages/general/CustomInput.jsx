@@ -34,8 +34,9 @@ const CustomInput = ({
     size,
 }) => {
     const handleChange = (e) => {
-        // Call the setValue function with the new value
-        setValue(e.target.value);
+        if (setValue) {
+            setValue(e.target.value);
+        }
     };
     
     return (
