@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Customer_Navbar from "../../components/customer_navbar";
 import { GlobalContext } from "../../context";
 import Cart_Item_List from "./components/Cart_Item_List";
+import { useNavigate } from "react-router-dom";
 
 function Customer_Cart() {
     const {
@@ -10,7 +11,7 @@ function Customer_Cart() {
         totalCheckoutPrice,
         setTotalCheckoutPrice,
     } = useContext(GlobalContext);
-    
+    const navigation = useNavigate();
     const [dict, setDict] = useState({});
     
     useEffect(() => {
@@ -56,12 +57,16 @@ function Customer_Cart() {
         setCartItems(updatedCartItems);
     };
 
+    const handleCheckout = () => {
+        // save to cartItems using setcartItems and then navigate to checkout page
+        setCartItems(cartItems);
+        navigation("/customer/checkout");
+    }
+
     let quantity = 0;
     for (let i = 0; i < cartItems.length; i++) {
         quantity += cartItems[i].quantity;
     }
-
-    
 
     return (
         <>
@@ -143,7 +148,7 @@ function Customer_Cart() {
                                 RM {totalCheckoutPrice}
                             </h4>
                             <div className="py-2 px-3 bg-[#5489FC] rounded-sm">
-                                <button className="font-sans text-white ">
+                                <button className="font-sans text-white " onClick={handleCheckout}>
                                     Check Out
                                 </button>
                             </div>

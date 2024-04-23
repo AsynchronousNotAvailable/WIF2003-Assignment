@@ -19,6 +19,8 @@ import CustomerAnalysis from "../pages/customer/customerAnalysis"
 import Marketplace from "../pages/general/marketplace"
 import Shop from "../pages/customer/shop";
 import EditProfile from "../pages/general/EditProfile";
+import Checkout from "../pages/payment/checkout";
+import Orders from "../pages/payment/orders";
 
 function AppNav() {
     const { isAuth, isSeller } = useContext(GlobalContext);
@@ -44,6 +46,8 @@ function AppNav() {
                     <Route path="/signup" element={<SignUp />} />
                     <Route path="/editprofile" element={<EditProfile />} />
                     <Route path="/customer/cart" element={<Customer_Cart />} />
+                    <Route path="/customer/checkout" element={<Checkout/> } />
+                    <Route path="/customer/orders" element={<Orders />} />
                     <Route
                         path="/customer/analysis"
                         element={<CustomerAnalysis />}

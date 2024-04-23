@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 
 export const GlobalContext = createContext(null);
+export const CheckoutContext = createContext(null);
 
 function GlobalState({ children }) {
     const [isAuth, setIsAuth] = useState(false);
@@ -223,6 +224,7 @@ function GlobalState({ children }) {
             },
         ],
     });
+
     return (
         <GlobalContext.Provider
             value={{
@@ -240,7 +242,7 @@ function GlobalState({ children }) {
                 setTotalCheckoutPrice,
             }}
         >
-            {children}
+                {children}
         </GlobalContext.Provider>
     );
 }
