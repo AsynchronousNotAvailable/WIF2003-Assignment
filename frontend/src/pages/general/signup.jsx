@@ -24,7 +24,7 @@ const StyledLogo = styled.img`
 const TagLine = styled.h1`
     font-size: 36px;
     font-weight: bold;
-    color: #7450DF;
+    color: #5489FC;
     margin-bottom: 15px;
 `
 
@@ -52,7 +52,7 @@ const FormWrapper = styled.div`
     padding: 50px;
     border-radius: 24px;
     box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.25);
-    border-left: 30px solid #C8B6FF;
+    border-left: 30px solid #ADC8FC;
 `;
 
 const SmallText = styled.p`

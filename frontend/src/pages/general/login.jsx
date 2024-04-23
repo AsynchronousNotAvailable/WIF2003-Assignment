@@ -50,7 +50,7 @@ const StyledLogo = styled.img`
 const TagLine = styled.h1`
     font-size: 36px;
     font-weight: bold;
-    color: #7450DF;
+    color: #5489FC;
     margin-bottom: 15px;
 `
 
@@ -64,7 +64,7 @@ const SmallText = styled.p`
 `
 
 const SocialLink = styled.a`
-    color: #7450DF;
+    color: #5489FC;
     text-decoration: none;
     font-weight: bold;
     cursor: pointer;
@@ -90,16 +90,23 @@ function Login() {
     const navigation = useNavigate();
    
     const handleLogin = () => {
-        if (emailAddress === "seller") {
-            setIsSeller(true);
-            setIsAuth(true);
-            navigation("/seller")
+        // if (emailAddress === "seller") {
+        //     setIsSeller(true);
+        //     setIsAuth(true);
+        //     navigation("/seller")
 
-        } else if (emailAddress === "customer") {
+        // } else if (emailAddress === "customer") {
+        //     setIsAuth(true);
+        //     navigation("/marketplace");
+        // } else {
+        //     alert("Invalid username");
+        // }
+
+        if (emailAddress && password) {
             setIsAuth(true);
             navigation("/marketplace");
         } else {
-            alert("Invalid username");
+            alert("Please enter your email and password");
         }
     };
     const handleSignUp = () => {
@@ -115,17 +122,17 @@ function Login() {
                 <StyledLogo src="/SyopiLogo.png" alt="logo" />
                 <TagLine>Empowering Campus Commerce: <br/> Connect, Sell, Shop, Thrive! </TagLine>
                 <SmallText withOpacity>Welcome back! Please login to your account.</SmallText>
-                <div style={{ width: "80%"}}>
-                <CustomInput title="Email Address" type="text" value={emailAddress} setValue={setEmailAddress} placeholder="Enter your email address" size="100%"/>
-                <CustomInput title="Password" type="password" value={password} setValue={setPassword} placeholder="Enter your password" size="100%" />
-                <div style={{ textAlign: "right"}}>
-                    <SmallText withOpacity onClick={handleForgotPassword} style={{ display: "inline-block", marginLeft: "auto", cursor: "pointer" }}>Forgot Password?</SmallText>
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between", width: "60%", marginBottom: "30px"}}>
-                    <CustomButton text="Login" backgroundColor="#7450DF" borderColor="#7450DF" textColor="white" width="45%" onClick={handleLogin} />
-                    <CustomButton text="Sign Up" backgroundColor="white" borderColor="#7450DF" textColor="#7450DF" width="45%" onClick={handleSignUp} />
-                </div>
-            </div>
+                <form onSubmit={handleLogin} style={{ width: "80%"}}>
+                    <CustomInput title="Email Address" type="email" value={emailAddress} setValue={setEmailAddress} placeholder="Enter your email address" size="100%"/>
+                    <CustomInput title="Password" type="password" value={password} setValue={setPassword} placeholder="Enter your password" size="100%" />
+                    <div style={{ textAlign: "right"}}>
+                        <SmallText withOpacity onClick={handleForgotPassword} style={{ display: "inline-block", marginLeft: "auto", cursor: "pointer" }}>Forgot Password?</SmallText>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-between", width: "60%", marginBottom: "30px"}}>
+                        <CustomButton text="Login" backgroundColor="#5489FC" borderColor="#5489FC" textColor="white" width="45%" type="submit" />
+                        <CustomButton text="Sign Up" backgroundColor="white" borderColor="#5489FC" textColor="#5489FC" width="45%" func={handleSignUp} />
+                    </div>
+                </form>
                 <div>
                     <SmallText>Or login with <SocialLink>Facebook</SocialLink> <SocialLink>Google</SocialLink> </SmallText>
                 </div>
