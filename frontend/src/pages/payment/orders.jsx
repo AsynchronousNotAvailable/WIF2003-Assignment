@@ -64,18 +64,20 @@ const PaymentContent = styled.div`
 `;
 
 export default function Orders() {
-    const { cartItems } = useContext(GlobalContext);
-    const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
-    const orderTotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-
+    const { orderHistory } = useContext(GlobalContext);
+    console.log("orders:" + orderHistory)
     const navigation = useNavigate();
 
     const handleOrderReceived = () => {
             navigation("/marketplace");
     };
 
-    const CheckoutList = () => {
-        return (
+    return (
+        <Container>
+            <Customer_Navbar />
+            <div style={{ width: "90%", marginTop: "8%"}} >
+                <Text style={{ fontSize: "32px", fontWeight: "bold", marginRight: "auto", marginBottom: "30px" }}>Orders</Text>       
+            </div>
             <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center"}}>
                 <Wrapper style={{ display: "flex"}}>
                     <Column width="40%"><Text style={{ marginRight: "auto" }}><Light>Product</Light></Text></Column>
@@ -84,28 +86,22 @@ export default function Orders() {
                     <Column width="20%"><Text style={{ marginRight: "auto" }}><Light>Total Price</Light></Text></Column>
                 </Wrapper>
                 <Wrapper>
-                    <Checkout_Item_List
-                        style={{ backgroundColor: "white" }}
-                        checkoutItems={cartItems}
-                    />
+                    {orderHistory.map((order, index) => (
+                        <div key={index}>
+                            <Checkout_Item_List
+                                style={{ backgroundColor: "white" }}
+                                checkoutItems={order.orderItems}
+                            />
+                            <Wrapper style={{ display: "flex" }}>
+                                <Column width="70%"></Column>
+                                <Column width="10%"><Text style={{ marginRight: "auto", marginTop: "15px" }}><Bold>Order Total</Bold></Text></Column>
+                                <Column width="20%"><Text style={{ marginRight: "auto", color: "#0F60FF", fontSize: "38px" }}>RM {order.price}</Text>
+                                    <PaymentButton style={{ backgroundColor: "#0F60FF", color: "white", width: "90%", margin: "0" }} onClick={() => handleOrderReceived()}>Order Received</PaymentButton></Column>
+                            </Wrapper>
+                        </div>
+                    ))}
                 </Wrapper>
             </div>
-        )
-    }
-
-    return (
-        <Container>
-            <Customer_Navbar />
-            <div style={{ width: "90%", marginTop: "8%"}} >
-                <Text style={{ fontSize: "32px", fontWeight: "bold", marginRight: "auto", marginBottom: "30px" }}>Orders</Text>       
-            </div>
-            <CheckoutList />
-            <Wrapper style={{ display: "flex" }}>
-                <Column width="70%"></Column>
-                <Column width="10%"><Text style={{ marginRight: "auto", marginTop: "15px" }}><Bold>Order Total</Bold></Text></Column>
-                <Column width="20%"><Text style={{ marginRight: "auto", color: "#0F60FF", fontSize: "38px" }}>RM {(orderTotal + 5).toFixed(2)}</Text>
-                <PaymentButton style={{ backgroundColor: "#0F60FF", color: "white", width: "90%", margin: "0"}} onClick={() => handleOrderReceived()}>Order Received</PaymentButton></Column>
-            </Wrapper>
         </Container>
     )
 }

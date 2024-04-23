@@ -27,6 +27,7 @@ function GlobalState({ children }) {
             status: "Order placed."
         }
         setOrderHistory([...orderHistory, order])
+        console.log("index:" + orderHistory);
     }
 
     // for marketplace
@@ -267,6 +268,7 @@ function GlobalState({ children }) {
                 addCardDetails,
                 cardDetails,
                 addOrders,
+                orderHistory
             }}
         >
                 {children}
