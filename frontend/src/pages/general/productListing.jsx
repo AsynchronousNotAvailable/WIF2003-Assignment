@@ -22,7 +22,9 @@ const ProductListing = () => {
 
         useEffect(() => {
             console.log(displayedProducts);
-            handleSortingChange(categoryClicked)
+            if(categoryClicked){
+                handleSortingChange(categoryClicked)
+            }
         }, [displayedProducts,categoryClicked]);
 
     const navigation = useNavigate();

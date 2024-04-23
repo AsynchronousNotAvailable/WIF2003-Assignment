@@ -10,16 +10,18 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import FloatingChat from "../customer/components/FloatingChat";
 import FloatingChatList from "../customer/components/FloatingChatList";
+import Box from '@mui/material/Box';
+import Rating from '@mui/material/Rating';
 
 function Marketplace() {
     const { shopsItemListing, productListing } = useContext(GlobalContext);
-    const options = productListing.map((option) => {
-        const firstLetter = option.name[0].toUpperCase();
-        return {
-            firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
-            ...option,
-        };
-    });
+    // const options = productListing.map((option) => {
+    //     const firstLetter = option.name[0].toUpperCase();
+    //     return {
+    //         firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
+    //         ...option,
+    //     };
+    // });
 
     const [categoryClicked,setCategoryClicked] = useState("")
 
@@ -41,7 +43,7 @@ function Marketplace() {
             img: "/homeIcon.png",
         },
         {
-            name: "Groceries",
+            name: "Food & Beverage",
             img: "/groceryIcon.png",
         },
     ]);
@@ -124,6 +126,7 @@ function Marketplace() {
     const [displayedProducts, setDisplayedProducts] = useState([]);
 
     const handleSearchChange = (event) => {
+        console.log(event)
         if (event.target.innerText) {
             if (event.target.innerText === "") {
                 setDisplayedProducts(productListing);
@@ -136,12 +139,14 @@ function Marketplace() {
                 );
                 setDisplayedProducts(matchedProducts);
             }
-        } else {
+        }
+         else if(event.target.value) {
             if (event.target.value === "") {
                 setDisplayedProducts(productListing);
             } else {
                 console.log("target value");
                 const userInput = event.target.value.toLowerCase();
+                console.log(userInput)
                 setUserSearchInput(userInput);
                 const matchedProducts = productListing.filter((product) =>
                     product.name.toLowerCase().includes(userInput)
@@ -149,7 +154,49 @@ function Marketplace() {
                 setDisplayedProducts(matchedProducts);
             }
         }
+        else {
+            const matchedProducts = productListing.filter((product) => product.name.toLowercAse().includes(userSearchInput))
+            setDisplayedProducts(matchedProducts)
+        }
     };
+    // const handleSearchChange = (event) => {
+    //     if(event.target.value){
+    //         const userInput = event.target.value.toLowerCase();
+    //         setUserSearchInput(userInput);
+    //     const matchedProducts = productListing.filter((product) =>
+    //         product.name.toLowerCase().includes(userInput)
+    //     );
+    //     setDisplayedProducts(matchedProducts);
+    //     }
+    //     else{
+    //         const userInput = " "
+    //         setUserSearchInput(userInput);
+    //     const matchedProducts = productListing.filter((product) =>
+    //         product.name.toLowerCase().includes(userInput)
+    //     );
+    //     setDisplayedProducts(matchedProducts);
+    //     }
+    // };
+        // setUserSearchInput(userInput);
+        // const matchedProducts = productListing.filter((product) =>
+        //     product.name.toLowerCase().includes(userInput)
+        // );
+        // setDisplayedProducts(matchedProducts);
+        // const handleSearchChange = (event) => {
+        //     const userInput = event.target.value.toLowerCase();
+        //     setUserSearchInput(userInput); // Always update the userInput state
+        
+        //     // If userInput is empty, set displayedProducts to the entire productListing
+        //     if (userInput.trim() === "") {
+        //         setDisplayedProducts(productListing);
+        //     } else {
+        //         // Filter products based on userInput
+        //         const matchedProducts = productListing.filter((product) =>
+        //             product.name.toLowerCase().includes(userInput)
+        //         );
+        //         setDisplayedProducts(matchedProducts);
+        //     }
+        // };
 
     const navigation = useNavigate();
     
@@ -352,7 +399,6 @@ function Marketplace() {
                             console.log(newValue);
                         }}
                         inputValue={userSearchInput}
-                        defaultValue={""}
                         value={userSearchInput}
                         onInputChange={(newInputValue) =>
                             handleSearchChange(newInputValue)
@@ -401,10 +447,11 @@ function Marketplace() {
                             })}
                         </section>
                         <section className="flex flex-row">
-                            <section className="flex flex-row">
+                            <section className="flex flex-row justify-between gap-10">
                                 {productCategorySetTwo.map((product) => {
                                     return (
-                                        <section className="flex flex-col  w-[175px] h-[218px] justify-center items-center">
+                                        <section className="flex flex-col gap-10 rounded-xl shadow-2xl w-48 h-72 px-5 py-5 justify-center items-center"
+                                        onClick={() => onCategoryClicked(product.name)}>
                                             <img
                                                 src={product.img}
                                                 className="border-gray-500 border-2 w-[110px] h-[110px] rounded-full object-contain"
@@ -476,7 +523,15 @@ function Marketplace() {
                                     <p className="font-sans text-[#7450DF]">
                                         RM{product.price}
                                     </p>
-                                    <p>{product.rating} stars</p>
+                                    <section className = "flex flex-row">
+                                    <p className = "font-sans font-semibold">{product.rating}.0/5 
+                                    </p>
+                                    <Box sx={{
+                                    '& > legend': { mt: 2 },}} >
+                                    <Rating name="read-only" value={product.rating} readOnly />
+                                    </Box>
+                                        </section>
+                                    
                                 </section>
                             );
                         })}
