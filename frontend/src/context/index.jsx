@@ -104,7 +104,7 @@ function GlobalState({ children }) {
             reviews: [],
             variations: ["Brown", "Khaki", "Grey"],
             category : "Books & Stationery",
-            description : "a book or binder of blank, often ruled, pages on which to write, especially one used by students to take notes in class. a book in which promissory notes are entered, registered, recorded, etc"
+            description : "A book or binder of blank, often ruled, pages on which to write, especially one used by students to take notes in class. a book in which promissory notes are entered, registered, recorded, etc"
         },
 
         {
@@ -160,7 +160,7 @@ function GlobalState({ children }) {
                 reviews: [],
                 variations: ["Brown", "Khaki", "Grey"],
                 category : "Books & Stationery",
-                description : "a book or binder of blank, often ruled, pages on which to write, especially one used by students to take notes in class. a book in which promissory notes are entered, registered, recorded, etc"
+                description : "A book or binder of blank, often ruled, pages on which to write, especially one used by students to take notes in class. a book in which promissory notes are entered, registered, recorded, etc"
             },
             {
                 id: 7,

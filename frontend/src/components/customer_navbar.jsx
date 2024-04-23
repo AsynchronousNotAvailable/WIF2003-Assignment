@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 function Customer_Navbar() {
     const navigation = useNavigate();
     const handleLogout = () => {
-        navigation("/login");
+        navigation("/");
     };
 
     const goToChat = () => {
@@ -47,8 +47,8 @@ function Customer_Navbar() {
                         class="cursor-pointer px-2 py-1 hover:bg-[#45b9dc] rounded-lg"
                         onClick={goToCart}
                     >
-                        <i class="fa-regular fa-cart-shopping text-white"></i>
-                    </div>
+                        <i class="fa-solid fa-cart-shopping text-white"></i>  
+                  </div>
 
                     <button
                         onClick={handleLogout}

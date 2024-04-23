@@ -8,11 +8,18 @@ module.exports = {
         },
        
         extend: {
-            colors : {
+            colors: {
+                button:{
+                    100: '#5489fc',
+                },
+                border:{
+                    100: '#e0e2e7',
+                },
                 myCyan : '#0FB7FF',
                 myGreen : '#1EB564'
-            }
+            },
         },
+       
     },
     plugin: [flowbite.plugin()],
 };

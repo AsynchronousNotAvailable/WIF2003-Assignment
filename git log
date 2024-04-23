@@ -1,0 +1,35 @@
+[33mc73c2b2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mck[m[33m, [m[1;31morigin/ck[m[33m)[m HEAD@{0}: rebase (finish): returning to refs/heads/ck
+[33mc73c2b2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mck[m[33m, [m[1;31morigin/ck[m[33m)[m HEAD@{1}: rebase (continue): add product page ui done
+[33m8d96fcd[m HEAD@{2}: rebase (continue): order and product management ui
+[33m1ab693f[m HEAD@{3}: rebase (start): checkout origin/kw-backup
+[33m2b78684[m HEAD@{4}: reset: moving to HEAD
+[33m2b78684[m HEAD@{5}: checkout: moving from ck to ck
+[33m2b78684[m HEAD@{6}: checkout: moving from main to ck
+[33m69068d5[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{7}: checkout: moving from ck to main
+[33m2b78684[m HEAD@{8}: reset: moving to HEAD
+[33m2b78684[m HEAD@{9}: rebase (finish): returning to refs/heads/ck
+[33m2b78684[m HEAD@{10}: rebase (pick): add product page ui done
+[33m88e7191[m HEAD@{11}: rebase (continue): order and product management ui
+[33m69068d5[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{12}: rebase (start): checkout main
+[33mbd5df5f[m HEAD@{13}: checkout: moving from ck to ck
+[33mbd5df5f[m HEAD@{14}: commit: add product page ui done
+[33m976c157[m HEAD@{15}: checkout: moving from wt to ck
+[33m69068d5[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{16}: checkout: moving from ck to wt
+[33m976c157[m HEAD@{17}: commit: order and product management ui
+[33mccdd93f[m HEAD@{18}: rebase (finish): returning to refs/heads/ck
+[33mccdd93f[m HEAD@{19}: rebase (start): checkout main
+[33m2c4bc8d[m[33m ([m[1;31morigin/main_backup[m[33m)[m HEAD@{20}: checkout: moving from ck to ck
+[33m2c4bc8d[m[33m ([m[1;31morigin/main_backup[m[33m)[m HEAD@{21}: checkout: moving from main to ck
+[33mccdd93f[m HEAD@{22}: checkout: moving from ck to main
+[33m2c4bc8d[m[33m ([m[1;31morigin/main_backup[m[33m)[m HEAD@{23}: checkout: moving from wt to ck
+[33m2c4bc8d[m[33m ([m[1;31morigin/main_backup[m[33m)[m HEAD@{24}: checkout: moving from ck to wt
+[33m2c4bc8d[m[33m ([m[1;31morigin/main_backup[m[33m)[m HEAD@{25}: checkout: moving from main to ck
+[33mccdd93f[m HEAD@{26}: checkout: moving from ck to main
+[33m2c4bc8d[m[33m ([m[1;31morigin/main_backup[m[33m)[m HEAD@{27}: checkout: moving from main to ck
+[33mccdd93f[m HEAD@{28}: pull --ff --recurse-submodules --progress origin: Fast-forward
+[33m2c4bc8d[m[33m ([m[1;31morigin/main_backup[m[33m)[m HEAD@{29}: checkout: moving from ck to main
+[33m2c4bc8d[m[33m ([m[1;31morigin/main_backup[m[33m)[m HEAD@{30}: checkout: moving from main to ck
+[33m2c4bc8d[m[33m ([m[1;31morigin/main_backup[m[33m)[m HEAD@{31}: checkout: moving from wt to main
+[33m2c4bc8d[m[33m ([m[1;31morigin/main_backup[m[33m)[m HEAD@{32}: checkout: moving from kw to wt
+[33m2c4bc8d[m[33m ([m[1;31morigin/main_backup[m[33m)[m HEAD@{33}: checkout: moving from main to kw
+[33m2c4bc8d[m[33m ([m[1;31morigin/main_backup[m[33m)[m HEAD@{34}: clone: from https://github.com/AsynchronousNotAvailable/WIF2003-Assignment.git
