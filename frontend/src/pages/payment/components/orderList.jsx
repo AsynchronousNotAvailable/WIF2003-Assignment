@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 const SmallText = styled.p`
@@ -31,7 +31,8 @@ const Image = styled.img`
     margin-right: 20px;
 `;
 
-function Order_List({ items }) {
+function Order_List({ items, handleChatButtonClick }) {
+    
     return (
         <div>
             {items && items.length > 0 ? (
@@ -46,20 +47,27 @@ function Order_List({ items }) {
                                         alignItems: "center",
                                     }}
                                 >
-                                    <Image
-                                        src={item.img}
-                                        alt="Product Image"
-                                    />
+                                    <Image src={item.img} alt="Product Image" />
                                     <SmallText>{item.name}</SmallText>
                                 </Column>
-                                <Column width="45%"></Column>
+                                <Column width="15%">
+                                    <SmallText>{item.seller}</SmallText>
+                                </Column>
+                                <Column width="30%">
+                                    {/* <SmallText>{item.seller}</SmallText> */}
+                                    <button
+                                        className=" bg-blue-500 text-white px-4 py-2 rounded-full shadow-md hover:bg-blue-600"
+                                        onClick={() => handleChatButtonClick(item.seller)}
+                                    >
+                                        <i className="fa fa-comment"></i>
+                                    </button>
+                                </Column>
                                 <Column width="15%" align="right">
                                     <SmallText>
                                         RM{" "}
-                                        {(
-                                            item.price *
-                                            item.quantity
-                                        ).toFixed(2)}
+                                        {(item.price * item.quantity).toFixed(
+                                            2
+                                        )}
                                     </SmallText>
                                 </Column>
                             </RowWrapper>

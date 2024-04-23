@@ -4,13 +4,15 @@ import Chat_Content from "./Chat_Content";
 function FloatingChat({ activeChat, activeChatContent, goBackToChatList }) {
     // const [activeChat, setActiveChat] = useState("Wen Thing");
     // const [activeChatContent, setActiveChatContent] = useState([
-    //     { type: "SELLER", text: "Hello! I am milo_seller" },
+    //     { type: "SELLER", text: "Hello! I am Koperasi_UM" },
     // ]);
     return (
         <div className="fixed bg-white bottom-5 right-20 flex flex-col  rounded-tl-lg rounded-tr-lg w-80 h-96 shadow-2xl">
             <div className="flex flex-row items-center gap-5 h-10 bg-slate-400 shadow-lg w-full px-5 py-2 rounded-tl-lg rounded-tr-lg">
-                <button onClick={goBackToChatList} className="hover:bg-slate-200 px-2">
-                    
+                <button
+                    onClick={goBackToChatList}
+                    className="hover:bg-slate-200 px-2"
+                >
                     <i class="fa-solid fa-arrow-left"></i>
                 </button>
                 <h1 className="font-sans font-semibold">{activeChat}</h1>
@@ -25,15 +27,21 @@ function FloatingChat({ activeChat, activeChatContent, goBackToChatList }) {
     );
 }
 
-function Floating_Chat_Content({ responses, customer}) {
+function Floating_Chat_Content({ responses, customer }) {
     const [prompt, setPrompt] = useState("");
 
     let pfp;
-    if (customer === "Wen Thing") {
-        pfp = require("../../../assets/wenthing.jpeg");
-    } else if (customer === "Kar Weng") {
-        pfp = require("../../../assets/karweng.jpeg");
-    } else if (customer === "Chen Kang") {
+    if (customer === "Koperasi UM") {
+        pfp = "/seller3.png";
+    } else if (customer === "KK Mart UM") {
+        pfp = "/seller4.png";
+    } else if (customer === "UM Sports Direct") {
+        pfp = "/seller1.png";
+    } else if (customer === "Sports_Direct_UM") {
+        pfp = require("../../../assets/chenkang.jpg");
+    } else if (customer === "Supercell") {
+        pfp = require("../../../assets/chenkang.jpg");
+    } else if (customer === "Koperasi_UM") {
         pfp = require("../../../assets/chenkang.jpg");
     }
 
@@ -42,13 +50,14 @@ function Floating_Chat_Content({ responses, customer}) {
     }, [customer]);
 
     const responseFromWenThing = [
-        "Hello! I am wen thing",
-        "How much is the battery charger?",
+        "Yes, we do have stock for Notebook. Do you have any preference for the brand?",
+       
     ];
-    const responseFromKarWeng = ["Hello! I am kar weng", "I see alright."];
+    const responseFromKarWeng = [
+        "Let me check the stock for you. Please wait for a moment.",
+    ];
     const responseFromChenKang = [
-        "Hello! I am chen kang",
-        "Will the product be delivered today?",
+        "We will deliver your product within 3 days.",
     ];
 
     const submitPrompt = async (e) => {
@@ -61,23 +70,22 @@ function Floating_Chat_Content({ responses, customer}) {
         });
 
         // customer sends a message
-        if (customer === "Wen Thing") {
+        if (customer === "Koperasi UM") {
             responses.push({
                 type: "SELLER",
-                text: responseFromWenThing[1],
+                text: responseFromWenThing[0],
             });
-        } else if (customer === "Kar Weng") {
+        } else if (customer === "KK Mart UM") {
             responses.push({
                 type: "SELLER",
-                text: responseFromKarWeng[1],
+                text: responseFromKarWeng[0],
             });
-        } else if (customer === "Chen Kang") {
+        } else if (customer === "UM Sports Direct") {
             responses.push({
                 type: "SELLER",
-                text: responseFromChenKang[1],
+                text: responseFromChenKang[0],
             });
         }
-
         setPrompt("");
     };
 
