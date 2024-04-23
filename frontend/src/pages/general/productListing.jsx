@@ -41,7 +41,8 @@ const ProductListing = () => {
     const handleSortingChange = (e) => {
         console.log("E from handleSortingChange"+e)
         setSortStatus(prevBool => !prevBool)
-        const sortingPreference = e ? e : e.target.value;
+        const sortingPreference = e.target.value ? e.target.value : e
+        console.log(sortingPreference)
         if(sortingPreference === e){
             const sortedProducts = productListing.filter((product) => product.category === e)
             setSortedProductsArr(sortedProducts)
