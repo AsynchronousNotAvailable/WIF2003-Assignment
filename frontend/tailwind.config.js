@@ -21,5 +21,5 @@ module.exports = {
         },
        
     },
-    plugin: [flowbite.plugin()],
+    plugin: [flowbite.plugin(), require("daisyui")],
 };

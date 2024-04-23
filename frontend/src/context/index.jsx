@@ -78,7 +78,7 @@ function GlobalState({ children }) {
         {
             id: 7,
             name: "Nice Pen",
-            price: 13,
+            price: 14,
             rating: 4,
             img: "/pen.jpeg",
             seller: "Nice",
@@ -90,7 +90,7 @@ function GlobalState({ children }) {
         {
             id: 8,
             name: "Nice Pencil Case",
-            price: 13,
+            price: 15,
             rating: 4,
             img: "/pencil_case.jpeg",
             seller: "Nice",
@@ -102,7 +102,7 @@ function GlobalState({ children }) {
         {
             id: 9,
             name: "Nice Wallet",
-            price: 13,
+            price: 18,
             rating: 4,
             img: "/wallet.jpeg",
             seller: "Nice",
@@ -133,7 +133,7 @@ function GlobalState({ children }) {
             {
                 id: 7,
                 name: "Nice Pen",
-                price: 13,
+                price: 14,
                 rating: 4,
                 img: "/pen.jpeg",
                 seller: "Nice",
@@ -145,7 +145,7 @@ function GlobalState({ children }) {
             {
                 id: 8,
                 name: "Nice Pencil Case",
-                price: 13,
+                price: 15,
                 rating: 4,
                 img: "/pencil_case.jpeg",
                 seller: "Nice",
@@ -157,7 +157,7 @@ function GlobalState({ children }) {
             {
                 id: 9,
                 name: "Nice Wallet",
-                price: 13,
+                price: 18,
                 rating: 4,
                 img: "/wallet.jpeg",
                 seller: "Nice",

@@ -9,11 +9,12 @@ import { BarChart } from "@mui/x-charts/BarChart";
 import Seller_NavSidebar from "../../components/seller_sidebar";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
-import FloatingChat from "../customer/components/FloatingChat";
-import FloatingChatList from "../customer/components/FloatingChatList";
+import Box from '@mui/material/Box';
+import Rating from '@mui/material/Rating';
 
 function Marketplace() {
     const { shopsItemListing, productListing } = useContext(GlobalContext);
+    console.log(shopsItemListing); //time to map the value of the name, given the key
     const options = productListing.map((option) => {
         const firstLetter = option.name[0].toUpperCase();
         return {
@@ -111,39 +112,33 @@ function Marketplace() {
     const [displayedProducts, setDisplayedProducts] = useState([]);
 
     const handleSearchChange = (event) => {
-        if (event.target.innerText) {
-            if(event.target.innerText === ""){
-                setDisplayedProducts(productListing)
-            }
-            else {
-                console.log("innerText")
-                const userInput = event.target.innerText.toLowerCase();
-                setUserSearchInput(userInput);
-                const matchedProducts = productListing.filter((product) =>
-                    product.name.toLowerCase().includes(userInput)
-                );
-                setDisplayedProducts(matchedProducts);
-            }    
+        if(event.target.innerText === null && event.target.value === null){
+            setDisplayedProducts(productListing)
+        }
+        
+        else if (event.target.innerText) {
+            console.log("innerText")
+            const userInput = event.target.innerText.toLowerCase();
+            setUserSearchInput(userInput);
+            const matchedProducts = productListing.filter((product) =>
+                product.name.toLowerCase().includes(userInput)
+            );
+            setDisplayedProducts(matchedProducts);
         } 
         else {
-            if(event.target.value === ""){
-                setDisplayedProducts(productListing)
-            }
-            else {
-                console.log("target value")
-                const userInput = event.target.value.toLowerCase();
-                setUserSearchInput(userInput);
-                const matchedProducts = productListing.filter((product) =>
-                    product.name.toLowerCase().includes(userInput)
-                );
-                setDisplayedProducts(matchedProducts);
-            }
+            console.log("target value")
+            const userInput = event.target.value.toLowerCase();
+            setUserSearchInput(userInput);
+            const matchedProducts = productListing.filter((product) =>
+                product.name.toLowerCase().includes(userInput)
+            );
+            setDisplayedProducts(matchedProducts);
         }
     };
 
     const navigation = useNavigate();
     const onSearchButtonClick = () => {
-        navigation(`/customer/products`, { state: { displayedProducts } });
+        navigation(`/customer/products`, { state: { displayedProducts} });
     };
 
     const navigateToShop = (seller) => {
@@ -160,82 +155,6 @@ function Marketplace() {
             state: { product },
         });
     };
-
-    const [floating, setFloating] = useState(false);
-    const toggleFloatingChat = () => {
-        setFloating(!floating);
-    }
-    const [activeChat, setActiveChat] = useState("");
-    const [activeChatContent, setActiveChatContent] = useState([]);
-    const handleChatButtonClick = () => {
-        // navigation("/customer/chat");
-        toggleFloatingChat()
-    }
-    const [chatList, setChatList] = useState([
-        {
-            active: true,
-            pfp: require("../../assets/wenthing.jpeg"),
-            name: "Wen Thing",
-            last_message: "How much is the battery charger?",
-        },
-        {
-            active: false,
-            pfp: require("../../assets/karweng.jpeg"),
-            name: "Kar Weng",
-            last_message: "I see alright.",
-        },
-        {
-            active: false,
-            pfp: require("../../assets/chenkang.jpg"),
-            name: "Chen Kang",
-            last_message: "Will the product be delivered today?",
-        },
-    ]);
-
-    const [chatName, setChatName] = useState("");
-    const handleChatClick = (name) => {
-        
-        setChatName(name);
-        if (name === "Wen Thing") {
-            setActiveChatContent([
-                {
-                    type: "SELLER",
-                    text: "Hello! I am wen thing",
-                },
-                {
-                    type: "SELLER",
-                    text: "How much is the battery charger?",
-                },
-            ]);
-        } else if (name === "Kar Weng") {
-            setActiveChatContent([
-                {
-                    type: "SELLER",
-                    text: "Hello! I am kar weng",
-                },
-                {
-                    type: "SELLER",
-                    text: "I see alright.",
-                },
-            ]);
-        } else if (name === "Chen Kang") {
-            setActiveChatContent([
-                {
-                    type: "SELLER",
-                    text: "Hello! I am chen kang",
-                },
-                {
-                    type: "SELLER",
-                    text: "Will the product be delivered today?",
-                },
-            ]);
-        }
-    }
-
-    const goBackToChatList = () => {
-        setChatName("");
-    }
-    
     return (
         <>
             <Customer_Navbar />
@@ -249,7 +168,6 @@ function Marketplace() {
                             console.log(newValue);
                         }}
                         inputValue={userSearchInput}
-                        defaultValue = {""}
                         value={userSearchInput}
                         onInputChange={(newInputValue) =>
                             handleSearchChange(newInputValue)
@@ -262,8 +180,7 @@ function Marketplace() {
 
                     <button
                         onClick={onSearchButtonClick}
-                        className="bg-[white] rounded-full shadow-3xl hover:bg-[#45b9dc] px-4 py-2"
-                    >
+                        className="bg-[white] rounded-full shadow-3xl hover:bg-[#45b9dc] px-4 py-2">
                         <i
                             class="fa fa-search text-black "
                             aria-hidden="true"
@@ -371,21 +288,20 @@ function Marketplace() {
                                     <p className="font-sans text-[#7450DF]">
                                         RM{product.price}
                                     </p>
-                                    <p>{product.rating} stars</p>
+                                    <div className = "flex flex-row">
+                                    <p className = "font-sans font-semibold">{product.rating}/5.0</p>
+                                    <section>
+                                    <Box sx={{'& > legend': { mt: 2 },}}>
+                                    <Rating name="read-only" value={product.rating} readOnly />
+                                    </Box>
+                                    </section>
+
+                                    </div>
                                 </section>
                             );
                         })}
                     </section>
                 </section>
-                <button
-                    className="fixed bottom-10 right-10 bg-blue-500 text-white px-4 py-2 rounded-full shadow-md hover:bg-blue-600"
-                    onClick={handleChatButtonClick}
-                >
-                    <i className="fa fa-comment"></i>
-                </button>
-                {/* {floating && <FloatingChat activeChat={activeChat}  activeChatContent={activeChatContent}/>} */}
-                {floating && <FloatingChatList chatList={chatList} handleChatClick={handleChatClick} />}
-                {chatName !== "" && <FloatingChat activeChat={chatName} activeChatContent={activeChatContent} goBackToChatList={goBackToChatList} />}
             </main>
         </>
     );
