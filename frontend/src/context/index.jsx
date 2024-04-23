@@ -30,6 +30,17 @@ function GlobalState({ children }) {
         setCartItems([])
     }
 
+    const updateOrderStatus = (orderId, newStatus) => {
+        setOrderHistory(prevOrders => {
+          return prevOrders.map(order => {
+            if (order.orderId === orderId) {
+              return { ...order, status: newStatus };
+            }
+            return order;
+          });
+        });
+      };
+
     // for marketplace
     const [productListing, setProductListing] = useState([
         {
@@ -268,7 +279,8 @@ function GlobalState({ children }) {
                 addCardDetails,
                 cardDetails,
                 addOrders,
-                orderHistory
+                orderHistory,
+                updateOrderStatus
             }}
         >
                 {children}

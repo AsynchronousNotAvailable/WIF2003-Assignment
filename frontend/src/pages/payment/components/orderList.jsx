@@ -52,13 +52,8 @@ function Order_List({ items }) {
                                     />
                                     <SmallText>{item.name}</SmallText>
                                 </Column>
-                                <Column width="30%"></Column>
-                                <Column width="15%">
-                                    <SmallText>
-                                        {item.quantity}
-                                    </SmallText>
-                                </Column>
-                                <Column width="15%">
+                                <Column width="45%"></Column>
+                                <Column width="15%" align="right">
                                     <SmallText>
                                         RM{" "}
                                         {(
