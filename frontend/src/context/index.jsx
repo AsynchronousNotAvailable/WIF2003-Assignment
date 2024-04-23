@@ -9,6 +9,7 @@ function GlobalState({ children }) {
     const [cartItems, setCartItems] = useState([]);
     const [totalCheckoutPrice, setTotalCheckoutPrice] = useState(0);
     const [userDetails, setUserDetails] = useState(null);
+    const [shippingAddress, setShippingAddress] = useState({});
     const [cardDetails, setCardDetails] = useState([]);
     const [orderHistory, setOrderHistory] = useState([]);
     
@@ -25,7 +26,7 @@ function GlobalState({ children }) {
             shippingAddress: shippingAddress,
             status: "Order placed."
         }
-
+        setOrderHistory([...orderHistory, order])
     }
 
     // for marketplace
@@ -261,6 +262,8 @@ function GlobalState({ children }) {
                 setShopItemListing,
                 totalCheckoutPrice,
                 setTotalCheckoutPrice,
+                shippingAddress,
+                setShippingAddress,
                 addCardDetails,
                 cardDetails,
                 addOrders,

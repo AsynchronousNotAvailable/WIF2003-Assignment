@@ -169,7 +169,9 @@ export default function Checkout() {
                 <Text style={{ fontSize: "32px", fontWeight: "bold", marginRight: "auto", marginBottom: "30px" }}>Checkout</Text>       
             </div>
             <Wrapper style={{ marginBottom: "30px"}}>
-                <Text style={{ marginRight: "auto", color: "#0F60FF" }}>Delivery Address</Text>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                    <Column width="12%"><Text style={{ marginRight: "auto", color: "#0F60FF" }}>Delivery Address</Text></Column><p style={{ fontSize: "14px"}}>EDIT</p>
+                </div>
                 <Text style={{ marginRight: "auto" }}> <Bold>Tan Jun Xian (+60) 132068030</Bold> 121, Jalan 17/14, Seksyen 17, Petaling Jaya, 46400 Selangor. </Text>  
             </Wrapper>
             <CheckoutList />
