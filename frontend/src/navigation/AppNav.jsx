@@ -21,6 +21,10 @@ import Shop from "../pages/customer/shop";
 import EditProfile from "../pages/general/EditProfile";
 import Checkout from "../pages/payment/checkout";
 import Orders from "../pages/payment/orders";
+import OrderManagement from "../pages/seller/order_management";
+import ProductManagement from "../pages/seller/product_management";
+import AddProduct from "../pages/seller/add_product";
+
 
 function AppNav() {
     const { isAuth, isSeller } = useContext(GlobalContext);
@@ -60,7 +64,10 @@ function AppNav() {
                     />
 
                     <Route path="/seller_chat" element={<Seller_Chat />} />
-                </Routes>
+                    <Route path="/order_management" element={<OrderManagement/>}/>
+                <Route path="/product_management" element={<ProductManagement/>}/>
+                <Route path="/add_product_page" element={<AddProduct/>}/>
+            </Routes>
                 {/* {!isAuth ? (
                 <Routes>
                     <Route path="/" element={<Landing />} />
@@ -111,4 +118,7 @@ function CustomerRoutes() {
         </>
     );
 }
+
+
+
 export default AppNav;

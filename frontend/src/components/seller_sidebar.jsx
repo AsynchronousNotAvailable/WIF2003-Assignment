@@ -10,6 +10,12 @@ function Seller_NavSidebar() {
     const goToChat = () => {
         navigation("/seller_chat");
     };
+    const toOrderManagement = () => {
+        navigation("/order_management");
+    }
+    const toProductManagement = () => {
+        navigation("/product_management");
+    }
     return (
         <div class="font-inter">
             <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 ">
@@ -115,18 +121,7 @@ function Seller_NavSidebar() {
                     <ul class="space-y-2 font-medium">
                         <li>
                             <a
-                                href="/marketplace/analysis"
-                                class="flex items-center p-2 my-4 text-white rounded-md hover:bg-gray-700"
-                            >
-                                <i class="w-5 fa-regular fa-boxes-stacked fa-lg text=[#B197FC]"></i>
-                                <span class="ms-3 font-inter font-medium">
-                                    Dashboard
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="/marketplace/analysis"
+                                href="#"
                                 class="flex border-white border-2 items-center p-2 my-4 text-white rounded-md hover:bg-gray-700"
                             >
                                 <i class="w-5 fa-regular fa-boxes-stacked fa-lg text=[#B197FC]"></i>
@@ -135,7 +130,7 @@ function Seller_NavSidebar() {
                                 </span>
                             </a>
                         </li>
-                        <li>
+                        <li onClick={toOrderManagement}>
                             <a
                                 href="#"
                                 class="flex items-center p-2 my-4 text-white rounded-lg hover:bg-gray-700"
@@ -146,7 +141,7 @@ function Seller_NavSidebar() {
                                 </span>
                             </a>
                         </li>
-                        <li>
+                        <li >
                             <a
                                 href="/seller/analysis"
                                 class="flex items-center p-2 my-4 text-white rounded-lg hover:bg-gray-700"
