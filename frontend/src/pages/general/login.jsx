@@ -104,6 +104,10 @@ function Login() {
         //     alert("Invalid username");
         // }
         console.log(emailAddress, password);
+        if (emailAddress === "" || password === "") {
+            alert("Please Enter Your Credentials");
+            return;
+        }
 
         if (
             emailAddress === userDetails.emailAddress &&
