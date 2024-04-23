@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 function Customer_Navbar() {
     const navigation = useNavigate();
     const handleLogout = () => {
-        navigation("/login");
+        navigation("/");
     };
 
     const goToChat = () => {

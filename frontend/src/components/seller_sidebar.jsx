@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 function Seller_NavSidebar() {
     const navigation = useNavigate();
     const handleLogout = () => {
-        navigation("/login");
+        navigation("/");
     };
 
     const goToChat = () => {
@@ -103,7 +103,7 @@ function Seller_NavSidebar() {
             >
                 <div class="flex items-center justify-between px-4 ">
                     <a
-                        href="https://flowbite.com/"
+                        href=""
                         class="flex items-center space-x-3 rtl:space-x-reverse"
                     >
                         <img
@@ -119,9 +119,9 @@ function Seller_NavSidebar() {
 
                 <div class="h-full mt-5 px-3 pb-4 bg-[#7450DF] ">
                     <ul class="space-y-2 font-medium">
-                        <li>
+                        <li onClick={toProductManagement}>
                             <a
-                                href="#"
+                                href="/product_management"
                                 class="flex border-white border-2 items-center p-2 my-4 text-white rounded-md hover:bg-gray-700"
                             >
                                 <i class="w-5 fa-regular fa-boxes-stacked fa-lg text=[#B197FC]"></i>
@@ -132,7 +132,7 @@ function Seller_NavSidebar() {
                         </li>
                         <li onClick={toOrderManagement}>
                             <a
-                                href="#"
+                                href="/order_management"
                                 class="flex items-center p-2 my-4 text-white rounded-lg hover:bg-gray-700"
                             >
                                 <i class="w-5 fa-solid fa-bag-shopping fa-lg text-white"></i>
@@ -141,7 +141,7 @@ function Seller_NavSidebar() {
                                 </span>
                             </a>
                         </li>
-                        <li >
+                        <li>
                             <a
                                 href="/seller/analysis"
                                 class="flex items-center p-2 my-4 text-white rounded-lg hover:bg-gray-700"
