@@ -83,7 +83,6 @@ function GlobalState({ children }) {
             description:
                 "Horlicks is a delicious drink made from milk, wheat and malt. Fortified with 19 vital nutrients which includes Zinc, Calcium, Iron, vitamins and minerals that provides essential nutrition to help in children's growth and development!",
         },
-
         {
             id: 4,
             name: "Iced Coffee",

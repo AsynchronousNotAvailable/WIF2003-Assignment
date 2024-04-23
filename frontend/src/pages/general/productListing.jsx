@@ -18,10 +18,12 @@ const ProductListing = () => {
     const { cartItems, setCartItems, productListing, setProductListing } =
         useContext(GlobalContext);
         const location = useLocation();
-        const { displayedProducts} = location.state;
+        const {displayedProducts, categoryClicked} = location.state;
+
         useEffect(() => {
             console.log(displayedProducts);
-        }, [displayedProducts]);
+            handleSortingChange(categoryClicked)
+        }, [displayedProducts,categoryClicked]);
 
     const navigation = useNavigate();
 
@@ -35,29 +37,37 @@ const ProductListing = () => {
     const [sortStatus , setSortStatus] = useState(false)
 
     const handleSortingChange = (e) => {
+        console.log("E from handleSortingChange"+e)
         setSortStatus(prevBool => !prevBool)
-        const sortingPreference = e.target.value;
-        setSortType(chosenSortType => sortingPreference)
-        if(sortingPreference === "PriceHTL"){
-            const sortedProducts = [...displayedProducts].sort((a, b) => b.price - a.price);
+        const sortingPreference = e ? e : e.target.value;
+        if(sortingPreference === e){
+            const sortedProducts = productListing.filter((product) => product.category === e)
             setSortedProductsArr(sortedProducts)
         }
-        else if (sortingPreference === "PriceLTH"){
-            const sortedProducts = [...displayedProducts].sort((a,b) => a.price - b.price);
-            setSortedProductsArr(sortedProducts)
-        }
-        else if (sortingPreference === "BS"){
-            const sortedProducts = displayedProducts.filter((product) => product.category === "Books & Stationery")
-            setSortedProductsArr(sortedProducts)
-        }
-        else if (sortingPreference === "FB"){
-            const sortedProducts = displayedProducts.filter((product) => product.category === "Food & Beverage")
-            setSortedProductsArr(sortedProducts)
-        }
-       
         else{
-            alert("Choice of Category is not available.")
+            setSortType(chosenSortType => sortingPreference)
+            if(sortingPreference === "PriceHTL"){
+                const sortedProducts = [...displayedProducts].sort((a, b) => b.price - a.price);
+                setSortedProductsArr(sortedProducts)
+            }
+            else if (sortingPreference === "PriceLTH"){
+                const sortedProducts = [...displayedProducts].sort((a,b) => a.price - b.price);
+                setSortedProductsArr(sortedProducts)
+            }
+            else if (sortingPreference === "BS"){
+                const sortedProducts = displayedProducts.filter((product) => product.category === "Books & Stationery")
+                setSortedProductsArr(sortedProducts)
+            }
+            else if (sortingPreference === "FB"){
+                const sortedProducts = displayedProducts.filter((product) => product.category === "Food & Beverage")
+                setSortedProductsArr(sortedProducts)
+            }
+           
+            else{
+                alert("Choice of Category is not available.")
+            }
         }
+        
     }
 
     return (

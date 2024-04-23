@@ -21,6 +21,8 @@ function Marketplace() {
         };
     });
 
+    const [categoryClicked,setCategoryClicked] = useState("")
+
     const [productCategorySetOne, setProductCategorySO] = useState([
         {
             name: "Books & Stationery",
@@ -150,13 +152,70 @@ function Marketplace() {
     };
 
     const navigation = useNavigate();
+    
     const onSearchButtonClick = () => {
         navigation(`/customer/products`, { state: { displayedProducts } });
     };
 
-    const onCategoryName = () => {
-        
+    const onCategoryClicked = (e) => {
+        console.log(e)
+        setCategoryClicked(e)
+        navigation(`/customer/products`, {
+            state : {
+                displayedProducts : displayedProducts,
+                categoryClicked : e
+            }
+        })
     }
+        // handleSortingChange(e)
+        // if (e === "Books & Stationery"){
+        //     const sortedProducts = productListing.filter((product) => product.category === "Books & Stationery")
+        //     console.log(sortedProducts)
+        //     setDisplayedProducts(sortedProducts)
+        // }
+        // console.log(displayedProducts)
+        // navigation(`/customer/products`, {state : {displayedProducts}})
+        // setCategoryClicked(e)
+        // handleSortingChange(e)
+        // navigation(`/customer/products`, {state : {displayedProducts}})
+    
+
+    // const handleSortingChange = (e) => {
+    //     console.log("E from handleSortingChange : " + e)
+    //     if (e === "Books & Stationery"){
+    //         const sortedProducts = productListing.filter((product) => product.category === "Books & Stationery")
+    //         console.log(sortedProducts)
+    //         setDisplayedProducts(sortedProducts)
+    //     }
+    //     navigation(`/customer/products`, {state : {displayedProducts}})
+
+    // }
+
+
+
+        //  if (e === "Books & Stationery"){
+        //     const sortedProducts = displayedProducts.filter((product) => product.category === "Books & Stationery")
+        //     console.log("argument passed : " + e)
+        //     console.log("products to be displayed : " + sortedProducts)
+        //     setDisplayedProducts(sortedProducts)
+        //     navigation(`/customer/products`, {state : {displayedProducts}})
+        // }
+        // else if (e === "Food & Beverage"){
+        //     const sortedProducts = displayedProducts.filter((product) => product.category === "Food & Beverage")
+        //     console.log("argument passed : " + e)
+        //     console.log("products to be displayed : " + sortedProducts)
+        //     setDisplayedProducts(sortedProducts)
+        //     navigation(`/customer/products`, {state : {displayedProducts}})
+        // }
+       
+        // else{
+        //     console.log(typeof e)
+        //     console.log(e)
+        //     console.log(productListing)
+        //     alert("Choice of Category is not available.")
+        // }
+    
+
     const navigateToShop = (seller) => {
         navigation(`/customer/shop/${seller}`, {
             state: { seller: seller },
@@ -166,7 +225,6 @@ function Marketplace() {
     const navigateToProductDetails = (productId) => {
         const product = productListing.find((p) => p.id === productId);
 
-        // Navigate to the product details page with the targeted product
         navigation(`/customer/product/${productId}`, {
             state: { product },
         });
@@ -283,7 +341,9 @@ function Marketplace() {
                         <section className="flex flex-row gap-20 py-10">
                             {productCategorySetOne.map((product) => {
                                 return (
-                                    <section className="flex flex-col gap-10 rounded-xl shadow-2xl w-48 h-72 px-5 py-5 justify-center items-center">
+                                    <section className="flex flex-col gap-10 rounded-xl shadow-2xl w-48 h-72 px-5 py-5 justify-center items-center"
+                                    onClick={() => onCategoryClicked(product.name)}
+                                    >
                                         <img
                                             src={product.img}
                                             className="border-gray-300 border-2 w-[110px] h-[110px] rounded-full object-right"
