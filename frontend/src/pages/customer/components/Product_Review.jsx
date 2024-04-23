@@ -28,7 +28,7 @@ function Product_Review({ product, setProduct, productListing, setProductListing
                 return p;
             }
         });
-
+        setReview("")
         setProductListing(updatedProductListing);
         setProduct(updatedProduct);
     };
@@ -53,7 +53,7 @@ function Product_Review({ product, setProduct, productListing, setProductListing
             </div>
             {product.reviews.map((review) => {
                 return (
-                    <div className="flex-col p-6 bg-slate-100  rounded-md">
+                    <div className="flex-col p-6   rounded-md">
                         <div className="flex flex-row items-center gap-10">
                             <img
                                 src={review.pfp}

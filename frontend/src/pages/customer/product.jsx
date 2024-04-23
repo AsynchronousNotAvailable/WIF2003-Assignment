@@ -165,16 +165,7 @@ function Product() {
                 </div>
                 
                 <div className = "font-sans text-2xl font-bold tracking-wide mt-[50px]">Reviews</div>
-                <div>Lroem Ipsum</div>
-                <div>Lroem Ipsum</div>
-                <div>Lroem Ipsum</div>
-                <div>Lroem Ipsum</div>
-                <div>Lroem Ipsum</div>
-                <div>Lroem Ipsum</div>
-                <div>Lroem Ipsum</div>
-                <div>Lroem Ipsum</div>
-                <div>Lroem Ipsum</div>
-
+                <Product_Review product = {product} setProduct = {setProduct} productListing={productListing} setProductListing={setProductListing} />
                 </div>
                 
         </div>
