@@ -14,7 +14,7 @@ const Container = styled.div`
     margin: 0;
     overflow: hidden;
     height: 100vh;
-`
+`;
 
 const Content = styled.div`
     flex: 1;
@@ -25,34 +25,34 @@ const Content = styled.div`
     margin-left: 7%;
     margin-top: 8%;
     background-color: white;
-`
-const GraphicContainer  = styled.div`
+`;
+const GraphicContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
     width: 50%;
     height: 100%;
-    background-color: #E5E5E5;
-`
+    background-color: #e5e5e5;
+`;
 
 const Graphic = styled.img`
     max-width: 80%;
     max-height: 80%;
-`
+`;
 
 const StyledLogo = styled.img`
     width: 269px;
     height: 77px;
     margin-bottom: 20px;
-`
+`;
 
 const TagLine = styled.h1`
     font-size: 36px;
     font-weight: bold;
-    color: #5489FC;
+    color: #5489fc;
     margin-bottom: 15px;
-`
+`;
 
 const SmallText = styled.p`
     font-size: 18px;
@@ -60,11 +60,11 @@ const SmallText = styled.p`
     font-weight: 300;
     opacity: 0.6;
     margin: 10px 0;
-    opacity: ${({ withOpacity }) => withOpacity ? '0.6' : '1.0'};
-`
+    opacity: ${({ withOpacity }) => (withOpacity ? "0.6" : "1.0")};
+`;
 
 const SocialLink = styled.a`
-    color: #5489FC;
+    color: #5489fc;
     text-decoration: none;
     font-weight: bold;
     cursor: pointer;
@@ -85,12 +85,12 @@ const SocialLink = styled.a`
 
 function Login() {
     const [emailAddress, setEmailAddress] = useState("");
-    console.log(emailAddress)
+    console.log(emailAddress);
     const [password, setPassword] = useState("");
     const { setIsAuth, setIsSeller } = useContext(GlobalContext);
     const { userDetails } = useContext(GlobalContext);
     const navigation = useNavigate();
-   
+
     const handleLogin = () => {
         // if (emailAddress === "seller") {
         //     setIsSeller(true);
@@ -105,40 +105,98 @@ function Login() {
         // }
         console.log(emailAddress, password);
 
-        if (emailAddress === userDetails.emailAddress && password === userDetails.password) {
-            setIsAuth(true);
-            navigation("/marketplace");
+        if (
+            emailAddress === userDetails.emailAddress &&
+            password === userDetails.password
+        ) {
+            if (userDetails.emailAddress.includes("seller")) {
+                navigation("/product_management");
+            } else {
+                navigation("/marketplace");
+            }
         } else {
             alert("Invalid username or password");
         }
-
     };
     const handleSignUp = () => {
         navigation("/signup");
     };
     const handleForgotPassword = () => {
         navigation("/forgot-password");
-    }
+    };
 
     return (
         <Container>
             <Content>
                 <StyledLogo src="/SyopiLogo.png" alt="logo" />
-                <TagLine>Empowering Campus Commerce: <br/> Connect, Sell, Shop, Thrive! </TagLine>
-                <SmallText withOpacity>Welcome back! Please login to your account.</SmallText>
-                <form onSubmit={handleLogin} style={{ width: "80%"}}>
-                    <CustomInput title="Email Address" type="email" value={emailAddress} setValue={setEmailAddress} placeholder="Enter your email address" size="100%"/>
-                    <CustomInput title="Password" type="password" value={password} setValue={setPassword} placeholder="Enter your password" size="100%" />
-                    <div style={{ textAlign: "right"}}>
-                        <SmallText withOpacity onClick={handleForgotPassword} style={{ display: "inline-block", marginLeft: "auto", cursor: "pointer" }}>Forgot Password?</SmallText>
+                <TagLine>
+                    Empowering Campus Commerce: <br /> Connect, Sell, Shop,
+                    Thrive!{" "}
+                </TagLine>
+                <SmallText withOpacity>
+                    Welcome back! Please login to your account.
+                </SmallText>
+                <form onSubmit={handleLogin} style={{ width: "80%" }}>
+                    <CustomInput
+                        title="Email Address"
+                        type="email"
+                        value={emailAddress}
+                        setValue={setEmailAddress}
+                        placeholder="Enter your email address"
+                        size="100%"
+                    />
+                    <CustomInput
+                        title="Password"
+                        type="password"
+                        value={password}
+                        setValue={setPassword}
+                        placeholder="Enter your password"
+                        size="100%"
+                    />
+                    <div style={{ textAlign: "right" }}>
+                        <SmallText
+                            withOpacity
+                            onClick={handleForgotPassword}
+                            style={{
+                                display: "inline-block",
+                                marginLeft: "auto",
+                                cursor: "pointer",
+                            }}
+                        >
+                            Forgot Password?
+                        </SmallText>
                     </div>
-                    <div style={{ display: "flex", justifyContent: "space-between", width: "60%", marginBottom: "30px"}}>
-                        <CustomButton text="Login" backgroundColor="#5489FC" borderColor="#5489FC" textColor="white" width="45%" type="submit" />
-                        <CustomButton text="Sign Up" backgroundColor="white" borderColor="#5489FC" textColor="#5489FC" width="45%" func={handleSignUp} />
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            width: "60%",
+                            marginBottom: "30px",
+                        }}
+                    >
+                        <CustomButton
+                            text="Login"
+                            backgroundColor="#5489FC"
+                            borderColor="#5489FC"
+                            textColor="white"
+                            width="45%"
+                            type="submit"
+                        />
+                        <CustomButton
+                            text="Sign Up"
+                            backgroundColor="white"
+                            borderColor="#5489FC"
+                            textColor="#5489FC"
+                            width="45%"
+                            func={handleSignUp}
+                        />
                     </div>
                 </form>
                 <div>
-                    <SmallText>Or login with <SocialLink>Facebook</SocialLink> <SocialLink>Google</SocialLink> </SmallText>
+                    <SmallText>
+                        Or login with <SocialLink>Facebook</SocialLink>{" "}
+                        <SocialLink>Google</SocialLink>{" "}
+                    </SmallText>
                 </div>
             </Content>
             <GraphicContainer>

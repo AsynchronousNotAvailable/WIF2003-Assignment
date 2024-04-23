@@ -1,7 +1,7 @@
 import { useTable, useSortBy, usePagination} from 'react-table'
 import React, { useMemo, useState, useEffect} from 'react'
 import cleaned_data from './cleaned_data.json'
-import {ReactPaginate} from 'react-paginate'
+
 
 let renderCount = 0
 export const SortingTable = () => {

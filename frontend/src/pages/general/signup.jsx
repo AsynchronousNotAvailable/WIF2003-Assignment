@@ -91,7 +91,13 @@ function SignUp() {
   const { userDetails, setUserDetails } = useContext(GlobalContext);
 
   const handleLogin = () => { 
-    navigation("/login");
+    if (userDetails.emailAddress.includes("seller")) {
+      navigation("/product_management");
+    }
+    else {
+      navigation("/marketplace");
+    }
+    
   }
 
   const handleSignUp = () => {
@@ -102,7 +108,7 @@ function SignUp() {
       // API call to create a new user
       setUserDetails({ firstName, lastName, emailAddress, password });
       console.log(userDetails);
-      navigation("/login");
+      navigation("/");
     }
   }
 
