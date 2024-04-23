@@ -1,82 +1,37 @@
 import { useTable, useSortBy, usePagination} from 'react-table'
-import React, { useMemo, useState, useEffect} from 'react'
+import React, { useMemo, useState, useEffect, forwardRef, useImperativeHandle} from 'react'
 import cleaned_data from './cleaned_data.json'
 
 
 let renderCount = 0
-export const SortingTable = () => {
-    const [data, setData] = useState(cleaned_data);
-    useEffect(() => {
-        console.log('data:', data)
-    }, [data])
-    const ORDER_COLUMNS = [
-        {
-            Header: 'Order ID',
-            Footer: 'Order ID',
-            accessor: 'order_id',
-        },
-        {
-            Header: 'Product',
-            Footer: 'Product',
-            accessor: 'product'
+function SortingTable(props, ref){
+    console.log(props);
+    const columnsData = props.columns;
+    const dataImport = props.data; 
     
-        },
-        {
-            Header: 'Date',
-            Footer: 'Date',
-            accessor: 'date',
-        },
-        {
-            Header: 'Customer',
-            Footer: 'Customer',
-            accessor: 'customer',
-        },
-        {
-            Header: 'Total',
-            Footer: 'Total',
-            accessor: 'total',
-        },
-        {
-            Header: 'Payment',
-            Footer: 'Payment',
-            accessor: 'payment',
-        },
-        {
-            Header: 'Status',
-            Footer: 'Status',
-            accessor: 'status',
-        },
-        {
-            Header: 'Action',
-            Footer: 'Action',
-            accessor: 'action',
-            Cell: ({cell}) => {
-                return (
-                <div className='flex'>
-                    <button className='mx-2' onClick={handleEditData}>
-                        Edit
-                    </button>
-                    <button className='mx-2' onClick={handleHideData}>
-                        Hide 
-                    </button>
-                        <button className='mx-2 mr-0' onClick={() => handleDeleteData(cell.row.index)}>
-                        Delete
-                    </button>
-                </div>  
-            )}
-        }
-    ]
-    const columns = useMemo(() => ORDER_COLUMNS, [])      
+    const [data, setData] = useState(dataImport);
+    
+    useImperativeHandle(ref, () => {
+        return {
+            handleDeleteData: (index) => handleDeleteData(index),
+            handleEditData: () => { alert("hi")},
+            handleHideData: () => {alert("hi")},
+        };
+
+    }, []);
+    
+    const columns = useMemo(() => columnsData, [data])      
+
     function handleEditData(){
 
     }
     
     function handleDeleteData(index){
         console.log(data)
+        console.log(data[index])
         const updatedData = data.filter((_,i) => i !== index);
         console.log(updatedData)
         setData(updatedData);
-        console.log(data)
     }
     
     function handleHideData(){
@@ -87,8 +42,8 @@ export const SortingTable = () => {
     
 
     const tableInstance = useTable({
-        columns: columns,
-        data: data
+        columns,
+        data
     },
     useSortBy,
     usePagination
@@ -114,7 +69,6 @@ export const SortingTable = () => {
     renderCount++
     return (
         <div className='flex-auto w-full'>
-            <h1>Youtube Form {renderCount/2}</h1>
          <table className='flex-1 w-full mb-5'{...getTableProps()}>
             <thead className='border-b-2 border-border-grey content-start text-left'>
                 {headerGroups.map((headerGroup) => (
@@ -186,3 +140,5 @@ export const SortingTable = () => {
         </div>
     )
 }
+
+export default React.forwardRef(SortingTable);

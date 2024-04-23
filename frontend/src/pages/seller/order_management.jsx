@@ -1,10 +1,10 @@
-import React, {useState} from "react";
+import React, { useMemo, useState, useEffect, forwardRef, useRef } from 'react'
 import Seller_NavSidebar from '../../components/seller_sidebar';
-import { BasicTable } from "../../components/order_management/order_table";
-import {SortingTable} from "../../components/order_management/sorting_table"
-
+import SortingTable from "../../components/order_management/sorting_table"
+import order_data from "../../components/order_management/cleaned_data.json"
 
 function OrderManagement(){
+    const sortingTableRef = useRef(); 
     function onExportClick(){
 
     }
@@ -12,7 +12,63 @@ function OrderManagement(){
     function onAddProductClick(){
 
     }
+    const ORDER_COLUMNS = [
+        {
+            Header: 'Order ID',
+            Footer: 'Order ID',
+            accessor: 'order_id',
+        },
+        {
+            Header: 'Product',
+            Footer: 'Product',
+            accessor: 'product'
     
+        },
+        {
+            Header: 'Date',
+            Footer: 'Date',
+            accessor: 'date',
+        },
+        {
+            Header: 'Customer',
+            Footer: 'Customer',
+            accessor: 'customer',
+        },
+        {
+            Header: 'Total',
+            Footer: 'Total',
+            accessor: 'total',
+        },
+        {
+            Header: 'Payment',
+            Footer: 'Payment',
+            accessor: 'payment',
+        },
+        {
+            Header: 'Status',
+            Footer: 'Status',
+            accessor: 'status',
+        },
+        {
+            Header: 'Action',
+            Footer: 'Action',
+            accessor: 'action',
+            Cell: ({cell}) => {
+                return (
+                <div className='flex'>
+                    <button className='mx-2' onClick={() => alert('hi')}>
+                        Edit
+                    </button>
+                    <button className='mx-2' onClick={() => alert('hi')}>
+                        Hide 
+                    </button>
+                        <button className='mx-2 mr-0' onClick={() => sortingTableRef.current.handleDeleteData(cell.row.index)}>
+                        Delete
+                    </button>
+                </div>  
+            )}
+        }
+    ]
     const selected = [true, false, false, false]
     return (
         <>
@@ -74,7 +130,7 @@ function OrderManagement(){
                     </div>
                 </div>
                 <div className="flex ms-5 me-2 my-2">
-                    <SortingTable />
+                <SortingTable ref={sortingTableRef} columns={ORDER_COLUMNS} stringabcd='abcd' data={order_data}/>
                     {/* <table className="w-full">
                     <thead className="border-2 border-border-grey">
                         <tr>
