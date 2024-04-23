@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import GlobalState, { GlobalContext } from "../../context";
 import Customer_Navbar from "../../components/customer_navbar";
 import { useNavigate } from "react-router-dom";
@@ -179,23 +179,63 @@ function Marketplace() {
         // navigation("/customer/chat");
         toggleFloatingChat();
     };
+    const { orderHistory } = useContext(GlobalContext);
+    
+
+    const fetchChatListFromOrders = () => {
+        let chatLists = [];
+        orderHistory.map((order) => {
+            const chatHeader = {
+                active: false,
+                name: order.orderItems[0].seller,
+                pfp:
+                    order.orderItems[0].seller === "Koperasi_UM"
+                        ? "/seller3.png"
+                        : order.orderItems[0].seller === "KK_Mart_UM"
+                        ? "/seller4.png"
+                        : order.orderItems[0].seller === "Zus_Coffee_UM"
+                                ? "/seller5.png"
+                        : "/seller1.png",
+                last_message:
+                    order.orderItems[0].seller === "Koperasi_UM"
+                        ? "How much is the battery charger?"
+                        : order.orderItems[0].seller === "KK_Mart_UM"
+                        ? "I see alright."
+                        : "Will the product be delivered today?",
+            };
+            chatLists.push(chatHeader);
+        });
+        setChatList(chatLists);
+    };
+
+    useEffect(() => {
+        fetchChatListFromOrders();
+    }, [])
+
+    
     const [chatList, setChatList] = useState([
         {
             active: true,
             pfp: "/seller3.png",
-            name: "Koperasi UM",
+            name: "Koperasi_UM",
             last_message: "How much is the battery charger?",
         },
         {
             active: false,
             pfp: "/seller4.png",
-            name: "KK Mart UM",
+            name: "KK_Mart_UM",
             last_message: "I see alright.",
         },
         {
             active: false,
             pfp: "/seller1.png",
-            name: "UM Sports Direct",
+            name: "UM_Sports_Direct",
+            last_message: "Will the product be delivered today?",
+        },
+        {
+            active: false,
+            pfp: "/seller5.png",
+            name: "Zus_Coffee_UM",
             last_message: "Will the product be delivered today?",
         },
     ]);
@@ -203,25 +243,32 @@ function Marketplace() {
     const [chatName, setChatName] = useState("");
     const handleChatClick = (name) => {
         setChatName(name);
-        if (name === "Koperasi UM") {
+        if (name === "Koperasi_UM") {
             setActiveChatContent([
                 {
                     type: "SELLER",
                     text: "Hello! I am Wen Thing from Koperasi UM. How may I assist you today?",
                 },
             ]);
-        } else if (name === "KK Mart UM") {
+        } else if (name === "KK_Mart_UM") {
             setActiveChatContent([
                 {
                     type: "SELLER",
                     text: "Hello! I am Kar Weng from KK Mart UM. It is my pleasure to help you. How may I assist you today?",
                 },
             ]);
-        } else if (name === "UM Sports Direct") {
+        } else if (name === "UM_Sports_Direct") {
             setActiveChatContent([
                 {
                     type: "SELLER",
                     text: "Hello! I am Wen Thing from Koperasi UM. It is my pleasure to help you. How may I assist you today?",
+                },
+            ]);
+        } else if (name === "Zus_Coffee_UM") {
+            setActiveChatContent([
+                {
+                    type: "SELLER",
+                    text: "Hello! I am Weng Hong from Zus. It is my pleasure to help you. How may I assist you today?",
                 },
             ]);
         }

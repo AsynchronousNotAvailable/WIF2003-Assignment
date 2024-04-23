@@ -4,12 +4,14 @@ function Chat_Content({ responses, customer }) {
     const [prompt, setPrompt] = useState("");
 
     let pfp;
-    if (customer === "Koperasi UM") {
-        pfp = "/seller1.png";
-    } else if (customer === "KK Mart UM") {
-        pfp = "./kkmart.jpeg";
-    } else if (customer === "UM Sports Direct") {
-        pfp = "./sportsum.png";
+    if (customer === "Koperasi_UM") {
+        pfp = "/seller3.png";
+    } else if (customer === "KK_Mart_UM") {
+        pfp = "./seller4.png";
+    } else if (customer === "UM_Sports_Direct") {
+        pfp = "./seller1.png";
+    } else if (customer === "Zus_Coffee_UM") {
+        pfp = "./seller5.png";
     }
 
     useEffect(() => {
@@ -36,22 +38,28 @@ function Chat_Content({ responses, customer }) {
         });
 
         // customer sends a message
-        if (customer === "Koperasi UM") {
+        if (customer === "Koperasi_UM") {
             responses.push({
                 type: "SELLER",
                 text: responseFromWenThing[0],
             });
-        } else if (customer === "KK Mart UM") {
+        } else if (customer === "KK_Mart_UM") {
             responses.push({
                 type: "SELLER",
                 text: responseFromKarWeng[0],
             });
-        } else if (customer === "UM Sports Direct") {
+        } else if (customer === "UM_Sports_Direct") {
+            responses.push({
+                type: "SELLER",
+                text: responseFromChenKang[0],
+            });
+        } else if (customer === "Zus_Coffee_UM") {
             responses.push({
                 type: "SELLER",
                 text: responseFromChenKang[0],
             });
         }
+
 
         setPrompt("");
     };

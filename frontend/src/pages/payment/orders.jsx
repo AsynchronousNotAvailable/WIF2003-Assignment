@@ -88,33 +88,26 @@ export default function Orders() {
     };
     const handleChatClick = (name) => {
         setChatName(name);
-        if (name === "Supercell") {
+        if (name === "Koperasi_UM") {
             setActiveChatContent([
                 {
                     type: "SELLER",
-                    text: "Hello! This is builder seller. Anything I can help you with?",
+                    text: "Hello! This is Koperasi UM Customer Service. Anything enquiries?",
                 },
             ]);
-        } else if (name === "Kar Weng") {
+        } else if (name === "KK_Mart_UM") {
             setActiveChatContent([
                 {
                     type: "SELLER",
-                    text: "Hello! I am kar weng",
+                    text: "Hello! This is KK Mart Customer Service. Anything enquiries?",
                 },
-                {
-                    type: "SELLER",
-                    text: "I see alright.",
-                },
+               
             ]);
-        } else if (name === "Chen Kang") {
+        } else if (name === "UM_Sports_Direct") {
             setActiveChatContent([
                 {
                     type: "SELLER",
-                    text: "Hello! I am chen kang",
-                },
-                {
-                    type: "SELLER",
-                    text: "Will the product be delivered today?",
+                    text: "Hello! This is UM Sport Direct Customer Service. Anything enquiries?",
                 },
             ]);
         }

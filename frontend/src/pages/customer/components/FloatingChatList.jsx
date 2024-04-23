@@ -55,9 +55,7 @@ function ChatList({
 }) {
     return (
         <div
-            className={`flex flex-row  items-center gap-2 border-b-[1px] px-6 py-6 border-gray-200 cursor-pointer ${
-                active ? "bg-[#a3d1cc]" : "bg-slate-100"
-            } hover:bg-slate-500`}
+            className={`flex flex-row items-center gap-2 border-b-[1px] px-6 py-6 border-gray-200 cursor-pointer "bg-slate-100" hover:bg-slate-500`}
             onClick={() => goToFloatingChatContent(name)}
         >
             <div className="min-w-max ">
