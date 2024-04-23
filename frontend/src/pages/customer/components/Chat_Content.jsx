@@ -4,12 +4,12 @@ function Chat_Content({ responses, customer }) {
     const [prompt, setPrompt] = useState("");
 
     let pfp;
-    if (customer === "Wen Thing") {
-        pfp = require("../../../assets/wenthing.jpeg");
-    } else if (customer === "Kar Weng") {
-        pfp = require("../../../assets/karweng.jpeg");
-    } else if (customer === "Chen Kang") {
-        pfp = require("../../../assets/chenkang.jpg");
+    if (customer === "Koperasi UM") {
+        pfp = "/seller1.png";
+    } else if (customer === "KK Mart UM") {
+        pfp = "./kkmart.jpeg";
+    } else if (customer === "UM Sports Direct") {
+        pfp = "./sportsum.png";
     }
 
     useEffect(() => {
@@ -17,13 +17,13 @@ function Chat_Content({ responses, customer }) {
     }, [customer]);
 
     const responseFromWenThing = [
-        "Hello! I am wen thing",
-        "How much is the battery charger?",
+        "Yes, we do have stock for Notebook. Do you have any preference for the brand?",
     ];
-    const responseFromKarWeng = ["Hello! I am kar weng", "I see alright."];
+    const responseFromKarWeng = [
+        "Let me check the stock for you. Please wait for a moment.",
+    ];
     const responseFromChenKang = [
-        "Hello! I am chen kang",
-        "Will the product be delivered today?",
+        "We will deliver your product within 3 days.",
     ];
 
     const submitPrompt = async (e) => {
@@ -36,20 +36,20 @@ function Chat_Content({ responses, customer }) {
         });
 
         // customer sends a message
-        if (customer === "Wen Thing") {
+        if (customer === "Koperasi UM") {
             responses.push({
                 type: "SELLER",
-                text: responseFromWenThing[1],
+                text: responseFromWenThing[0],
             });
-        } else if (customer === "Kar Weng") {
+        } else if (customer === "KK Mart UM") {
             responses.push({
                 type: "SELLER",
-                text: responseFromKarWeng[1],
+                text: responseFromKarWeng[0],
             });
-        } else if (customer === "Chen Kang") {
+        } else if (customer === "UM Sports Direct") {
             responses.push({
                 type: "SELLER",
-                text: responseFromChenKang[1],
+                text: responseFromChenKang[0],
             });
         }
 

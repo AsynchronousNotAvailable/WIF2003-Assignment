@@ -19,6 +19,11 @@ function Customer_Navbar() {
     const goToProductList = () => {
         navigation("/marketplace");
     }
+
+    const goToOrders = () => { 
+        navigation("/customer/orders");
+    }
+
     return (
         <nav class="bg-[#5489FC] fixed w-full z-20 top-0 start-0 border-b border-gray-200">
             <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -47,8 +52,8 @@ function Customer_Navbar() {
                         class="cursor-pointer px-2 py-1 hover:bg-[#45b9dc] rounded-lg"
                         onClick={goToCart}
                     >
-                        <i class="fa-solid fa-cart-shopping text-white"></i>  
-                  </div>
+                        <i class="fa-solid fa-cart-shopping text-white"></i>
+                    </div>
 
                     <button
                         onClick={handleLogout}
@@ -63,38 +68,40 @@ function Customer_Navbar() {
                     id="navbar-sticky"
                 >
                     <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-[#5489FC] md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-[#5489FC]">
-                        <li onClick={goToProductList}>
-                            <a
-                                // href="/customer/products"
-                                class="block py-2 px-3 text-white  rounded md:bg-transparent md:text-white md:p-0"
-                                aria-current="page"
+                        <li>
+                            <button
+                                onClick={goToProductList}
+                                type="button"
+                                class="text-white bg-[#5489FC] hover:bg-[#45b9dc]  font-medium rounded-lg text-md px-4 py-2 text-center"
                             >
                                 Home
-                            </a>
+                            </button>
                         </li>
                         <li>
-                            <a
-                                href="#"
-                                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                            <button
+                                type="button"
+                                class="text-white bg-[#5489FC] hover:bg-[#45b9dc]  font-medium rounded-lg text-md px-4 py-2 text-center"
                             >
                                 About
-                            </a>
+                            </button>
                         </li>
+
                         <li>
-                            <a
-                                href="#"
-                                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                            <button
+                                onClick={goToOrders}
+                                type="button"
+                                class="text-white bg-[#5489FC] hover:bg-[#45b9dc]  font-medium rounded-lg text-md px-4 py-2 text-center"
                             >
-                                Services
-                            </a>
+                                Orders
+                            </button>
                         </li>
                         <li>
-                            <a
-                                href="#"
-                                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                            <button
+                                type="button"
+                                class="text-white  bg-[#5489FC] hover:bg-[#45b9dc] font-medium rounded-lg text-md px-4 py-2 text-center"
                             >
                                 Contact
-                            </a>
+                            </button>
                         </li>
                     </ul>
                 </div>

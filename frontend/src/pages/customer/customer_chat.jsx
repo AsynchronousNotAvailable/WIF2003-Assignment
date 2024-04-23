@@ -3,7 +3,7 @@ import Customer_Navbar from "../../components/customer_navbar";
 import Chat_Content from "./components/Chat_Content";
 import ChatList from "./components/ChatList";
 function Customer_Chat() {
-       const [activeChat, setActiveChat] = useState("Wen Thing");
+       const [activeChat, setActiveChat] = useState("Koperasi UM");
        const [activeChatContent, setActiveChatContent] = useState([]);
        const [prompt, setPrompt] = useState("");
        const handleChangeChat = (name) => {
@@ -11,18 +11,18 @@ function Customer_Chat() {
        };
        const chatList = [
            {
-               pfp: require("../../assets/wenthing.jpeg"),
-               name: "Wen Thing",
-               last_message: "How much is the battery charger?",
+               pfp: "/seller1.png",
+               name: "Koperasi UM",
+               last_message: "Hi, we have our stock ready",
            },
            {
-               pfp: require("../../assets/karweng.jpeg"),
-               name: "Kar Weng",
+               pfp: "./kkmart.jpeg",
+               name: "KK Mart UM",
                last_message: "I see alright.",
            },
            {
-               pfp: require("../../assets/chenkang.jpg"),
-               name: "Chen Kang",
+               pfp: "./sportsum.png",
+               name: "UM Sports Direct",
                last_message: "Will the product be delivered today?",
            },
        ];
@@ -30,40 +30,48 @@ function Customer_Chat() {
        const responses1 = [
            {
                type: "CUSTOMER",
-               text: "Hello! I am wen thing",
+               text: "Hello!",
            },
            {
                type: "SELLER",
-               text: "I would like a chees cake.",
+               text: "Hi! What would you like to ask?",
            },
        ];
 
        const responses2 = [
            {
                type: "CUSTOMER",
-               text: "Hello! I am kar weng",
+               text: "Hello!",
            },
            {
                type: "SELLER",
-               text: "I would like a chees cake.",
+               text: "Hello there! How can I help you?",
            },
-       ];
-
-       const responses3 = [
            {
                type: "CUSTOMER",
-               text: "Hello! I am chen kang",
+               text: "Can I refund my order?",
            },
            {
                type: "SELLER",
-               text: "I would like a chees cake.",
+               text: "Sure but we would charge a fee for that.",
            },
        ];
 
+    const responses3 = [
+        {
+            type: "CUSTOMER",
+            text: "Hello. I would like to ask about the delivery status.",
+        },
+        {
+            type: "SELLER",
+            text: "Hello. We will be delivering the product within this 2 days.",
+        },
+    ];
+
        const allChatContent = {
-           "Wen Thing": responses1,
-           "Kar Weng": responses2,
-           "Chen Kang": responses3,
+           "Koperasi UM": responses1,
+           "KK Mart UM": responses2,
+           "UM Sports Direct": responses3,
        };
 
        useEffect(() => {
