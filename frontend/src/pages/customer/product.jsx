@@ -16,6 +16,7 @@ function Product() {
     const [variation, setVariation] = useState("");
     const [quantity, setQuantity] = useState(0);
 
+    console.log(product)
     const addToCart = () => {
         // Check if the product already exists in the cart items
         const existingCartItemIndex = cartItems.findIndex(
@@ -78,6 +79,108 @@ function Product() {
     const addReview = () => {};
     return (
         <>
+        <Customer_Navbar/>
+        <div className = "flex flex-row p-36 w-screen h-screen">
+            <div className = "w-2/3 h-[76vh] object-contain items-center justify-center align-middle flex flex-row ">
+                <img src = {product.img} className = "h-full object-cover "/>
+            </div>
+            <div className = "flex-1 flex flex-col overflow-y-scroll px-5" style = {{height : "76vh"}}>
+                <p className = "font-sans text-normal  text-gray-400 mb-[10px]">{product.category}</p>
+                <div className = "flex flex-row align-middle items-center">
+                <p className = "font-sans text-2xl font-bold tracking-wide mr-10">{product.name}</p>
+                </div>
+                <div className = "flex flex-row">
+                <p className = "font-sans text-sm  text-gray-400">by <a href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ" target = "_blank" className="hover:underline hover:text-black">
+                    <span className = "font-sans text-md font-semibold tracking-wide text-black">{product.seller}</span>
+                    </a>
+                </p>
+                </div>
+                <div className = "flex flex-row font-sans font-semibold mt-[5px]">
+                <p className = "">{product.rating}.0/5</p>
+                <Box sx={{'& > legend': { mt: 2 },}}>
+                    <Rating name="read-only" value={product.rating} readOnly />
+                </Box>
+                </div>
+                <p className = "font-sans text-xl tracking-wide font-semibold mt-[10px]">RM{product.price}.00</p>
+                <p className = "font-sans text-lg tracking-wide mt-[20px] ">{product.description}</p>
+                <div className="flex flex-col mt-[20px]">
+                                        <h4 className="font-sans mb-[10px]">
+                                            Variation
+                                        </h4>
+                                        <div className = "flex flex-row justify-between w-full">
+                                        {product.variations.map(
+                                            (v, index) => (
+                                                <div key={index}
+                                                 className={`flex flex-row px-4 py-2 
+                                                 rounded-lg w-[150px] border border-gray-400 variation-item cursor-pointer 
+                                                 ${variation.includes(v) ? "bg-blue-800 text-white" : "hover:bg-blue-800 hover:text-white transition-colors duration-500"}`}
+                                                    onClick={() => toggleSelection(v)}>{v}
+                                                </div>
+                                            )
+                                        )}
+                                        </div>
+                                        
+                </div>
+                <div className="flex flex-row mt-[50px]">
+                                        <div className="flex flex-row align-middle items-center gap-5 p-2 px-6  rounded-lg border-2 justify-between border-gray-300">
+                                            <i
+                                                class="fa-solid fa-minus hover:bg-slate-200   rounded-lg cursor-pointer"
+                                                onClick={minusQuantity}
+                                            ></i>
+                                            <div className=" px-2 rounded-sm font-semibold text-lg">
+                                                {quantity}
+                                            </div>
+                                            <i
+                                                class="fa-solid fa-plus hover:bg-slate-200   rounded-lg cursor-pointer "
+                                                onClick={addQuantity}
+                                            ></i>
+                                        </div>
+                </div>
+                <div className="flex flex-col justify-between  mt-[50px] gap-10 ">
+                                        <div className = "flex flex-row items-center ">
+                                        <button
+                                            className="flex flex-row px-20 items-center hover:cursor-pointer gap-5  rounded-lg shadow-md py-2 border-2 border-gray-400"
+                                            onClick={addToCart}>
+                                            <i class="fa-solid fa-cart-shopping text-blue-800"></i>
+                                            <div className="text-[#5489FC] font-sans">
+                                                Add to cart
+                                            </div>
+                                        </button>
+
+                                        <img src="/heartIcon.svg" className="w-[20px] ml-[20px] h-[20px] fill-red-600" />
+
+                                        </div>
+                                    
+                                       <div className = "flex flex-row items-center">
+                                       <button
+                                            className="flex flex-row px-[110px] items-center rounded-lg bg-blue-800 border-gray-400 border-2 shadow-md py-2"
+                                            onClick={buyNow}>
+                                            <div className="text-white font-sans">
+                                                Buy Now
+                                            </div>
+                                        </button>
+                                       </div>
+                                         
+                                       
+                </div>
+                
+                <div className = "font-sans text-2xl font-bold tracking-wide mt-[50px]">Reviews</div>
+                <div>Lroem Ipsum</div>
+                <div>Lroem Ipsum</div>
+                <div>Lroem Ipsum</div>
+                <div>Lroem Ipsum</div>
+                <div>Lroem Ipsum</div>
+                <div>Lroem Ipsum</div>
+                <div>Lroem Ipsum</div>
+                <div>Lroem Ipsum</div>
+                <div>Lroem Ipsum</div>
+
+                </div>
+                
+        </div>
+        </>
+    )
+}
             {/* <Customer_Navbar />
         <div className = "mt-[64px] flex flex-row">
             <div className = "w-[592px] h-[712px]">
@@ -116,7 +219,7 @@ function Product() {
 
             </div>
         </div> */}
-            <Customer_Navbar />
+            {/* <Customer_Navbar />
             <div className="mt-[64px]">
                 <div className="w-full bg-gray-200 h-[92vh] px-48 py-16">
                     <div className="flex flex-row gap-20">
@@ -259,7 +362,7 @@ function Product() {
             </div>
             <></>
         </>
-    );
-}
+    ); */}
+
 
 export default Product;

@@ -4,9 +4,6 @@ import { GlobalContext } from "../../../context";
 
 function Product_Review({ product, setProduct, productListing, setProductListing }) {
     const [review, setReview] = useState("");
-    
-    
-
     const submitReview = () => {
         let updatedProduct = {};
         const updatedProductListing = productListing.map((p) => {
@@ -88,16 +85,6 @@ function Product_Review({ product, setProduct, productListing, setProductListing
                     </div>
                 );
             })}
-            {/* <div className="flex-col p-6 bg-slate-400">
-                <div className="flex flex-row gap-10">
-                    <div className="flex">{product.pfp}</div>
-                    <div className="flex flex-col gap-3">
-                        <h4>{product.username}</h4>
-                        <h4>{product.stars}</h4>
-                        <h4>{product.description}</h4>
-                    </div>
-                </div>
-            </div> */}
         </>
     );
 }
