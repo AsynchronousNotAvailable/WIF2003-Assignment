@@ -9,6 +9,8 @@ import { BarChart } from "@mui/x-charts/BarChart";
 import Seller_NavSidebar from "../../components/seller_sidebar";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
+import FloatingChat from "../customer/components/FloatingChat";
+import FloatingChatList from "../customer/components/FloatingChatList";
 
 function Marketplace() {
     const { shopsItemListing, productListing } = useContext(GlobalContext);
@@ -158,6 +160,82 @@ function Marketplace() {
             state: { product },
         });
     };
+
+    const [floating, setFloating] = useState(false);
+    const toggleFloatingChat = () => {
+        setFloating(!floating);
+    }
+    const [activeChat, setActiveChat] = useState("");
+    const [activeChatContent, setActiveChatContent] = useState([]);
+    const handleChatButtonClick = () => {
+        // navigation("/customer/chat");
+        toggleFloatingChat()
+    }
+    const [chatList, setChatList] = useState([
+        {
+            active: true,
+            pfp: require("../../assets/wenthing.jpeg"),
+            name: "Wen Thing",
+            last_message: "How much is the battery charger?",
+        },
+        {
+            active: false,
+            pfp: require("../../assets/karweng.jpeg"),
+            name: "Kar Weng",
+            last_message: "I see alright.",
+        },
+        {
+            active: false,
+            pfp: require("../../assets/chenkang.jpg"),
+            name: "Chen Kang",
+            last_message: "Will the product be delivered today?",
+        },
+    ]);
+
+    const [chatName, setChatName] = useState("");
+    const handleChatClick = (name) => {
+        
+        setChatName(name);
+        if (name === "Wen Thing") {
+            setActiveChatContent([
+                {
+                    type: "SELLER",
+                    text: "Hello! I am wen thing",
+                },
+                {
+                    type: "SELLER",
+                    text: "How much is the battery charger?",
+                },
+            ]);
+        } else if (name === "Kar Weng") {
+            setActiveChatContent([
+                {
+                    type: "SELLER",
+                    text: "Hello! I am kar weng",
+                },
+                {
+                    type: "SELLER",
+                    text: "I see alright.",
+                },
+            ]);
+        } else if (name === "Chen Kang") {
+            setActiveChatContent([
+                {
+                    type: "SELLER",
+                    text: "Hello! I am chen kang",
+                },
+                {
+                    type: "SELLER",
+                    text: "Will the product be delivered today?",
+                },
+            ]);
+        }
+    }
+
+    const goBackToChatList = () => {
+        setChatName("");
+    }
+    
     return (
         <>
             <Customer_Navbar />
@@ -299,6 +377,15 @@ function Marketplace() {
                         })}
                     </section>
                 </section>
+                <button
+                    className="fixed bottom-10 right-10 bg-blue-500 text-white px-4 py-2 rounded-full shadow-md hover:bg-blue-600"
+                    onClick={handleChatButtonClick}
+                >
+                    <i className="fa fa-comment"></i>
+                </button>
+                {/* {floating && <FloatingChat activeChat={activeChat}  activeChatContent={activeChatContent}/>} */}
+                {floating && <FloatingChatList chatList={chatList} handleChatClick={handleChatClick} />}
+                {chatName !== "" && <FloatingChat activeChat={chatName} activeChatContent={activeChatContent} goBackToChatList={goBackToChatList} />}
             </main>
         </>
     );
