@@ -393,6 +393,7 @@ function Marketplace() {
                 <section className="flex flex-row w-full gap-2 mb-10 justify-center">
                     <Autocomplete
                         id="free-solo-demo"
+                        disableClearable = {true}
                         freeSolo
                         sx={{ width: 600 }}
                         onChange={(event, newValue) => {

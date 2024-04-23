@@ -150,7 +150,7 @@ function GlobalState({ children }) {
                 "A wallet is a flat case or pouch, often used to carry small personal items such as physical currency, debit cards, and credit cards; identification documents such as driving licence, identification card, club card; photographs, transit pass, business cards and other paper or laminated cards.",
         },
         {
-            id: 11,
+            id: 10,
             name: "Man United Jersey",
             price: 13,
             rating: 4,
@@ -173,6 +173,19 @@ function GlobalState({ children }) {
             category: "Food & Beverage",
             description: "This is CEO Latte",
         },
+        
+            {
+                id: 12,
+                name: "Man United Jersey",
+                price: 500,
+                rating: 4,
+                img: "/ultraboost.jpg",
+                seller: "UM_Sports_Direct",
+                reviews: [],
+                variations: ["Black", "Red", "White"],
+                category: "Men's Fashion",
+                description: "This is Ultraboost",
+            },
     ]);
 
     // for each shops
@@ -305,7 +318,7 @@ function GlobalState({ children }) {
             "/seller1.png",
 
             {
-                id: 11,
+                id: 10,
                 name: "Man United Jersey",
                 price: 13,
                 rating: 4,

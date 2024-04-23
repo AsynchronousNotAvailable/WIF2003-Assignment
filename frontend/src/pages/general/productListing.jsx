@@ -30,6 +30,7 @@ const ProductListing = () => {
     const navigation = useNavigate();
 
     const handleClick = (product) => {
+        console.log(product + " Clicked ")
         navigation(`/customer/product/${product.id}`, { state: { product } });
     };
 
@@ -65,7 +66,10 @@ const ProductListing = () => {
                 const sortedProducts = displayedProducts.filter((product) => product.category === "Food & Beverage")
                 setSortedProductsArr(sortedProducts)
             }
-           
+            else if (sortingPreference === "MF"){
+                const sortedProducts = displayedProducts.filter((product) => product.category === "Men's Fashion")
+                setSortedProductsArr(sortedProducts)
+            }
             else{
                 alert("Choice of Category is not available.")
             }
@@ -85,7 +89,7 @@ const ProductListing = () => {
                     <option value="PriceLTH">Price [Low to High]</option>
                     <option value="PriceHTL">Price [High to Low]</option>
                     <optgroup label="Categories">
-                        <option value="E">Electronics</option>
+                        <option value="MF">Men's Fashion</option>
                         <option value="FB">Food & Beverage</option>
                         <option value="BS">Books & Stationery</option>
                         {/* Add more category options as needed */}
@@ -96,7 +100,7 @@ const ProductListing = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-10">
                 {sortedProductsArr.length > 0 ? (
     sortedProductsArr.map((product) => (
-        <section key={product.id}>
+        <section key={product.id} onClick = {() => handleClick(product)}>
             <img src={product.img} className="w-[280px] h-[320px] object-cover"/>
             <p className="font-sans text-xl  text-black">{product.name} <span className = "text-gray-500 text-sm font-sans mr-[15px]">by <a className = "text-black text-md hover:cursor-pointer hover:text-black hover:underline font-sanss">{product.seller}</a></span></p>
             <p className="font-sans font-bold text-gray-900">RM{product.price}</p>
@@ -104,7 +108,7 @@ const ProductListing = () => {
     ))
 ) : (
     displayedProducts.map((product) => (
-        <section key={product.id}>
+        <section key={product.id} onClick = {() => handleClick(product)}>
             <img src={product.img} className="w-[280px] h-[320px] object-cover"/>
             <p className="font-sans font-semibold text-xl text-black">{product.name} <span className = "text-gray-500 text-sm font-sans mr-[15px]">by <a className = "text-black text-md hover:cursor-pointer hover:text-black hover:underline font-sanss">{product.seller}</a></span></p>
             <p className="font-sans font-bold text-gray-900">RM{product.price}</p>
