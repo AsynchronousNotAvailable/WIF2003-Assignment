@@ -1,6 +1,6 @@
 import React from "react";
 import Customer_Navbar from "../../components/customer_navbar";
-import Checkout_Item_List from "../payment/components/Checkout_Item_List";
+import Order_List from "./components/orderList";
 import { GlobalContext } from "../../context";
 import { useContext } from "react";
 import styled from "styled-components";
@@ -46,6 +46,13 @@ const Light = styled.p`
     opacity: 0.6;
 `
 
+const Row = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+`
+
 const PaymentButton = styled.button`
     border: 1px solid #0F60FF;
     color: #0F60FF;
@@ -65,7 +72,6 @@ const PaymentContent = styled.div`
 
 export default function Orders() {
     const { orderHistory } = useContext(GlobalContext);
-    console.log("orders:" + orderHistory)
     const navigation = useNavigate();
 
     const handleOrderReceived = () => {
@@ -78,30 +84,26 @@ export default function Orders() {
             <div style={{ width: "90%", marginTop: "8%"}} >
                 <Text style={{ fontSize: "32px", fontWeight: "bold", marginRight: "auto", marginBottom: "30px" }}>Orders</Text>       
             </div>
-            <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center"}}>
-                <Wrapper style={{ display: "flex"}}>
-                    <Column width="40%"><Text style={{ marginRight: "auto" }}><Light>Product</Light></Text></Column>
-                    <Column width="20%"><Text style={{ marginRight: "auto" }}><Light>Unit Price</Light></Text></Column>
-                    <Column width="20%"><Text style={{ marginRight: "auto" }}><Light>Quantity</Light></Text></Column>
-                    <Column width="20%"><Text style={{ marginRight: "auto" }}><Light>Total Price</Light></Text></Column>
+            {orderHistory.map((order, index) => (
+                <Wrapper key={index}>
+                    <Row>
+                        <Column width="40%"><Text><Light>Order ID: {order.orderId}</Light></Text></Column>
+                        <Column width="30%"></Column>
+                        <Column width="30%"><Text><Bold style={{ textAlign: "right", color: "#0F60FF" }}>{order.status}</Bold></Text></Column>
+                    </Row>
+                    <Order_List
+                        style={{ backgroundColor: "white" }}
+                        items={order.orderItems}
+                    />
+                    <Row>
+                        <Column width="85%"><Text><Bold style={{ textAlign: "right" }}>Order Total</Bold></Text></Column>
+                        <Column width="15%"><Text><Light style={{ color: "#0F60FF", fontSize: "38px", textAlign: "right" }}>RM {order.orderPrice.toFixed(2)}</Light></Text></Column>
+                    </Row>
+                    <Row>
+                        <PaymentButton style={{ backgroundColor: "#0F60FF", color: "white", width: "20%", marginLeft: "auto" }} onClick={() => handleOrderReceived()}>Order Received</PaymentButton>
+                    </Row>
                 </Wrapper>
-                <Wrapper>
-                    {orderHistory.map((order, index) => (
-                        <div key={index}>
-                            <Checkout_Item_List
-                                style={{ backgroundColor: "white" }}
-                                checkoutItems={order.orderItems}
-                            />
-                            <Wrapper style={{ display: "flex" }}>
-                                <Column width="70%"></Column>
-                                <Column width="10%"><Text style={{ marginRight: "auto", marginTop: "15px" }}><Bold>Order Total</Bold></Text></Column>
-                                <Column width="20%"><Text style={{ marginRight: "auto", color: "#0F60FF", fontSize: "38px" }}>RM {order.price}</Text>
-                                    <PaymentButton style={{ backgroundColor: "#0F60FF", color: "white", width: "90%", margin: "0" }} onClick={() => handleOrderReceived()}>Order Received</PaymentButton></Column>
-                            </Wrapper>
-                        </div>
-                    ))}
-                </Wrapper>
-            </div>
+            ))}
         </Container>
     )
 }

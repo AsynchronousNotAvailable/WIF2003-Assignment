@@ -27,7 +27,7 @@ function GlobalState({ children }) {
             status: "Order placed."
         }
         setOrderHistory([...orderHistory, order])
-        console.log("index:" + orderHistory);
+        setCartItems([])
     }
 
     // for marketplace
