@@ -141,6 +141,9 @@ function Marketplace() {
         navigation(`/customer/products`, { state: { displayedProducts} });
     };
 
+    const onCategoryName = () => {
+        
+    }
     const navigateToShop = (seller) => {
         navigation(`/customer/shop/${seller}`, {
             state: { seller: seller },
