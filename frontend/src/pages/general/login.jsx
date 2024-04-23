@@ -87,6 +87,7 @@ function Login() {
     const [emailAddress, setEmailAddress] = useState("");
     const [password, setPassword] = useState("");
     const { setIsAuth, setIsSeller } = useContext(GlobalContext);
+    const { userDetails } = useContext(GlobalContext);
     const navigation = useNavigate();
    
     const handleLogin = () => {
@@ -101,13 +102,15 @@ function Login() {
         // } else {
         //     alert("Invalid username");
         // }
+        console.log(emailAddress, password);
 
-        if (emailAddress && password) {
+        if (emailAddress === userDetails.emailAddress && password === userDetails.password) {
             setIsAuth(true);
             navigation("/marketplace");
         } else {
-            alert("Please enter your email and password");
+            alert("Invalid username or password");
         }
+
     };
     const handleSignUp = () => {
         navigation("/signup");

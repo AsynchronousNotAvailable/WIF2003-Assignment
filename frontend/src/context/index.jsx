@@ -8,6 +8,7 @@ function GlobalState({ children }) {
     const [isSeller, setIsSeller] = useState(false);
     const [cartItems, setCartItems] = useState([]);
     const [totalCheckoutPrice, setTotalCheckoutPrice] = useState(0);
+    const [userDetails, setUserDetails] = useState(null);
     
     // for marketplace
     const [productListing, setProductListing] = useState([
@@ -228,6 +229,8 @@ function GlobalState({ children }) {
     return (
         <GlobalContext.Provider
             value={{
+                userDetails,
+                setUserDetails,
                 isAuth,
                 setIsAuth,
                 isSeller,
