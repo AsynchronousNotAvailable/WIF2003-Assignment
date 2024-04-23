@@ -345,32 +345,77 @@ function GlobalState({ children }) {
     });
 
     const [sellerProduct, setSellerProduct] = useState([
-        {"Product":"Mahi Mahi","SKU":"7566753746","Category":"unavailable","Stock":98,"Status":1,"Added":"2024-04-22"},
-        {"Product":"Wine - Fat Bastard Merlot","SKU":"7465236789","Category":"Leprocaulinus vipera","Stock":6,"Status":4,"Added":"2024-03-09"},
-        {"Product":"Muffin - Mix - Strawberry Rhubarb","SKU":"9862275863","Category":"Dusicyon thous","Stock":72,"Status":2,"Added":"2023-05-07"},
-        {"Product":"Onions Granulated","SKU":"8776371727","Category":"Paroaria gularis","Stock":23,"Status":1,"Added":"2023-06-29"},
-        {"Product":"Nantuket Peach Orange","SKU":"1387566016","Category":"Phalacrocorax brasilianus","Stock":9,"Status":4,"Added":"2023-12-27"},
-        {"Product":"Eggplant - Baby","SKU":"4203899826","Category":"Helogale undulata","Stock":58,"Status":2,"Added":"2023-08-03"},
-        {"Product":"Muffin - Banana Nut Individual","SKU":"5295642488","Category":"Felis chaus","Stock":79,"Status":1,"Added":"2023-05-20"},
-        {"Product":"Aspic - Clear","SKU":"9368753717","Category":"Stercorarius longicausus","Stock":98,"Status":1,"Added":"2024-03-22"},
-        {"Product":"Bread Ww Cluster","SKU":"7552261986","Category":"Corvus brachyrhynchos","Stock":67,"Status":2,"Added":"2023-10-07"},
-        {"Product":"Lettuce - Romaine, Heart","SKU":"1654324108","Category":"Meles meles","Stock":72,"Status":4,"Added":"2024-02-02"},
-        {"Product":"Jagermeister","SKU":"2514724961","Category":"Colobus guerza","Stock":96,"Status":2,"Added":"2023-12-03"},
-        {"Product":"Crackers - Graham","SKU":"1768464979","Category":"Dasyurus maculatus","Stock":62,"Status":2,"Added":"2024-04-06"},
-        {"Product":"Lemon Balm - Fresh","SKU":"8825782950","Category":"Cracticus nigroagularis","Stock":26,"Status":1,"Added":"2023-10-14"},
-        {"Product":"Oats Large Flake","SKU":"3442125855","Category":"unavailable","Stock":49,"Status":3,"Added":"2023-11-26"},
-        {"Product":"Stainless Steel Cleaner Vision","SKU":"8902767728","Category":"Tenrec ecaudatus","Stock":82,"Status":4,"Added":"2023-11-07"},
-        {"Product":"Muffins - Assorted","SKU":"0942765796","Category":"Ursus americanus","Stock":51,"Status":1,"Added":"2023-07-23"},
-        {"Product":"Oil - Food, Lacquer Spray","SKU":"6963346542","Category":"Merops nubicus","Stock":88,"Status":1,"Added":"2024-03-02"},
-        {"Product":"Chocolate - Pistoles, White","SKU":"4528060213","Category":"Diomedea irrorata","Stock":48,"Status":1,"Added":"2023-07-24"},
-        {"Product":"Barley - Pearl","SKU":"5213952240","Category":"Centrocercus urophasianus","Stock":57,"Status":1,"Added":"2023-06-12"},
-        {"Product":"Juice - Orange, 341 Ml","SKU":"3454302854","Category":"Anas bahamensis","Stock":83,"Status":4,"Added":"2023-11-24"}
+        { "Product": "Mahi Mahi", "SKU": "7566753746", "Category": "unavailable", "Stock": 98, "Status": 1, "Added": "2024-04-22" },
+        { "Product": "Wine - Fat Bastard Merlot", "SKU": "7465236789", "Category": "Leprocaulinus vipera", "Stock": 6, "Status": 4, "Added": "2024-03-09" },
+        { "Product": "Muffin - Mix - Strawberry Rhubarb", "SKU": "9862275863", "Category": "Dusicyon thous", "Stock": 72, "Status": 2, "Added": "2023-05-07" },
+        { "Product": "Onions Granulated", "SKU": "8776371727", "Category": "Paroaria gularis", "Stock": 23, "Status": 1, "Added": "2023-06-29" },
+        { "Product": "Nantuket Peach Orange", "SKU": "1387566016", "Category": "Phalacrocorax brasilianus", "Stock": 9, "Status": 4, "Added": "2023-12-27" },
+        { "Product": "Eggplant - Baby", "SKU": "4203899826", "Category": "Helogale undulata", "Stock": 58, "Status": 2, "Added": "2023-08-03" },
+        { "Product": "Muffin - Banana Nut Individual", "SKU": "5295642488", "Category": "Felis chaus", "Stock": 79, "Status": 1, "Added": "2023-05-20" },
+        { "Product": "Aspic - Clear", "SKU": "9368753717", "Category": "Stercorarius longicausus", "Stock": 98, "Status": 1, "Added": "2024-03-22" },
+        { "Product": "Bread Ww Cluster", "SKU": "7552261986", "Category": "Corvus brachyrhynchos", "Stock": 67, "Status": 2, "Added": "2023-10-07" },
+        { "Product": "Lettuce - Romaine, Heart", "SKU": "1654324108", "Category": "Meles meles", "Stock": 72, "Status": 4, "Added": "2024-02-02" },
+        { "Product": "Jagermeister", "SKU": "2514724961", "Category": "Colobus guerza", "Stock": 96, "Status": 2, "Added": "2023-12-03" },
+        { "Product": "Crackers - Graham", "SKU": "1768464979", "Category": "Dasyurus maculatus", "Stock": 62, "Status": 2, "Added": "2024-04-06" },
+        { "Product": "Lemon Balm - Fresh", "SKU": "8825782950", "Category": "Cracticus nigroagularis", "Stock": 26, "Status": 1, "Added": "2023-10-14" },
+        { "Product": "Oats Large Flake", "SKU": "3442125855", "Category": "unavailable", "Stock": 49, "Status": 3, "Added": "2023-11-26" },
+        { "Product": "Stainless Steel Cleaner Vision", "SKU": "8902767728", "Category": "Tenrec ecaudatus", "Stock": 82, "Status": 4, "Added": "2023-11-07" },
+        { "Product": "Muffins - Assorted", "SKU": "0942765796", "Category": "Ursus americanus", "Stock": 51, "Status": 1, "Added": "2023-07-23" },
+        { "Product": "Oil - Food, Lacquer Spray", "SKU": "6963346542", "Category": "Merops nubicus", "Stock": 88, "Status": 1, "Added": "2024-03-02" },
+        { "Product": "Chocolate - Pistoles, White", "SKU": "4528060213", "Category": "Diomedea irrorata", "Stock": 48, "Status": 1, "Added": "2023-07-24" },
+        { "Product": "Barley - Pearl", "SKU": "5213952240", "Category": "Centrocercus urophasianus", "Stock": 57, "Status": 1, "Added": "2023-06-12" },
+        { "Product": "Juice - Orange, 341 Ml", "SKU": "3454302854", "Category": "Anas bahamensis", "Stock": 83, "Status": 4, "Added": "2023-11-24" }
     ]);
 
     const addSellerProduct = (product) => {
         setSellerProduct([...sellerProduct, product]);
     };
 
+    const deleteSellerProduct = (index) => {
+        const updatedData = sellerProduct.filter((_,i) => i !== index);
+        setSellerProduct(updatedData);
+        console.log(sellerProduct);
+    }
+
+    const [sellerOrder, setSellerOrder] = useState([
+        { "order_id": 1, "product": "Motorola", "date": 1641859200000, "customer": "Merline Docket", "total": 98.07, "payment": "laser", "status": 3 }, 
+        { "order_id": 2, "product": "Telit", "date": 1725235200000, "customer": "Birk Iddins", "total": 5.34, "payment": "maestro", "status": 2 }, 
+        { "order_id": 3, "product": "Infinix", "date": 1690243200000, "customer": "Glendon Stiegar", "total": 33.64, "payment": "jcb", "status": 4 }, 
+        { "order_id": 4, "product": "Spice", "date": 1644278400000, "customer": "Huberto Pessold", "total": 85.66, "payment": "mastercard", "status": 3 }, 
+        { "order_id": 5, "product": "Samsung", "date": 1719792000000, "customer": "Meryl Perryn", "total": 91.29, "payment": "jcb", "status": 2 }, 
+        { "order_id": 6, "product": "Apple", "date": 1675209600000, "customer": "Diandra Le Gallo", "total": 84.71, "payment": "jcb", "status": 1 }, 
+        { "order_id": 7, "product": "Spice", "date": 1705449600000, "customer": "Sheffield Maffucci", "total": 97.99, "payment": "jcb", "status": 3 }, 
+        { "order_id": 8, "product": "Micromax", "date": 1661126400000, "customer": "Coral Lightoller", "total": 50.05, "payment": "jcb", "status": 2 }, 
+        { "order_id": 9, "product": "Telit", "date": 1708732800000, "customer": "Evelina Lockhead", "total": 90.4, "payment": "instapayment", "status": 1 }, 
+        { "order_id": 10, "product": "Panasonic", "date": 1661558400000, "customer": "Lisette Coultard", "total": 49.47, "payment": "jcb", "status": 1 }, 
+        { "order_id": 11, "product": "verykool", "date": 1709510400000, "customer": "Kora Alden", "total": 97.55, "payment": "jcb", "status": 2 }, 
+        { "order_id": 12, "product": "Icemobile", "date": 1691020800000, "customer": "Adolphe Mallion", "total": 39.19, "payment": "maestro", "status": 4 }, 
+        { "order_id": 13, "product": "Motorola", "date": 1663718400000, "customer": "Caralie Ick", "total": 39.21, "payment": "switch", "status": 2 }, 
+        { "order_id": 14, "product": "Ulefone", "date": 1669507200000, "customer": "Trevor Wadge", "total": 37.88, "payment": "jcb", "status": 2 }, 
+        { "order_id": 15, "product": "Micromax", "date": 1687392000000, "customer": "Yale MacGuffie", "total": 59.07, "payment": "switch", "status": 1 }, 
+        { "order_id": 16, "product": "Panasonic", "date": 1661817600000, "customer": "Adiana Seabourne", "total": 46.69, "payment": "visa-electron", "status": 4 }, 
+        { "order_id": 17, "product": "Huawei", "date": 1699056000000, "customer": "Aleksandr Masden", "total": 12.54, "payment": "mastercard", "status": 3 }, 
+        { "order_id": 18, "product": "Asus", "date": 1709078400000, "customer": "Misti Mc Harg", "total": 67.84, "payment": "bankcard", "status": 4 }, 
+        { "order_id": 19, "product": "Nokia", "date": 1664236800000, "customer": "Rosette Crowthe", "total": 56.64, "payment": "visa", "status": 3 }, 
+        { "order_id": 20, "product": "Philips", "date": 1689120000000, "customer": "Georgi Cartan", "total": 45.25, "payment": "jcb", "status": 3 }, 
+        { "order_id": 21, "product": "alcatel", "date": 1671321600000, "customer": "Emogene Gude", "total": 31.5, "payment": "maestro", "status": 5 },
+        { "order_id": 22, "product": "Sewon", "date": 1698710400000, "customer": "Hew Cornwall", "total": 8.41, "payment": "mastercard", "status": 3 },
+        { "order_id": 23, "product": "LG", "date": 1706140800000, "customer": "Karlan Andrysek", "total": 53.38, "payment": "jcb", "status": 2 },
+        { "order_id": 24, "product": "Coolpad", "date": 1683849600000, "customer": "Saxe Waye", "total": 95.06, "payment": "maestro", "status": 2 },
+        { "order_id": 25, "product": "Celkon", "date": 1693353600000, "customer": "Meredith Cheel", "total": 41.84, "payment": "jcb", "status": 4 },
+        { "order_id": 26, "product": "Mitsubishi", "date": 1698278400000, "customer": "Joete Musson", "total": 25.37, "payment": "maestro", "status": 3 },
+        { "order_id": 27, "product": "Bird", "date": 1703548800000, "customer": "Jemimah Cockling", "total": 66.11, "payment": "switch", "status": 1 },
+        { "order_id": 28, "product": "Samsung", "date": 1668988800000, "customer": "Adolphus Cawthery", "total": 37.49, "payment": "jcb", "status": 5 },
+        { "order_id": 29, "product": "LG", "date": 1657324800000, "customer": "Lillian Espasa", "total": 73.25, "payment": "jcb", "status": 3 },
+        { "order_id": 30, "product": "Gigabyte", "date": 1667088000000, "customer": "Dionisio Ortzen", "total": 92.07, "payment": "mastercard", "status": 3 }
+    ])
+
+    const deleteSellerOrder = (index) => {
+        const updatedData = sellerOrder.filter((_,i) => i !== index);
+        console.log(updatedData);
+        setSellerOrder(updatedData);
+    }
+    
     return (
         <GlobalContext.Provider
             value={{
@@ -396,6 +441,9 @@ function GlobalState({ children }) {
                 orderHistory,
                 updateOrderStatus,
                 addSellerProduct,
+                deleteSellerOrder, 
+                deleteSellerProduct,
+                sellerOrder,
                 sellerProduct,
             }}
         >

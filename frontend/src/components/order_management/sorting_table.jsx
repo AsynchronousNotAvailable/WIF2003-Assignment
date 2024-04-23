@@ -1,24 +1,19 @@
-import { useTable, useSortBy, usePagination} from 'react-table'
-import React, { useMemo, useState, useEffect, forwardRef, useImperativeHandle} from 'react'
+import { useTable, useSortBy, usePagination, useGlobalFilter, useFilters, } from 'react-table'
+import React, { useMemo, useState, useEffect, forwardRef, useImperativeHandle, useContext} from 'react'
+import { GlobalContext } from "../../context";
+
 import cleaned_data from './cleaned_data.json'
+import TableDatePicker from "../../components/order_management/tableDatePicker";
 
 
 let renderCount = 0
 function SortingTable(props, ref){
-    console.log(props);
     const columnsData = props.columns;
     const dataImport = props.data; 
-    
+    const dateFilter = props.dateFilter; 
     const [data, setData] = useState(dataImport);
+     
     
-    useImperativeHandle(ref, () => {
-        return {
-            handleDeleteData: (index) => handleDeleteData(index),
-            handleEditData: () => { alert("hi")},
-            handleHideData: () => {alert("hi")},
-        };
-
-    }, []);
     
     const columns = useMemo(() => columnsData, [data])      
 
@@ -45,8 +40,10 @@ function SortingTable(props, ref){
         columns,
         data
     },
+    useFilters,
+    useGlobalFilter,
     useSortBy,
-    usePagination
+    usePagination,
     )
 
     const { 
@@ -60,13 +57,24 @@ function SortingTable(props, ref){
         canPreviousPage,
         pageOptions, 
         state, 
+        setGlobalFilter, 
         prepareRow, 
         gotoPage,
         pageCount, 
     } = tableInstance
-    
+    const { globalFilter} = state; 
     const {pageIndex} = state
     renderCount++
+    useImperativeHandle(ref, () => {
+        return {
+            handleDeleteData: (index) => handleDeleteData(index),
+            handleEditData: () => { alert("hi")},
+            handleHideData: () => {alert("hi")},
+            globalFilter: globalFilter, 
+            setGlobalFilter: setGlobalFilter, 
+        };
+
+    }, []);
     return (
         <div className='flex-auto w-full'>
          <table className='flex-1 w-full mb-5'{...getTableProps()}>
@@ -85,13 +93,24 @@ function SortingTable(props, ref){
                 }
             </thead>
             <tbody {...getTableBodyProps()}>
-                {page.map(row => {
+                {page.filter(row => {
+                    let filterPass = true;
+                    const date = new Date(row.values.Added)
+                    if(dateFilter?.startDate){
+                        filterPass = filterPass && (new Date(dateFilter.startDate) < date)
+                    }
+                    if(dateFilter?.endDate){
+                        filterPass = filterPass && (new Date(dateFilter.endDate) > date)
+                    }
+                    return filterPass;
+                }).map(row => {
                     prepareRow(row)
                     return (
                         <tr className='h-14 border-b border-border-grey'{...row.getRowProps()}>
                             {   
                                 row.cells.map(
                                     cell => {
+                                        //return <td className={`${cell.column.Header === "SKU" ? 'text-button-100' : 'text-textGrey-400'}`} {...cell.getCellProps()}/>
                                         return <td {...cell.getCellProps()}>
                                             {cell.render('Cell')}
                                         </td>
@@ -104,8 +123,8 @@ function SortingTable(props, ref){
                 })}
             </tbody>
         </table>
-        <div className='float-right'>
-            <span className='inline-block'>
+        <div className='float-right pb-3'>
+            <span className='inline-block mb-2'>
                 Page{' '}
                 <strong>
                     {pageIndex + 1} of {pageOptions.length}
@@ -113,10 +132,10 @@ function SortingTable(props, ref){
             </span>
             <ul>
                 <li className='inline-block'>
-                    <button className="bg-button-blue rounded-lg mx-2 h-7 px-4" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>{'<<'}</button>
+                    <button className="disabled:bg-textGrey-400 bg-button-100 rounded-lg mx-2 h-7 px-4 w-14" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>{'<<'}</button>
                 </li>
                 <li className='inline-block'>
-                    <button className="bg-button-blue rounded-lg mx-2 h-7 px-4" onClick={() => previousPage()} disabled={!canPreviousPage}>Previous</button>
+                    <button className="disabled:bg-textGrey-400 bg-button-100 rounded-lg mx-2 h-7 px-4 w-14" onClick={() => previousPage()} disabled={!canPreviousPage}>{'<'}</button>
                 </li>
                 <li className='inline-block'>
                     {
@@ -130,10 +149,10 @@ function SortingTable(props, ref){
                     }
                 </li>
                 <li className='inline-block'>
-                    <button className='bg-button-blue rounded-lg mx-2 h-7 px-4' onClick={() => nextPage()} disabled={!canNextPage}>Next</button>
+                    <button className='disabled:bg-textGrey-400 bg-button-100  rounded-lg mx-2 h-7 px-4 w-14' onClick={() => nextPage()} disabled={!canNextPage}>{'>'}</button>
                 </li>
                 <li className='inline-block'>
-                    <button className="bg-button-blue rounded-lg mx-2 h-7 px-4" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>{'>>'}</button>
+                    <button className="disabled:bg-textGrey-400 bg-button-100  rounded-lg mx-2 h-7 px-4 w-14" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>{'>>'}</button>
                 </li>
             </ul>
         </div>

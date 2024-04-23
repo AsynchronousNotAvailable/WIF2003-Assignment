@@ -2,12 +2,28 @@ import React, { useMemo, useState, useEffect, forwardRef, useRef } from 'react'
 import Seller_NavSidebar from '../../components/seller_sidebar';
 import SortingTable from "../../components/order_management/sorting_table"
 import order_data from "../../components/order_management/cleaned_data.json"
+import download_icon_blue from "../../assets/download_icon_blue.png"
+import calendar_icon from "../../assets/calendar_icon.png"
+import filter_icon from "../../assets/filter_icon.png"
+import { GlobalFilter } from "../../components/order_management/global_filter";
+import { GlobalContext } from "../../context";
+import { useContext } from "react";
+
+
+
 
 function OrderManagement(){
     const sortingTableRef = useRef(); 
     function onExportClick(){
 
     }
+    const { deleteSellerOrder } = useContext(GlobalContext)
+    const [rendered, setRendered] = useState(false);
+    const {sellerOrder} = useContext(GlobalContext);
+
+    useEffect(() => {
+        setRendered(() => true);
+    }, [sortingTableRef])
 
     function onAddProductClick(){
 
@@ -48,25 +64,6 @@ function OrderManagement(){
             Header: 'Status',
             Footer: 'Status',
             accessor: 'status',
-        },
-        {
-            Header: 'Action',
-            Footer: 'Action',
-            accessor: 'action',
-            Cell: ({cell}) => {
-                return (
-                <div className='flex'>
-                    <button className='mx-2' onClick={() => alert('hi')}>
-                        Edit
-                    </button>
-                    <button className='mx-2' onClick={() => alert('hi')}>
-                        Hide 
-                    </button>
-                        <button className='mx-2 mr-0' onClick={() => sortingTableRef.current.handleDeleteData(cell.row.index)}>
-                        Delete
-                    </button>
-                </div>  
-            )}
         }
     ]
     const selected = [true, false, false, false]
@@ -74,13 +71,13 @@ function OrderManagement(){
         <>
             {/* <Seller_NavSidebar/> */}
             <Seller_NavSidebar />
-            <div className="ml-64 mt-[60px]">
-                <div className="flex ms-5 mb-2 me-2 float-left">
+            <div className="ml-64 mt-[70px]">
+                <div className="flex ms-5 mb-3 me-2">
                     <p className="flex-1 font-bold text-3xl">Order</p>
-                    <div className="flex">
+                    {/* <div className="flex">
                         <img
-                            className="mx-2 h-auto max-w-full"
-                            src="https://via.placeholder.com/30"
+                            className="mx-2 h-7 max-w-full"
+                            src={notification_icon}
                         ></img>
                         <img
                             className="mx-2 h-auto max-w-full"
@@ -88,31 +85,31 @@ function OrderManagement(){
                         ></img>
                         <img
                             className="mx-2 mr-0 rounded-lg mx-2 h-auto max-w-full"
-                            src="https://via.placeholder.com/30"
+                        src="https://via.placeholder.com/30"
                         ></img>
-                    </div>
+                    </div> */}
                     <br />
                 </div>
                 <div className="flex ms-5 me-2 mb-2">
-                    <input
-                        type="text"
-                        placeholder="Search product"
-                        className="flex-1 border-2 me-4 border-border-grey ps-2 rounded-lg"
-                    ></input>
+                    <div className="flex-1 mr-3">
+                        {rendered &&
+                            <GlobalFilter filter={sortingTableRef.current.globalFilter} setFilter={sortingTableRef.current.setGlobalFilter} />
+                        }
+                    </div>
                     <button
-                        className="flex-initial w-24 me-2 bg-button-blue/15 rounded-lg h-10 "
+                        className="items-center content-center flex w-24 me-2 bg-[#7450DF]/15 rounded-lg h-10"
                         onClick={onExportClick}
                     >
-                        Export
+                        <span className='flex text-[#7450DF] pl-3'><img className=""src={download_icon_blue}></img><p className='ml-1'>Export</p></span>
                     </button>
-                    <button
-                        className="flex-initial w-36 bg-button-blue rounded-lg h-10"
+                    {/* <button
+                        className="flex-initial w-36 bg-button-100 rounded-lg h-10"
                         onClick={onAddProductClick}
                     >
-                        Add Product
-                    </button>
+                        <span className='text-white'>Add Product</span>
+                    </button> */}
                 </div>
-                <div className="flex ms-5 me-2 max-w-full">
+            <div className="flex ms-5 me-4 mt-3 mb-3 max-w-full h-10 hidden">
                     <div className="border-2 border-border-grey rounded-lg">
                         <button className="mx-2 h-9">All Product</button>
                         <button className="mx-2 h-9">Published</button>
@@ -120,17 +117,17 @@ function OrderManagement(){
                         <button className="mx-2 h-9">Draft</button>
                     </div>
                     <div className="flex-1"></div>
-                    <div className="float-end">
+                    <div className="float-end flex ">
                         <button className="mx-2 mr-0 h-10 border-2 border-border-grey rounded-lg w-32">
-                            Select Date
+                            <span className='flex ml-2'><img src={calendar_icon}></img><p className='text-border-100 text-textGrey-400 ml-1'>Select Date</p></span>
                         </button>
                         <button className="mx-2 mr-0 h-10 border-2 border-border-grey rounded-lg w-24">
-                            Filters
+                            <span className='flex ml-4'><img src={filter_icon}></img><p className='text-border-100 text-textGrey-400 ml-1'>Filter</p></span>
                         </button>
                     </div>
                 </div>
                 <div className="flex ms-5 me-2 my-2">
-                <SortingTable ref={sortingTableRef} columns={ORDER_COLUMNS} stringabcd='abcd' data={order_data}/>
+                <SortingTable ref={sortingTableRef} columns={ORDER_COLUMNS} stringabcd='abcd' data={sellerOrder}/>
                     {/* <table className="w-full">
                     <thead className="border-2 border-border-grey">
                         <tr>

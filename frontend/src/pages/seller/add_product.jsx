@@ -70,6 +70,9 @@ function AddProduct() {
     function handleTagsChange(event){
         setTags(() => event.target.value);
     }
+    function handleCancelClick(){
+        navigation("/product_management");
+    }
     function handleSubmit(event){
         event.preventDefault();
         const obj = {
@@ -192,7 +195,7 @@ function AddProduct() {
                 </div>
                 <div className="w-1/5 mx-5">
                     <div className="flex w-full">
-                        <button className="w-1/4 h-8 border-0 bg-blue-400 rounded-lg mx-5 my-3">Cancel</button>
+                        <button onClick={handleCancelClick} className="w-1/4 h-8 border-0 bg-blue-400 rounded-lg mx-5 my-3">Cancel</button>
                         <button className="w-3/4 h-8 border-0 bg-blue-200 rounded-lg mx-5 my-3">Add Product</button>
                     </div>
                     <div className="content-center mx-5 mb-7 shadow-lg px-5 py-5 rounded-md">
