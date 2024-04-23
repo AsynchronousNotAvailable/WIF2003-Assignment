@@ -84,7 +84,7 @@ function DragDropImageUploader() {
                 )}
 
 
-                <input type="file" key={fileInputKey} className="hidden" name='file' ref={fileInputRef} onChange={onFilesSelect}></input>
+                <input id="product-photo" type="file" key={fileInputKey} className="hidden" name='file' ref={fileInputRef} onChange={onFilesSelect}></input>
             </div>
             <div className="w-full h-auto flex content-start flex-wrap items-start max-h-48 overflow-y-auto mt-10">
                 {images.map((images, index) => (

@@ -1,12 +1,13 @@
-import React, {useState} from "react";
+import React, {useState, useRef} from "react";
 import { useNavigate } from "react-router-dom";
 import Seller_NavSidebar from '../../components/seller_sidebar';
-import { BasicTable } from "../../components/order_management/order_table";
-import {SortingTable} from "../../components/order_management/sorting_table"
+import SortingTable from "../../components/order_management/sorting_table"
+import product_data from "../../components/order_management/mock_product_data.json"
 
 
 function ProductManagement(){
     const navigation = useNavigate();
+const sortingTableRef = useRef(); 
     function onExportClick(){
 
     }
@@ -15,7 +16,63 @@ function ProductManagement(){
         navigation("/add_product_page");
     }
     
-
+    const PRODUCT_COLUMNS = [
+        {
+            Header: 'Product',
+            Footer: 'Product',
+            accessor: 'Product',
+        },
+        {
+            Header: 'SKU',
+            Footer: 'SKU',
+            accessor: 'SKU'
+    
+        },
+        {
+            Header: 'Category',
+            Footer: 'Category',
+            accessor: 'Category',
+        },
+        {
+            Header: 'Stock',
+            Footer: 'Stock',
+            accessor: 'Stock',
+        },
+        {
+            Header: 'Price',
+            Footer: 'Price',
+            accessor: 'Price',
+        },
+        {
+            Header: 'Status',
+            Footer: 'Status',
+            accessor: 'Status',
+        },
+        {
+            Header: 'Added',
+            Footer: 'Added',
+            accessor: 'Added',
+        },
+        {
+            Header: 'Action',
+            Footer: 'Action',
+            accessor: 'action',
+            Cell: ({cell}) => {
+                return (
+                <div className='flex'>
+                    <button className='mx-2' onClick={() =>  alert('hi')}>
+                        Edit
+                    </button>
+                    <button className='mx-2' onClick={() =>  alert('hi')}>
+                        Hide 
+                    </button>
+                        <button className='mx-2 mr-0' onClick={() => alert('hi')}>
+                        Delete
+                    </button>
+                </div>  
+            )}
+        }
+    ]
 
     const selected = [true, false, false, false]
     return (
@@ -77,7 +134,7 @@ function ProductManagement(){
                     </div>
                 </div>
                 <div className="flex ms-5 me-2 my-2">
-                    <SortingTable />
+                    <SortingTable ref={sortingTableRef} columns={PRODUCT_COLUMNS} data={product_data}/>
                     {/* <table className="w-full">
                     <thead className="border-2 border-border-grey">
                         <tr>
