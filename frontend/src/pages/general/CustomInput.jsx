@@ -45,7 +45,7 @@ const CustomInput = ({
             <StyledInput
                 type={type}
                 defaultValue={value}
-                onChange={onChange} // Updated to use setValue
+                onChange={handleChange} // Updated to use setValue
                 placeholder={placeholder}
             />
         </CustomInputContainer>
