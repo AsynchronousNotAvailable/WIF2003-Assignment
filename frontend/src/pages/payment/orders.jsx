@@ -71,7 +71,7 @@ export default function Orders() {
     const navigation = useNavigate();
 
     const handleOrderReceived = () => {
-            navigation("/customer/products");
+            navigation("/marketplace");
     };
 
     const CheckoutList = () => {

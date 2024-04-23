@@ -87,45 +87,33 @@ const CreditDebitCardForm = ({ onSave, onCancel }) => {
     setNameOnCard('');
 };
 
+  const handleCardNumberChange = (e) => {
+    let cleanedValue = e.target.value.replace(/\D/g, '');
+    let formattedValue = '';
+    for (let i = 0; i < cleanedValue.length; i++) {
+        if (i % 4 === 0 && i !== 0) {
+            formattedValue += ' ';
+        }
+        formattedValue += cleanedValue[i];
+    }
+    setCardNumber(formattedValue);
+  };
+
+
   return (
     <form 
         style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
         onSubmit={handleSubmit}>
         <Text>Add new card</Text>
       <div style={{ marginBottom: "10px"}}>
-        <StyledInput
-            type="text"
-            value={cardNumber}
-            onChange={(e) => setCardNumber(e.target.value)}
-            placeholder="Card Number"
-            required
-        />
+        <StyledInput type="text" value={cardNumber} onChange={handleCardNumberChange} placeholder="Card Number" required />
       </div>
       <div style={{ display: "flex", marginBottom: "10px"}}>
-        <Column width="70%"><StyledInput
-            type="text"
-            value={expiryDate}
-            onChange={(e) => setExpiryDate(e.target.value)}
-            placeholder="Expiry Date"
-            required
-        /></Column>
-        <Column width="27%"><StyledInput
-            style={{ marginLeft: "15px" }}
-            type="text"
-            value={cvv}
-            onChange={(e) => setCvv(e.target.value)}
-            placeholder="CVV"
-            required
-        /></Column>
+        <Column width="70%"><StyledInput type="date" value={expiryDate} onChange={(e) => setExpiryDate(e.target.value)} placeholder="Expiry Date" required/></Column>
+        <Column width="27%"><StyledInput style={{ marginLeft: "15px" }} type="password" value={cvv} onChange={(e) => setCvv(e.target.value)} placeholder="CVV" required/></Column>
       </div>
       <div style={{ marginBottom: "30px"}}>
-        <StyledInput
-            type="text"
-            value={NameOnCard}
-            onChange={(e) => setNameOnCard(e.target.value)}
-            placeholder="Name on Card"
-            required
-        />
+        <StyledInput type="text" value={NameOnCard} onChange={(e) => setNameOnCard(e.target.value)} placeholder="Name on Card" required/>
       </div>
       <div>
         <CustomButton onClick={onCancel}>Cancel</CustomButton>
