@@ -9,7 +9,39 @@ function GlobalState({ children }) {
     const [cartItems, setCartItems] = useState([]);
     const [totalCheckoutPrice, setTotalCheckoutPrice] = useState(0);
     const [userDetails, setUserDetails] = useState(null);
+    const [shippingAddress, setShippingAddress] = useState({});
+    const [cardDetails, setCardDetails] = useState([]);
+    const [orderHistory, setOrderHistory] = useState([]);
     
+    const addCardDetails = (details) => {
+        setCardDetails([...cardDetails, details]);
+    };
+
+    const addOrders = (items, price, paymentMethod, shippingAddress) => {
+        const order = {
+            orderId: Math.random().toString(36).substring(2,10),
+            orderItems: items,
+            orderPrice: price,
+            paymentMethod: paymentMethod,
+            shippingAddress: shippingAddress,
+            status: "Order placed.",
+            timestamp: Date.now()
+        }
+        setOrderHistory([...orderHistory, order])
+        setCartItems([])
+    }
+
+    const updateOrderStatus = (orderId, newStatus) => {
+        setOrderHistory(prevOrders => {
+          return prevOrders.map(order => {
+            if (order.orderId === orderId) {
+              return { ...order, status: newStatus };
+            }
+            return order;
+          });
+        });
+      };
+
     // for marketplace
     const [productListing, setProductListing] = useState([
         {
@@ -243,6 +275,13 @@ function GlobalState({ children }) {
                 setShopItemListing,
                 totalCheckoutPrice,
                 setTotalCheckoutPrice,
+                shippingAddress,
+                setShippingAddress,
+                addCardDetails,
+                cardDetails,
+                addOrders,
+                orderHistory,
+                updateOrderStatus
             }}
         >
                 {children}
