@@ -40,10 +40,16 @@ const ProductListing = () => {
     const [sortStatus , setSortStatus] = useState(false)
 
     const handleSortingChange = (e) => {
-        console.log("E from handleSortingChange"+e)
-        setSortStatus(prevBool => !prevBool)
-        const sortingPreference = e.target.value ? e.target.value : e
+        console.log("E from handleSortingChange "+e)
+        let sortingPreference = ""
+        if(categoryClicked){
+            sortingPreference = e
+        }
+        else{
+            sortingPreference = e.target.value
+        }
         console.log(sortingPreference)
+        console.log(sortingPreference === e)
         if(sortingPreference === e){
             const sortedProducts = productListing.filter((product) => product.category === e)
             setSortedProductsArr(sortedProducts)
