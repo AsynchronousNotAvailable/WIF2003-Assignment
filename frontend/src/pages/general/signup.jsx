@@ -24,7 +24,7 @@ const StyledLogo = styled.img`
 const TagLine = styled.h1`
     font-size: 36px;
     font-weight: bold;
-    color: #7450DF;
+    color: #5489FC;
     margin-bottom: 15px;
 `
 
@@ -52,7 +52,7 @@ const FormWrapper = styled.div`
     padding: 50px;
     border-radius: 24px;
     box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.25);
-    border-left: 30px solid #C8B6FF;
+    border-left: 30px solid #ADC8FC;
 `;
 
 const SmallText = styled.p`
@@ -88,6 +88,7 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigation = useNavigate();
+  const { userDetails, setUserDetails } = useContext(GlobalContext);
 
   const handleLogin = () => { 
     navigation("/login");
@@ -99,34 +100,16 @@ function SignUp() {
     }
     else {
       // API call to create a new user
+      setUserDetails({ firstName, lastName, emailAddress, password });
+      console.log(userDetails);
+      navigation("/login");
     }
   }
 
-    const LoginForm = () => {
-      const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
       const handlePasswordToggle = () => {
         setShowPassword(!showPassword);
     };
-      return (
-        <div style={{ width: "100%" }}>
-            <div style={{ display: "flex"}}>
-                <CustomInput title="First Name" type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} placeholder="Enter your first name" size="80%" />
-                <CustomInput title="Last Name" type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} placeholder="Enter your last name" size="80%" />
-            </div>
-            <CustomInput title="Email Address" type="text" value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} placeholder="Enter your email address" size="100%" />
-            <div style={{ display: "flex"}}>
-                <CustomInput title="Password" type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password" size="100%" />
-                <CustomInput title="Confirm Password" type={showPassword ? "text" : "password"} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm your password" size="100%" />
-            </div>
-            <SmallText withOpacity style={{ fontSize: "14px" }}>Use 8 or more characters with a mix of letters, numbers & symbols</SmallText>
-            <TogglePassword
-                type="checkbox"
-                onClick={handlePasswordToggle}
-            />
-            <PasswordLabel>Show Password</PasswordLabel>
-        </div>
-    );
-    }
 
     return (
       <Container>
@@ -138,11 +121,27 @@ function SignUp() {
         <FormContainer>
           <FormWrapper>
             <SmallText style={{ fontSize: "32px", fontWeight: "medium" }}>Create an account</SmallText>
-            <SmallText> Already have an account? <LoginLink>Log in</LoginLink></SmallText>
-            <LoginForm/>
+            <SmallText> Already have an account? <LoginLink onClick={handleLogin}>Log in</LoginLink></SmallText>
+            <form style={{ width: "100%" }}>
+                <div style={{ display: "flex"}}>
+                    <CustomInput title="First Name" type="text" value={firstName} setValue={setFirstName} placeholder="Enter your first name" size="80%" />
+                    <CustomInput title="Last Name" type="text" value={lastName} setValue={setLastName} placeholder="Enter your last name" size="80%" />
+                </div>
+                <CustomInput title="Email Address" type="email" value={emailAddress} setValue={setEmailAddress} placeholder="Enter your email address" size="100%" />
+                <div style={{ display: "flex"}}>
+                    <CustomInput title="Password" type={showPassword ? "text" : "password"} value={password} setValue={setPassword} placeholder="Enter your password" size="100%" />
+                    <CustomInput title="Confirm Password" type={showPassword ? "text" : "password"} value={confirmPassword} setValue={setConfirmPassword} placeholder="Confirm your password" size="100%" />
+                </div>
+                <SmallText withOpacity style={{ fontSize: "14px" }}>Use 8 or more characters with a mix of letters, numbers & symbols</SmallText>
+                <TogglePassword
+                    type="checkbox"
+                    onClick={handlePasswordToggle}
+                />
+                <PasswordLabel>Show Password</PasswordLabel>
+            </form>
             <div style={{ display: "flex", width: "100%", justifyContent: "space-between", alignItems: "center", marginTop: "40px"}}>
-              <LoginLink>log in instead</LoginLink>
-              <CustomButton style={{ Opacity: "35%", marginRight: "auto"}} text="Create an account" backgroundColor="#666666" borderColor="none" textColor="white" width="45%" onClick={handleSignUp} />
+              <LoginLink onClick={handleLogin}>log in instead</LoginLink>
+              <CustomButton style={{ Opacity: "35%", marginRight: "auto"}} text="Create an account" backgroundColor="#666666" borderColor="none" textColor="white" width="45%" func={handleSignUp} />
             </div>
           </FormWrapper>
         </FormContainer>

@@ -33,7 +33,12 @@ const CustomInput = ({
     placeholder,
     size,
 }) => {
-
+    const handleChange = (e) => {
+        if (setValue) {
+            setValue(e.target.value);
+        }
+    };
+    
     return (
         <CustomInputContainer size={size}>
             <StyledLabel>{title}</StyledLabel>
