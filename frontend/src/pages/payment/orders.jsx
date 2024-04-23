@@ -76,9 +76,10 @@ export default function Orders() {
     const navigation = useNavigate();
 
     const handleOrderReceived = (orderId) => {
-        updateOrderStatus(orderId, "Received");
-        navigation("/marketplace");
+        updateOrderStatus(orderId, "Order Received.");
       };
+
+    const sortedOrders = orderHistory.slice().sort((a, b) => b.timestamp - a.timestamp);
 
     return (
         <Container>
@@ -86,7 +87,7 @@ export default function Orders() {
             <div style={{ width: "90%", marginTop: "8%"}} >
                 <Text style={{ fontSize: "32px", fontWeight: "bold", marginRight: "auto", marginBottom: "30px" }}>Orders</Text>       
             </div>
-            {orderHistory.map((order, index) => (
+            {sortedOrders.map((order, index) => (
                 <Wrapper key={index} style={{ marginBottom: "20px"}}>
                     <Row>
                         <Column width="40%"><Text><Light>Order ID: {order.orderId}</Light></Text></Column>
@@ -103,7 +104,7 @@ export default function Orders() {
                         <Column width="85%"><Text><Bold style={{ textAlign: "right" }}>Order Total</Bold></Text></Column>
                         <Column width="15%"><Text><Light style={{ color: "#0F60FF", fontSize: "38px", textAlign: "right" }}>RM {order.orderPrice.toFixed(2)}</Light></Text></Column>
                     </Row>
-                    {order.status !== "Received" && (
+                    {order.status !== "Order Received." && (
                         <Row>
                         <PaymentButton style={{backgroundColor: "#0f60ff", color: "white", width: "20%", marginLeft: "auto" }}
                             onClick={() => handleOrderReceived(order.orderId)}

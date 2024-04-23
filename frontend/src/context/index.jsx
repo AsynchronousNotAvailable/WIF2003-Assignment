@@ -24,7 +24,8 @@ function GlobalState({ children }) {
             orderPrice: price,
             paymentMethod: paymentMethod,
             shippingAddress: shippingAddress,
-            status: "Order placed."
+            status: "Order placed.",
+            timestamp: Date.now()
         }
         setOrderHistory([...orderHistory, order])
         setCartItems([])
