@@ -9,6 +9,7 @@ const ModalBackground = styled.div`
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     display: ${({ open }) => (open ? 'block' : 'none')};
+    z-index: 999;
 `;
 
 const ModalContent = styled.div`
@@ -27,22 +28,27 @@ const InputField = styled.input`
     margin-bottom: 10px;
 `;
 
+const ButtonContainer = styled.div`
+    display: flex;
+    margin-top: 20px;
+`;
+
 const Button = styled.button`
     padding: 10px 20px;
     background-color: #0F60FF;
     color: #fff;
     border: none;
     cursor: pointer;
+    margin-left: auto; 
 `;
 
-const EditAddressModal = ({ isOpen, onClose, onSave, name, address, phoneNumber }) => {
+const EditAddressModal = ({ isOpen, name, address, phoneNumber, onSave }) => {
     const [editedName, setEditedName] = useState(name);
     const [editedAddress, setEditedAddress] = useState(address);
     const [editedPhoneNumber, setPhoneNumber] = useState(phoneNumber);
 
     const handleSave = () => {
-        onSave(editedName, editedAddress);
-        onClose();
+        onSave(editedName, editedPhoneNumber, editedAddress);
     };
 
     return (
@@ -66,7 +72,9 @@ const EditAddressModal = ({ isOpen, onClose, onSave, name, address, phoneNumber 
                     onChange={(e) => setEditedAddress(e.target.value)}
                     placeholder="Delivery Address"
                 />
-                <Button onClick={handleSave}>Save</Button>
+                <ButtonContainer>
+                    <Button onClick={handleSave}>Save</Button>
+                </ButtonContainer>
             </ModalContent>
         </ModalBackground>
     );
