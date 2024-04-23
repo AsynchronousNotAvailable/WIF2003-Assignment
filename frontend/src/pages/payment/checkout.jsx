@@ -90,12 +90,41 @@ export default function Checkout() {
 
     const CheckoutList = () => {
         return (
-            <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "30px"}}>
-                <Wrapper style={{ display: "flex"}}>
-                    <Column width="40%"><Text style={{ marginRight: "auto" }}><Light>Product</Light></Text></Column>
-                    <Column width="20%"><Text style={{ marginRight: "auto" }}><Light>Unit Price</Light></Text></Column>
-                    <Column width="20%"><Text style={{ marginRight: "auto" }}><Light>Quantity</Light></Text></Column>
-                    <Column width="20%"><Text style={{ marginRight: "auto" }}><Light>Total Price</Light></Text></Column>
+            <div
+                style={{
+                    width: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    marginBottom: "30px",
+                }}
+            >
+                <Wrapper style={{ display: "flex" }}>
+                    <Column width="40%">
+                        <Text style={{ marginRight: "auto" }}>
+                            <Light>Product</Light>
+                        </Text>
+                    </Column>
+                    <Column width="15%">
+                        <Text style={{ marginRight: "auto" }}>
+                            <Light>Variation</Light>
+                        </Text>
+                    </Column>
+                    <Column width="15%">
+                        <Text style={{ marginRight: "auto" }}>
+                            <Light>Unit Price</Light>
+                        </Text>
+                    </Column>
+                    <Column width="15%">
+                        <Text style={{ marginRight: "auto" }}>
+                            <Light>Quantity</Light>
+                        </Text>
+                    </Column>
+                    <Column width="15%">
+                        <Text style={{ marginRight: "auto" }}>
+                            <Light>Total Price</Light>
+                        </Text>
+                    </Column>
                 </Wrapper>
                 <Wrapper>
                     <Checkout_Item_List
@@ -103,18 +132,34 @@ export default function Checkout() {
                         checkoutItems={cartItems}
                     />
                 </Wrapper>
-                <Wrapper style={{ display: "flex"}}>
-                    <Column width="60%"></Column>
-                    <Column width="20%"><Text style={{ marginRight: "auto" }}><Bold>Doorstep Delivery</Bold></Text></Column>
-                    <Column width="20%"><Text style={{ marginRight: "auto" }}><Light>RM 5.00</Light></Text></Column>
+                <Wrapper style={{ display: "flex" }}>
+                    <Column width="65%"></Column>
+                    <Column width="20%">
+                        <Text style={{ marginRight: "auto" }}>
+                            <Bold>Doorstep Delivery</Bold>
+                        </Text>
+                    </Column>
+                    <Column width="20%">
+                        <Text style={{ marginRight: "auto" }}>
+                            <Light>RM 5.00</Light>
+                        </Text>
+                    </Column>
                 </Wrapper>
-                <Wrapper style={{ display: "flex"}}>
-                    <Column width="60%"></Column>
-                    <Column width="20%"><Text style={{ marginRight: "auto" }}><Bold>Order Total ({totalItems} item)</Bold></Text></Column>
-                    <Column width="20%"><Text style={{ marginRight: "auto" }}><Light>RM {orderTotal.toFixed(2)}</Light></Text></Column>
+                <Wrapper style={{ display: "flex" }}>
+                    <Column width="65%"></Column>
+                    <Column width="20%">
+                        <Text style={{ marginRight: "auto" }}>
+                            <Bold>Order Total ({totalItems} item)</Bold>
+                        </Text>
+                    </Column>
+                    <Column width="20%">
+                        <Text style={{ marginRight: "auto" }}>
+                            <Light>RM {orderTotal.toFixed(2)}</Light>
+                        </Text>
+                    </Column>
                 </Wrapper>
             </div>
-        )
+        );
     }
 
     return (
