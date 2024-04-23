@@ -356,7 +356,7 @@ function GlobalState({ children }) {
     ]);
 
     const addSellerProduct = (product) => {
-        setSellerProduct([...sellerProducts, product]);
+        setSellerProduct([...sellerProduct, product]);
     };
 
     return (

@@ -1,7 +1,12 @@
 import React, {useState} from "react";
 import DragDropImageUploader from "../../components/product_management/add_product/dragDropImageUploader";
 import {useForm} from 'react-hook-form'
+import { useContext } from "react";
+import { GlobalContext } from "../../context";
+import { useNavigate } from "react-router-dom";
+
 function AddProduct() {
+    const { addSellerProduct } = useContext(GlobalContext);
     
     const[productName, setProductName] = useState('');
     const[productDesc, setProductDesc] = useState('');
@@ -17,6 +22,8 @@ function AddProduct() {
     const[width, setWidth] = useState(0);
     const[category, setCategory] = useState("none");
     const[tags, setTags] = useState("none");
+
+    const navigation = useNavigate();
     function handleNameChange(event){
         setProductName(() => event.target.value);
     }
@@ -83,7 +90,8 @@ function AddProduct() {
             const json = JSON.stringify(obj); //convert it back to json
             fs.writeFile("../../components/order_management/mock_product_data.json", json, 'utf8'); // write it back 
         }}); */
-        console.log(obj);
+        addSellerProduct(obj);
+        navigation("/product_management");
     }
 
     
