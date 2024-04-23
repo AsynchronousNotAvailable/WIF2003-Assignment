@@ -67,7 +67,7 @@ const PaymentContent = styled.div`
 `;
 
 export default function Checkout() {
-    const { cartItems, shippingAddress, setShippingAddress } = useContext(GlobalContext);
+    const { cartItems, shippingAddress, setShippingAddress, addOrders } = useContext(GlobalContext);
     const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
     const orderTotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
@@ -84,6 +84,7 @@ export default function Checkout() {
             alert("Please select a payment method to proceed.");
         }
         else {
+            addOrders(cartItems, orderTotal, selectedPaymentMethod, shippingAddress);
             alert("Order placed successfully!");
             navigation("/customer/orders");
         }
