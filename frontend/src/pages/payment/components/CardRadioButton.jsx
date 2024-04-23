@@ -33,7 +33,7 @@ const RadioFill = styled.span`
   display: ${({ checked }) => (checked ? 'block' : 'none')};
 `;
 
-const CardRadioButton = ({ name, onChange, checked }) => {
+const CardRadioButton = ({ name, onChange, checked, cardNumber }) => {
   return (
     <RadioContainer>
       <RadioInput
@@ -42,6 +42,7 @@ const CardRadioButton = ({ name, onChange, checked }) => {
         value={name}
         onChange={onChange}
         checked={checked}
+        cardNumber={cardNumber}
       />
       <RadioButton>
         <RadioFill checked={checked} />

@@ -8,6 +8,7 @@ import { useState } from "react";
 import OnlineBankingOptions from "./components/OnlineBanking";
 import CreditDebitCard from "./components/CreditDebit";
 import { useNavigate } from "react-router-dom";
+import EditAddressModal from "./components/deliveryAddressModal";
 
 const Container = styled.div`
     display: flex;
@@ -66,7 +67,7 @@ const PaymentContent = styled.div`
 `;
 
 export default function Checkout() {
-    const { cartItems } = useContext(GlobalContext);
+    const { cartItems, shippingAddress, setShippingAddress, addOrders, orderHistory } = useContext(GlobalContext);
     const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
     const orderTotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
@@ -83,7 +84,7 @@ export default function Checkout() {
             alert("Please select a payment method to proceed.");
         }
         else {
-            alert("Order placed successfully!");
+            addOrders(cartItems, orderTotal+5, selectedPaymentMethod, shippingAddress);
             navigation("/customer/orders");
         }
     };
@@ -162,6 +163,21 @@ export default function Checkout() {
         );
     }
 
+    const [modalOpen, setModalOpen] = useState(false);
+    const handleEdit = () => {
+        setModalOpen(true);
+    }
+
+    const handleSave = (editedName, editedPhoneNumber, editedAddress) => {
+        const shippingAddress = {
+            name: editedName,
+            phone: editedPhoneNumber,
+            add: editedAddress,
+        }
+        setShippingAddress(shippingAddress);
+        setModalOpen(false);
+    };
+
     return (
         <Container>
             <Customer_Navbar />
@@ -169,8 +185,17 @@ export default function Checkout() {
                 <Text style={{ fontSize: "32px", fontWeight: "bold", marginRight: "auto", marginBottom: "30px" }}>Checkout</Text>       
             </div>
             <Wrapper style={{ marginBottom: "30px"}}>
-                <Text style={{ marginRight: "auto", color: "#0F60FF" }}>Delivery Address</Text>
-                <Text style={{ marginRight: "auto" }}> <Bold>Tan Jun Xian (+60) 132068030</Bold> 121, Jalan 17/14, Seksyen 17, Petaling Jaya, 46400 Selangor. </Text>  
+                <div style={{ display: "flex", alignItems: "center" }}>
+                    <Column width="12%"><Text style={{ marginRight: "auto", color: "#0F60FF" }}>Delivery Address</Text></Column><p onClick={handleEdit} style={{ fontSize: "14px"}}>EDIT</p>
+                </div>
+                <Text style={{ marginRight: "auto" }}> <Bold>{shippingAddress.name} {shippingAddress.phone}</Bold> {shippingAddress.add} </Text>  
+                <EditAddressModal
+                    isOpen={modalOpen}
+                    name={shippingAddress.name}
+                    address={shippingAddress.add}
+                    phoneNumber={shippingAddress.phone}
+                    onSave={handleSave}
+                />
             </Wrapper>
             <CheckoutList />
             <Wrapper style={{ display: "flex", alignItems: "center"}}>
