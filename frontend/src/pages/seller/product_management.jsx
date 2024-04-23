@@ -2,15 +2,17 @@ import React, {useState, useRef} from "react";
 import { useNavigate } from "react-router-dom";
 import Seller_NavSidebar from '../../components/seller_sidebar';
 import SortingTable from "../../components/order_management/sorting_table"
-import product_data from "../../components/order_management/mock_product_data.json"
+import { useContext } from "react";
+import { GlobalContext } from "../../context";
 
 
 function ProductManagement(){
     const navigation = useNavigate();
-const sortingTableRef = useRef(); 
+    const sortingTableRef = useRef(); 
     function onExportClick(){
 
     }
+    const { sellerProduct } = useContext(GlobalContext);
 
     function onAddProductClick(){
         navigation("/add_product_page");
@@ -134,7 +136,7 @@ const sortingTableRef = useRef();
                     </div>
                 </div>
                 <div className="flex ms-5 me-2 my-2">
-                    <SortingTable ref={sortingTableRef} columns={PRODUCT_COLUMNS} data={product_data}/>
+                    <SortingTable ref={sortingTableRef} columns={PRODUCT_COLUMNS} data={sellerProduct}/>
                     {/* <table className="w-full">
                     <thead className="border-2 border-border-grey">
                         <tr>
