@@ -120,7 +120,10 @@ function MarketplaceAnalysis() {
                         <header className="text-2xl font-bold tracking-wide mb-5">
                             Best Selling Product Category Distribution
                         </header>
+                        <div className = "flex flex-row align-middle items-center justify-center">
                         <PieChart
+                          margin={{ top: 200, bottom: 100, }}
+
                             series={[
                                 {
                                     outerRadius: 200,
@@ -132,15 +135,16 @@ function MarketplaceAnalysis() {
                                     direction: "column",
                                     position: {
                                         vertical: "top",
-                                        horizontal: "left",
+                                        horizontal: "right",
                                     },
-                                    padding: 0,
                                 },
                             }}
                             height={500}
                             width={500}
                             
                         />
+                        </div>
+                       
                     </section>
                 </section>
             </main>

@@ -3,6 +3,8 @@ import Customer_Navbar from "../../components/customer_navbar";
 import { useLocation, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../context";
 import Product_Review from "./components/Product_Review";
+import Box from '@mui/material/Box';
+import Rating from '@mui/material/Rating';
 
 function Product() {
     const { cartItems, setCartItems, productListing, setProductListing } =
@@ -70,16 +72,49 @@ function Product() {
     const addReview = () => {
 
     }
-
     return (
         <>
+        {/* <Customer_Navbar />
+        <div className = "mt-[64px] flex flex-row">
+            <div className = "w-[592px] h-[712px]">
+                <img src = {product.img} className = "object-cover w-full h-full"/>
+            </div>
+            <div className = "flex flex-col flex-1">
+                <p className = "text-grey-900 font-bold font-sans text-[36px]" >{product.name}</p>
+                <p className = "text-grey-900  font-sans text-[36px]">RM{product.price}</p>
+                
+                    <Box
+                     sx={{'& > legend': { mt: 2 },}}>
+                    <Rating name="read-only" value={4} readOnly />
+                    </Box>
+                
+                <div className = "text-grey-700 text-[24px] tracking-tight font-sans">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>
+                <div className="flex flex-col">
+                                        <h4 className="font-sans text-[20px]  text-gray-600">
+                                            Variation
+                                        </h4>
+                                        <div className = "flex flex-row">
+                                        {product.variations.map(
+                                            (v, index) => (
+                                                <div key={index} className={`flex flex-row px-4 py-2 rounded-sm 
+                                                ${variation.includes(v) ? "bg-slate-500 text-white" : "bg-slate-400"}`}
+                                                    onClick={() => toggleSelection(v)}>{v}
+                                                </div>
+                                            )
+                                        )}
+                                        </div>
+                                        
+                </div>
+                <div className = "flex flex-row">
+                <button className = "bg-[#5489FC]"> Add to Cart</button>
+                <p>[Wishlist]</p>
+                </div>
+
+            </div>
+        </div> */}
             <Customer_Navbar />
             <div className="mt-[64px]">
-                {/* {product.id}
-                {product.name}
-                {product.price}
-                {product.rating}
-                {product.img} */}
+             
 
                 <div className="w-full bg-gray-200 h-[92vh] px-48 py-16">
                     <div className="flex flex-row gap-20">
@@ -225,6 +260,8 @@ function Product() {
                     </div>
                 </div>
             </div>
+            <>
+            </>
         </>
     );
 }

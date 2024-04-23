@@ -19,6 +19,8 @@ function GlobalState({ children }) {
             seller: "Milo_Seller",
             reviews: [],
             variations: ["Original", "Chocolate", "Vanilla"],
+            category : "Food & Beverage",
+            description : "Milo (/ˈmaɪloʊ/ MY-loh; stylised as MILO) is a chocolate-flavoured malted powder product produced by Nestlé, typically mixed with milk, hot water, or both, to produce a beverage.",
         },
         {
             id: 1,
@@ -29,6 +31,8 @@ function GlobalState({ children }) {
             seller: "Milo_Seller",
             reviews: [],
             variations: ["Original", "Chocolate", "Vanilla"],
+            category : "Food & Beverage",
+            description : "Milo (/ˈmaɪloʊ/ MY-loh; stylised as MILO) is a chocolate-flavoured malted powder product produced by Nestlé, typically mixed with milk, hot water, or both, to produce a beverage."
         },
         {
             id: 2,
@@ -39,6 +43,8 @@ function GlobalState({ children }) {
             seller: "Horlicks_Seller",
             reviews: [],
             variations: ["Original", "Chocolate", "Vanilla"],
+            category : "Food & Beverage",
+            description : "Horlicks is a delicious drink made from milk, wheat and malt. Fortified with 19 vital nutrients which includes Zinc, Calcium, Iron, vitamins and minerals that provides essential nutrition to help in children's growth and development!"
         },
 
         {
@@ -50,6 +56,8 @@ function GlobalState({ children }) {
             seller: "Builder_Seller",
             reviews: [],
             variations: ["Original", "Chocolate", "Vanilla"],
+            category : "Home & Lifestyle",
+            description : "Builders are the workers that live inside the Builder's Hut. They can upgrade and build structures, as well as upgrade your Heroes. They can also craft Capital Gold in the forge. You do not need a Builder to add decorations or traps, but you need a Builder to upgrade Walls."
         },
 
         {
@@ -61,6 +69,8 @@ function GlobalState({ children }) {
             seller: "Nice",
             reviews: [],
             variations: ["Brown", "Khaki", "Grey"],
+            category : "Books & Stationery",
+            description : "a book or binder of blank, often ruled, pages on which to write, especially one used by students to take notes in class. a book in which promissory notes are entered, registered, recorded, etc"
         },
 
         {
@@ -72,6 +82,8 @@ function GlobalState({ children }) {
             seller: "Nice",
             reviews: [],
             variations: ["0.38mm", "0.5mm", "0.7mm"],
+            category : "Books & Stationery",
+            description : "A universal tool used for writing on paper. A pen has a plastic body called a barrel, a tip, an ink reservoir or chamber, and a cap. Different colours of ink can be used in a pen to write. A significant phrase related to it is “Pen is mightier than the sword”."
         },
         {
             id: 8,
@@ -82,6 +94,8 @@ function GlobalState({ children }) {
             seller: "Nice",
             reviews: [],
             variations: ["White", "Brown", "Grey"],
+            category : "Books & Stationery",
+            description : "A pencil case or pencil box is a container used to store pencils. A pencil case can also contain a variety of other stationery such as sharpeners, pens, glue sticks, erasers, scissors, and rulers."
         },
         {
             id: 9,
@@ -92,6 +106,8 @@ function GlobalState({ children }) {
             seller: "Nice",
             reviews: [],
             variations: ["Black", "Brown", "White"],
+            category : "Men's Fashion",
+            description : "A wallet is a flat case or pouch, often used to carry small personal items such as physical currency, debit cards, and credit cards; identification documents such as driving licence, identification card, club card; photographs, transit pass, business cards and other paper or laminated cards."
         },
     ]);
 
@@ -109,6 +125,8 @@ function GlobalState({ children }) {
                 seller: "Nice",
                 reviews: [],
                 variations: ["Brown", "Khaki", "Grey"],
+                category : "Books & Stationery",
+                description : "a book or binder of blank, often ruled, pages on which to write, especially one used by students to take notes in class. a book in which promissory notes are entered, registered, recorded, etc"
             },
             {
                 id: 7,
@@ -119,6 +137,8 @@ function GlobalState({ children }) {
                 seller: "Nice",
                 reviews: [],
                 variations: ["0.38mm", "0.5mm", "0.7mm"],
+                category : "Books & Stationery",
+                description : "A universal tool used for writing on paper. A pen has a plastic body called a barrel, a tip, an ink reservoir or chamber, and a cap. Different colours of ink can be used in a pen to write. A significant phrase related to it is “Pen is mightier than the sword”."
             },
             {
                 id: 8,
@@ -129,6 +149,8 @@ function GlobalState({ children }) {
                 seller: "Nice",
                 reviews: [],
                 variations: ["White", "Brown", "Grey"],
+                category : "Books & Stationery",
+                description : "A pencil case or pencil box is a container used to store pencils. A pencil case can also contain a variety of other stationery such as sharpeners, pens, glue sticks, erasers, scissors, and rulers."
             },
             {
                 id: 9,
@@ -139,6 +161,8 @@ function GlobalState({ children }) {
                 seller: "Nice",
                 reviews: [],
                 variations: ["Black", "Brown", "White"],
+                category : "Men's Fashion",
+                description : "A wallet is a flat case or pouch, often used to carry small personal items such as physical currency, debit cards, and credit cards; identification documents such as driving licence, identification card, club card; photographs, transit pass, business cards and other paper or laminated cards."
             },
         ],
         Milo_Seller: [
@@ -152,6 +176,8 @@ function GlobalState({ children }) {
                 seller: "Milo_Seller",
                 reviews: [],
                 variations: ["Original", "Chocolate", "Vanilla"],
+                category : "Food & Beverage",
+                description : "Milo (/ˈmaɪloʊ/ MY-loh; stylised as MILO) is a chocolate-flavoured malted powder product produced by Nestlé, typically mixed with milk, hot water, or both, to produce a beverage.",
             },
             {
                 id: 1,
@@ -162,6 +188,8 @@ function GlobalState({ children }) {
                 seller: "Milo_2_Seller",
                 reviews: [],
                 variations: ["Original", "Chocolate", "Vanilla"],
+                category : "Food & Beverage",
+                description : "Milo (/ˈmaɪloʊ/ MY-loh; stylised as MILO) is a chocolate-flavoured malted powder product produced by Nestlé, typically mixed with milk, hot water, or both, to produce a beverage.",
             },
         ],
         Horlicks_Seller: [
@@ -175,6 +203,8 @@ function GlobalState({ children }) {
                 seller: "Horlicks_Seller",
                 reviews: [],
                 variations: ["Original", "Chocolate", "Vanilla"],
+                category : "Food & Beverage",
+                description : "Horlicks is a delicious drink made from milk, wheat and malt. Fortified with 19 vital nutrients which includes Zinc, Calcium, Iron, vitamins and minerals that provides essential nutrition to help in children's growth and development!"
             },
         ],
         Builder_Seller: [
@@ -188,6 +218,8 @@ function GlobalState({ children }) {
                 seller: "Builder_Seller",
                 reviews: [],
                 variations: ["Original", "Chocolate", "Vanilla"],
+                category : "Home & Lifestyle",
+                description : "Builders are the workers that live inside the Builder's Hut. They can upgrade and build structures, as well as upgrade your Heroes. They can also craft Capital Gold in the forge. You do not need a Builder to add decorations or traps, but you need a Builder to upgrade Walls."
             },
         ],
     });
