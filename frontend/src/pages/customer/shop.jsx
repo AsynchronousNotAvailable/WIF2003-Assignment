@@ -41,8 +41,8 @@ function Shop() {
                 </div>
             </main> */}
             <div className="flex flex-col mt-36">
-                <div className="flex p-5">
-                    <h4 className="font-sans font-semibold text-2xl">
+                <div className="flex px-20">
+                    <h4 className="font-sans font-semibold text-3xl">
                         {seller}'s Shop
                     </h4>
                 </div>

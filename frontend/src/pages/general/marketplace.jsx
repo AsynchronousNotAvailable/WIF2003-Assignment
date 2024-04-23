@@ -15,7 +15,6 @@
 //         const userInput = event.target.value.toLowerCase();
 //         setUserSearch(userInput);
 
-
 //     };
 
 //     // const matchedProducts = products.filter((product) =>
@@ -100,7 +99,6 @@
 //         },
 //     ]);
 
-    
 //     const navigation = useNavigate();
 
 //     const navigateToShop = (seller) => {
@@ -244,19 +242,19 @@ import { PieChart } from "@mui/x-charts/PieChart";
 import { Typography, Stack } from "@mui/material";
 import { BarChart } from "@mui/x-charts/BarChart";
 import Seller_NavSidebar from "../../components/seller_sidebar";
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
 
 function Marketplace() {
     const { shopsItemListing, productListing } = useContext(GlobalContext);
-    console.log(shopsItemListing) //time to map the value of the name, given the key 
+    console.log(shopsItemListing); //time to map the value of the name, given the key
     const options = productListing.map((option) => {
         const firstLetter = option.name[0].toUpperCase();
         return {
-          firstLetter: /[0-9]/.test(firstLetter) ? '0-9' : firstLetter,
-          ...option,
+            firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
+            ...option,
         };
-      });
+    });
 
     const [productCategorySetOne, setProductCategorySO] = useState([
         {
@@ -310,7 +308,7 @@ function Marketplace() {
             name: "Nice Notebook",
             price: 13,
             rating: 4,
-            img: "/notebook.jpeg",
+            img: "/notebook.png",
             seller: "Nice",
             reviews: [],
             variations: ["Brown", "Khaki", "Grey"],
@@ -344,37 +342,40 @@ function Marketplace() {
         },
     ]);
     const [userSearchInput, setUserSearchInput] = useState("");
-    const [displayedProducts , setDisplayedProducts] = useState([]);
+    const [displayedProducts, setDisplayedProducts] = useState([]);
 
     // const handleSearchChange = (e) => {
-    
+
     //     const userInput = e.target.value.toLowerCase();
     //     setUserSearchInput(userInput)
-    //     const matchedProducts = productListing.filter((product) => 
+    //     const matchedProducts = productListing.filter((product) =>
     //         product.name.toLowerCase().includes(userInput)
     //     )
     //     setDisplayedProducts(matchedProducts)
     // }
     const handleSearchChange = (event) => {
-        if(event.target.innerText){
-            const userInput = (event.target.innerText).toLowerCase();
-            setUserSearchInput(userInput)
-            const matchedProducts = productListing.filter((product) => product.name.toLowerCase().includes(userInput))
-            setDisplayedProducts(matchedProducts)
-        }
-        else {
+        if (event.target.innerText) {
+            const userInput = event.target.innerText.toLowerCase();
+            setUserSearchInput(userInput);
+            const matchedProducts = productListing.filter((product) =>
+                product.name.toLowerCase().includes(userInput)
+            );
+            setDisplayedProducts(matchedProducts);
+        } else {
             const userInput = event.target.value.toLowerCase();
-            setUserSearchInput(userInput)
-            const matchedProducts = productListing.filter((product) => product.name.toLowerCase().includes(userInput))
-            setDisplayedProducts(matchedProducts)
+            setUserSearchInput(userInput);
+            const matchedProducts = productListing.filter((product) =>
+                product.name.toLowerCase().includes(userInput)
+            );
+            setDisplayedProducts(matchedProducts);
         }
     };
-    
+
     const navigation = useNavigate();
 
     const onSearchButtonClick = () => {
-        navigation((`/customer/products`), {state : {displayedProducts}})
-    }
+        navigation(`/customer/products`, { state: { displayedProducts } });
+    };
 
     const navigateToShop = (seller) => {
         navigation(`/customer/shop/${seller}`, {
@@ -383,11 +384,8 @@ function Marketplace() {
     };
 
     const navigateToProductDetails = (productId) => {
-        
-        const product = productListing.find(
-            (p) => p.id === productId
-        );
-      
+        const product = productListing.find((p) => p.id === productId);
+
         // Navigate to the product details page with the targeted product
         navigation(`/customer/product/${productId}`, {
             state: { product },
@@ -396,61 +394,52 @@ function Marketplace() {
     return (
         <>
             <Customer_Navbar />
-            <main className="mt-36 flex flex-col gap-5">
-                <section className = "flex flex-row w-full gap-2 justify-center">
-                <Autocomplete
-                            id="free-solo-demo"
-                            freeSolo
-                            sx={{ width:600 }}
-                            onChange = {(event, newValue) => {
-                                console.log(newValue)
-                            }}
-                            inputValue = {userSearchInput}
-                            value = {userSearchInput}
-                            onInputChange = {(newInputValue) => handleSearchChange(newInputValue)}
-                            options={productListing.map((option) => option.name)}
-                            renderInput={(params) => <TextField {...params} label="Search" />}
-                        />
+            <main className="mt-24 flex flex-col">
+                <section className="flex flex-row w-full gap-2 mb-10 justify-center">
+                    <Autocomplete
+                        id="free-solo-demo"
+                        freeSolo
+                        sx={{ width: 600 }}
+                        onChange={(event, newValue) => {
+                            console.log(newValue);
+                        }}
+                        inputValue={userSearchInput}
+                        value={userSearchInput}
+                        onInputChange={(newInputValue) =>
+                            handleSearchChange(newInputValue)
+                        }
+                        options={productListing.map((option) => option.name)}
+                        renderInput={(params) => (
+                            <TextField {...params} label="Search" />
+                        )}
+                    />
 
-                <button onClick={onSearchButtonClick}>
-                <i class="fa fa-search" aria-hidden="true"></i>
-                </button>
-
+                    <button
+                        onClick={onSearchButtonClick}
+                        className="bg-[white] rounded-full shadow-3xl hover:bg-[#45b9dc] px-4 py-2"
+                    >
+                        <i
+                            class="fa fa-search text-black "
+                            aria-hidden="true"
+                        ></i>
+                    </button>
                 </section>
-                <section className="flex flex-row justify-center  ">
-                    <img className=" object-cover " src="/setelbanner.png" />
+                <section className="flex flex-row justify-center px-12 ">
+                    <img
+                        className=" object-cover rounded-3xl shadow-2xl"
+                        src="/setelbanner.png"
+                    />
                 </section>
-                <section className="flex flex-col ">
-                    <section className = "flex flex-row">
-                    {/* <Stack spacing={2} sx={{ width: 300 }}>
-                        
-                        <Autocomplete
-                            freeSolo
-                            id="free-solo-2-demo"
-                            disableClearable
-                            onInputChange = {(newInputValue) => handleSearchChange(newInputValue)}
-                            options={productListing.map((option) => option.name)}
-                            renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                label="Search input"
-                                InputProps={{
-                                ...params.InputProps,
-                                type: 'search',
-                                }}
-                            />
-                            )}
-                        />
-                        </Stack>                       */}
-                    </section>
-                    <span className="text-xl items-start mb-10 mt-20 font-sans font-semibold ml-[300px]">
+                <section className="flex flex-col px-16 py-10">
+                    <p className="text-3xl items-start my-10 font-sans font-semibold ">
                         Category
-                    </span>
-                    <section className="flex flex-col justify-center items-center">
-                        <section className="flex flex-row ">
+                    </p>
+
+                    <section className="flex flex-col gap-10  justify-center items-center">
+                        <section className="flex flex-row gap-20 py-10">
                             {productCategorySetOne.map((product) => {
                                 return (
-                                    <section className="flex flex-col border-2 w-[175px] h-[218px] justify-center items-center">
+                                    <section className="flex flex-col gap-10 rounded-xl shadow-2xl w-48 h-72 px-5 py-5 justify-center items-center">
                                         <img
                                             src={product.img}
                                             className="border-gray-300 border-2 w-[110px] h-[110px] rounded-full object-right"
@@ -478,23 +467,26 @@ function Marketplace() {
                     </section>
                 </section>
 
-                <section className="flex flex-col ">
-                    <span className="text-xl items-start mb-10 mt-20 font-sans font-semibold ml-[300px]">
-                        Top Sellers
-                    </span>
-                    <section className="flex flex-col justify-center items-center">
-                        <section className="flex flex-row gap-10">
+                <section className="flex flex-col px-16 py-10">
+                    <p className="text-3xl items-start my-10 font-sans font-semibold ">
+                        Meet Syopi Top Sellers
+                    </p>
+
+                    <section className="flex flex-col justify-center items-center ">
+                        <section className="flex flex-row gap-10 ">
                             {Object.keys(shopsItemListing).map((sellers) => {
                                 return (
                                     <section
-                                        className="flex flex-col rounded-lg shadow-lg w-[175px] h-[218px] justify-center items-center"
+                                        className="flex flex-col justify-center w-64 h-92 rounded-xl shadow-2xl px-10 py-10 items-center hover:bg-slate-100"
                                         onClick={() => navigateToShop(sellers)}
                                     >
                                         <img
                                             src={shopsItemListing[sellers][0]}
-                                            className="border-gray-500 border-2 w-[110px] h-[110px] rounded-full object-contain"
+                                            className="border-gray-500 border-2 w-[110px] h-[110px] rounded-full shadow-2xl object-contain mb-5"
                                         />
-                                        <p>{sellers}</p>
+                                        <p className="font-sans font-light text-xl">
+                                            {sellers}
+                                        </p>
                                     </section>
                                 );
                             })}
@@ -502,11 +494,11 @@ function Marketplace() {
                     </section>
                 </section>
 
-                <section className="flex flex-col  ">
-                    <p className="ftext-xl items-start mb-10 mt-20 font-sans font-semibold ml-[300px]">
+                <section className="flex flex-col px-16 py-10">
+                    <p className="text-3xl items-start my-10 font-sans font-semibold ">
                         Just For You
                     </p>
-                    <section className="flex flex-row items-center justify-center gap-5 ">
+                    <section className="flex flex-row  gap-20">
                         {recommendProduct.map((product) => {
                             return (
                                 <section
@@ -514,13 +506,14 @@ function Marketplace() {
                                         navigateToProductDetails(product.id)
                                     }
                                     key={product.id}
-                                    className="flex flex-col w-[350px] border border-gray-300 p-2 justify-center"
+                                    className="flex flex-col justify-center w-64 h-92 rounded-xl shadow-2xl px-10 py-10 hover:bg-slate-100"
                                 >
                                     <img
                                         src={product.img}
-                                        className="h-full object-cover object-center"
+                                        className="h-full object-cover object-center "
                                         alt={product.name}
                                     />
+
                                     <p className="font-sans font-semibold text-lg">
                                         {product.name}
                                     </p>

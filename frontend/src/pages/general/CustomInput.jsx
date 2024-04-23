@@ -29,7 +29,7 @@ const CustomInput = ({
     title,
     type,
     value,
-    setValue,
+    onChange,
     placeholder,
     size,
 }) => {
@@ -44,8 +44,8 @@ const CustomInput = ({
             <StyledLabel>{title}</StyledLabel>
             <StyledInput
                 type={type}
-                value={value}
-                onChange={handleChange} // Updated to use setValue
+                defaultValue={value}
+                onChange={onChange} // Updated to use setValue
                 placeholder={placeholder}
             />
         </CustomInputContainer>

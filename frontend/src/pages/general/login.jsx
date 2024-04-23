@@ -85,6 +85,7 @@ const SocialLink = styled.a`
 
 function Login() {
     const [emailAddress, setEmailAddress] = useState("");
+    console.log(emailAddress)
     const [password, setPassword] = useState("");
     const { setIsAuth, setIsSeller } = useContext(GlobalContext);
     const { userDetails } = useContext(GlobalContext);
