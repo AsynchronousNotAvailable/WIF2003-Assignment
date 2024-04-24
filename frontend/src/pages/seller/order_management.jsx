@@ -6,6 +6,7 @@ import download_icon_blue from "../../assets/download_icon_blue.png"
 import calendar_icon from "../../assets/calendar_icon.png"
 import filter_icon from "../../assets/filter_icon.png"
 import { GlobalFilter } from "../../components/order_management/global_filter";
+import ExportCsv from "../../components/order_management/export_csv";
 import { GlobalContext } from "../../context";
 import { useContext } from "react";
 
@@ -96,12 +97,7 @@ function OrderManagement(){
                             <GlobalFilter filter={sortingTableRef.current.globalFilter} setFilter={sortingTableRef.current.setGlobalFilter} />
                         }
                     </div>
-                    <button
-                        className="items-center content-center flex w-24 me-2 bg-[#7450DF]/15 rounded-lg h-10"
-                        onClick={onExportClick}
-                    >
-                        <span className='flex text-[#7450DF] pl-3'><img className=""src={download_icon_blue}></img><p className='ml-1'>Export</p></span>
-                    </button>
+                    <ExportCsv data={sellerOrder} fileName={"seller_order"}/>
                     {/* <button
                         className="flex-initial w-36 bg-button-100 rounded-lg h-10"
                         onClick={onAddProductClick}

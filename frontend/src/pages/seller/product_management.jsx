@@ -113,7 +113,7 @@ function ProductManagement() {
             Header: 'Action',
             Footer: 'Action',
             accessor: 'action',
-            Cell: ({cell, deleteSellerProduct}) => {
+            Cell: ({cell}) => {
                 return (
                     <div className='flex'>
                         {/* <button className='mx-2' onClick={() => alert('hi')}>
@@ -146,9 +146,10 @@ function ProductManagement() {
                         {rendered &&
                             <GlobalFilter filter={sortingTableRef.current.globalFilter} setFilter={sortingTableRef.current.setGlobalFilter} />
                         }
-                        <ExportCsv data={sellerProduct}/>
 
                     </div>
+
+                    <ExportCsv data={sellerProduct} fileName={'seller_product'}></ExportCsv>
                     
                     <button
                         className="flex-initial w-36 bg-[#7450DF] rounded-lg h-10"
