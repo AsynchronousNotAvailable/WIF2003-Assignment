@@ -11,6 +11,7 @@ import add_icon from "../../assets/add_icon_white.png"
 import { GlobalFilter } from "../../components/order_management/global_filter";
 import { format, setDate } from 'date-fns'
 import TableDatePicker from "../../components/order_management/tableDatePicker";
+import ExportCsv from "../../components/order_management/export_csv";
 import DatePicker from "react-datepicker";
 function ProductManagement() {
     const navigation = useNavigate();
@@ -26,12 +27,26 @@ function ProductManagement() {
     useEffect(() => {
         setRendered(() => true);
     }, [sortingTableRef]);
-
+    
     function onExportClick() {
 
     }
+
+    const {setSellerProduct} =  useContext(GlobalContext)
+
+    const deleteSellerProduct = (index) => {
+        const updatedData = sellerProduct.filter((_,i) => i !== index);
+        console.log(index);
+        console.log(updatedData);
+        setSellerProduct(updatedData);
+        console.log(sellerProduct);
+    }
+    
+    // useEffect(() => {
+
+    // }, [sellerProduct]);
+
     const { sellerProduct } = useContext(GlobalContext);
-    const { deleteSellerProduct } = useContext(GlobalContext);
 
     function handleStartDateChange(date) {
         setStartDate(() => date);
@@ -98,7 +113,7 @@ function ProductManagement() {
             Header: 'Action',
             Footer: 'Action',
             accessor: 'action',
-            Cell: ({ cell }) => {
+            Cell: ({cell, deleteSellerProduct}) => {
                 return (
                     <div className='flex'>
                         {/* <button className='mx-2' onClick={() => alert('hi')}>
@@ -107,7 +122,7 @@ function ProductManagement() {
                         <button className='mx-2' onClick={() => alert('hi')}>
                             Hide
                         </button> */}
-                        <button className='mx-2 mr-0' onClick={() => deleteSellerProduct(cell.row.index)}>
+                        <button className='mx-2 mr-0' onClick={() => sortingTableRef.current.handleDeleteData(cell.row.index)}>
                             Delete
                         </button>
                     </div>
@@ -131,14 +146,10 @@ function ProductManagement() {
                         {rendered &&
                             <GlobalFilter filter={sortingTableRef.current.globalFilter} setFilter={sortingTableRef.current.setGlobalFilter} />
                         }
+                        <ExportCsv data={sellerProduct}/>
 
                     </div>
-                    <button
-                        className="items-center content-center flex w-24 me-2 bg-[#7450DF]/15 rounded-lg h-10"
-                        onClick={onExportClick}
-                    >
-                        <span className='flex text-[#7450DF] pl-3'><img className="" src={download_icon_blue}></img><p className='ml-1'>Export</p></span>
-                    </button>
+                    
                     <button
                         className="flex-initial w-36 bg-[#7450DF] rounded-lg h-10"
                         onClick={onAddProductClick}
@@ -171,7 +182,7 @@ function ProductManagement() {
                     </div>
                 </div>
                 <div className="flex ms-5 me-2 my-2">
-                    <SortingTable ref={sortingTableRef} columns={PRODUCT_COLUMNS} data={sellerProduct} />
+                    <SortingTable ref={sortingTableRef} columns={PRODUCT_COLUMNS} data={sellerProduct} deleteSellerProduct={deleteSellerProduct} dateFilter={dateFilter} />
                     {/* <table className="w-full">
                     <thead className="border-2 border-border-grey">
                         <tr>

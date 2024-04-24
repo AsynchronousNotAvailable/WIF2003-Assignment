@@ -371,11 +371,7 @@ function GlobalState({ children }) {
         setSellerProduct([...sellerProduct, product]);
     };
 
-    const deleteSellerProduct = (index) => {
-        const updatedData = sellerProduct.filter((_,i) => i !== index);
-        setSellerProduct(updatedData);
-        console.log(sellerProduct);
-    }
+    
 
     const [sellerOrder, setSellerOrder] = useState([
         { "order_id": 1, "product": "Motorola", "date": 1641859200000, "customer": "Merline Docket", "total": 98.07, "payment": "laser", "status": 3 }, 
@@ -442,8 +438,8 @@ function GlobalState({ children }) {
                 updateOrderStatus,
                 addSellerProduct,
                 deleteSellerOrder, 
-                deleteSellerProduct,
                 sellerOrder,
+                setSellerProduct,
                 sellerProduct,
             }}
         >
