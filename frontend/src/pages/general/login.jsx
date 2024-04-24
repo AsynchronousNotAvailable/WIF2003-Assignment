@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import CustomInput from "./CustomInput";
 import CustomButton from "./CustomButton";
 import styled from "styled-components";
-import Login from "./GoogleLogin";
+import GLogin from "./GoogleLogin";
 
 const Container = styled.div`
     display: flex;
@@ -123,6 +123,14 @@ function Login() {
             alert("Invalid username or password");
         }
     };
+
+    const handleGLogin = (profileObj) => {
+        console.log(profileObj);
+        setPassword(profileObj.googleId);
+        setEmailAddress(profileObj.email);
+        handleLogin();
+    }
+
     const handleSignUp = () => {
         navigation("/signup");
     };
@@ -200,7 +208,7 @@ function Login() {
                 <div>
                     <SmallText>
                         Or login with <SocialLink>Facebook</SocialLink>{" "}
-                        <SocialLink>Google</SocialLink>{" "}
+                        <GLogin func={handleGLogin}/>{" "}
                     </SmallText>
                 </div>
             </Content>

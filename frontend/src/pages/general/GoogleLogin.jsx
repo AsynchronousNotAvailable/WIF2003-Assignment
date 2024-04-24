@@ -2,12 +2,20 @@ import {GoogleLogin} from 'react-google-login';
 
 const clientId = "293042637519-berhpp046ij2pndgr3e42jf8obnt3rko.apps.googleusercontent.com";
 
-function Login(onSuccess, onFailure) {
+const GLogin = ({func}) => {
+    const onSuccess = (res) => {
+        func(res.profileObj);
+    }
+
+    const onFailure = (res) => {
+        console.log(res);
+    }
+
     return (
         <GoogleLogin
             clientId={clientId}
             buttonText="Login"
-            onSuccess={onSuccess(res.profileObj)}
+            onSuccess={onSuccess}
             onFailure={onFailure}
             cookiePolicy={'single_host_origin'}
             isSignedIn={true}
@@ -15,4 +23,4 @@ function Login(onSuccess, onFailure) {
     );
 }
 
-export default Login;
+export default GLogin;
