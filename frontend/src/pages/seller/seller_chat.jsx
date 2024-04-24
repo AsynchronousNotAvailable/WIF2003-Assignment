@@ -13,59 +13,65 @@ function Seller_Chat() {
     const chatList = [
         {
             pfp: require("../../assets/wenthing.jpeg"),
-            name: "Wen Thing",
-            last_message: "How much is the battery charger?",
+            name: "Customer Wen Thing",
+            last_message:
+                "Hello! I bought a product from you, and I would like ",
         },
         {
             pfp: require("../../assets/karweng.jpeg"),
-            name: "Kar Weng",
+            name: "Customer Kar Weng",
             last_message: "I see alright.",
         },
         {
             pfp: require("../../assets/chenkang.jpg"),
-            name: "Chen Kang",
-            last_message: "Will the product be delivered today?",
+            name: "Customer Chen Kang",
+            last_message:
+                "The product will be delivered tomorrow. Thank you for your purchase!",
         },
     ];
 
     const responses1 = [
       
         {
-            type: "CUSTOMER",
-            text: "Hello! I am wen thing",
-        },
-        {
             type: "SELLER",
-            text: "I would like a chees cake.",
+            text: "Hello! I bought a product from you, and I would like to ask if you have a warranty for it.",
         },
+        // {
+        //     type: "CUSTOMER",
+        //     text: "Yes we do have a warranty for our products. How can I help you?",
+        // },
     ];
 
     const responses2 = [
         {
+            type: "SELLER",
+            text: "Hi, do you sell any strawberry cheesecake?",
+        },
+        {
             type: "CUSTOMER",
-            text: "Hello! I am kar weng",
+            text: "Oh no, we do not have any strawberry cheesecake. We only have blueberry cheesecake.",
         },
         {
             type: "SELLER",
-            text: "I would like a chees cake.",
+            text: "I see alright.",
         },
     ];
 
     const responses3 = [
         {
-            type: "CUSTOMER",
-            text: "Hello! I am chen kang",
+            type: "SELLER",
+            text: "Hello! Can I know when will the product be delivered?",
         },
         {
-            type: "SELLER",
-            text: "I would like a chees cake.",
+            type: "CUSTOMER",
+            text: "The product will be delivered tomorrow. Thank you for your purchase!",
         },
     ];
 
     const allChatContent = {
-        "Wen Thing": responses1,
-        "Kar Weng": responses2,
-        "Chen Kang": responses3,
+        "Customer Wen Thing": responses1,
+        "Customer Kar Weng": responses2,
+        "Customer Chen Kang": responses3,
     };
 
     useEffect(() => {
