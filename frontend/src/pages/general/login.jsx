@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import CustomInput from "./CustomInput";
 import CustomButton from "./CustomButton";
 import styled from "styled-components";
+import GLogin from "./GoogleLogin";
 
 const Container = styled.div`
     display: flex;
@@ -85,10 +86,10 @@ const SocialLink = styled.a`
 
 function Login() {
     const [emailAddress, setEmailAddress] = useState("");
-    console.log(emailAddress);
     const [password, setPassword] = useState("");
-    const { setIsAuth, setIsSeller } = useContext(GlobalContext);
+    const { setIsAuth, setIsSeller, setUserDetails } = useContext(GlobalContext);
     const { userDetails } = useContext(GlobalContext);
+    const [redirectToMarketplace, setRedirectToMarketplace] = useState(false);
     const navigation = useNavigate();
 
     const handleLogin = () => {
@@ -122,6 +123,23 @@ function Login() {
             alert("Invalid username or password");
         }
     };
+
+    const handleGLogin = (profileObj) => {
+        const firstName = profileObj.givenName;
+        const lastName = profileObj.familyName;
+        const Gpassword = profileObj.googleId;
+        const GemailAddress = profileObj.email;
+        setUserDetails({ firstName, lastName, GemailAddress, Gpassword });
+        setRedirectToMarketplace(true);
+        console.log("im triggered");
+    }
+
+    useEffect(() => {
+        if (redirectToMarketplace) {
+            navigation("/marketplace");
+        }
+    }, [redirectToMarketplace, navigation]);
+
     const handleSignUp = () => {
         navigation("/signup");
     };
@@ -197,9 +215,12 @@ function Login() {
                     </div>
                 </form>
                 <div>
-                    <SmallText>
-                        Or login with <SocialLink>Facebook</SocialLink>{" "}
-                        <SocialLink>Google</SocialLink>{" "}
+                    <SmallText style={{ display: "flex", alignItems: "center"}}>
+                        Or login with 
+                        {/* <SocialLink>Facebook</SocialLink> */}
+                        <div style={{ marginLeft: "20px"}}>
+                            <GLogin func={handleGLogin}/>
+                        </div>
                     </SmallText>
                 </div>
             </Content>
@@ -211,13 +232,3 @@ function Login() {
 }
 
 export default Login;
-
-function debounce(func, delay) {
-    let timer;
-    return function (...args) {
-        clearTimeout(timer);
-        timer = setTimeout(() => {
-            func.apply(this, args);
-        }, delay);
-    };
-}
