@@ -1,10 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useContext } from "react";
+import { GlobalContext } from "../context";
 
 function Customer_Navbar() {
+    const { setUserDetails } = useContext(GlobalContext);
     const navigation = useNavigate();
     const handleLogout = () => {
+        setUserDetails(null);
         navigation("/");
     };
 
