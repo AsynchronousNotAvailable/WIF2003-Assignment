@@ -86,10 +86,10 @@ const SocialLink = styled.a`
 
 function Login() {
     const [emailAddress, setEmailAddress] = useState("");
-    console.log(emailAddress);
     const [password, setPassword] = useState("");
-    const { setIsAuth, setIsSeller } = useContext(GlobalContext);
+    const { setIsAuth, setIsSeller, setUserDetails } = useContext(GlobalContext);
     const { userDetails } = useContext(GlobalContext);
+    const [redirectToMarketplace, setRedirectToMarketplace] = useState(false);
     const navigation = useNavigate();
 
     const handleLogin = () => {
@@ -125,11 +125,20 @@ function Login() {
     };
 
     const handleGLogin = (profileObj) => {
-        console.log(profileObj);
-        setPassword(profileObj.googleId);
-        setEmailAddress(profileObj.email);
-        handleLogin();
+        const firstName = profileObj.givenName;
+        const lastName = profileObj.familyName;
+        const Gpassword = profileObj.googleId;
+        const GemailAddress = profileObj.email;
+        setUserDetails({ firstName, lastName, GemailAddress, Gpassword });
+        setRedirectToMarketplace(true);
+        console.log("im triggered");
     }
+
+    useEffect(() => {
+        if (redirectToMarketplace) {
+            navigation("/marketplace");
+        }
+    }, [redirectToMarketplace, navigation]);
 
     const handleSignUp = () => {
         navigation("/signup");
@@ -208,7 +217,7 @@ function Login() {
                 <div>
                     <SmallText>
                         Or login with <SocialLink>Facebook</SocialLink>{" "}
-                        <GLogin func={handleGLogin}/>{" "}
+                        <GLogin func={handleGLogin}/>
                     </SmallText>
                 </div>
             </Content>
