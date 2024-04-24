@@ -5,7 +5,7 @@ function ChatList({ active, pfp, name, last_message, handleChangeChat }) {
 
     return (
         <div
-            className={`flex flex-row items-center gap-2 border-b-[1px] px-4 py-2 border-gray-200 cursor-pointer ${
+            className={`flex flex-row items-center gap-2 border-b-[1px] px-4 py-6 h-24 border-gray-200 cursor-pointer ${
                 active ? "bg-[#FFD6FF]" : "bg-slate-100"
             } hover:bg-slate-500`}
             onClick={() => handleChangeChat(name)}

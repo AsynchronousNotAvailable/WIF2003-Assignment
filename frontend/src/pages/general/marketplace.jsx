@@ -10,8 +10,8 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import FloatingChat from "../customer/components/FloatingChat";
 import FloatingChatList from "../customer/components/FloatingChatList";
-import Box from '@mui/material/Box';
-import Rating from '@mui/material/Rating';
+import Box from "@mui/material/Box";
+import Rating from "@mui/material/Rating";
 
 function Marketplace() {
     const { shopsItemListing, productListing } = useContext(GlobalContext);
@@ -23,7 +23,7 @@ function Marketplace() {
     //     };
     // });
 
-    const [categoryClicked,setCategoryClicked] = useState("")
+    const [categoryClicked, setCategoryClicked] = useState("");
 
     const [productCategorySetOne, setProductCategorySO] = useState([
         {
@@ -110,7 +110,7 @@ function Marketplace() {
             variations: ["Original", "Chocolate", "Vanilla"],
         },
         {
-            id: 11,
+            id: 10,
             name: "Man United Jersey",
             price: 13,
             rating: 4,
@@ -126,7 +126,7 @@ function Marketplace() {
     const [displayedProducts, setDisplayedProducts] = useState([]);
 
     const handleSearchChange = (event) => {
-        console.log(event)
+        console.log(event);
         if (event.target.innerText) {
             if (event.target.innerText === "") {
                 setDisplayedProducts(productListing);
@@ -139,24 +139,24 @@ function Marketplace() {
                 );
                 setDisplayedProducts(matchedProducts);
             }
-        }
-         else if(event.target.value) {
+        } else if (event.target.value) {
             if (event.target.value === "") {
                 setDisplayedProducts(productListing);
             } else {
                 console.log("target value");
                 const userInput = event.target.value.toLowerCase();
-                console.log(userInput)
+                console.log(userInput);
                 setUserSearchInput(userInput);
                 const matchedProducts = productListing.filter((product) =>
                     product.name.toLowerCase().includes(userInput)
                 );
                 setDisplayedProducts(matchedProducts);
             }
-        }
-        else {
-            const matchedProducts = productListing.filter((product) => product.name.toLowercAse().includes(userSearchInput))
-            setDisplayedProducts(matchedProducts)
+        } else {
+            const matchedProducts = productListing.filter((product) =>
+                product.name.toLowercAse().includes(userSearchInput)
+            );
+            setDisplayedProducts(matchedProducts);
         }
     };
     // const handleSearchChange = (event) => {
@@ -177,55 +177,54 @@ function Marketplace() {
     //     setDisplayedProducts(matchedProducts);
     //     }
     // };
-        // setUserSearchInput(userInput);
-        // const matchedProducts = productListing.filter((product) =>
-        //     product.name.toLowerCase().includes(userInput)
-        // );
-        // setDisplayedProducts(matchedProducts);
-        // const handleSearchChange = (event) => {
-        //     const userInput = event.target.value.toLowerCase();
-        //     setUserSearchInput(userInput); // Always update the userInput state
-        
-        //     // If userInput is empty, set displayedProducts to the entire productListing
-        //     if (userInput.trim() === "") {
-        //         setDisplayedProducts(productListing);
-        //     } else {
-        //         // Filter products based on userInput
-        //         const matchedProducts = productListing.filter((product) =>
-        //             product.name.toLowerCase().includes(userInput)
-        //         );
-        //         setDisplayedProducts(matchedProducts);
-        //     }
-        // };
+    // setUserSearchInput(userInput);
+    // const matchedProducts = productListing.filter((product) =>
+    //     product.name.toLowerCase().includes(userInput)
+    // );
+    // setDisplayedProducts(matchedProducts);
+    // const handleSearchChange = (event) => {
+    //     const userInput = event.target.value.toLowerCase();
+    //     setUserSearchInput(userInput); // Always update the userInput state
+
+    //     // If userInput is empty, set displayedProducts to the entire productListing
+    //     if (userInput.trim() === "") {
+    //         setDisplayedProducts(productListing);
+    //     } else {
+    //         // Filter products based on userInput
+    //         const matchedProducts = productListing.filter((product) =>
+    //             product.name.toLowerCase().includes(userInput)
+    //         );
+    //         setDisplayedProducts(matchedProducts);
+    //     }
+    // };
 
     const navigation = useNavigate();
-    
+
     const onSearchButtonClick = () => {
         navigation(`/customer/products`, { state: { displayedProducts } });
     };
 
     const onCategoryClicked = (e) => {
-        console.log(e)
-        setCategoryClicked(e)
+        console.log(e);
+        setCategoryClicked(e);
         navigation(`/customer/products`, {
-            state : {
-                displayedProducts : displayedProducts,
-                categoryClicked : e
-            }
-        })
-    }
-        // handleSortingChange(e)
-        // if (e === "Books & Stationery"){
-        //     const sortedProducts = productListing.filter((product) => product.category === "Books & Stationery")
-        //     console.log(sortedProducts)
-        //     setDisplayedProducts(sortedProducts)
-        // }
-        // console.log(displayedProducts)
-        // navigation(`/customer/products`, {state : {displayedProducts}})
-        // setCategoryClicked(e)
-        // handleSortingChange(e)
-        // navigation(`/customer/products`, {state : {displayedProducts}})
-    
+            state: {
+                displayedProducts: displayedProducts,
+                categoryClicked: e,
+            },
+        });
+    };
+    // handleSortingChange(e)
+    // if (e === "Books & Stationery"){
+    //     const sortedProducts = productListing.filter((product) => product.category === "Books & Stationery")
+    //     console.log(sortedProducts)
+    //     setDisplayedProducts(sortedProducts)
+    // }
+    // console.log(displayedProducts)
+    // navigation(`/customer/products`, {state : {displayedProducts}})
+    // setCategoryClicked(e)
+    // handleSortingChange(e)
+    // navigation(`/customer/products`, {state : {displayedProducts}})
 
     // const handleSortingChange = (e) => {
     //     console.log("E from handleSortingChange : " + e)
@@ -238,30 +237,27 @@ function Marketplace() {
 
     // }
 
+    //  if (e === "Books & Stationery"){
+    //     const sortedProducts = displayedProducts.filter((product) => product.category === "Books & Stationery")
+    //     console.log("argument passed : " + e)
+    //     console.log("products to be displayed : " + sortedProducts)
+    //     setDisplayedProducts(sortedProducts)
+    //     navigation(`/customer/products`, {state : {displayedProducts}})
+    // }
+    // else if (e === "Food & Beverage"){
+    //     const sortedProducts = displayedProducts.filter((product) => product.category === "Food & Beverage")
+    //     console.log("argument passed : " + e)
+    //     console.log("products to be displayed : " + sortedProducts)
+    //     setDisplayedProducts(sortedProducts)
+    //     navigation(`/customer/products`, {state : {displayedProducts}})
+    // }
 
-
-        //  if (e === "Books & Stationery"){
-        //     const sortedProducts = displayedProducts.filter((product) => product.category === "Books & Stationery")
-        //     console.log("argument passed : " + e)
-        //     console.log("products to be displayed : " + sortedProducts)
-        //     setDisplayedProducts(sortedProducts)
-        //     navigation(`/customer/products`, {state : {displayedProducts}})
-        // }
-        // else if (e === "Food & Beverage"){
-        //     const sortedProducts = displayedProducts.filter((product) => product.category === "Food & Beverage")
-        //     console.log("argument passed : " + e)
-        //     console.log("products to be displayed : " + sortedProducts)
-        //     setDisplayedProducts(sortedProducts)
-        //     navigation(`/customer/products`, {state : {displayedProducts}})
-        // }
-       
-        // else{
-        //     console.log(typeof e)
-        //     console.log(e)
-        //     console.log(productListing)
-        //     alert("Choice of Category is not available.")
-        // }
-    
+    // else{
+    //     console.log(typeof e)
+    //     console.log(e)
+    //     console.log(productListing)
+    //     alert("Choice of Category is not available.")
+    // }
 
     const navigateToShop = (seller) => {
         navigation(`/customer/shop/${seller}`, {
@@ -288,7 +284,6 @@ function Marketplace() {
         toggleFloatingChat();
     };
     const { orderHistory } = useContext(GlobalContext);
-    
 
     const fetchChatListFromOrders = () => {
         let chatLists = [];
@@ -302,14 +297,16 @@ function Marketplace() {
                         : order.orderItems[0].seller === "KK_Mart_UM"
                         ? "/seller4.png"
                         : order.orderItems[0].seller === "Zus_Coffee_UM"
-                                ? "/seller5.png"
+                        ? "/seller5.png"
                         : "/seller1.png",
                 last_message:
                     order.orderItems[0].seller === "Koperasi_UM"
-                        ? "How much is the battery charger?"
+                        ? "Hello! I am Wen Thing from Koperasi UM."
                         : order.orderItems[0].seller === "KK_Mart_UM"
-                        ? "I see alright."
-                        : "Will the product be delivered today?",
+                        ? "Hello! I am Kar Weng from KK Mart UM."
+                        : order.orderItems[0].seller === "Zus_Coffee_UM"
+                        ? "Hello! I am Weng Hong from Zus Coffee UM."
+                        : "Hello! I am Chen Kang from Sports Direct UM.",
             };
             chatLists.push(chatHeader);
         });
@@ -318,34 +315,33 @@ function Marketplace() {
 
     useEffect(() => {
         fetchChatListFromOrders();
-    }, [])
+    }, []);
 
-    
     const [chatList, setChatList] = useState([
-        {
-            active: true,
-            pfp: "/seller3.png",
-            name: "Koperasi_UM",
-            last_message: "How much is the battery charger?",
-        },
-        {
-            active: false,
-            pfp: "/seller4.png",
-            name: "KK_Mart_UM",
-            last_message: "I see alright.",
-        },
-        {
-            active: false,
-            pfp: "/seller1.png",
-            name: "UM_Sports_Direct",
-            last_message: "Will the product be delivered today?",
-        },
-        {
-            active: false,
-            pfp: "/seller5.png",
-            name: "Zus_Coffee_UM",
-            last_message: "Will the product be delivered today?",
-        },
+        // {
+        //     active: true,
+        //     pfp: "/seller3.png",
+        //     name: "Koperasi_UM",
+        //     last_message: "Hello! I am Wen Thing from Koperasi UM.",
+        // },
+        // {
+        //     active: false,
+        //     pfp: "/seller4.png",
+        //     name: "KK_Mart_UM",
+        //     last_message: "Hello! I am Kar Weng from KK Mart UM.",
+        // },
+        // {
+        //     active: false,
+        //     pfp: "/seller1.png",
+        //     name: "UM_Sports_Direct",
+        //     last_message: "Hello! I am Chen Kang from KK Mart UM.",
+        // },
+        // {
+        //     active: false,
+        //     pfp: "/seller5.png",
+        //     name: "Zus_Coffee_UM",
+        //     last_message: "Hello! I am Weng Hong from Zus Coffee UM.",
+        // },
     ]);
 
     const [chatName, setChatName] = useState("");
@@ -393,7 +389,7 @@ function Marketplace() {
                 <section className="flex flex-row w-full gap-2 mb-10 justify-center">
                     <Autocomplete
                         id="free-solo-demo"
-                        disableClearable = {true}
+                        disableClearable={true}
                         freeSolo
                         sx={{ width: 600 }}
                         onChange={(event, newValue) => {
@@ -435,8 +431,11 @@ function Marketplace() {
                         <section className="flex flex-row gap-20 py-10">
                             {productCategorySetOne.map((product) => {
                                 return (
-                                    <section className="flex flex-col gap-10 rounded-xl shadow-2xl w-48 h-72 px-5 py-5 justify-center items-center"
-                                    onClick={() => onCategoryClicked(product.name)}
+                                    <section
+                                        className="flex flex-col gap-10 rounded-xl shadow-2xl w-48 h-72 px-5 py-5 justify-center items-center"
+                                        onClick={() =>
+                                            onCategoryClicked(product.name)
+                                        }
                                     >
                                         <img
                                             src={product.img}
@@ -451,8 +450,12 @@ function Marketplace() {
                             <section className="flex flex-row justify-between gap-10">
                                 {productCategorySetTwo.map((product) => {
                                     return (
-                                        <section className="flex flex-col gap-10 rounded-xl shadow-2xl w-48 h-72 px-5 py-5 justify-center items-center"
-                                        onClick={() => onCategoryClicked(product.name)}>
+                                        <section
+                                            className="flex flex-col gap-10 rounded-xl shadow-2xl w-48 h-72 px-5 py-5 justify-center items-center"
+                                            onClick={() =>
+                                                onCategoryClicked(product.name)
+                                            }
+                                        >
                                             <img
                                                 src={product.img}
                                                 className="border-gray-500 border-2 w-[110px] h-[110px] rounded-full object-contain"
@@ -524,15 +527,22 @@ function Marketplace() {
                                     <p className="font-sans text-[#7450DF]">
                                         RM{product.price}
                                     </p>
-                                    <section className = "flex flex-row">
-                                    <p className = "font-sans font-semibold">{product.rating}.0/5 
-                                    </p>
-                                    <Box sx={{
-                                    '& > legend': { mt: 2 },}} >
-                                    <Rating name="read-only" value={product.rating} readOnly />
-                                    </Box>
-                                        </section>
-                                    
+                                    <section className="flex flex-row">
+                                        <p className="font-sans font-semibold">
+                                            {product.rating}.0/5
+                                        </p>
+                                        <Box
+                                            sx={{
+                                                "& > legend": { mt: 2 },
+                                            }}
+                                        >
+                                            <Rating
+                                                name="read-only"
+                                                value={product.rating}
+                                                readOnly
+                                            />
+                                        </Box>
+                                    </section>
                                 </section>
                             );
                         })}
@@ -545,11 +555,14 @@ function Marketplace() {
                     <i className="fa fa-comment"></i>
                 </button>
                 {/* {floating && <FloatingChat activeChat={activeChat}  activeChatContent={activeChatContent}/>} */}
+                
                 {floating && (
-                    <FloatingChatList
-                        chatList={chatList}
-                        handleChatClick={handleChatClick}
-                    />
+                    
+                        <FloatingChatList
+                            chatList={chatList}
+                            handleChatClick={handleChatClick}
+                        />
+                   
                 )}
                 {chatName !== "" && (
                     <FloatingChat

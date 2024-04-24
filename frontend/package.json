@@ -34,6 +34,7 @@
         "react-scripts": "5.0.1",
         "react-tab": "^1.0.0",
         "react-table": "^7.8.0",
+        "reactjs-popup": "^2.0.6",
         "styled-components": "^6.1.8",
         "web-vitals": "^2.1.4"
     },

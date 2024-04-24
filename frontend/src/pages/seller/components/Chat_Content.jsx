@@ -4,11 +4,11 @@ function Chat_Content({ responses, customer }) {
     const [prompt, setPrompt] = useState("");
 
     let pfp;
-    if (customer === "Wen Thing") {
+    if (customer === "Customer Wen Thing") {
         pfp = require("../../../assets/wenthing.jpeg");
-    } else if (customer === "Kar Weng") {
+    } else if (customer === "Customer Kar Weng") {
         pfp = require("../../../assets/karweng.jpeg");
-    } else if (customer === "Chen Kang") {
+    } else if (customer === "Customer Chen Kang") {
         pfp = require("../../../assets/chenkang.jpg");
     }
 
@@ -18,12 +18,12 @@ function Chat_Content({ responses, customer }) {
 
     const responseFromWenThing = [
         "Hello! I am wen thing",
-        "How much is the battery charger?",
+        "Ok Thank you",
     ];
-    const responseFromKarWeng = ["Hello! I am kar weng", "I see alright."];
+    const responseFromKarWeng = ["Hello! I am kar weng", "Ok Thanks."];
     const responseFromChenKang = [
         "Hello! I am chen kang",
-        "Will the product be delivered today?",
+        "Ok Thanks.",
     ];
 
     const submitPrompt = async (e) => {
@@ -36,17 +36,17 @@ function Chat_Content({ responses, customer }) {
         });
 
         // customer sends a message
-        if (customer === "Wen Thing") {
+        if (customer === "Customer Wen Thing") {
             responses.push({
                 type: "SELLER",
                 text: responseFromWenThing[1],
             });
-        } else if (customer === "Kar Weng") {
+        } else if (customer === "Customer Kar Weng") {
             responses.push({
                 type: "SELLER",
                 text: responseFromKarWeng[1],
             });
-        } else if (customer === "Chen Kang") {
+        } else if (customer === "Customer Chen Kang") {
             responses.push({
                 type: "SELLER",
                 text: responseFromChenKang[1],

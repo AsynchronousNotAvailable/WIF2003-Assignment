@@ -101,13 +101,19 @@ export default function Orders() {
                     type: "SELLER",
                     text: "Hello! This is KK Mart Customer Service. Anything enquiries?",
                 },
-               
             ]);
         } else if (name === "UM_Sports_Direct") {
             setActiveChatContent([
                 {
                     type: "SELLER",
                     text: "Hello! This is UM Sport Direct Customer Service. Anything enquiries?",
+                },
+            ]);
+        } else if (name === "Zus_Coffee_UM") {
+            setActiveChatContent([
+                {
+                    type: "SELLER",
+                    text: "Hello! This is Zus Coffee UM Customer Service. Anything enquiries?",
                 },
             ]);
         }
