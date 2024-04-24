@@ -215,9 +215,12 @@ function Login() {
                     </div>
                 </form>
                 <div>
-                    <SmallText>
-                        Or login with <SocialLink>Facebook</SocialLink>{" "}
-                        <GLogin func={handleGLogin}/>
+                    <SmallText style={{ display: "flex", alignItems: "center"}}>
+                        Or login with 
+                        {/* <SocialLink>Facebook</SocialLink> */}
+                        <div style={{ marginLeft: "20px"}}>
+                            <GLogin func={handleGLogin}/>
+                        </div>
                     </SmallText>
                 </div>
             </Content>
