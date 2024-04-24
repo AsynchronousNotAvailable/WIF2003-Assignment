@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import CustomInput from "./CustomInput";
 import CustomButton from "./CustomButton";
 import styled from "styled-components";
+import Login from "./GoogleLogin";
 
 const Container = styled.div`
     display: flex;
@@ -211,13 +212,3 @@ function Login() {
 }
 
 export default Login;
-
-function debounce(func, delay) {
-    let timer;
-    return function (...args) {
-        clearTimeout(timer);
-        timer = setTimeout(() => {
-            func.apply(this, args);
-        }, delay);
-    };
-}
