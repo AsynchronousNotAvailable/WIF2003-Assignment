@@ -28,12 +28,10 @@ const ProductListing = () => {
         }, [displayedProducts,categoryClicked]);
 
     const navigation = useNavigate();
-
     const handleClick = (product) => {
         console.log(product + " Clicked ")
         navigation(`/customer/product/${product.id}`, { state: { product } });
     };
-
 
     const [chosenSortType,setSortType] = useState("")
     const [sortedProductsArr, setSortedProductsArr] = useState([])
