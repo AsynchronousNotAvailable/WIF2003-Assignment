@@ -47,19 +47,21 @@ const months = ['Jan', 'Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','N
 
     return (
         <>
-        <Seller_NavSidebar/>
-        <section className = "flex flex-col p-14 ml-64 mt-[10px] gap-8">
+        <Customer_Navbar />
+        <section className = "flex flex-col p-20 mt-10 gap-8">
             <section className = " w-full font-sans font-bold text-2xl">
                <header className = "font-sans">Customer Analysis</header>
             </section>
             <section className = "flex-1  flex flex-col w-full gap-10 h-full">
                 <section className = "flex flex-row w-full gap-5 h-[280px]">
-                    <section className = "flex-1 shadow-[0_3px_10px_rgb(0,0,0,0.2)]  p-5 rounded-xl flex flex-col">
-                        <p className = "font-sans font-bold">Frequency of Purchase</p>
+                    <section className = "flex-1 shadow-[0_3px_10px_rgb(0,0,0,0.2)]  p-5 rounded-xl flex flex-row">
+                    <section className = "flex items-center w-1/3 px-5">
+                        <p className = "text-xl font-bold font-sans tracking-normal">Frequency of Purchase</p>
+                        </section>
                         <section className = "flex flex-row">
                         <LineChart
-                                width={500}
-                                height={200}
+                                width={600}
+                                height={250}
                                 series={[
                                     { data: purchaseHistoryData, label: 'Purchase Amount (RM)' }
                                 ]}

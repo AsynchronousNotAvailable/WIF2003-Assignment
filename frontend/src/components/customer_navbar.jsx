@@ -16,12 +16,21 @@ function Customer_Navbar() {
         navigation("/customer_chat");
     };
 
+    
     const goToCart = () => {
         navigation("/customer/cart");
     };
 
+    const goToUserAnalysis = () => {
+        navigation("/customer/analysis")
+    }
+
     const goToProductList = () => {
         navigation("/marketplace");
+    }
+
+    const goToMarketAnalysis = () => {
+        navigation("/marketplace/analysis")
     }
 
     const goToOrders = () => { 
@@ -105,6 +114,26 @@ function Customer_Navbar() {
                                 class="text-white  bg-[#5489FC] hover:bg-[#45b9dc] font-medium rounded-lg text-md px-4 py-2 text-center"
                             >
                                 Contact
+                            </button>
+                        </li>
+
+                        <li>
+                            <button
+                                type="button"
+                                class="text-white  bg-[#5489FC] hover:bg-[#45b9dc] font-medium rounded-lg text-md px-4 py-2 text-center"
+                                onClick = {goToMarketAnalysis}
+                            >
+                                Marketplace Analysis 
+                            </button>
+                        </li>
+
+                        <li>
+                            <button
+                                type="button"
+                                class="text-white  bg-[#5489FC] hover:bg-[#45b9dc] font-medium rounded-lg text-md px-4 py-2 text-center"
+                                onClick = {goToUserAnalysis}
+                            >
+                                User Analysis 
                             </button>
                         </li>
                     </ul>

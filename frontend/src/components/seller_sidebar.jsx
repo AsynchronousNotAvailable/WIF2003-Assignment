@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
 
 function Seller_NavSidebar() {
+    const [selectedItem, setSelectedItem] = useState(null); // State to track selected item
     const navigation = useNavigate();
     const handleLogout = () => {
         navigation("/");
@@ -11,9 +12,11 @@ function Seller_NavSidebar() {
         navigation("/seller_chat");
     };
     const toOrderManagement = () => {
+        setSelectedItem("order")
         navigation("/order_management");
     }
     const toProductManagement = () => {
+        setSelectedItem("product")
         navigation("/product_management");
     }
     return (
@@ -122,9 +125,9 @@ function Seller_NavSidebar() {
                         <li onClick={toProductManagement}>
                             <a
                                 href="/product_management"
-                                class="flex border-white border-2 items-center p-2 my-4 text-white rounded-md hover:bg-gray-700"
+                                class=  "border-white border-2 flex items-center p-2 my-4 text-white rounded-md hover:bg-gray-700" 
                             >
-                                <i class="w-5 fa-regular fa-boxes-stacked fa-lg text=[#B197FC]"></i>
+                                <i class="w-5 fa-solid fa-boxes-stacked fa-lg text=[#B197FC]"></i>
                                 <span class="ms-3 font-inter font-medium">
                                     Product Management
                                 </span>

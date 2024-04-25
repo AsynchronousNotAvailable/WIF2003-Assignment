@@ -52,19 +52,26 @@ const xLabels = [
     return (
         <>
         <Seller_NavSidebar/>
-        <section className = "flex flex-col p-14 ml-64 mt-[10px] gap-8">
+        <section className = "flex flex-col p-14 ml-64 mt-10 gap-1">
             <section className = " w-full font-sans font-bold text-2xl">
                <header className = "font-sans">Seller Analysis</header>
             </section>
+            <section className = "mt-10">
+                
+            </section>
             <section className = "flex-1  flex flex-col w-full gap-10 h-full">
                 <section className = "flex flex-row w-full gap-5 h-[280px]">
-                    <section className = "flex-1 shadow-[0_3px_10px_rgb(0,0,0,0.2)]  p-5 rounded-xl">
+                    <section className = "flex-1 shadow-[0_3px_10px_rgb(0,0,0,0.2)]  p-5 rounded-xl flex-row flex">
+                        <section className = "flex items-center w-1/3 px-5">
+                            <p className = "text-xl font-bold font-sans tracking-normal ">Analysis of Visitors</p>
+                        </section>
+                        <section>
                     <LineChart
                     width={500}
                     height={250}
                     series={[
-                        { data: returningVisitor, label: 'Returning Visitor', area : true, fillOpacity : 0.3  },
-                        { data: newVisitor, label: 'New Visitor', area : true, fillOpacity : 0.3 },
+                        { data: returningVisitor, label: 'Returning Visitor', },
+                        { data: newVisitor, label: 'New Visitor',  },
                     ]}
                     xAxis={[{ scaleType: 'point', data: xLabels }]}
                     sx={{
@@ -82,7 +89,7 @@ const xLabels = [
                         itemMarkHeight: 2,
                         markGap: 5,
                         itemGap: 10,
-                      
+                        font : {className : "font-sans text-green-700"}
                         },
                         area: {
                             visible: true, // Set to true to display area below the lines
@@ -90,6 +97,8 @@ const xLabels = [
                         }
                     }}
                     />
+                        </section>
+                    
 
                     {/* <ResponsiveChartContainer
                         width={500}
@@ -207,7 +216,7 @@ const xLabels = [
                 <section className = "flex flex-row  justify- h-[200px] items-center gap-10 justify-between ">
                     <section className = "flex flex-col w-1/4  shadow-[0_3px_10px_rgb(0,0,0,0.2)]  rounded-xl h-full justify-center items-center ">
                         <img src = "/CustomerIcon.png" style = {{width : '50px'}}/>
-                        <p className = "font-sans font-semibold mt-[20px]">Total Customers</p> </section>
+                        <p className = "font-sans font-semibold mt-[20px]">Customers Summary</p> </section>
 
                     <section className = "flex flex-col w-1/4 shadow-[0_3px_10px_rgb(0,0,0,0.2)]  rounded-xl h-full justify-center items-center">
                         <img src = "/OrderIcon.png" style = {{width : '50px'}}/>
