@@ -59,8 +59,8 @@ function MarketplaceAnalysis() {
     return (
         <>
             <Customer_Navbar />
-            <main className="mt-[10px] p-16 flex flex-col gap-5">
-                <section className=" w-full font-sans font-bold text-3xl align-middle justify-center text-center  py-5">
+            <main className="mt-10 p-20 flex flex-col gap-5">
+                <section className=" w-full font-sans font-bold text-3xl">
                     <header>Marketplace Analysis</header>
                 </section>
                 <section className=" w-full  flex flex-row gap-5">
@@ -112,7 +112,7 @@ function MarketplaceAnalysis() {
                                 </section>
                             </section>
                         </section>
-                        <section className="flex flex-col shadow-xl p-10 rounded-lg">
+                        <section className="flex flex-col shadow-xl pt-10 pl-5 rounded-lg">
                             <header className="text-2xl font-bold font-sans">
                                 Total Visitors For The Past Week
                             </header>

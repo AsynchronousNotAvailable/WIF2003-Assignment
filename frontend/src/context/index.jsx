@@ -12,6 +12,8 @@ function GlobalState({ children }) {
     const [shippingAddress, setShippingAddress] = useState({});
     const [cardDetails, setCardDetails] = useState([]);
     const [orderHistory, setOrderHistory] = useState([]);
+    const [sellerNavBarSelected, setSellerNavBarSelected] = useState("ProductMgmt")
+
 
     const addCardDetails = (details) => {
         setCardDetails([...cardDetails, details]);
@@ -371,7 +373,6 @@ function GlobalState({ children }) {
         setSellerProduct([...sellerProduct, product]);
     };
 
-    
 
     const [sellerOrder, setSellerOrder] = useState([
         { "order_id": 1, "product": "Motorola", "date": 1641859200000, "customer": "Merline Docket", "total": 98.07, "payment": "laser", "status": 3 }, 
@@ -441,6 +442,8 @@ function GlobalState({ children }) {
                 sellerOrder,
                 setSellerProduct,
                 sellerProduct,
+                sellerNavBarSelected,
+                setSellerNavBarSelected
             }}
         >
             {children}

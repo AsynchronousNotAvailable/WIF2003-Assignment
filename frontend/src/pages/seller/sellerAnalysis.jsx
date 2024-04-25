@@ -54,7 +54,7 @@ const xLabels = [
         <Seller_NavSidebar/>
         <section className = "flex flex-col p-14 ml-64 mt-10 gap-1">
             <section className = " w-full font-sans font-bold text-2xl">
-               <header className = "font-sans">Seller Analysis</header>
+               <header className = "font-sans font-bold text-3xl">Seller Analysis</header>
             </section>
             <section className = "mt-10">
                 

@@ -1,22 +1,28 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import { useNavigate } from "react-router-dom";
+import { GlobalContext } from "../context";
 
 function Seller_NavSidebar() {
-    const [selectedItem, setSelectedItem] = useState(null); // State to track selected item
+    const {sellerNavBarSelected, setSellerNavBarSelected} = useContext(GlobalContext)
+    console.log(sellerNavBarSelected)
     const navigation = useNavigate();
     const handleLogout = () => {
         navigation("/");
     };
 
+    const toReportAndAnalysis = () => {
+        setSellerNavBarSelected("RnA")
+        navigation("/seller/analysis")
+    }
     const goToChat = () => {
         navigation("/seller_chat");
     };
     const toOrderManagement = () => {
-        setSelectedItem("order")
+        setSellerNavBarSelected("OrderMgmt")
         navigation("/order_management");
     }
     const toProductManagement = () => {
-        setSelectedItem("product")
+        setSellerNavBarSelected("ProductMgmt")
         navigation("/product_management");
     }
     return (
@@ -124,9 +130,9 @@ function Seller_NavSidebar() {
                     <ul class="space-y-2 font-medium">
                         <li onClick={toProductManagement}>
                             <a
-                                href="/product_management"
-                                class=  "border-white border-2 flex items-center p-2 my-4 text-white rounded-md hover:bg-gray-700" 
-                            >
+                                className = {sellerNavBarSelected === "ProductMgmt" ? "border-white border-2 flex items-center p-2 my-4 text-white rounded-md hover:bg-gray-700" :  "flex items-center p-2 my-4 text-white rounded-md hover:bg-gray-700"
+                            }
+>
                                 <i class="w-5 fa-solid fa-boxes-stacked fa-lg text=[#B197FC]"></i>
                                 <span class="ms-3 font-inter font-medium">
                                     Product Management
@@ -135,20 +141,18 @@ function Seller_NavSidebar() {
                         </li>
                         <li onClick={toOrderManagement}>
                             <a
-                                href="/order_management"
-                                class="flex items-center p-2 my-4 text-white rounded-lg hover:bg-gray-700"
-                            >
+                                className = {sellerNavBarSelected === "OrderMgmt" ? "border-white border-2 flex items-center p-2 my-4 text-white rounded-md hover:bg-gray-700" :  "flex items-center p-2 my-4 text-white rounded-md hover:bg-gray-700"
+                            }                            >
                                 <i class="w-5 fa-solid fa-bag-shopping fa-lg text-white"></i>
                                 <span class="flex-1 ms-3 whitespace-nowrap">
                                     Order Management
                                 </span>
                             </a>
                         </li>
-                        <li>
+                        <li onClick = {toReportAndAnalysis}>
                             <a
-                                href="/seller/analysis"
-                                class="flex items-center p-2 my-4 text-white rounded-lg hover:bg-gray-700"
-                            >
+                                className = {sellerNavBarSelected === "RnA" ? "border-white border-2 flex items-center p-2 my-4 text-white rounded-md hover:bg-gray-700" :  "flex items-center p-2 my-4 text-white rounded-md hover:bg-gray-700"
+                            }                            >
                                 <i class="w-5 fa-solid fa-magnifying-glass-chart fa-lg text-white"></i>
                                 <span class="flex-1 ms-3 whitespace-nowrap">
                                     Report and Analysis

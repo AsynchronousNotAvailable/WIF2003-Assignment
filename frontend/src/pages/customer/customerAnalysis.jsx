@@ -49,7 +49,7 @@ const months = ['Jan', 'Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','N
         <>
         <Customer_Navbar />
         <section className = "flex flex-col p-20 mt-10 gap-8">
-            <section className = " w-full font-sans font-bold text-2xl">
+            <section className = " w-full font-sans font-bold text-3xl">
                <header className = "font-sans">Customer Analysis</header>
             </section>
             <section className = "flex-1  flex flex-col w-full gap-10 h-full">
