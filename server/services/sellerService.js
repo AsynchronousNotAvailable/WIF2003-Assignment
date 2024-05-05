@@ -16,6 +16,17 @@ async function checkSellerByEmail(email) {
     return seller;
 }
 
+exports.login = async (loginData) => {
+    const seller = await SellerModel.findOne({
+        email: loginData.emailAddress,
+        password: loginData.password,
+    });
+    if (!seller) {
+        throw new Error("Seller Not Found");
+    }
+    return seller;
+};
+
 exports.getSellerById = async (sellerId) => {
     const seller = await SellerModel.findById(sellerId);
     if (!seller) {
@@ -109,8 +120,6 @@ exports.deleteProduct = async (username, productId) => {
         .populate("reviews")
         .populate("seller");
 
-    
-
     if (!productToBeDeleted) {
         throw new Error("Product Not Found");
     }
@@ -175,10 +184,8 @@ exports.updateProduct = async (username, productId, updateProductData) => {
             $set: {
                 ...updateProductData,
             },
-        },
-        
+        }
     );
-
 
     if (!updatedProduct) {
         throw new Error("Failed To Update Product");

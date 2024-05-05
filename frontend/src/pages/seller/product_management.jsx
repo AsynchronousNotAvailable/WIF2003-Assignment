@@ -14,6 +14,7 @@ import TableDatePicker from "../../components/order_management/tableDatePicker";
 import ExportCsv from "../../components/order_management/export_csv";
 import DatePicker from "react-datepicker";
 function ProductManagement() {
+    const { seller, setSellerProduct } = useContext(GlobalContext);
     const navigation = useNavigate();
     const [rendered, setRendered] = useState(false);
     const [dateFilter, setDateFilter] = useState({
@@ -27,12 +28,16 @@ function ProductManagement() {
     useEffect(() => {
         setRendered(() => true);
     }, [sortingTableRef]);
+
+    useEffect(() => {
+        console.log('FROM PRODUCT MANAGEMENT', seller);
+    }, []);
     
-    function onExportClick() {
+    // function onExportClick() {
 
-    }
+    // }
 
-    const {setSellerProduct} =  useContext(GlobalContext)
+   
 
     const deleteSellerProduct = (index) => {
         const updatedData = sellerProduct.filter((_,i) => i !== index);

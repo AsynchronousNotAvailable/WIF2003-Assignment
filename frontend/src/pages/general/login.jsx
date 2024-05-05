@@ -1,11 +1,12 @@
 // Login.jsx
-import React, { useContext, useState, useRef, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { GlobalContext } from "../../context";
 import { useNavigate } from "react-router-dom";
 import CustomInput from "./CustomInput";
 import CustomButton from "./CustomButton";
 import styled from "styled-components";
 import GLogin from "./GoogleLogin";
+import axios from "axios";
 
 const Container = styled.div`
     display: flex;
@@ -87,41 +88,55 @@ const SocialLink = styled.a`
 function Login() {
     const [emailAddress, setEmailAddress] = useState("");
     const [password, setPassword] = useState("");
-    const { setIsAuth, setIsSeller, setUserDetails } = useContext(GlobalContext);
-    const { userDetails } = useContext(GlobalContext);
+    const {
+        
+        setIsSeller,
+        userDetails,
+        setUserDetails,
+        customer,
+        setCustomer,
+        seller,
+        setSeller,
+    } = useContext(GlobalContext);
     const [redirectToMarketplace, setRedirectToMarketplace] = useState(false);
     const navigation = useNavigate();
 
-    const handleLogin = () => {
-        // if (emailAddress === "seller") {
-        //     setIsSeller(true);
-        //     setIsAuth(true);
-        //     navigation("/seller")
+    const handleLogin = async (e) => {
+        e.preventDefault();
 
-        // } else if (emailAddress === "customer") {
-        //     setIsAuth(true);
-        //     navigation("/marketplace");
-        // } else {
-        //     alert("Invalid username");
-        // }
-        console.log(emailAddress, password);
-        if (emailAddress === "" || password === "") {
-            alert("Please Enter Your Credentials");
-            return;
+        const loginData = {
+            emailAddress: emailAddress,
+            password: password,
+        };
+
+        let response;
+
+        if (loginData.emailAddress.includes("seller")) {
+            response = await axios.post(
+                `http://localhost:8080/api/sellers/login`,
+                loginData
+            );
+        }
+        else {
+            response = await axios.post(
+                `http://localhost:8080/api/customers/login`,
+                loginData
+            );
         }
 
-        if (
-            emailAddress === userDetails.emailAddress &&
-            password === userDetails.password
-        ) {
-            if (userDetails.emailAddress.includes("seller")) {
-                navigation("/product_management");
-            } else {
+        console.log(response.data);
+
+        if (response.status === 200) {
+            if (response.data.customer) {
+                setCustomer(response.data.customer);
                 navigation("/marketplace");
+            } else {
+                setSeller(response.data.seller);
+                navigation("/product_management");
             }
-        } else {
-            alert("Invalid username or password");
         }
+
+        
     };
 
     const handleGLogin = (profileObj) => {
@@ -132,7 +147,7 @@ function Login() {
         setUserDetails({ firstName, lastName, GemailAddress, Gpassword });
         setRedirectToMarketplace(true);
         console.log("im triggered");
-    }
+    };
 
     useEffect(() => {
         if (redirectToMarketplace) {
@@ -215,12 +230,14 @@ function Login() {
                     </div>
                 </form>
                 <div>
-                    <SmallText style={{ display: "flex", alignItems: "center"}}>
-                        Or login with 
+                    <SmallText
+                        style={{ display: "flex", alignItems: "center" }}
+                    >
+                        Or login with
                         {/* <SocialLink>Facebook</SocialLink> */}
-                        <div style={{ marginLeft: "20px"}}>
-                            <GLogin func={handleGLogin}/>
-                        </div>
+                        {/* <div style={{ marginLeft: "20px" }}>
+                            <GLogin func={handleGLogin} />
+                        </div> */}
                     </SmallText>
                 </div>
             </Content>

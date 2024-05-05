@@ -2,6 +2,21 @@
 
 const CustomerService = require("../services/customerService");
 const mongoose = require("mongoose");
+
+exports.login = async (req, res) => {
+    try {
+        const loginData = req.body;
+        const customer = await CustomerService.login(loginData);
+        res.json({ message: "Login Successful", customer: customer });
+    } catch (error) {
+        if (error.message === "Customer Not Found") {
+            res.status(404).json({ error: error.message });
+        } else {
+            res.status(500).json({ error: error.message });
+        }
+    }
+};
+
 exports.getCustomerByUsername = async (req, res) => {
     try {
         const username = req.params.username;
@@ -84,14 +99,14 @@ exports.addToCart = async (req, res) => {
 exports.getCard = async (req, res) => {
     try {
         const username = req.params.username;
-       
+
         const cards = await CustomerService.getCard(username);
 
         res.status(200).json(cards);
     } catch (error) {
         if (error.message === "Customer Not Found") {
             res.status(404).json({ error: error.message });
-        }else {
+        } else {
             res.status(500).json({ error: error.message });
         }
     }

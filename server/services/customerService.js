@@ -22,6 +22,19 @@ async function checkCustomerByUsername(username) {
     return customer;
 }
 
+exports.login = async (loginData) => {
+    const { emailAddress, password } = loginData;
+    const customer = await CustomerModel.findOne({ email: emailAddress });
+    if (!customer) {
+        throw new Error("Customer Not Found");
+    }
+    if (customer.password !== password) {
+        throw new Error("Invalid Login Credentaials");
+    }
+
+    return customer;
+};
+
 exports.getCustomerById = async (customerId) => {
     const customer = await CustomerModel.findById(customerId);
     if (!customer) {

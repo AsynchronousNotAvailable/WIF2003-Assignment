@@ -1,14 +1,10 @@
 // AppNav.jsx
-import React, { useContext } from "react";
-import { GlobalContext } from "../context";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Landing from "../pages/general/landing";
 import Login from "../pages/general/login";
 import SignUp from "../pages/general/signup";
 import Seller_Home from "../pages/seller/seller_home";
-import Customer_Navbar from "../components/customer_navbar";
 import Seller_Chat from "../pages/seller/seller_chat";
-import Seller_NavSidebar from "../components/seller_sidebar";
 import Customer_Chat from "../pages/customer/customer_chat";
 import MarketplaceAnalysis from "../pages/general/marketplaceAnalysis";
 import SellerAnalysis from "../pages/seller/sellerAnalysis";
@@ -26,8 +22,6 @@ import ProductManagement from "../pages/seller/product_management";
 import AddProduct from "../pages/seller/add_product";
 
 function AppNav() {
-    const { isAuth, isSeller } = useContext(GlobalContext);
-
     return (
         <>
             <Router>
@@ -39,7 +33,6 @@ function AppNav() {
                     />
                     <Route path="/marketplace" element={<Marketplace />} />
                     <Route path="/customer/shop/:seller" element={<Shop />} />
-                    {/* <Route path="/login" element={<Login />} /> */}
                     <Route
                         path="/customer/products"
                         element={<ProductListing />}
@@ -73,52 +66,7 @@ function AppNav() {
                     />
                     <Route path="/add_product_page" element={<AddProduct />} />
                 </Routes>
-                {/* {!isAuth ? (
-                <Routes>
-                    <Route path="/" element={<Landing />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/signup" element={<SignUp />} />
-                </Routes>
-            ) : isSeller ? (
-                    <Routes>
-                    
-                    <Route path="/seller" element={<Seller_Home />} />
-                </Routes>
-            ) : (
-                <Routes>
-                    <Route path="/customer" element={<Customer_Home />} />
-                </Routes>
-            )} */}
             </Router>
-        </>
-    );
-}
-
-function AuthenticatedRoutes({ isSeller }) {
-    return (
-        <Routes>
-            {isSeller ? (
-                <Route path="/" element={<SellerRoutes />} />
-            ) : (
-                <Route path="/" element={<CustomerRoutes />} />
-            )}
-        </Routes>
-    );
-}
-
-function SellerRoutes() {
-    return (
-        <>
-            <Route path="/" element={<Seller_Home />} />
-            {/* Add more seller-specific routes here */}
-        </>
-    );
-}
-
-function CustomerRoutes() {
-    return (
-        <>
-            <Route path="/" element={<Marketplace />} />
         </>
     );
 }

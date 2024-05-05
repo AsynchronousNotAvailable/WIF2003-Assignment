@@ -14,7 +14,18 @@ import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
 
 function Marketplace() {
-    const { shopsItemListing, productListing } = useContext(GlobalContext);
+    const { shopsItemListing, productListing, customer } =
+        useContext(GlobalContext);
+
+    useEffect(() => {
+        console.log("FROM MARKETPLACE", customer);
+        // fetch data of all products
+    }, []);
+
+
+
+    
+
     // const options = productListing.map((option) => {
     //     const firstLetter = option.name[0].toUpperCase();
     //     return {
@@ -555,14 +566,12 @@ function Marketplace() {
                     <i className="fa fa-comment"></i>
                 </button>
                 {/* {floating && <FloatingChat activeChat={activeChat}  activeChatContent={activeChatContent}/>} */}
-                
+
                 {floating && (
-                    
-                        <FloatingChatList
-                            chatList={chatList}
-                            handleChatClick={handleChatClick}
-                        />
-                   
+                    <FloatingChatList
+                        chatList={chatList}
+                        handleChatClick={handleChatClick}
+                    />
                 )}
                 {chatName !== "" && (
                     <FloatingChat

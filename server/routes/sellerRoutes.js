@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const sellerController = require("../controllers/sellerControllers");
+router.post("/login", sellerController.login);
 
 router.get("/:username", sellerController.getSellerByUsername);
 

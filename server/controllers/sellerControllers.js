@@ -2,6 +2,20 @@
 
 const SellerService = require("../services/sellerService");
 
+exports.login = async (req, res) => {
+    try {
+        const loginData = req.body;
+        const seller = await SellerService.login(loginData);
+        res.json({ message: "Login Successful", seller: seller });
+    } catch (error) {
+        if (error.message === "Seller Not Found") {
+            res.status(404).json({ error: error.message });
+        } else {
+            res.status(500).json({ error: error.message });
+        }
+    }
+
+}
 exports.getSellerByUsername = async (req, res) => {
     try {
         const username = req.params.username;
