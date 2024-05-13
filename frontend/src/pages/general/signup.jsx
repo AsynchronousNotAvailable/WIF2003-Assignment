@@ -112,6 +112,10 @@ function SignUp() {
     }
   }
 
+  const toLogin = () => {
+    navigation("/");
+  }
+
   const [showPassword, setShowPassword] = useState(false);
       const handlePasswordToggle = () => {
         setShowPassword(!showPassword);
@@ -127,7 +131,7 @@ function SignUp() {
         <FormContainer>
           <FormWrapper>
             <SmallText style={{ fontSize: "32px", fontWeight: "medium" }}>Create an account</SmallText>
-            <SmallText> Already have an account? <LoginLink onClick={handleLogin}>Log in</LoginLink></SmallText>
+            <SmallText> Already have an account? <LoginLink onClick={toLogin}>Log in</LoginLink></SmallText>
             <form style={{ width: "100%" }}>
                 <div style={{ display: "flex"}}>
                     <CustomInput title="First Name" type="text" value={firstName} setValue={setFirstName} placeholder="Enter your first name" size="80%" />
@@ -146,7 +150,7 @@ function SignUp() {
                 <PasswordLabel>Show Password</PasswordLabel>
             </form>
             <div style={{ display: "flex", width: "100%", justifyContent: "space-between", alignItems: "center", marginTop: "40px"}}>
-              <LoginLink onClick={handleLogin}>log in instead</LoginLink>
+              <LoginLink onClick={toLogin}>log in instead</LoginLink>
               <CustomButton style={{ Opacity: "35%", marginRight: "auto"}} text="Create an account" backgroundColor="#666666" borderColor="none" textColor="white" width="45%" func={handleSignUp} />
             </div>
           </FormWrapper>

@@ -235,9 +235,9 @@ function Login() {
                     >
                         Or login with
                         {/* <SocialLink>Facebook</SocialLink> */}
-                        {/* <div style={{ marginLeft: "20px" }}>
+                        <div style={{ marginLeft: "20px" }}>
                             <GLogin func={handleGLogin} />
-                        </div> */}
+                        </div>
                     </SmallText>
                 </div>
             </Content>
