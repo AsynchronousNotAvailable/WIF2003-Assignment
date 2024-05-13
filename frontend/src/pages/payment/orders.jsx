@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Customer_Navbar from "../../components/customer_navbar";
 import Order_List from "./components/orderList";
 import { GlobalContext } from "../../context";
@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FloatingChat from "../customer/components/FloatingChat";
+import axios from 'axios';
 
 const Container = styled.div`
     display: flex;
@@ -76,9 +77,33 @@ const Divider = styled.hr`
 export default function Orders() {
     const [chatName, setChatName] = useState("");
     const [activeChatContent, setActiveChatContent] = useState([]);
+    const [products, setProducts] = useState([]);
     const [floating, setFloating] = useState(false);
     const toggleFloatingChat = () => {
         setFloating(!floating);
+    };
+    const { shopsItemListing, productListing, customer } =
+        useContext(GlobalContext);
+
+    useEffect(() => {
+        console.log("FROM ORDERS", customer);
+       
+        fetchData();
+    }, []);
+
+    const fetchData = async () => {
+        console.log(customer.username);
+        const username = customer.username;
+        try {
+            const response = await axios.get(
+                `http://localhost:8080/api/customers/${username}/orderHistory`
+            );
+            console.log("FROM DATABASE", response.data);
+            const products = response.data;
+            console.log('products', products);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const handleChatButtonClick = (name) => {
@@ -132,6 +157,12 @@ export default function Orders() {
     const sortedOrders = orderHistory
         .slice()
         .sort((a, b) => b.timestamp - a.timestamp);
+
+    // const fetchData = async () => {
+    //     try {
+    //         const response = await axios.fetch
+    //     }
+    // }
 
     return (
         <Container>
