@@ -5,7 +5,8 @@ const sellerRoutes = require("./routes/sellerRoutes");
 const productRoutes = require("./routes/productRoutes");
 const app = express();
 
-const PORT = 8080;
+//change port number
+const PORT = 5000;
 
 //so can parse json request body
 app.use(express.json());

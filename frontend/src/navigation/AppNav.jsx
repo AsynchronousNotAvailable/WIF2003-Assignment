@@ -48,7 +48,7 @@ function AppNav() {
                         path="/customer/analysis"
                         element={<CustomerAnalysis />}
                     />
-                    <Route path="/customer_chat" element={<Customer_Chat />} />
+                    <Route path="/customer_chat" element={<Customer_Chat />} /> 
                     <Route path="/seller" element={<Seller_Home />} />
                     <Route
                         path="/seller/analysis"

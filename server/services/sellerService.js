@@ -16,6 +16,14 @@ async function checkSellerByEmail(email) {
     return seller;
 }
 
+exports.getAllSellers = async () => {
+    const sellers = await SellerModel.find();
+    if(sellers.length === 0){
+        throw new Error("No Sellers Found");
+    }
+    return sellers;
+}
+
 exports.login = async (loginData) => {
     const seller = await SellerModel.findOne({
         email: loginData.emailAddress,

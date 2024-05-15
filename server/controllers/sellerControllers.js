@@ -16,6 +16,47 @@ exports.login = async (req, res) => {
     }
 
 }
+
+exports.getAllSellers = async (req,res) => {
+    try {
+        const sellers = await SellerService.getAllSellers();
+        return res.status(200).json(sellers);
+        /* 
+        returns : 
+        [
+    {
+        "_id": "66349c22cf490c204299bdb7",
+        "username": "Kar Weng",
+        "email": "kw@seller.com",
+        "password": "1234",
+        "products": [
+            "6634afce386c72bb97f4dacb",
+            "6634b377f4aa74d9e9be9353"
+        ],
+        "orders": [
+            "6634b50a46a975b16fbdc9c1",
+            "6634b50b46a975b16fbdc9c5",
+            "66421b3c8494b32b8868208a",
+            "66421b3c8494b32b8868208e"
+        ],
+        "__v": 11
+    },
+    {
+        "_id": "6634a75cc04e61affe904b34",
+        "username": "Abang",
+        "email": "Abang@syopi.com",
+        "password": "1234",
+        "products": [],
+        "orders": [],
+        "__v": 0
+    }
+]       
+        */
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+}
+
 exports.getSellerByUsername = async (req, res) => {
     try {
         const username = req.params.username;

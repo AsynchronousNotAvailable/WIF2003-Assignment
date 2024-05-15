@@ -13,7 +13,7 @@ function Customer_Navbar() {
     };
 
     const goToChat = () => {
-        navigation("/customer_chat");
+        navigation(`/customer_chat`);
     };
 
     

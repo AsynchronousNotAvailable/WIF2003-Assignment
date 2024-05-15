@@ -110,16 +110,18 @@ function Login() {
         };
 
         let response;
+        
+        //change port number for functions below 
 
         if (loginData.emailAddress.includes("seller")) {
             response = await axios.post(
-                `http://localhost:8080/api/sellers/login`,
+                `http://localhost:5000/api/sellers/login`,
                 loginData
             );
         }
         else {
             response = await axios.post(
-                `http://localhost:8080/api/customers/login`,
+                `http://localhost:5000/api/customers/login`,
                 loginData
             );
         }
@@ -129,7 +131,7 @@ function Login() {
         if (response.status === 200) {
             if (response.data.customer) {
                 setCustomer(response.data.customer);
-                navigation("/marketplace");
+                navigation(`/marketplace`);
             } else {
                 setSeller(response.data.seller);
                 navigation("/product_management");
