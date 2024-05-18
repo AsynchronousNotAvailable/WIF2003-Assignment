@@ -1,26 +1,29 @@
-// import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { GlobalContext } from "../context";
 
-// const useSeller = () => {
-//     const [seller, setSeller] = useState(null);
+const useSeller = () => {
+    const [seller, setSeller] = useState(null);
 
-//     useEffect(() => {
-//         const seller = localStorage.getItem("seller");
-//         if (seller) {
-//             setSeller(JSON.parse(seller));
-//         }
-//     });
+    // setSeller(JSON.parse(localStorage.getItem("seller")));
 
-//     const saveSeller = (seller) => {
-//         localStorage.setItem("seller", JSON.stringify(seller));
-//         setSeller(seller);
-//     }
+    
+    const getSeller = () => {
+        const seller = localStorage.getItem("seller");
+        return seller ? JSON.parse(seller) : null;
+    };
 
-//     const clearSeller = () => {
-//         localStorage.removeItem("seller");
-//         setSeller(null);
-//     }
 
-//     return {seller, saveSeller, clearSeller}
-// }
+    const saveSeller = (seller) => {
+        localStorage.setItem("seller", JSON.stringify(seller));
+        setSeller(seller);
+    };
 
-// export default useSeller;
+    const clearSeller = () => {
+        localStorage.removeItem("seller");
+        setSeller(null);
+    };
+
+    return { seller, getSeller, saveSeller, clearSeller };
+};
+
+export default useSeller;

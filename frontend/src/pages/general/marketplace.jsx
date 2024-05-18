@@ -15,18 +15,15 @@ import Rating from "@mui/material/Rating";
 import useCustomer from "../../hooks/useCustomer";
 
 function Marketplace() {
-    const { shopsItemListing, productListing, customer } =
-        useContext(GlobalContext);
+    const { shopsItemListing, productListing } = useContext(GlobalContext);
+    const { getCustomer } = useCustomer();
+    const [customer, setCustomer] = useState(getCustomer());
 
     useEffect(() => {
         console.log("FROM CONTEXT", customer);
-        
+
         // fetch data of all products
     }, []);
-
-
-
-    
 
     // const options = productListing.map((option) => {
     //     const firstLetter = option.name[0].toUpperCase();
@@ -418,6 +415,7 @@ function Marketplace() {
                             <TextField {...params} label="Search" />
                         )}
                     />
+                    {customer && customer.username}
 
                     <button
                         onClick={onSearchButtonClick}

@@ -1,25 +1,23 @@
-// import { useState, useEffect } from "react";
-// const useCustomer = () => {
-//     const [customer, setCustomer] = useState(null);
+import { useState } from "react";
 
-//     useEffect(() => {
-//         const customer = localStorage.getItem("customer");
-//         if (customer) {
-//             setCustomer(JSON.parse(customer));
-//         }
-//     }, []);
+const useCustomer = () => {
+    const [customer, setCustomer] = useState(null);
+    const getCustomer = () => {
+        const customer = localStorage.getItem("customer");
+        return customer ? JSON.parse(customer) : null;
+    }
 
-//     const saveCustomer = () => {
-//         localStorage.setItem("customer", JSON.stringify(customer));
-//         setCustomer(customer);
-//     };
+    const saveCustomer = (customerData) => {
+        localStorage.setItem("customer", JSON.stringify(customerData));
+        setCustomer(customerData);
+    };
 
-//     const clearCustomer = () => {
-//         localStorage.removeItem("customer");
-//         setCustomer(null);
-//     };
+    const clearCustomer = () => {
+        localStorage.removeItem("customer");
+        setCustomer(null);
+    };
 
-//     return { customer, saveCustomer, clearCustomer };
-// };
+    return { customer, getCustomer, saveCustomer, clearCustomer };
+};
 
-// export default useCustomer;
+export default useCustomer;

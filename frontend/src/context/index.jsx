@@ -5,8 +5,6 @@ export const GlobalContext = createContext(null);
 export const CheckoutContext = createContext(null);
 
 function GlobalState({ children }) {
-    const [customer, setCustomer] = useState(null);
-    const [seller, setSeller] = useState(null);
     const [isSeller, setIsSeller] = useState(false);
     const [cartItems, setCartItems] = useState([]);
     const [totalCheckoutPrice, setTotalCheckoutPrice] = useState(0);
@@ -17,19 +15,19 @@ function GlobalState({ children }) {
     const [sellerNavBarSelected, setSellerNavBarSelected] =
         useState("ProductMgmt");
     
-    useEffect(() => {
-        const customer = localStorage.getItem("customer");
-        console.log('CUSTOMER', customer);
-        if (customer) {
-            setCustomer(JSON.parse(customer));
-        }
+    // useEffect(() => {
+    //     const customer = localStorage.getItem("customer");
+    //     console.log('CUSTOMER', customer);
+    //     if (customer) {
+    //         setCustomer(JSON.parse(customer));
+    //     }
 
-        const seller = localStorage.getItem("seller");
-        if (seller) {
-            setSeller(JSON.parse(seller));
-        }
+    //     const seller = localStorage.getItem("seller");
+    //     if (seller) {
+    //         setSeller(JSON.parse(seller));
+    //     }
     
-    }, [customer, seller])
+    // }, [])
 
     const addCardDetails = (details) => {
         setCardDetails([...cardDetails, details]);
@@ -811,10 +809,7 @@ function GlobalState({ children }) {
     return (
         <GlobalContext.Provider
             value={{
-                customer,
-                setCustomer,
-                seller,
-                setSeller,
+                
                 userDetails,
                 setUserDetails,
                 isSeller,

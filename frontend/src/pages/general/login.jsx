@@ -94,15 +94,13 @@ function Login() {
         setIsSeller,
         userDetails,
         setUserDetails,
-        customer,
-        setCustomer,
-        seller,
-        setSeller,
+        
+       
     } = useContext(GlobalContext);
     const [redirectToMarketplace, setRedirectToMarketplace] = useState(false);
     const navigation = useNavigate();
-    // const { saveCustomer } = useCustomer();
-    // const { saveSeller } = useSeller();
+    const { saveCustomer } = useCustomer();
+    const { saveSeller } = useSeller();
 
     const handleLogin = async (e) => {
         try {
@@ -131,20 +129,13 @@ function Login() {
 
             if (response.status === 200) {
                 if (response.data.customer) {
-                    // setCustomer(response.data.customer);
-                    // saveCustomer(response.data.customer);
-                    localStorage.setItem(
-                        "customer",
-                        JSON.stringify(response.data.customer)
-                    );
-                    // setCustomer(response.data.customer);
+                    console.log('save customer');
+                    saveCustomer(response.data.customer);
+                    
                     navigation("/marketplace");
                 } else {
-                    // setSeller(response.data.seller);
-                    localStorage.setItem(
-                        "seller",
-                        JSON.stringify(response.data.seller)
-                    );
+                    saveSeller(response.data.seller);
+                    
                     navigation("/product_management");
                 }
             }
