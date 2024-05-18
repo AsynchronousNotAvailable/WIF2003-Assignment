@@ -9,6 +9,7 @@ function Customer_Navbar() {
     const navigation = useNavigate();
     const handleLogout = () => {
         setUserDetails(null);
+        localStorage.removeItem("customer");
         navigation("/");
     };
 

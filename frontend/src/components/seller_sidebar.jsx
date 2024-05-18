@@ -7,6 +7,7 @@ function Seller_NavSidebar() {
     console.log(sellerNavBarSelected)
     const navigation = useNavigate();
     const handleLogout = () => {
+        localStorage.removeItem("seller");
         navigation("/");
     };
 

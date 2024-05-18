@@ -7,6 +7,8 @@ import CustomButton from "./CustomButton";
 import styled from "styled-components";
 import GLogin from "./GoogleLogin";
 import axios from "axios";
+import useCustomer from "../../hooks/useCustomer";
+import useSeller from "../../hooks/useSeller";
 
 const Container = styled.div`
     display: flex;
@@ -89,7 +91,6 @@ function Login() {
     const [emailAddress, setEmailAddress] = useState("");
     const [password, setPassword] = useState("");
     const {
-        
         setIsSeller,
         userDetails,
         setUserDetails,
@@ -100,43 +101,57 @@ function Login() {
     } = useContext(GlobalContext);
     const [redirectToMarketplace, setRedirectToMarketplace] = useState(false);
     const navigation = useNavigate();
+    // const { saveCustomer } = useCustomer();
+    // const { saveSeller } = useSeller();
 
     const handleLogin = async (e) => {
-        e.preventDefault();
+        try {
+            e.preventDefault();
 
-        const loginData = {
-            emailAddress: emailAddress,
-            password: password,
-        };
+            const loginData = {
+                emailAddress: emailAddress,
+                password: password,
+            };
 
-        let response;
+            let response;
 
-        if (loginData.emailAddress.includes("seller")) {
-            response = await axios.post(
-                `http://localhost:8080/api/sellers/login`,
-                loginData
-            );
-        }
-        else {
-            response = await axios.post(
-                `http://localhost:8080/api/customers/login`,
-                loginData
-            );
-        }
-
-        console.log(response.data);
-
-        if (response.status === 200) {
-            if (response.data.customer) {
-                setCustomer(response.data.customer);
-                navigation("/marketplace");
+            if (loginData.emailAddress.includes("seller")) {
+                response = await axios.post(
+                    `http://localhost:8080/api/sellers/login`,
+                    loginData
+                );
             } else {
-                setSeller(response.data.seller);
-                navigation("/product_management");
+                response = await axios.post(
+                    `http://localhost:8080/api/customers/login`,
+                    loginData
+                );
             }
-        }
 
-        
+            console.log(response.data);
+
+            if (response.status === 200) {
+                if (response.data.customer) {
+                    // setCustomer(response.data.customer);
+                    // saveCustomer(response.data.customer);
+                    localStorage.setItem(
+                        "customer",
+                        JSON.stringify(response.data.customer)
+                    );
+                    // setCustomer(response.data.customer);
+                    navigation("/marketplace");
+                } else {
+                    // setSeller(response.data.seller);
+                    localStorage.setItem(
+                        "seller",
+                        JSON.stringify(response.data.seller)
+                    );
+                    navigation("/product_management");
+                }
+            }
+        } catch (error) {
+            console.log(error);
+            window.alert("Invalid Credentials");
+        }
     };
 
     const handleGLogin = (profileObj) => {

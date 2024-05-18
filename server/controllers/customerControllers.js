@@ -4,6 +4,7 @@ const CustomerService = require("../services/customerService");
 const mongoose = require("mongoose");
 
 exports.login = async (req, res) => {
+    console.log('login');
     try {
         const loginData = req.body;
         const customer = await CustomerService.login(loginData);
@@ -32,16 +33,19 @@ exports.getCustomerByUsername = async (req, res) => {
 };
 
 exports.createCustomer = async (req, res) => {
+   
     try {
-        const { username, email, password } = req.body;
+        console.log(req.body);
+        const { firstName, lastName, username, email, password } = req.body;
         const customerData = {
+            firstName,
+            lastName,
             username,
             email,
             password,
             orderId: [],
-            card: [],
+            cards: [],
         };
-
         const newCustomer = await CustomerService.createCustomer(customerData);
         res.status(201).json(newCustomer);
     } catch (error) {
@@ -51,11 +55,14 @@ exports.createCustomer = async (req, res) => {
             error.message === "Existing Customer With Same Email" ||
             error.message === "Existing Customer With Same Username"
         ) {
-            res.status(409).json({ error: error.message });
+            res.status(409).json(error.message);
         } else {
-            res.status(500).json({ error: error.message });
+            res.status(500).json(error.message);
+            console.log(error)
         }
     }
+
+    
 };
 
 //get cart

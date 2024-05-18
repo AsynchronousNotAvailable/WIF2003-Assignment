@@ -6,7 +6,7 @@ router.post('/:login', customerController.login);
 
 router.get('/:username', customerController.getCustomerByUsername);
 
-router.post('/new', customerController.createCustomer);
+router.post('/register', customerController.createCustomer);
 
 router.post('/:username/addToCart', customerController.addToCart);
 

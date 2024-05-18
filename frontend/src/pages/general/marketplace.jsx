@@ -12,13 +12,15 @@ import FloatingChat from "../customer/components/FloatingChat";
 import FloatingChatList from "../customer/components/FloatingChatList";
 import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
+import useCustomer from "../../hooks/useCustomer";
 
 function Marketplace() {
     const { shopsItemListing, productListing, customer } =
         useContext(GlobalContext);
 
     useEffect(() => {
-        console.log("FROM MARKETPLACE", customer);
+        console.log("FROM CONTEXT", customer);
+        
         // fetch data of all products
     }, []);
 

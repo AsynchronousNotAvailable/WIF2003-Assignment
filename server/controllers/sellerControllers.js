@@ -32,8 +32,10 @@ exports.getSellerByUsername = async (req, res) => {
 
 exports.createSeller = async (req, res) => {
     try {
-        const { username, email, password } = req.body;
+        const { firstName, lastName, username, email, password } = req.body;
         const sellerData = {
+            firstName,
+            lastName,
             username,
             email,
             password,

@@ -62,11 +62,16 @@ exports.getCustomerByUsername = async (username) => {
 };
 
 exports.createCustomer = async (customerData) => {
+    console.log(customerData);
     const checkExistingCustomerWithEmail = await checkCustomerByEmail(
         customerData.email
     );
     const checkExistingCustomerWithUsername = await checkCustomerByUsername(
         customerData.username
+    );
+    console.log(
+        checkExistingCustomerWithEmail,
+        checkExistingCustomerWithUsername
     );
 
     if (checkExistingCustomerWithEmail) {

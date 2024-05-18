@@ -16,4 +16,5 @@ router.put("/:username/:productId/edit", sellerController.editProduct);
 router.get("/:username/orders", sellerController.getOrders);
 //retrieve products
 router.get("/:username/products", sellerController.getProducts);
+
 module.exports = router;
