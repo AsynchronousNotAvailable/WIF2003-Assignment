@@ -4,16 +4,18 @@ import Seller_NavSidebar from "../../components/seller_sidebar";
 import SortingTable from "../../components/order_management/sorting_table";
 import { useContext } from "react";
 import { GlobalContext } from "../../context";
-import download_icon_blue from "../../assets/download_icon_blue.png";
-import calendar_icon from "../../assets/calendar_icon.png";
-import filter_icon from "../../assets/filter_icon.png";
-import add_icon from "../../assets/add_icon_white.png";
+import download_icon_blue from "../../assets/download_icon_blue.png"
+import calendar_icon from "../../assets/calendar_icon.png"
+import filter_icon from "../../assets/filter_icon.png"
+import axios from "axios";
+import add_icon from "../../assets/add_icon_white.png"
 import { GlobalFilter } from "../../components/order_management/global_filter";
 import { format, setDate } from "date-fns";
 import TableDatePicker from "../../components/order_management/tableDatePicker";
 import ExportCsv from "../../components/order_management/export_csv";
 import DatePicker from "react-datepicker";
 import useSeller from "../../hooks/useSeller";
+import {Component} from 'react';
 function ProductManagement() {
     const { setSellerProduct } = useContext(GlobalContext);
     const navigation = useNavigate();
@@ -22,8 +24,9 @@ function ProductManagement() {
         startDate: null,
         endDate: null,
     });
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
+    const [startDate, setStartDate] = useState(null)
+    const [endDate, setEndDate] = useState(null)
+    const [productData, setProductData] = useState(null); 
     const sortingTableRef = useRef();
     const { getSeller } = useSeller();
     const [seller, setSeller] = useState(getSeller());
@@ -33,12 +36,22 @@ function ProductManagement() {
     }, [sortingTableRef]);
 
     useEffect(() => {
-        console.log("FROM PRODUCT MANAGEMENT", seller);
+      const username = seller.username;
+      axios
+        .get(`http://localhost:8080/api/sellers/${username}/products`)
+        .then((response) => {
+          setProductData(response.data);
+          console.log(response.data);
+        });
     }, []);
 
-    // function onExportClick() {
 
-    // }
+    
+
+    // useEffect(() => {
+    //     console.log('FROM PRODUCT MANAGEMENT', seller);
+    // }, []);
+   
 
     const deleteSellerProduct = (index) => {
         const updatedData = sellerProduct.filter((_, i) => i !== index);
@@ -72,79 +85,93 @@ function ProductManagement() {
         console.log(dateFilter);
     }
 
-    function onAddProductClick() {
-        navigation("/add_product_page");
+
+    function onAddEditProductClick(isAdd, product) {
+        navigation("/add_product_page", {state: {isAdd: isAdd, product: product}});
     }
 
+
     const PRODUCT_COLUMNS = [
-        {
-            Header: "Product",
-            Footer: "Product",
-            accessor: "Product",
-        },
-        {
-            Header: "SKU",
-            Footer: "SKU",
-            accessor: "SKU",
-        },
-        {
-            Header: "Category",
-            Footer: "Category",
-            accessor: "Category",
-        },
-        {
-            Header: "Stock",
-            Footer: "Stock",
-            accessor: "Stock",
-        },
-        {
-            Header: "Price",
-            Footer: "Price",
-            accessor: "Price",
-        },
-        {
-            Header: "Status",
-            Footer: "Status",
-            accessor: "Status",
-        },
-        {
-            Header: "Added",
-            Footer: "Added",
-            accessor: "Added",
-            Cell: ({ value }) => {
-                return format(new Date(value), "dd/MM/yyyy");
-            },
-        },
-        {
-            Header: "Action",
-            Footer: "Action",
-            accessor: "action",
-            Cell: ({ cell }) => {
-                return (
-                    <div className="flex">
-                        {/* <button className='mx-2' onClick={() => alert('hi')}>
+      {
+        Header: "Product",
+        Footer: "Product",
+        accessor: "name",
+      },
+      {
+        Header: "Category",
+        Footer: "Category",
+        accessor: "category",
+      },
+      {
+        Header: "Stock",
+        Footer: "Stock",
+        accessor: "quantity",
+      },
+      {
+        Header: "Price",
+        Footer: "Price",
+        accessor: "pricePerUnit",
+      },
+      {
+        Header: "Variation",
+        Footer: "Variation",
+        accessor: "variation",
+        // Cell: ({ value }) => {
+        //   const variations = "";
+        //   for (let element in value) {
+        //     variations.concat(element.toString());
+        //   }
+        //   return <p>{variations}</p>;
+        // },
+      },
+      // {
+      //     Header: 'Status',
+      //     Footer: 'Status',
+      //     accessor: 'Status',
+      // },
+      {
+          Header: 'Created Date',
+          Footer: 'Created Date',
+          accessor: 'createdDateTime',
+          Cell: ({ value }) => { return format(new Date(value), 'dd/MM/yyyy') },
+      },
+      {
+        Header: "Action",
+        Footer: "Action",
+        Cell: ({ cell }) => {
+          return (
+            <div className="flex">
+              {/* <button className='mx-2' onClick={() => alert('hi')}>
                             Edit
                         </button>
                         <button className='mx-2' onClick={() => alert('hi')}>
                             Hide
                         </button> */}
-                        <button
-                            className="mx-2 mr-0"
-                            onClick={() =>
-                                sortingTableRef.current.handleDeleteData(
-                                    cell.row.index
-                                )
-                            }
-                        >
-                            Delete
-                        </button>
-                    </div>
-                );
-            },
+              <button
+                className="mx-2 mr-0"
+                onClick={() =>{
+                    if(window.confirm("Do you sure you want to delete the product?")){
+                        sortingTableRef.current.handleDeleteData(productData[cell.row.index]._id)
+                    }
+                }
+                }
+              >
+                Delete
+              </button>
+              <button
+                className="mx-2 mr-0"
+                onClick={() =>
+                  {onAddEditProductClick(false, productData[cell.row.index]);}
+                }
+              >
+                Edit
+              </button>
+            </div>
+          );
         },
+      },
     ];
 
-    const selected = [true, false, false, false];
     return (
         <>
             <Seller_NavSidebar />
@@ -156,14 +183,10 @@ function ProductManagement() {
                 </div>
                 <div className="flex ms-5 me-2 mb-2">
                     <div className="flex-1 mr-3">
-                        {rendered && (
-                            <GlobalFilter
-                                filter={sortingTableRef.current.globalFilter}
-                                setFilter={
-                                    sortingTableRef.current.setGlobalFilter
-                                }
-                            />
-                        )}
+                        {rendered &&
+                            <GlobalFilter filter={sortingTableRef.current?.globalFilter} setFilter={sortingTableRef.current?.setGlobalFilter} />
+                        }
+
                     </div>
 
                     <ExportCsv
@@ -173,7 +196,7 @@ function ProductManagement() {
 
                     <button
                         className="flex-initial w-36 bg-[#7450DF] rounded-lg h-10"
-                        onClick={onAddProductClick}
+                        onClick={() => {onAddEditProductClick(true, null)}}
                     >
                         <span className="text-white flex ml-4">
                             <img src={add_icon}></img>
@@ -223,35 +246,10 @@ function ProductManagement() {
                     </div>
                 </div>
                 <div className="flex ms-5 me-2 my-2">
-                    <SortingTable
-                        ref={sortingTableRef}
-                        columns={PRODUCT_COLUMNS}
-                        data={sellerProduct}
-                        deleteSellerProduct={deleteSellerProduct}
-                        dateFilter={dateFilter}
-                    />
-                    {/* <table className="w-full">
-                    <thead className="border-2 border-border-grey">
-                        <tr>
-                            <th className="">Order ID</th>
-                            <th className="">Product</th>
-                            <th className="">Date</th>
-                            <th className="">Customer</th>
-                            <th className="">Total</th>
-                            <th className="">Payment</th>
-                            <th className="">Status</th>
-                            <th className="">Action</th>
-                        </tr>
-                    </thead>
-                    <tr>
-                        <td>abcd</td>
-                        <td>defgh</td>
-                    </tr>
-                </table> */}
+                    {productData && <SortingTable ref={sortingTableRef} columns={PRODUCT_COLUMNS} data={productData} deleteSellerProduct={deleteSellerProduct} dateFilter={dateFilter} />}
                 </div>
             </div>
         </>
     );
 }
-
 export default ProductManagement;

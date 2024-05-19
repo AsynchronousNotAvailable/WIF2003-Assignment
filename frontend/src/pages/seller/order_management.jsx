@@ -15,13 +15,9 @@ import { useContext } from "react";
 
 function OrderManagement(){
     const sortingTableRef = useRef(); 
-    function onExportClick(){
-
-    }
     const { deleteSellerOrder } = useContext(GlobalContext)
     const [rendered, setRendered] = useState(false);
     const {sellerOrder} = useContext(GlobalContext);
-
     useEffect(() => {
         setRendered(() => true);
     }, [sortingTableRef])

@@ -63,7 +63,7 @@ exports.createSeller = async (req, res) => {
 exports.addProduct = async (req, res) => {
     try {
         const username = req.params.username;
-        const { name, description, variation, pricePerUnit, category } =
+        const { name, description, variation, pricePerUnit, category, createdDateTime, quantity } =
             req.body;
 
         const newProductData = {
@@ -73,6 +73,8 @@ exports.addProduct = async (req, res) => {
             pricePerUnit,
             category,
             review: [],
+            createdDateTime, 
+            quantity,
         };
 
         const newProduct = await SellerService.addProduct(

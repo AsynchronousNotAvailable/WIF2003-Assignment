@@ -1,9 +1,7 @@
 import { useTable, useSortBy, usePagination, useGlobalFilter, useFilters, } from 'react-table'
 import React, { useMemo, useState, useEffect, forwardRef, useImperativeHandle, useContext} from 'react'
 import { GlobalContext } from "../../context";
-
-import cleaned_data from './cleaned_data.json'
-import TableDatePicker from "../../components/order_management/tableDatePicker";
+import axios  from 'axios';
 
 
 let renderCount = 0
@@ -12,21 +10,24 @@ function SortingTable(props, ref){
     const dataImport = props.data; 
     const dateFilter = props.dateFilter; 
     const [data, setData] = useState(dataImport);
+    const { seller } = useContext(GlobalContext);
      
     
     
     const columns = useMemo(() => columnsData, [data])      
 
-    function handleEditData(){
-
+    function handleEditData(productID){
+        
     }
     
-    function handleDeleteData(index){
-        console.log(data)
-        console.log(data[index])
-        const updatedData = data.filter((_,i) => i !== index);
-        console.log(updatedData)
-        setData(updatedData);
+    function handleDeleteData(productID){
+        const username = seller.username; 
+        axios.delete(`http://localhost:8080/api/sellers/${username}/${productID}/delete`).then((_) => {
+            window.alert("Product is delete successfully.")
+            axios.get(`http://localhost:8080/api/sellers/${username}/products`).then((response) => {
+                setData(response.data);
+            });
+        })
     }
     
     function handleHideData(){
@@ -67,8 +68,8 @@ function SortingTable(props, ref){
     renderCount++
     useImperativeHandle(ref, () => {
         return {
-            handleDeleteData: (index) => handleDeleteData(index),
-            handleEditData: () => { alert("hi")},
+            handleDeleteData: (productID) => handleDeleteData(productID),
+            handleEditData: (productID) => {handleEditData(productID)},
             handleHideData: () => {alert("hi")},
             globalFilter: globalFilter, 
             setGlobalFilter: setGlobalFilter, 
@@ -95,7 +96,7 @@ function SortingTable(props, ref){
             <tbody {...getTableBodyProps()}>
                 {page.filter(row => {
                     let filterPass = true;
-                    const date = new Date(row.values.Added)
+                    const date = new Date(row.values.createdDateTime)
                     if(dateFilter?.startDate){
                         filterPass = filterPass && (new Date(dateFilter.startDate) < date)
                     }
