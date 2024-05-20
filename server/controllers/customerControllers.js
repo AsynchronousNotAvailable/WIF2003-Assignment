@@ -4,7 +4,6 @@ const CustomerService = require("../services/customerService");
 const OrderModel = require("../models/order");
 const mongoose = require("mongoose");
 
-
 exports.login = async (req, res) => {
     try {
         const loginData = req.body;
@@ -115,6 +114,8 @@ exports.createCustomer = async (req, res) => {
         }
     }
 };
+
+
 
 //get cart
 

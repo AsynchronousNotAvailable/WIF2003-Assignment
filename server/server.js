@@ -3,6 +3,7 @@ const { connect } = require("mongoose");
 const customerRoutes = require("./routes/customerRoutes");
 const sellerRoutes = require("./routes/sellerRoutes");
 const productRoutes = require("./routes/productRoutes");
+const messageRoutes = require("./routes/messageRoutes");
 const app = express();
 
 //change port number
@@ -28,6 +29,8 @@ connectDb()
 app.use("/api/customers", customerRoutes);
 app.use("/api/sellers", sellerRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/messages", messageRoutes);
+
 // app.use("/api/sales", salesRoutes);
 async function connectDb() {
     // const url =

@@ -4,25 +4,24 @@ const ConversationSchema = new mongoose.Schema({
    messages : [
     {
         type : mongoose.Schema.Types.ObjectId,
-        ref : "MessageModel",
-        default : []
+        ref : "Message",
+        default : [],
     }
-        ],
-    
-    participants : [
-        {
-            type : mongoose.Schema.Types.ObjectId,
-            ref : "CustomerModel",
-            required : true
-        },
-        {
-            type : mongoose.Schema.Types.ObjectId,
-            ref : "SellerModel",
-            required : true
-        }
-    ]
-   
-   
-}, {timestamps : true})
+   ],
+
+   sellerId : {
+    type : mongoose.Schema.Types.ObjectId,
+    ref : "Seller",
+    required : true,
+   },
+
+   customerId : {
+    type : mongoose.Schema.Types.ObjectId,
+    ref : "Customer",
+    required : true,
+   }
+
+}, {timestamps : true});
 
 exports.ConversationModel = mongoose.model("Conversation", ConversationSchema);
+
