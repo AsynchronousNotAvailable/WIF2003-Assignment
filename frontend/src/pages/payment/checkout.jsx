@@ -2,13 +2,13 @@ import React from "react";
 import Customer_Navbar from "../../components/customer_navbar";
 import Checkout_Item_List from "../payment/components/Checkout_Item_List";
 import { GlobalContext } from "../../context";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import styled from "styled-components";
-import { useState } from "react";
 import OnlineBankingOptions from "./components/OnlineBanking";
 import CreditDebitCard from "./components/CreditDebit";
 import { useNavigate } from "react-router-dom";
 import EditAddressModal from "./components/deliveryAddressModal";
+import useCustomer from "../../hooks/useCustomer";
 
 const Container = styled.div`
     display: flex;
@@ -74,15 +74,10 @@ export default function Checkout() {
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
 
-    const { customer, getCustomer } = useCustomer();
-    const [customerData, setCustomerData] = useState(null);
+    const { getCustomer } = useCustomer();
+    const [ customer, setCustomer] = useState(getCustomer());
 
     const navigation = useNavigate();
-
-    useEffect(() => {
-        const fetchedCustomer = getCustomer();
-        setCustomerData(fetchedCustomer);
-    }, [getCustomer]);
 
     const handlePaymentMethodClick = (method) => {
         setSelectedPaymentMethod(method);
@@ -220,7 +215,7 @@ export default function Checkout() {
             </PaymentContent>
             <PaymentContent selected={selectedPaymentMethod === "Credit/Debit Card"}>
                 <Wrapper>
-                    <CreditDebitCard />
+                    <CreditDebitCard username={customer.username} />
                 </Wrapper>
             </PaymentContent>
             <PaymentContent selected={selectedPaymentMethod === "TnG E-Wallet"}>

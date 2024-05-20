@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import CardRadioButton from './CardRadioButton';
 import { GlobalContext } from '../../../context';
+import axios from 'axios';
 
 // Styled components for the modal
 const ModalBackground = styled.div`
@@ -74,7 +75,7 @@ const CreditDebitCardForm = ({ onSave, onCancel }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const cardDetails = { cardNumber, expiryDate, cvv };
+    const cardDetails = { cardNumber: cardNumber, expiryDate: expiryDate, CVV: cvv, name: NameOnCard};
     onSave(cardDetails);
     addCardDetails(cardDetails);
     setCardNumber('');
@@ -93,10 +94,11 @@ const CreditDebitCardForm = ({ onSave, onCancel }) => {
 
   const handleCardNumberChange = (e) => {
     let cleanedValue = e.target.value.replace(/\D/g, '');
+    cleanedValue = cleanedValue.slice(0, 16);
     let formattedValue = '';
     for (let i = 0; i < cleanedValue.length; i++) {
         if (i % 4 === 0 && i !== 0) {
-            formattedValue += ' ';
+            formattedValue += '-';
         }
         formattedValue += cleanedValue[i];
     }
@@ -128,25 +130,22 @@ const CreditDebitCardForm = ({ onSave, onCancel }) => {
   );
 };
 
-const CreditDebitCard = () => {
+const CreditDebitCard = async ({ username }) => {
   const { cardDetails } = useContext(GlobalContext);
+  let cards; 
+  cards = await axios.get(`http://localhost:8080/api/customers/${username}/getCard`);
+  console.log(cards)
   const [modalOpen, setModalOpen] = useState(false);
   const [error, setError] = useState('');
   const [selectedCard, setSelectedCard] = useState('');
 
   const handleSaveCard = async (cardDetails) => {
     try {
-      const response = await axios.post(`/api/customer/${username}/addCard`, cardDetails);
+      const response = await axios.post(`http://localhost:8080/api/customers/${username}/addCard`, cardDetails);
       console.log('Card added successfully', response.data);
       setModalOpen(false);
     } catch (error) {
-      if (error.response) {
-          setError(error.response.data.error);
-          console.error('Error adding card:', error.response.data.error);
-      } else {
-          console.error('Error adding card:', error);
-          setError(error.message);
-      }
+      console.log(error);
     }
   };
 
