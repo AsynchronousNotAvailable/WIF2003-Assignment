@@ -72,8 +72,17 @@ export default function Checkout() {
     const orderTotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const { customer, getCustomer } = useCustomer();
+    const [customerData, setCustomerData] = useState(null);
 
     const navigation = useNavigate();
+
+    useEffect(() => {
+        const fetchedCustomer = getCustomer();
+        setCustomerData(fetchedCustomer);
+    }, [getCustomer]);
 
     const handlePaymentMethodClick = (method) => {
         setSelectedPaymentMethod(method);
@@ -87,6 +96,20 @@ export default function Checkout() {
             addOrders(cartItems, orderTotal+5, selectedPaymentMethod, shippingAddress);
             navigation("/customer/orders");
         }
+    };
+
+    const handleEdit = () => {
+        setModalOpen(true);
+    }
+
+    const handleSave = (editedName, editedPhoneNumber, editedAddress) => {
+        const shippingAddress = {
+            name: editedName,
+            phone: editedPhoneNumber,
+            add: editedAddress,
+        }
+        setShippingAddress(shippingAddress);
+        setModalOpen(false);
     };
 
     const CheckoutList = () => {
@@ -162,21 +185,6 @@ export default function Checkout() {
             </div>
         );
     }
-
-    const [modalOpen, setModalOpen] = useState(false);
-    const handleEdit = () => {
-        setModalOpen(true);
-    }
-
-    const handleSave = (editedName, editedPhoneNumber, editedAddress) => {
-        const shippingAddress = {
-            name: editedName,
-            phone: editedPhoneNumber,
-            add: editedAddress,
-        }
-        setShippingAddress(shippingAddress);
-        setModalOpen(false);
-    };
 
     return (
         <Container>

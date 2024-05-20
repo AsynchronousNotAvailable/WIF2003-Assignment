@@ -131,10 +131,23 @@ const CreditDebitCardForm = ({ onSave, onCancel }) => {
 const CreditDebitCard = () => {
   const { cardDetails } = useContext(GlobalContext);
   const [modalOpen, setModalOpen] = useState(false);
+  const [error, setError] = useState('');
   const [selectedCard, setSelectedCard] = useState('');
 
-  const handleSaveCard = (cardDetails) => {
-    setModalOpen(false); 
+  const handleSaveCard = async (cardDetails) => {
+    try {
+      const response = await axios.post(`/api/customer/${username}/addCard`, cardDetails);
+      console.log('Card added successfully', response.data);
+      setModalOpen(false);
+    } catch (error) {
+      if (error.response) {
+          setError(error.response.data.error);
+          console.error('Error adding card:', error.response.data.error);
+      } else {
+          console.error('Error adding card:', error);
+          setError(error.message);
+      }
+    }
   };
 
   const handleCancel = () => {
