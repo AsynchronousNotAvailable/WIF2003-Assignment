@@ -123,8 +123,6 @@ exports.getCard = async (req, res) => {
 exports.addCard = async (req, res) => {
     console.log("add card")
     try {
-        console.log("Request Params:", req.params); // Log request parameters
-        console.log("Request Body:", req.body); // Log request body
         const username = req.params.username;
         const cardDetails = req.body;
 

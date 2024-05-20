@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import CardRadioButton from './CardRadioButton';
 import { GlobalContext } from '../../../context';
@@ -130,20 +130,33 @@ const CreditDebitCardForm = ({ onSave, onCancel }) => {
   );
 };
 
-const CreditDebitCard = async ({ username }) => {
-  const { cardDetails } = useContext(GlobalContext);
-  let cards; 
-  cards = await axios.get(`http://localhost:8080/api/customers/${username}/getCard`);
-  console.log(cards)
+const CreditDebitCard = ({ username }) => {
+  const [cards, setCards] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [error, setError] = useState('');
   const [selectedCard, setSelectedCard] = useState('');
+
+  useEffect(() => {
+    const fetchCards = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/api/customers/${username}/getCard`
+        );
+        setCards(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchCards();
+  }, [username]);
 
   const handleSaveCard = async (cardDetails) => {
     try {
       const response = await axios.post(`http://localhost:8080/api/customers/${username}/addCard`, cardDetails);
       console.log('Card added successfully', response.data);
       setModalOpen(false);
+      setCards((prevCards) => [...prevCards, cardDetails])
     } catch (error) {
       console.log(error);
     }
@@ -170,7 +183,7 @@ const CreditDebitCard = async ({ username }) => {
                     <CreditDebitCardForm onSave={handleSaveCard} onCancel={handleCancel} />
                 </ModalContent>
             </ModalBackground>
-            {cardDetails.map((card, index) => (
+            {cards.map((card, index) => (
                 <CardRadioButton
                     key={index}
                     name={`Card ending in ${card.cardNumber.slice(-4)}`}
