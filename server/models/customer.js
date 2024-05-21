@@ -3,13 +3,13 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const addressSchema = new Schema({
-    street: { type: String, required: true },
-    city: { type: String, required: true },
-    state: { type: String, required: true },
-    zipCode: { type: String, required: true },
-    country: { type: String, required: true },
-    receiverName: { type: String, required: true },
-    receiverPhoneNumber: { type: String, required: true },
+    street: { type: String, default: '' },
+    city: { type: String, default: '' },
+    state: { type: String, default: '' },
+    zipCode: { type: String, default: '' },
+    country: { type: String, default: '' },
+    receiverName: { type: String, default: '' },
+    receiverPhoneNumber: { type: String, default: '' },
 });
 
 const customerSchema = new Schema({

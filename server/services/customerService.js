@@ -194,6 +194,24 @@ exports.deleteFromCart = async (username, cartItemId) => {
     return cart;
 };
 
+exports.getShippingAddress = async (username) => {
+    const customer = await CustomerModel.findOne({ username: username });
+    if (!customer) {
+        throw new Error("Customer Not Found");
+    }
+    return customer.shippingAddress || {};
+}
+
+exports.updateShippingAddress = async (username, address) => {
+    const customer = await CustomerModel.findOne({ username: username });
+    if (!customer) {
+        throw new Error("Customer Not Found");
+    }
+    customer.shippingAddress = address;
+    await customer.save();
+    return customer;
+}
+
 exports.getCard = async (username) => {
     const customer = await CustomerModel.findOne({ username: username });
     if (!customer) {
