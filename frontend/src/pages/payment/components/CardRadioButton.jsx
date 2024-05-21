@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const RadioContainer = styled.label`
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
   cursor: pointer;
 `;
 
