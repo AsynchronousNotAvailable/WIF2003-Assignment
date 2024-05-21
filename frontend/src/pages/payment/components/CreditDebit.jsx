@@ -72,7 +72,7 @@ const DeleteButton = styled.button`
   color: red;
   padding: 5px 10px;
   cursor: pointer;
-  margin-left: 10px;
+  margin-left: 30px;
 `;
 
 const CreditDebitCardForm = ({ onSave, onCancel }) => {
