@@ -63,7 +63,7 @@ exports.createSeller = async (req, res) => {
 exports.addProduct = async (req, res) => {
     try {
         const username = req.params.username;
-        const { name, description, variation, pricePerUnit, category, createdDateTime, quantity } =
+        const { name, description, variation, pricePerUnit, category, createdDateTime, quantity, deleted } =
             req.body;
 
         const newProductData = {
@@ -75,6 +75,7 @@ exports.addProduct = async (req, res) => {
             review: [],
             createdDateTime, 
             quantity,
+            deleted,
         };
 
         const newProduct = await SellerService.addProduct(
@@ -163,4 +164,25 @@ exports.getProducts = async (req, res) => {
             res.status(500).json({ error: error.message });
         }
     }
+};
+
+exports.getProductById = async (req, res) => {
+  try {
+    const username = req.params.username;
+    const productId = req.params.productId;
+    const product = await SellerService.getProductById(
+      username,
+      productId
+    );
+    res.status(200).json(product);
+  } catch (error) {
+    if (
+      error.message === "Seller Not Found" ||
+      error.message === "Products Not Found"
+    ) {
+      res.status(400).json({ error: error.message });
+    } else {
+      res.status(500).json({ error: error.message });
+    }
+  }
 };

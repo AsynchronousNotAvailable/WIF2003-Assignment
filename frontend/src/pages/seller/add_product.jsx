@@ -8,8 +8,9 @@ import cross_icon from "../../assets/cross_icon.png";
 import axios from "axios";
 import add_icon from "../../assets/add_icon_white.png";
 import Seller_NavSidebar from "../../components/seller_sidebar";
+import useSeller from "../../hooks/useSeller";
+
 function AddProduct() {
-  const { seller } = useContext(GlobalContext);
   const { state } = useLocation();
   const { isAdd, product } = state;
 
@@ -28,7 +29,8 @@ function AddProduct() {
   // const [width, setWidth] = useState(0);
   const [category, setCategory] = useState(product ? product.category : "");
   const [tags, setTags] = useState("none");
-
+  const { getSeller } = useSeller();
+  const [seller, setSeller] = useState(getSeller());
   const navigation = useNavigate();
   function handleNameChange(event) {
     setProductName(() => event.target.value);
@@ -118,9 +120,10 @@ function AddProduct() {
     //   Category: category,
       // "Stock": quantity,
     //   Status: Math.floor(Math.random() * 4),
-      createdDateTime: Date(),
+      createdDateTime: isAdd ? Date() : product.createdDateTime,
       variation: ['a', 'b'],
       category: category,
+      deleted: false,
     };
     /* var fs = require('fs');
         fs.readFile("../../components/order_management/mock_product_data.json", 'utf8', function readFileCallback(err, data){
