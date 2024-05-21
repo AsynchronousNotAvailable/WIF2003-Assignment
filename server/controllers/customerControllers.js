@@ -102,6 +102,27 @@ exports.addToCart = async (req, res) => {
     }
 };
 
+exports.getShippingAddress = async (req, res) => {
+    const username = req.params;
+    try {
+        const address = await customerService.getShippingAddress(username);
+        res.status(200).json(address);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
+const updateShippingAddress = async (req, res) => {
+    const username = req.params;
+    const address = req.body;
+    try {
+        const customer = await customerService.updateShippingAddress(username, address);
+        res.status(200).json(customer);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
 // get Card
 exports.getCard = async (req, res) => {
     try {
