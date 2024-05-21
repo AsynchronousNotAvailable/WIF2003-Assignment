@@ -66,6 +66,15 @@ const CustomButton = styled.button`
   margin-left: 20px;
 `;
 
+const DeleteButton = styled.button`
+  border: 1px solid red;
+  background-color: transparent;
+  color: red;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-left: 10px;
+`;
+
 const CreditDebitCardForm = ({ onSave, onCancel }) => {
   const { addCardDetails} = useContext(GlobalContext);
   const [cardNumber, setCardNumber] = useState('');
@@ -162,14 +171,26 @@ const CreditDebitCard = ({ username }) => {
     }
   };
 
+  const handleDeleteCard = async (cardId) => {
+    try {
+      await axios.delete(`http://localhost:8080/api/customers/${username}/${cardId}/removeCard`);
+      setCards((prevCards) => prevCards.filter(card => card._id !== cardId));
+      if (selectedCard === cardId) {
+        setSelectedCard('');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleCancel = () => {
     setModalOpen(false);
   };
 
-  const handleCardChange = (cardNumber) => {
-    setSelectedCard(cardNumber);
-    console.log(cardNumber);
-  }
+  const handleCardChange = (cardId) => {
+    setSelectedCard(cardId);
+    console.log(cardId);
+  };
 
   return (
     <div style={{ display: "flex", alignItems: "flex-start"}}>
@@ -184,13 +205,15 @@ const CreditDebitCard = ({ username }) => {
                 </ModalContent>
             </ModalBackground>
             {cards.map((card, index) => (
+              <div key={index} style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
                 <CardRadioButton
-                    key={index}
-                    name={`Card ending in ${card.cardNumber.slice(-4)}`}
-                    onChange={() => handleCardChange(card.cardNumber)}
-                    checked={selectedCard === card.cardNumber}
-                    cardNumber={card.cardNumber}
+                  name={`Card ending in ${card.cardNumber.slice(-4)}`}
+                  onChange={() => handleCardChange(card._id)}
+                  checked={selectedCard === card._id}
+                  cardNumber={card.cardNumber}
                 />
+                <DeleteButton onClick={() => handleDeleteCard(card._id)}>Delete</DeleteButton>
+              </div>
             ))}
         </Column>
     </div>
