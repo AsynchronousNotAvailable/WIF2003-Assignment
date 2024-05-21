@@ -121,6 +121,7 @@ exports.getCard = async (req, res) => {
 
 // add Card
 exports.addCard = async (req, res) => {
+    console.log("add card")
     try {
         const username = req.params.username;
         const cardDetails = req.body;
@@ -134,6 +135,7 @@ exports.addCard = async (req, res) => {
         } else if (error.message === "Duplicate Card Found") {
             res.status(409).json({ error: error.message });
         } else {
+            console.log(error.message)
             res.status(500).json({ error: error.message });
         }
     }

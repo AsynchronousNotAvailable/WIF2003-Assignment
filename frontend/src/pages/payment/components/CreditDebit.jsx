@@ -1,7 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import CardRadioButton from './CardRadioButton';
 import { GlobalContext } from '../../../context';
+import axios from 'axios';
 
 // Styled components for the modal
 const ModalBackground = styled.div`
@@ -65,6 +66,15 @@ const CustomButton = styled.button`
   margin-left: 20px;
 `;
 
+const DeleteButton = styled.button`
+  border: 1px solid red;
+  background-color: transparent;
+  color: red;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-left: 30px;
+`;
+
 const CreditDebitCardForm = ({ onSave, onCancel }) => {
   const { addCardDetails} = useContext(GlobalContext);
   const [cardNumber, setCardNumber] = useState('');
@@ -74,7 +84,7 @@ const CreditDebitCardForm = ({ onSave, onCancel }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const cardDetails = { cardNumber, expiryDate, cvv };
+    const cardDetails = { cardNumber: cardNumber, expiryDate: expiryDate, CVV: cvv, name: NameOnCard};
     onSave(cardDetails);
     addCardDetails(cardDetails);
     setCardNumber('');
@@ -93,10 +103,11 @@ const CreditDebitCardForm = ({ onSave, onCancel }) => {
 
   const handleCardNumberChange = (e) => {
     let cleanedValue = e.target.value.replace(/\D/g, '');
+    cleanedValue = cleanedValue.slice(0, 16);
     let formattedValue = '';
     for (let i = 0; i < cleanedValue.length; i++) {
         if (i % 4 === 0 && i !== 0) {
-            formattedValue += ' ';
+            formattedValue += '-';
         }
         formattedValue += cleanedValue[i];
     }
@@ -128,23 +139,58 @@ const CreditDebitCardForm = ({ onSave, onCancel }) => {
   );
 };
 
-const CreditDebitCard = () => {
-  const { cardDetails } = useContext(GlobalContext);
+const CreditDebitCard = ({ username }) => {
+  const [cards, setCards] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [error, setError] = useState('');
   const [selectedCard, setSelectedCard] = useState('');
 
-  const handleSaveCard = (cardDetails) => {
-    setModalOpen(false); 
+  useEffect(() => {
+    const fetchCards = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/api/customers/${username}/getCard`
+        );
+        setCards(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchCards();
+  }, [username]);
+
+  const handleSaveCard = async (cardDetails) => {
+    try {
+      const response = await axios.post(`http://localhost:8080/api/customers/${username}/addCard`, cardDetails);
+      console.log('Card added successfully', response.data);
+      setModalOpen(false);
+      setCards((prevCards) => [...prevCards, cardDetails])
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDeleteCard = async (cardId) => {
+    try {
+      await axios.delete(`http://localhost:8080/api/customers/${username}/${cardId}/removeCard`);
+      setCards((prevCards) => prevCards.filter(card => card._id !== cardId));
+      if (selectedCard === cardId) {
+        setSelectedCard('');
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleCancel = () => {
     setModalOpen(false);
   };
 
-  const handleCardChange = (cardNumber) => {
-    setSelectedCard(cardNumber);
-    console.log(cardNumber);
-  }
+  const handleCardChange = (cardId) => {
+    setSelectedCard(cardId);
+    console.log(cardId);
+  };
 
   return (
     <div style={{ display: "flex", alignItems: "flex-start"}}>
@@ -158,14 +204,16 @@ const CreditDebitCard = () => {
                     <CreditDebitCardForm onSave={handleSaveCard} onCancel={handleCancel} />
                 </ModalContent>
             </ModalBackground>
-            {cardDetails.map((card, index) => (
+            {cards.map((card, index) => (
+              <div key={index} style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
                 <CardRadioButton
-                    key={index}
-                    name={`Card ending in ${card.cardNumber.slice(-4)}`}
-                    onChange={() => handleCardChange(card.cardNumber)}
-                    checked={selectedCard === card.cardNumber}
-                    cardNumber={card.cardNumber}
+                  name={`Card ending in ${card.cardNumber.slice(-4)}`}
+                  onChange={() => handleCardChange(card._id)}
+                  checked={selectedCard === card._id}
+                  cardNumber={card.cardNumber}
                 />
+                <DeleteButton onClick={() => handleDeleteCard(card._id)}>Delete</DeleteButton>
+              </div>
             ))}
         </Column>
     </div>

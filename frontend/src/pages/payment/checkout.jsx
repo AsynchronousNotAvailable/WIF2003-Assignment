@@ -2,13 +2,13 @@ import React from "react";
 import Customer_Navbar from "../../components/customer_navbar";
 import Checkout_Item_List from "../payment/components/Checkout_Item_List";
 import { GlobalContext } from "../../context";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import styled from "styled-components";
-import { useState } from "react";
 import OnlineBankingOptions from "./components/OnlineBanking";
 import CreditDebitCard from "./components/CreditDebit";
 import { useNavigate } from "react-router-dom";
 import EditAddressModal from "./components/deliveryAddressModal";
+import useCustomer from "../../hooks/useCustomer";
 
 const Container = styled.div`
     display: flex;
@@ -72,6 +72,10 @@ export default function Checkout() {
     const orderTotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const { getCustomer } = useCustomer();
+    const [ customer, setCustomer] = useState(getCustomer());
 
     const navigation = useNavigate();
 
@@ -87,6 +91,20 @@ export default function Checkout() {
             addOrders(cartItems, orderTotal+5, selectedPaymentMethod, shippingAddress);
             navigation("/customer/orders");
         }
+    };
+
+    const handleEdit = () => {
+        setModalOpen(true);
+    }
+
+    const handleSave = (editedName, editedPhoneNumber, editedAddress) => {
+        const shippingAddress = {
+            name: editedName,
+            phone: editedPhoneNumber,
+            add: editedAddress,
+        }
+        setShippingAddress(shippingAddress);
+        setModalOpen(false);
     };
 
     const CheckoutList = () => {
@@ -163,21 +181,6 @@ export default function Checkout() {
         );
     }
 
-    const [modalOpen, setModalOpen] = useState(false);
-    const handleEdit = () => {
-        setModalOpen(true);
-    }
-
-    const handleSave = (editedName, editedPhoneNumber, editedAddress) => {
-        const shippingAddress = {
-            name: editedName,
-            phone: editedPhoneNumber,
-            add: editedAddress,
-        }
-        setShippingAddress(shippingAddress);
-        setModalOpen(false);
-    };
-
     return (
         <Container>
             <Customer_Navbar />
@@ -212,7 +215,7 @@ export default function Checkout() {
             </PaymentContent>
             <PaymentContent selected={selectedPaymentMethod === "Credit/Debit Card"}>
                 <Wrapper>
-                    <CreditDebitCard />
+                    <CreditDebitCard username={customer.username} />
                 </Wrapper>
             </PaymentContent>
             <PaymentContent selected={selectedPaymentMethod === "TnG E-Wallet"}>
