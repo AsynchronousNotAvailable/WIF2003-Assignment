@@ -1,18 +1,56 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../context";
 import Customer_Navbar from "../../components/customer_navbar";
-
-
+import axios from "axios";
 function Shop() {
     const location = useLocation();
-    const { shopsItemListing, setShopsItemListing } = useContext(GlobalContext);
-    const [seller, setSeller] = useState(location.state.seller);
-    const [shopItems, setShopItems] = useState(shopsItemListing[seller].slice(1));
+    // const { shopsItemListing, setShopsItemListing } = useContext(GlobalContext);
+
+    const [seller, setSeller] = useState();
+    const [shopItems, setShopItems] = useState([]);
     const navigation = useNavigate();
+    useEffect(() => {
+        fetchProducts(location.state.sellerId);
+    }, []);
+
+    const fetchProducts = async (sellerId) => {
+        try {
+            const response = await axios.get(
+                `http://localhost:8080/api/products/marketplace`
+            );
+            const products = response.data;
+            console.log(products, sellerId);
+            const productsForSeller = products.filter(
+                (product) => product.seller._id === sellerId
+            );
+
+            console.log(productsForSeller);
+            console.log(productsForSeller[0].seller);
+            setSeller(productsForSeller[0].seller.username);
+            setShopItems(productsForSeller);
+
+            // products.forEach((product) => {
+            //     if (
+            //         tempCategory.filter((p) => p.seller._id === sellerId)
+            //             .length === 0
+            //     ) {
+            //         let category = product.category;
+            //         const newCategory = {
+            //             category: category,
+            //             url: mapCategoryImage(category),
+            //         };
+            //         tempCategory.push(newCategory);
+            //     }
+            // });
+            setShopItems(productsForSeller);
+        } catch (error) {
+            console.log(error);
+        }
+    };
     const selectProduct = (product) => {
-        console.log(product)
-        navigation(`/customer/product/${product.id}`, { state: { product } });
+        console.log(product);
+        navigation(`/customer/product/${product._id}`, { state: { product } });
     };
     return (
         <div>
@@ -49,7 +87,7 @@ function Shop() {
                 <div className="flex flex-row items-center px-20 py-10 gap-5 ">
                     {shopItems.map((product) => (
                         <div
-                            key={product.id}
+                    
                             className="flex flex-col gap-10 product-card rounded-md shadow-xl p-10 "
                             onClick={() => selectProduct(product)}
                         >
@@ -64,13 +102,14 @@ function Shop() {
                                         {product.name}
                                     </h3>
                                     <p className="font-sans font-light text-md">
-                                        Price: RM {product.price}
+                                        Price: RM {product.pricePerUnit}
                                     </p>
                                     <p className="font-sans font-light text-md">
-                                        Rating: {product.rating.toFixed(1)}
+                                        Rating:{" "}
+                                        {product.average_rating.toFixed(1)}
                                     </p>
                                     <p className="font-sans font-light text-md">
-                                        Seller: {product.seller}
+                                        Seller: {seller}
                                     </p>
                                 </div>
                             </div>

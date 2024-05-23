@@ -82,10 +82,11 @@ exports.getCart = async (req, res) => {
 exports.addToCart = async (req, res) => {
     try {
         const username = req.params.username;
-        const { productId, quantity } = req.body;
+        const { productId, quantity, selectedVariation } = req.body;
         const updatedCart = await CustomerService.addToCart(
             username,
             productId,
+            selectedVariation,
             quantity
         );
         res.status(201).json(updatedCart);

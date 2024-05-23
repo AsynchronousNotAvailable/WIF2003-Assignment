@@ -14,8 +14,17 @@ exports.login = async (req, res) => {
             res.status(500).json({ error: error.message });
         }
     }
+};
 
-}
+exports.getSellers = async (req, res) => {
+    try {
+        const sellers = await SellerService.getSellers();
+        res.json({ sellers });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 exports.getSellerByUsername = async (req, res) => {
     try {
         const username = req.params.username;
@@ -63,8 +72,15 @@ exports.createSeller = async (req, res) => {
 exports.addProduct = async (req, res) => {
     try {
         const username = req.params.username;
-        const { name, description, variation, pricePerUnit, category, createdDateTime, quantity } =
-            req.body;
+        const {
+            name,
+            description,
+            variation,
+            pricePerUnit,
+            category,
+            createdDateTime,
+            quantity,
+        } = req.body;
 
         const newProductData = {
             name,
@@ -73,8 +89,10 @@ exports.addProduct = async (req, res) => {
             pricePerUnit,
             category,
             review: [],
-            createdDateTime, 
+            createdDateTime,
             quantity,
+            avarage_rating: 0,
+            deleted: false
         };
 
         const newProduct = await SellerService.addProduct(
@@ -145,7 +163,6 @@ exports.getOrders = async (req, res) => {
         }
     }
 };
-
 
 exports.getProducts = async (req, res) => {
     try {

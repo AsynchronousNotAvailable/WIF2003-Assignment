@@ -9,9 +9,11 @@ const productSchema = new Schema({
     pricePerUnit: { type: Number, required: true },
     reviews: [{ type: Schema.Types.ObjectId, ref: "Review" }],
     category: { type: String, required: true },
-    seller: {type: Schema.Types.ObjectId, ref: 'Seller'},
-    quantity: {type: Number, required: true},
-    createdDateTime: {type: Date, required: true}
+    seller: { type: Schema.Types.ObjectId, ref: "Seller" },
+    quantity: { type: Number, required: true },
+    createdDateTime: { type: Date, required: true },
+    average_rating: { type: Number, required: true, default: 0 },
+    deleted: { type: Boolean, required: true, default: false },
 });
 
 exports.ProductModel = mongoose.model("Product", productSchema);

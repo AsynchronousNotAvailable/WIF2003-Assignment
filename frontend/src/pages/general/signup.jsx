@@ -104,12 +104,19 @@ function SignUp() {
             // API call to create a new user
             setUserDetails({ username, firstName, lastName, email, password });
             console.log(userDetails);
-            signUp(userDetails);
-            //
+
+            if (selectedOption === 'Customer') {
+                signUpCustomer(userDetails);
+            }
+            else if (selectedOption === 'Seller') {
+                signUpSeller(userDetails);
+            }
+            
+            
         }
     };
 
-    const signUp = async (userDetails) => {
+    const signUpCustomer = async (userDetails) => {
         try {
             const response = await axios.post(
                 `http://localhost:8080/api/customers/register`,
@@ -125,6 +132,24 @@ function SignUp() {
             window.alert(error.response.data);
         }
     };
+
+
+    const signUpSeller = async (userDetails) => {
+        try {
+            const response = await axios.post(
+                `http://localhost:8080/api/sellers/register`,
+                userDetails
+            );
+            console.log(response);
+            if (response.status === 201) {
+                window.alert("Signup Sucessfully");
+                navigation("/");
+            }
+        } catch (error) {
+            console.log(error);
+            window.alert(error.response.data);
+        }
+    }
 
     const toLogin = () => {
         navigation("/");

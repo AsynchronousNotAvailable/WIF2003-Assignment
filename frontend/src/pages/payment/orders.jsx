@@ -7,7 +7,8 @@ import styled from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FloatingChat from "../customer/components/FloatingChat";
-import axios from 'axios';
+import axios from "axios";
+import useCustomer from "../../hooks/useCustomer";
 
 const Container = styled.div`
     display: flex;
@@ -82,14 +83,16 @@ export default function Orders() {
     const toggleFloatingChat = () => {
         setFloating(!floating);
     };
-    const { shopsItemListing, productListing, customer } =
-        useContext(GlobalContext);
-
+    const { shopsItemListing, productListing } = useContext(GlobalContext);
+    const { getCustomer } = useCustomer();
+    const [customer, setCustomer] = useState(getCustomer());
+    const [orders, setOrders] = useState([]);
+    const [fetchOrder, setFetchOrder] = useState(false);
     useEffect(() => {
         console.log("FROM ORDERS", customer);
-       
+
         fetchData();
-    }, []);
+    }, [fetchOrder]);
 
     const fetchData = async () => {
         console.log(customer.username);
@@ -100,7 +103,8 @@ export default function Orders() {
             );
             console.log("FROM DATABASE", response.data);
             const products = response.data;
-            console.log('products', products);
+            setOrders(products);
+            console.log("products", products);
         } catch (error) {
             console.log(error);
         }
@@ -148,16 +152,32 @@ export default function Orders() {
         setChatName("");
     };
     const { orderHistory, updateOrderStatus } = useContext(GlobalContext);
+
     const navigation = useNavigate();
 
-    const handleOrderReceived = (orderId) => {
-        updateOrderStatus(orderId, "Order Received.");
+    const handleOrderReceived = async (orderId) => {
+        // updateOrderStatus(orderId, "Order Received.");
+        try {
+            const customer = getCustomer();
+            const username = customer.username;
+            const receivalDetails = { time_received: new Date() };
+            const response = await axios.put(
+                `http://localhost:8080/api/customers/${username}/${orderId}/orderReceived`, receivalDetails
+            );
+            console.log(response.data);
+            if (response.status === 200) {
+                setFetchOrder(!fetchOrder);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
-    const sortedOrders = orderHistory
+    const sortedOrders = orders
         .slice()
         .sort((a, b) => b.timestamp - a.timestamp);
 
+    console.log(sortedOrders);
     // const fetchData = async () => {
     //     try {
     //         const response = await axios.fetch
@@ -184,7 +204,7 @@ export default function Orders() {
                     <Row>
                         <Column width="40%">
                             <Text>
-                                <Light>Order ID: {order.orderId}</Light>
+                                <Light>Order ID: {order._id}</Light>
                             </Text>
                         </Column>
                         <Column width="30%">
@@ -208,7 +228,9 @@ export default function Orders() {
                     <Divider />
                     <Order_List
                         style={{ backgroundColor: "white" }}
-                        items={order.orderItems}
+                        items={order.product}
+                        quantity={order.quantity}
+                        sellerName={order.sellerId.username}
                         handleChatButtonClick={handleChatButtonClick}
                     />
                     <Divider />
@@ -229,7 +251,7 @@ export default function Orders() {
                                         textAlign: "right",
                                     }}
                                 >
-                                    RM {order.orderPrice.toFixed(2)}
+                                    RM {order.totalPricePerOrder.toFixed(2)}
                                 </Light>
                             </Text>
                         </Column>
@@ -243,9 +265,7 @@ export default function Orders() {
                                     width: "20%",
                                     marginLeft: "auto",
                                 }}
-                                onClick={() =>
-                                    handleOrderReceived(order.orderId)
-                                }
+                                onClick={() => handleOrderReceived(order._id)}
                             >
                                 Order Received
                             </PaymentButton>
