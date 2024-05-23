@@ -14,6 +14,8 @@ router.get("/:username/cart", customerController.getCart);
 
 router.delete("/:username/deleteFromCart/:cartItemId", customerController.deleteFromCart);
 
+router.post("/:username/updateShippingAddress", customerController.updateShippingAddress);
+
 router.get("/:username/getCard", customerController.getCard);
 
 router.post("/:username/addCard", customerController.addCard);
