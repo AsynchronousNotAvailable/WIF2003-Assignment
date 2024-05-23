@@ -166,9 +166,11 @@ exports.deleteProduct = async (username, productId) => {
         throw new Error("Failed To Update Seller");
     }
 
-    await ProductModel.findByIdAndDelete(
-        new mongoose.Types.ObjectId(productId)
-    );
+  await ProductModel.findByIdAndUpdate(new mongoose.Types.ObjectId(productId), {
+    $set: {
+        deleted: true,
+    }
+  });
 };
 //update product
 exports.updateProduct = async (username, productId, updateProductData) => {
@@ -217,7 +219,7 @@ exports.getProducts = async (username) => {
         throw new Error("Seller Not Found");
     }
 
-    const products = await ProductModel.find({ seller: seller._id })
+    const products = await ProductModel.find({ seller: seller._id, deleted: false })
         .populate("seller")
         .populate("reviews");
 
@@ -226,4 +228,25 @@ exports.getProducts = async (username) => {
     }
 
     return products;
+};
+
+exports.getProductById = async (username, productId) => {
+    const seller = await SellerModel.findOne({ username: username });
+
+    if (!seller) {
+        throw new Error("Seller Not Found");
+    }
+
+    const product = await ProductModel.findOne({
+        seller: seller._id,
+        _id: productId, 
+    })
+        .populate("seller")
+        .populate("reviews");
+
+    if (!product) {
+        throw new Error("Products Not Found");
+    }
+
+    return product;
 };

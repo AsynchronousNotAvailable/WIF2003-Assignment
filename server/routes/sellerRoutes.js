@@ -17,4 +17,6 @@ router.get("/:username/orders", sellerController.getOrders);
 //retrieve products
 router.get("/:username/products", sellerController.getProducts);
 
+router.get("/:username/products/:productId", sellerController.getProductById); 
+
 module.exports = router;

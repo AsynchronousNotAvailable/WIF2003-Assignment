@@ -2,6 +2,8 @@ import { useTable, useSortBy, usePagination, useGlobalFilter, useFilters, } from
 import React, { useMemo, useState, useEffect, forwardRef, useImperativeHandle, useContext} from 'react'
 import { GlobalContext } from "../../context";
 import axios  from 'axios';
+import useSeller from "../../hooks/useSeller";
+
 
 
 let renderCount = 0
@@ -10,8 +12,8 @@ function SortingTable(props, ref){
     const dataImport = props.data; 
     const dateFilter = props.dateFilter; 
     const [data, setData] = useState(dataImport);
-    const { seller } = useContext(GlobalContext);
-     
+    const { getSeller } = useSeller();
+    const [seller, setSeller] = useState(getSeller());
     
     
     const columns = useMemo(() => columnsData, [data])      
@@ -138,7 +140,7 @@ function SortingTable(props, ref){
                 <li className='inline-block'>
                     <button className="disabled:bg-textGrey-400 bg-button-100 rounded-lg mx-2 h-7 px-4 w-14" onClick={() => previousPage()} disabled={!canPreviousPage}>{'<'}</button>
                 </li>
-                <li className='inline-block'>
+                <div className='inline-block'>
                     {
                         pageCount < 6 && 
                         Array.from(Array(pageCount).keys()).map((_, i) => {
@@ -148,7 +150,7 @@ function SortingTable(props, ref){
                         }
                     )
                     }
-                </li>
+                </div>
                 <li className='inline-block'>
                     <button className='disabled:bg-textGrey-400 bg-button-100  rounded-lg mx-2 h-7 px-4 w-14' onClick={() => nextPage()} disabled={!canNextPage}>{'>'}</button>
                 </li>
