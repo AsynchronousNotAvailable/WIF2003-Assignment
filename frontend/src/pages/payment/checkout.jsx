@@ -9,6 +9,7 @@ import CreditDebitCard from "./components/CreditDebit";
 import { useNavigate } from "react-router-dom";
 import EditAddressModal from "./components/deliveryAddressModal";
 import useCustomer from "../../hooks/useCustomer";
+import axios from "axios";
 
 const Container = styled.div`
     display: flex;
@@ -67,7 +68,7 @@ const PaymentContent = styled.div`
 `;
 
 export default function Checkout() {
-    const { cartItems, shippingAddress, setShippingAddress, addOrders, orderHistory } = useContext(GlobalContext);
+    const { cartItems, addOrders, orderHistory } = useContext(GlobalContext);
     const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
     const orderTotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
@@ -88,7 +89,7 @@ export default function Checkout() {
             alert("Please select a payment method to proceed.");
         }
         else {
-            addOrders(cartItems, orderTotal+5, selectedPaymentMethod, shippingAddress);
+            addOrders(cartItems, orderTotal+5, selectedPaymentMethod, customer.shippingAddress);
             navigation("/customer/orders");
         }
     };
@@ -97,14 +98,14 @@ export default function Checkout() {
         setModalOpen(true);
     }
 
-    const handleSave = (editedName, editedPhoneNumber, editedAddress) => {
-        const shippingAddress = {
-            name: editedName,
-            phone: editedPhoneNumber,
-            add: editedAddress,
-        }
-        setShippingAddress(shippingAddress);
+    const handleSave = async (updatedAddress) => {
+        setCustomer({ ...customer, shippingAddress: updatedAddress });
         setModalOpen(false);
+        try {
+            const response = await axios.post(`http://localhost:8080/api/customers/${customer.username}/updateShippingAddress`, updatedAddress);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const CheckoutList = () => {
@@ -191,12 +192,10 @@ export default function Checkout() {
                 <div style={{ display: "flex", alignItems: "center" }}>
                     <Column width="12%"><Text style={{ marginRight: "auto", color: "#0F60FF" }}>Delivery Address</Text></Column><p onClick={handleEdit} style={{ fontSize: "14px"}}>EDIT</p>
                 </div>
-                <Text style={{ marginRight: "auto" }}> <Bold>{shippingAddress.name} {shippingAddress.phone}</Bold> {shippingAddress.add} </Text>  
+                <Text style={{ marginRight: "auto" }}> <Bold>{customer.shippingAddress.receiverName} {customer.shippingAddress.receiverPhoneNumber}</Bold> {customer.shippingAddress.street} {customer.shippingAddress.zipCode} {customer.shippingAddress.city} {customer.shippingAddress.state} {customer.shippingAddress.country} </Text>  
                 <EditAddressModal
                     isOpen={modalOpen}
-                    name={shippingAddress.name}
-                    address={shippingAddress.add}
-                    phoneNumber={shippingAddress.phone}
+                    shippingAddress={customer.shippingAddress}
                     onSave={handleSave}
                 />
             </Wrapper>
