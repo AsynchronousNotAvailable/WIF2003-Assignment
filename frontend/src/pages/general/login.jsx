@@ -118,18 +118,21 @@ function Login() {
                 `http://localhost:5000/api/sellers/login`,
                 loginData
             );
+            setUserDetails(response.data)
         }
         else {
             response = await axios.post(
                 `http://localhost:5000/api/customers/login`,
                 loginData
             );
+            setUserDetails(response.data)
         }
 
         console.log(response.data);
 
         if (response.status === 200) {
             if (response.data.customer) {
+                localStorage.setItem("customer", JSON.stringify(response.data.customer));
                 setCustomer(response.data.customer);
                 navigation(`/marketplace`);
             } else {

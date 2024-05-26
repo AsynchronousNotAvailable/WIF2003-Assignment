@@ -5,7 +5,7 @@ import {BsSend} from 'react-icons/bs'
 const MessageInput = () => {
 	const [message,setMessage] = useState("");
 
-
+	
 
 	return (
 		<div className='px-4 my-3 bg-white' >

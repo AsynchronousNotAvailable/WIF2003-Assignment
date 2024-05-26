@@ -4,9 +4,11 @@ export const GlobalContext = createContext(null);
 export const CheckoutContext = createContext(null);
 
 function GlobalState({ children }) {
+    const [messages,setAllMessages] = useState([]);
     const [customer, setCustomer] = useState(null);
-    const [seller, setSeller] = useState(null);
-  
+    const [seller, setSeller] = useState(null); //to validate as user
+    const [allSellers, setAllSellers] = useState([]);
+    const [selectedSeller , setSelectedSeller] = useState({});
     const [isSeller, setIsSeller] = useState(false);
     const [cartItems, setCartItems] = useState([]);
     const [totalCheckoutPrice, setTotalCheckoutPrice] = useState(0);
@@ -827,6 +829,12 @@ function GlobalState({ children }) {
                 sellerProduct,
                 sellerNavBarSelected,
                 setSellerNavBarSelected,
+                allSellers,
+                setAllSellers,
+                selectedSeller,
+                setSelectedSeller,
+                messages,
+                setAllMessages,
             }}
         >
             {children}

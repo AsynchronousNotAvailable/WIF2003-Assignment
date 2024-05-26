@@ -18,8 +18,7 @@ exports.sendMessage = async (req, res) => {
 
 
 exports.getMessages = async (req, res) => {
-    const {id: userToChatId} = req.params; 
-    const {senderId} = req.body;
+    const {userId:senderId,tochatId: userToChatId} = req.params; 
     try{
         const messages = await MessageService.getMessage(senderId, userToChatId);
         return res.status(200).json(messages);

@@ -14,11 +14,12 @@ import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
 
 function Marketplace() {
-    const { shopsItemListing, productListing, customer } =
+    const { shopsItemListing, productListing, customer,userDetails } =
         useContext(GlobalContext);
 
     useEffect(() => {
         console.log("FROM MARKETPLACE", customer);
+        console.log("User : " , userDetails)
         // fetch data of all products
     }, []);
 
