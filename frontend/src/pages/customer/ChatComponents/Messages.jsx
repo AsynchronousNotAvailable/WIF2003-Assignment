@@ -7,15 +7,16 @@ const Messages = () => {
     //Call the hook here
     //Save conversation
     //Loop through conversation using Message
-    const {conversationMessages, setConversationMessages} = useGetMessages()
-    console.log(conversationMessages)
+    const {messages} = useGetMessages()
+    
+    console.log(messages)
 
     return (
         <div>
             {/* {conversationMessages.map((message) => 
                 <Message message = {message} key = {message._id} />
             )} */}
-            {conversationMessages ? conversationMessages.map((message) => <Message message = {message} key = {message._id} />) : <div className = "mt-20 bg-black">Start a new conversation.</div>}
+            {messages ? messages.map((message) => <Message message = {message} key = {message._id} />) : <div className = "mt-20 bg-black">Start a new conversation.</div>}
         </div>
     )
   

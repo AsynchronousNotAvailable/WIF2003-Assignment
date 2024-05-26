@@ -1,10 +1,16 @@
 import { useState } from "react";
 import {BsSend} from 'react-icons/bs'
-
+import useSendMessage from "./Hooks/useSendMessage";
 
 const MessageInput = () => {
 	const [message,setMessage] = useState("");
+	const {sendMessage} = useSendMessage();
 
+	const handleOnClick = async() => {
+		if(!message)return;
+		await sendMessage(message)
+		setMessage("");
+	}
 	
 
 	return (
@@ -21,7 +27,7 @@ const MessageInput = () => {
 					placeholder='Send a message'
 				/>
 				<button type='submit'  className='absolute inset-y-0 end-0 flex items-center pe-3'>
-                <BsSend className="text-black"/>
+                <BsSend onClick = {handleOnClick} className="text-black"/>
 				</button>
 			</div>
 		</div>
