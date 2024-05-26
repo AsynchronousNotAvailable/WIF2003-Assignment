@@ -14,7 +14,8 @@ import TableDatePicker from "../../components/order_management/tableDatePicker";
 import ExportCsv from "../../components/order_management/export_csv";
 import DatePicker from "react-datepicker";
 function ProductManagement() {
-    const { seller, setSellerProduct } = useContext(GlobalContext);
+    const { seller, setSellerProduct, userDetails } = useContext(GlobalContext);
+    console.log(userDetails)
     const navigation = useNavigate();
     const [rendered, setRendered] = useState(false);
     const [dateFilter, setDateFilter] = useState({

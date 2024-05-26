@@ -3,7 +3,6 @@ import Message from './Message'
 import useGetMessages from './Hooks/useGetMessages'
 import { GlobalContext } from "../../../context";
 const Messages = () => {
-    const {allMessages,setAllMessages, customer,selectedSeller} = useContext(GlobalContext);
     //Call the hook here
     //Save conversation
     //Loop through conversation using Message

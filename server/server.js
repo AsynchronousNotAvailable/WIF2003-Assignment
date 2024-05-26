@@ -1,5 +1,4 @@
 const express = require("express");
-const { Server } = require("socket.io");
 const { connect } = require("mongoose");
 const customerRoutes = require("./routes/customerRoutes");
 const sellerRoutes = require("./routes/sellerRoutes");
