@@ -84,7 +84,7 @@ function Seller_Chat() {
             <div className="">
                 <Seller_NavSidebar />
             </div>
-            <div className="ml-64 mt-[60px] border-2 border-orange-600 flex-1 flex flex-col">
+            <div className="ml-64 mt-[60px] flex-1 flex flex-col">
                 <div className="flex flex-row h-full">
                     <div className="border-r-2 border-gray-300">
                         <Seller_ConversationList />

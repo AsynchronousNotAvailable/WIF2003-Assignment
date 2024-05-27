@@ -11,18 +11,11 @@ const Messages = () => {
 
     return (
         <div>
-            {/* {conversationMessages.map((message) => 
-                <Message message = {message} key = {message._id} />
-            )} */}
             {messages ? messages.map((message) => <Message message = {message} key = {message._id} />) : <div className = "mt-20 bg-black">Start a new conversation.</div>}
         </div>
     )
   
-    // allMessages.map((message) => {
-    //     return (
-    //         <Message message = {message}/>
-    //       )
-    // })
+  
  
 }
 
