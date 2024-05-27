@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "../pages/general/login";
 import SignUp from "../pages/general/signup";
 import Seller_Home from "../pages/seller/seller_home";
-import Seller_Chat from "../pages/seller/seller_chat";
+import Seller_Chat from "../pages/seller/ChatComponents/seller_chat";
 import Customer_Chat from "../pages/customer/ChatComponents/customer_chat";
 import MarketplaceAnalysis from "../pages/general/marketplaceAnalysis";
 import SellerAnalysis from "../pages/seller/sellerAnalysis";

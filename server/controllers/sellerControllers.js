@@ -6,7 +6,7 @@ exports.login = async (req, res) => {
     try {
         const loginData = req.body;
         const seller = await SellerService.login(loginData);
-        res.json({ message: "Login Successful", seller: seller });
+        res.json({ seller, role : "seller"});
     } catch (error) {
         if (error.message === "Seller Not Found") {
             res.status(404).json({ error: error.message });
@@ -16,6 +16,16 @@ exports.login = async (req, res) => {
     }
 
 }
+
+exports.getAllCustomers = async (req, res) => {
+    try {
+        const { sellerId } = req.params;
+        const customers = await SellerService.getAllCustomers(sellerId);
+        return res.status(200).json(customers);
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
 
 exports.getAllSellers = async (req,res) => {
     try {

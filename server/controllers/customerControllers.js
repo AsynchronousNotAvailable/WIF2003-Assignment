@@ -8,7 +8,7 @@ exports.login = async (req, res) => {
     try {
         const loginData = req.body;
         const customer = await CustomerService.login(loginData);
-        res.json({ message: "Login Successful", customer: customer });
+        res.json({ customer, role : "customer"});
     } catch (error) {
         if (error.message === "Customer Not Found") {
             res.status(404).json({ error: error.message });

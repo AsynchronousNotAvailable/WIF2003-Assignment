@@ -4,7 +4,7 @@ import axios from "axios";
 
 //Universal hook for both customers and sellers
 const useGetConversations =  () => {
-    const {customer} = useContext(GlobalContext);
+    const {customer, userDetails} = useContext(GlobalContext);
     const customerId = customer._id
     const [conversations, setAllConversations] = useState([]);
     useEffect(() => {    

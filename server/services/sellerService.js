@@ -24,6 +24,18 @@ exports.getAllSellers = async () => {
     return sellers;
 }
 
+exports.getAllCustomers = async (sellerId) => {
+    const orders = await OrderModel.find({ sellerId }).populate('customerId');
+
+    if (!orders || orders.length === 0) {
+        throw new Error('No orders found for the specified seller');
+    }
+
+    const customers = [...new Set(orders.map(order => order.customerId))];
+
+    return customers;
+};
+
 exports.login = async (loginData) => {
     const seller = await SellerModel.findOne({
         email: loginData.emailAddress,

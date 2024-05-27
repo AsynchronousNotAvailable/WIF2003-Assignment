@@ -5,7 +5,9 @@ export const CheckoutContext = createContext(null);
 
 function GlobalState({ children }) {
     const [messages,setMessages] = useState([]);
-    const [customer, setCustomer] = useState(null);
+    const [customer, setCustomer] = useState(null); //validate as user
+    const [selectedCustomer, setSelectedCustomer] = useState({})
+    const [allCustomers, setAllCustomers] = useState([]);
     const [seller, setSeller] = useState(null); //to validate as user
     const [allSellers, setAllSellers] = useState([]);
     const [selectedSeller , setSelectedSeller] = useState({});
@@ -835,6 +837,10 @@ function GlobalState({ children }) {
                 setSelectedSeller,
                 messages,
                 setMessages,
+                selectedCustomer,
+                setSelectedCustomer,
+                allCustomers,
+                setAllCustomers
             }}
         >
             {children}
