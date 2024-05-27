@@ -10,6 +10,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import EditAddressModal from "./components/deliveryAddressModal";
 import useCustomer from "../../hooks/useCustomer";
 import axios from "axios";
+import axios from "axios";
 
 const Container = styled.div`
     display: flex;
@@ -128,14 +129,14 @@ export default function Checkout() {
         setModalOpen(true);
     };
 
-    const handleSave = (editedName, editedPhoneNumber, editedAddress) => {
-        const shippingAddress = {
-            name: editedName,
-            phone: editedPhoneNumber,
-            add: editedAddress,
-        };
-        setShippingAddress(shippingAddress);
+    const handleSave = async (updatedAddress) => {
+        setCustomer({ ...customer, shippingAddress: updatedAddress });
         setModalOpen(false);
+        try {
+            const response = await axios.post(`http://localhost:8080/api/customers/${customer.username}/updateShippingAddress`, updatedAddress);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const CheckoutList = () => {
@@ -238,18 +239,10 @@ export default function Checkout() {
                         EDIT
                     </p>
                 </div>
-                <Text style={{ marginRight: "auto" }}>
-                    {" "}
-                    <Bold>
-                        {shippingAddress.name} {shippingAddress.phone}
-                    </Bold>{" "}
-                    {shippingAddress.add}{" "}
-                </Text>
+                <Text style={{ marginRight: "auto" }}> <Bold>{customer.shippingAddress.receiverName} {customer.shippingAddress.receiverPhoneNumber}</Bold> {customer.shippingAddress.street} {customer.shippingAddress.zipCode} {customer.shippingAddress.city} {customer.shippingAddress.state} {customer.shippingAddress.country} </Text>  
                 <EditAddressModal
                     isOpen={modalOpen}
-                    name={shippingAddress.name}
-                    address={shippingAddress.add}
-                    phoneNumber={shippingAddress.phone}
+                    shippingAddress={customer.shippingAddress}
                     onSave={handleSave}
                 />
             </Wrapper>

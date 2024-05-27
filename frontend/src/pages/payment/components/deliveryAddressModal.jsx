@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useEffect } from 'react';
 
 const ModalBackground = styled.div`
     position: fixed;
@@ -42,13 +43,23 @@ const Button = styled.button`
     margin-left: auto; 
 `;
 
-const EditAddressModal = ({ isOpen, name, address, phoneNumber, onSave }) => {
-    const [editedName, setEditedName] = useState(name);
-    const [editedAddress, setEditedAddress] = useState(address);
-    const [editedPhoneNumber, setPhoneNumber] = useState(phoneNumber);
+const EditAddressModal = ({ isOpen, shippingAddress, onSave }) => {
+    const [editedAddress, setEditedAddress] = useState(shippingAddress);
+
+    useEffect(() => {
+        setEditedAddress(shippingAddress);
+    }, [shippingAddress]);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setEditedAddress(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
 
     const handleSave = () => {
-        onSave(editedName, editedPhoneNumber, editedAddress);
+        onSave(editedAddress);
     };
 
     return (
@@ -56,21 +67,52 @@ const EditAddressModal = ({ isOpen, name, address, phoneNumber, onSave }) => {
             <ModalContent>
                 <InputField
                     type="text"
-                    value={editedName}
-                    onChange={(e) => setEditedName(e.target.value)}
+                    name="receiverName"
+                    value={editedAddress.receiverName}
+                    onChange={handleChange}
                     placeholder="Name"
                 />
                 <InputField
                     type="text"
-                    value={editedPhoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    name="receiverPhoneNumber"
+                    value={editedAddress.receiverPhoneNumber}
+                    onChange={handleChange}
                     placeholder="Phone Number"
                 />
                 <InputField
                     type="text"
-                    value={editedAddress}
-                    onChange={(e) => setEditedAddress(e.target.value)}
-                    placeholder="Delivery Address"
+                    name="street"
+                    value={editedAddress.street}
+                    onChange={handleChange}
+                    placeholder="Street"
+                />
+                <InputField
+                    type="text"
+                    name="city"
+                    value={editedAddress.city}
+                    onChange={handleChange}
+                    placeholder="City"
+                />
+                <InputField
+                    type="text"
+                    name="state"
+                    value={editedAddress.state}
+                    onChange={handleChange}
+                    placeholder="State"
+                />
+                <InputField
+                    type="text"
+                    name="zipCode"
+                    value={editedAddress.zipCode}
+                    onChange={handleChange}
+                    placeholder="Zip Code"
+                />
+                <InputField
+                    type="text"
+                    name="country"
+                    value={editedAddress.country}
+                    onChange={handleChange}
+                    placeholder="Country"
                 />
                 <ButtonContainer>
                     <Button onClick={handleSave}>Save</Button>

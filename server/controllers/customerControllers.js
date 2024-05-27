@@ -103,6 +103,18 @@ exports.addToCart = async (req, res) => {
     }
 };
 
+exports.updateShippingAddress = async (req, res) => {
+    const username = req.params.username;
+    const address = req.body;
+    try {
+        const customer = await CustomerService.updateShippingAddress(username, address);
+        res.status(200).json(customer);
+    } catch (error) {
+        console.log(error.message);
+        res.status(400).json({ message: error.message });
+    }
+};
+
 // get Card
 exports.getCard = async (req, res) => {
     try {
