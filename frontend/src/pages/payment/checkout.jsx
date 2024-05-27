@@ -10,7 +10,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import EditAddressModal from "./components/deliveryAddressModal";
 import useCustomer from "../../hooks/useCustomer";
 import axios from "axios";
-import axios from "axios";
 
 const Container = styled.div`
     display: flex;
