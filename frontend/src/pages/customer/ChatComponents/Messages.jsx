@@ -2,12 +2,13 @@ import React, {useContext, useEffect} from 'react'
 import Message from './Message'
 import useGetMessages from './Hooks/useGetMessages'
 import { GlobalContext } from "../../../context";
+import useListenMessages from '../../../Hooks/useListenMessages';
 const Messages = () => {
     //Call the hook here
     //Save conversation
     //Loop through conversation using Message
     const {messages} = useGetMessages()
-    
+    useListenMessages()
     console.log(messages)
 
     return (

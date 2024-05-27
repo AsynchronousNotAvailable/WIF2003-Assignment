@@ -2,7 +2,8 @@ const { MessageModel } = require("../models/message.js");
 const {ConversationModel} = require("../models/conversation.js")
 const { SellerModel } = require("../models/seller.js");
 const { CustomerModel } = require("../models/customer.js");
-
+const { getReceiverSocketId } = require("../socket.js");
+const { io } = require("../socket.js")
 exports.sendMessage = async (senderId, receiverId, message) => {
    try {
     //Use brute force to find customerId or sellerId
@@ -67,6 +68,13 @@ exports.sendMessage = async (senderId, receiverId, message) => {
     }
 
     await Promise.all([conversation.save(), newMessage.save()])
+
+    const receiverSocketId = getReceiverSocketId(receiverId);
+
+    if(receiverSocketId){
+        //io.emit() is used to send events to all connected clients [BROADCAST]
+        io.to(receiverSocketId).emit("newMessage", newMessage);
+    }
 
     return newMessage;
     

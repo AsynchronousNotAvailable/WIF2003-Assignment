@@ -1,11 +1,17 @@
 import React, {useContext} from 'react'
 import UseGetConversations from './Hooks/UseGetConversations'
 import { GlobalContext } from '../../../context'
+import { useSocketContext } from '../../../context/SocketContext'
 
 const Seller_ConversationList = () => {
     const {allCustomers} = UseGetConversations()
     const {selectedCustomer, setSelectedCustomer} = useContext(GlobalContext)
     console.log(allCustomers)
+
+    const {onlineUsers} = useSocketContext()
+    const isOnline = onlineUsers.includes(selectedCustomer._id)
+
+
 
     const handleClickedCustomer = (customer) => {
         console.log("Clicked Customer : ")
@@ -23,8 +29,10 @@ const Seller_ConversationList = () => {
 
                     key = {selectedCustomer._id} 
                     onClick = {() => handleClickedCustomer(customer)}>
-                        <div className = " w-1/4  flex">
-                        <img src = {pfpLink} className = "" />
+                        <div className = " flex w-1/4">
+                        <div className = {`avatar ${isOnline ? "online placeholder" : ""}`}>
+                        <img src = {pfpLink} className = {`avatar ${isOnline? "online placeholder" : ""}`} />
+                        </div>
                         </div>
                     <div className = "font-sans font-semibold ">
                     <p>{customer.username}</p>    
