@@ -419,19 +419,19 @@ function AddProduct() {
                   onChange={handleCategoryChange}
                 >
                   <option value="none">Select a category</option>
-                  <option value="food">Food and Beverages</option>
-                  <option value="clothing">Clothing and Accessories</option>
-                  <option value="electronics">Electronics</option>
-                  <option value="home&living">Home and Living</option>
-                  <option value="health">Health and Personal Care</option>
-                  <option value="automotive">Automotive</option>
-                  <option value="sports">Sports and Outdoors</option>
-                  <option value="toys">Toys and Hobbies</option>
-                  <option value="entertaintment">
+                  <option value="Food">Food and Beverages</option>
+                  <option value="Clothing">Clothing and Accessories</option>
+                  <option value="Electronics">Electronics</option>
+                  <option value="Home&Living">Home and Living</option>
+                  <option value="Health">Health and Personal Care</option>
+                  <option value="Automotive">Automotive</option>
+                  <option value="Sports">Sports and Outdoors</option>
+                  <option value="Toys">Toys and Hobbies</option>
+                  <option value="Entertaintment">
                     Books, Music, and Entertainment
                   </option>
-                  <option value="office">Office Supplies</option>
-                  <option value="pet">Pet</option>
+                  <option value="Office">Office Supplies</option>
+                  <option value="Pet">Pet</option>
                 </select>
                 <h3 className="font-normal text-[#777980] text-base">
                   Product Tags
