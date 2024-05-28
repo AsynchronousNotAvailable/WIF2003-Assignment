@@ -116,13 +116,9 @@ function ProductManagement() {
         Header: "Variation",
         Footer: "Variation",
         accessor: "variation",
-        // Cell: ({ value }) => {
-        //   const variations = "";
-        //   for (let element in value) {
-        //     variations.concat(element.toString());
-        //   }
-        //   return <p>{variations}</p>;
-        // },
+        Cell: ({ value }) => {
+          return <p className="w-60">{value.join(", ")}</p>;
+        },
       },
       // {
       //     Header: 'Status',
@@ -150,7 +146,7 @@ function ProductManagement() {
               <button
                 className="mx-2 mr-0"
                 onClick={() =>{
-                    if(window.confirm("Do you sure you want to delete the product?")){
+                    if(window.confirm("Are you sure you want to delete the product?")){
                         sortingTableRef.current.handleDeleteData(productData[cell.row.index]._id)
                     }
                 }

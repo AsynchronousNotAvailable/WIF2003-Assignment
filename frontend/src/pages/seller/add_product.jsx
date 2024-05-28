@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { GlobalContext } from "../../context";
 import { useNavigate, useLocation } from "react-router-dom";
 import cross_icon from "../../assets/cross_icon.png";
+import cross_icon_white from "../../assets/cross_icon_white.png";
 import axios from "axios";
 import add_icon from "../../assets/add_icon_white.png";
 import Seller_NavSidebar from "../../components/seller_sidebar";
@@ -20,6 +21,7 @@ function AddProduct() {
   const [discountType, setDiscountType] = useState("none");
   const [quantity, setQuantity] = useState(product ? product.quantity : "");
   const [discountPercentage, setDiscountPercentage] = useState(0);
+  const [variations, setVariations] = useState(product ? product.variation : []);
   // const [sku, setSku] = useState();
   // const [barcode, setBarcode] = useState();
   // const [quantity, setQuantity] = useState(0);
@@ -29,6 +31,7 @@ function AddProduct() {
   // const [width, setWidth] = useState(0);
   const [category, setCategory] = useState(product ? product.category : "");
   const [tags, setTags] = useState("none");
+  const [images, setImages] = useState(product ? [product.image] : []);
   const { getSeller } = useSeller();
   const [seller, setSeller] = useState(getSeller());
   const navigation = useNavigate();
@@ -55,6 +58,25 @@ function AddProduct() {
   function handleDiscountPercentageChange(event) {
     setDiscountPercentage(() => event.target.value);
   }
+
+  function handleVariationChange(event, index) {
+    const updatedList = variations.map((variation, i) =>
+      i === index ? event.target.value : variation
+    );
+    setVariations(updatedList);
+  }
+
+  function addVariants(event){
+    const newVariant = "";
+    setVariations([...variations, newVariant]);
+  }
+
+  function deleteVariants(index){
+    const updatedData = variations.filter((_, i) => i !== index);
+    setVariations(updatedData);
+  }
+
+
   // function handleSkuChange(event) {
   //     setSku(() => event.target.value)
   // }
@@ -88,13 +110,19 @@ function AddProduct() {
 
   function addSellerProduct(productObj){
     const username = seller.username; 
-    axios.post(
+    try{
+      axios.post(
         `http://localhost:8080/api/sellers/${username}/product/new`,
          productObj
     ).then((_) => {
         window.alert("Product added successfully");
         navigation(-1);
     });
+    } catch (err){
+      console.log(err.response.data);
+      throw err
+    }
+    
   } 
 
   function editSellerProduct(productObj, productID){
@@ -109,8 +137,11 @@ function AddProduct() {
     });
   } 
 
-  function handleSubmit(event) {
+  async function handleSubmit(event)  {
     event.preventDefault();
+    
+    // const base64 = await convertToBase64(images[0] ?? null)
+    // console.log(base64);
     const obj = {
       name: productName,
       description: productDesc, 
@@ -121,9 +152,10 @@ function AddProduct() {
       // "Stock": quantity,
     //   Status: Math.floor(Math.random() * 4),
       createdDateTime: isAdd ? Date() : product.createdDateTime,
-      variation: ['a', 'b'],
+      variation: variations.filter(item => item.trim() !== ""),
       category: category,
       deleted: false,
+      image: await extractBase64Strings(images),
     };
     /* var fs = require('fs');
         fs.readFile("../../components/order_management/mock_product_data.json", 'utf8', function readFileCallback(err, data){
@@ -138,6 +170,21 @@ function AddProduct() {
 
     isAdd ? addSellerProduct(obj) : editSellerProduct(obj, product._id);
   }
+
+  async function extractBase64Strings(images) {
+    const base64Promises = images.map((image) => {
+      if(typeof image == 'string'){
+        return image;
+      } else if(image.base64 instanceof Promise){
+        return image.base64;
+      }
+    });
+
+    const base64Strings = await Promise.all(base64Promises);
+
+    return base64Strings;
+  }
+
 
   return (
     <>
@@ -190,12 +237,59 @@ function AddProduct() {
                   onChange={handleQuantityChange}
                 />
               </div>
+              <div className="mb-7 shadow-lg px-5 py-5 rounded-md">
+                <h2 className="font-semibold mb-2 text-[#353535] text-2xl">
+                  Variation
+                </h2>
+                <ul>
+                  {variations.map((variation, index) => {
+                    return (
+                      <li key={index}
+                      className="flex">
+                        <input
+                          id="product-name"
+                          className="mb-2 h-8 w-full border-2 me-4 border-border-grey ps-2 rounded-lg"
+                          type="text"
+                          placeholder="Type product name here..."
+                          value={variation}
+                          onChange={(event) =>
+                            handleVariationChange(event, index)
+                          }
+                        />
+                        <button
+                          type="button"
+                          onClick={(_) => deleteVariants(index)}
+                          className="flex-initial w-12 bg-[#DC2626] rounded-lg h-8 mr-0 mb-3 items-center justify-center"
+                        >
+                          <span className="text-white flex ml-4">
+                            <img className="h-4 mt-1" src={cross_icon_white}></img>
+                          </span>
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+                <button
+                type="button"
+                  onClick={addVariants}
+                  className="flex-initial w-40 bg-[#7450DF] rounded-lg h-10 mr-0 mb-3"
+                >
+                  <span className="text-white flex ml-4">
+                    <img className="h-4 mt-1" src={add_icon}></img>
+                    <p className="ml-1">{"Add Variants"}</p>
+                  </span>
+                </button>
+              </div>
               <div className="mb-7 shadow-lg px-5 py-2 rounded-md">
                 <h2 className="font-semibold mb-2 text-[#353535] text-2xl mb-2">
                   Media
                 </h2>
                 <h3 className="font-normal text-[#777980] text-base">Photo</h3>
-                <DragDropImageUploader />
+                <DragDropImageUploader
+                  images={images}
+                  setImages={setImages}
+                  isAdd={isAdd}
+                />
               </div>
               <div className="mb-7 shadow-lg px-5 py-2 rounded-md">
                 <h2 className="font-semibold mb-2 text-[#353535] text-2xl mb-2">
@@ -333,7 +427,9 @@ function AddProduct() {
                   <option value="automotive">Automotive</option>
                   <option value="sports">Sports and Outdoors</option>
                   <option value="toys">Toys and Hobbies</option>
-                  <option value="entertaintment">Books, Music, and Entertainment</option>
+                  <option value="entertaintment">
+                    Books, Music, and Entertainment
+                  </option>
                   <option value="office">Office Supplies</option>
                   <option value="pet">Pet</option>
                 </select>

@@ -1,7 +1,9 @@
 import React, { useState, useRef } from 'react';
 
-function DragDropImageUploader() {
-    const [images, setImages] = useState([]);
+function DragDropImageUploader(props) {
+    const images = props.images; 
+    const setImages = props.setImages; 
+    const isAdd = props.isAdd; 
     const [isDragging, setIsDragging] = useState(false);
     const [fileInputKey, setFileInputKey] = useState(Math.random().toString(36));
     const fileInputRef = useRef(null);
@@ -37,7 +39,8 @@ function DragDropImageUploader() {
                     ...prevImages,
                     {
                         name: files[i].name,
-                        url: URL.createObjectURL(files[i])
+                        url: URL.createObjectURL(files[i]),
+                        base64: convertToBase64(files[i])
                     },
                 ]))
             }
@@ -51,6 +54,7 @@ function DragDropImageUploader() {
 
     function onFilesSelect(event) {
         const files = event.target.files;
+        console.log(files);
         if (files.length === 0) return;
         for (let i = 0; i < files.length; i++) {
             if (files[i].type.split('/')[0] !== 'image') continue;
@@ -59,7 +63,8 @@ function DragDropImageUploader() {
                     ...prevImages,
                     {
                         name: files[i].name,
-                        url: URL.createObjectURL(files[i])
+                        url: URL.createObjectURL(files[i]),
+                        base64: convertToBase64(files[i])
                     },
                 ]))
             }
@@ -90,13 +95,26 @@ function DragDropImageUploader() {
                 {images.map((images, index) => (
                     <div className="w-20 mr-5 h-80 mb-8 relative" key={index}>
                         <span onClick={() => deleteImage(index)} className="z-50 bg-blue-200">&times;</span>
-                        <img className="w-full h-full rounded.lg" src={images.url} alt={images.name}></img>
+                        <img className="w-full h-full rounded.lg" src={images.url ?? images} alt={images.name}></img>
                     </div>
                 ))}
             </div>
 
         </>
     )
+    async function convertToBase64(file){
+        return new Promise((resolve, reject) => {
+          
+          const fileReader = new FileReader()
+          fileReader.readAsDataURL(file);
+    
+          fileReader.onload = () => {
+            resolve(fileReader.result)
+          }
+          fileReader.onerror = (error) => 
+            reject(error)
+        })
+      }
 }
 
 export default DragDropImageUploader; 

@@ -63,7 +63,7 @@ exports.createSeller = async (req, res) => {
 exports.addProduct = async (req, res) => {
     try {
         const username = req.params.username;
-        const { name, description, variation, pricePerUnit, category, createdDateTime, quantity, deleted } =
+        const { name, description, variation, pricePerUnit, category, createdDateTime, quantity, deleted, image } =
             req.body;
 
         const newProductData = {
@@ -76,6 +76,7 @@ exports.addProduct = async (req, res) => {
             createdDateTime, 
             quantity,
             deleted,
+            image
         };
 
         const newProduct = await SellerService.addProduct(

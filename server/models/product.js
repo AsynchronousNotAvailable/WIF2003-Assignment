@@ -14,6 +14,7 @@ const productSchema = new Schema({
     quantity: { type: Number, required: true },
     createdDateTime: { type: Date, required: true },
     deleted: { type: Boolean, required: true },
+    image: [{type: String, required: false}]
 });
 
 exports.ProductModel = mongoose.model("Product", productSchema);
