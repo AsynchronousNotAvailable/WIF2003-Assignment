@@ -93,9 +93,9 @@ function DragDropImageUploader(props) {
             </div>
             <div className="w-full h-auto flex content-start flex-wrap items-start max-h-48 overflow-y-auto mt-10">
                 {images.map((images, index) => (
-                    <div className="w-20 mr-5 h-80 mb-8 relative" key={index}>
+                    <div className="w-40 h-40 mr-5 mb-8 relative" key={index}>
                         <span onClick={() => deleteImage(index)} className="z-50 bg-blue-200">&times;</span>
-                        <img className="w-full h-full rounded.lg" src={images.url ?? images} alt={images.name}></img>
+                        <img className="w-full h-full rounded-lg object-cover" src={images.url ?? images} alt={images.name}></img>
                     </div>
                 ))}
             </div>

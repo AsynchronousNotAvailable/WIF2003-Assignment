@@ -155,7 +155,7 @@ function AddProduct() {
       variation: variations.filter(item => item.trim() !== ""),
       category: category,
       deleted: false,
-      image: await extractBase64Strings(images),
+      image: await extractBase64Strings(images[0]),
     };
     /* var fs = require('fs');
         fs.readFile("../../components/order_management/mock_product_data.json", 'utf8', function readFileCallback(err, data){
@@ -173,7 +173,7 @@ function AddProduct() {
 
   async function extractBase64Strings(images) {
     const base64Promises = images.map((image) => {
-      if(typeof image == 'string'){
+      if(typeof image === 'string' || image instanceof String){
         return image;
       } else if(image.base64 instanceof Promise){
         return image.base64;
