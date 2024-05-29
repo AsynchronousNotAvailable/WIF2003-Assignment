@@ -80,40 +80,7 @@ const ProductListing = () => {
             setSortedProductsArr(sortedProducts);
         }
 
-        // console.log('FILTER', sortedProducts);
-        // setSortedProductsArr(sortedProducts);
-        // } else {
-        //     console.log("HERE");
-        //     setSortType((chosenSortType) => sortingPreference);
-        //     if (sortingPreference === "PriceHTL") {
-        //         const sortedProducts = [...displayedProducts].sort(
-        //             (a, b) => b.price - a.price
-        //         );
-        //         setSortedProductsArr(sortedProducts);
-        //     } else if (sortingPreference === "PriceLTH") {
-        //         const sortedProducts = [...displayedProducts].sort(
-        //             (a, b) => a.price - b.price
-        //         );
-        //         setSortedProductsArr(sortedProducts);
-        //     } else if (sortingPreference === "BS") {
-        //         const sortedProducts = displayedProducts.filter(
-        //             (product) => product.category === "Books & Stationery"
-        //         );
-        //         setSortedProductsArr(sortedProducts);
-        //     } else if (sortingPreference === "FB") {
-        //         const sortedProducts = displayedProducts.filter(
-        //             (product) => product.category === "Food & Beverage"
-        //         );
-        //         setSortedProductsArr(sortedProducts);
-        //     } else if (sortingPreference === "MF") {
-        //         const sortedProducts = displayedProducts.filter(
-        //             (product) => product.category === "Men's Fashion"
-        //         );
-        //         setSortedProductsArr(sortedProducts);
-        //     } else {
-        //         alert("Choice of Category is not available.");
-        //     }
-        // }
+        
 
         if (sortedProductsArr.length > 0) {
             console.log(sortedProductsArr);
@@ -158,7 +125,8 @@ const ProductListing = () => {
                                 onClick={() => handleClick(product)}
                             >
                                 <img
-                                    src={product.img}
+                                    style={{objectFit: "contain"}}
+                                    src={product.image}
                                     className="w-[280px] h-[320px] object-cover"
                                 />
                                 <p className="font-sans text-xl  text-black">
@@ -175,63 +143,7 @@ const ProductListing = () => {
                                 </p>
                             </section>
                         ))}
-                    {/* {sortedProductsArr.length > 0
-                        ? sortedProductsArr.map((product) => (
-                              <section
-                                  key={product.id}
-                                  onClick={() => handleClick(product)}
-                              >
-                                  <img
-                                      src={product.img}
-                                      className="w-[280px] h-[320px] object-cover"
-                                  />
-                                  <p className="font-sans text-xl  text-black">
-                                      {product.name}{" "}
-                                      <span className="text-gray-500 text-sm font-sans mr-[15px]">
-                                          by{" "}
-                                          <a className="text-black text-md hover:cursor-pointer hover:text-black hover:underline font-sanss">
-                                              {product.seller}
-                                          </a>
-                                      </span>
-                                  </p>
-                                  <p className="font-sans font-bold text-gray-900">
-                                      RM{product.price}
-                                  </p>
-                              </section>
-                          ))
-                        : displayedProducts.map((product) => (
-                              <section
-                                  key={product.id}
-                                  onClick={() => handleClick(product)}
-                              >
-                                  <img
-                                      src={product.img}
-                                      className="w-[280px] h-[320px] object-cover"
-                                  />
-                                  <p className="font-sans font-semibold text-xl text-black">
-                                      {product.name}{" "}
-                                      <span className="text-gray-500 text-sm font-sans mr-[15px]">
-                                          by{" "}
-                                          <a className="text-black text-md hover:cursor-pointer hover:text-black hover:underline font-sanss">
-                                              {product.seller}
-                                          </a>
-                                      </span>
-                                  </p>
-                                  <p className="font-sans font-bold text-gray-900">
-                                      RM{product.price}
-                                  </p>
-                              </section>
-                          ))} */}
-
-                    {/* { displayedProducts.map((product) => {
-                        return(
-                            <section className = "flex flex-col ">
-                                <img src = {product.img} className = "w-[280px] h-[320px] " />
-                                <p className = "font-sans  text-lg text-gray-700">{product.name}</p>
-                                <p className = "font-sans font-bold text-gray-900 ">RM{product.price}</p>
-                            </section>
-                        )
-                    })} */}
+                    
                 </div>
             </main>
         </div>

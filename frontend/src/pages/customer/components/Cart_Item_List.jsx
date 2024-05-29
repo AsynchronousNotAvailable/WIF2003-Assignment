@@ -6,17 +6,11 @@ function Cart_Item_List({
     cartItems,
     deleteItem,
     seller,
-    totalCheckoutPrice,
     setTotalCheckoutPrice,
 }) {
-    console.log(cartItems);
-
     useEffect(() => {
-     
-        console.log('CALLED');
         let totalPrice = 0;
         Object.values(cartItems).forEach((items) => {
-            console.log(items);
             items.forEach((item) => {
                 totalPrice +=
                     parseFloat(item.product.pricePerUnit) *
@@ -38,7 +32,7 @@ function Cart_Item_List({
                     <div className="flex flex-row justify-between border-[1px] py-3 px-5 rounded-sm">
                         <div className="flex flex-row gap-8 items-center">
                             <img
-                                src={cartItem.img}
+                                src={cartItem.product.image}
                                 alt=""
                                 className=" w-20 h-20"
                             />
@@ -65,16 +59,6 @@ function Cart_Item_List({
                             <button onClick={() => deleteItem(cartItem._id)}>
                                 <i class="fa-solid fa-trash"></i>
                             </button>
-
-                            {/* <h4
-                                onClick={() =>
-                                    addToTotalCheckoutPrice(
-                                        cartItem.price * cartItem.quantity
-                                    )
-                                }
-                            >
-                                Add
-                            </h4> */}
                         </div>
                     </div>
                 );

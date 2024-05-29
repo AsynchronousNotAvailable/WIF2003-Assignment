@@ -28,7 +28,7 @@ function Customer_Cart() {
             const response = await axios.get(
                 `http://localhost:8080/api/customers/${username}/cart`
             );
-            console.log(response.data);
+            
             const cartItems = response.data.cartItem;
             setCartItems(cartItems);
             const updatedDict = {};
@@ -62,38 +62,10 @@ function Customer_Cart() {
         }
     };
 
-    // const deleteItem = (cartItem, seller) => {
-
-    //     console.log(typeof dict[seller][0]["id"])
-    //     const updatedItemListsPerSeller = dict[seller].filter((item) => {
-    //         return (
-    //             item.id !== cartItem.id && item.variation !== cartItem.variation
-    //         );
-    //         // Check if the item's ID matches and the variation is the same
-    //     });
-
-    //     setDict((prev) => ({
-    //         ...prev,
-    //         [seller]: updatedItemListsPerSeller, // Update the item list for the specified seller
-    //     }));
-
-    //     // Filter out the deleted item from the overall cart items
-    //     const updatedCartItems = cartItems.filter((item) => {
-    //         // Check if the item's ID matches and the variation is the same
-    //         return (
-    //             item.id !== cartItem.id || item.variation !== cartItem.variation
-    //         );
-    //     });
-
-    //     // Update the cart items state
-    //     setCartItems(updatedCartItems);
-    // };
-
     const handleCheckout = () => {
         // save to cartItems using setcartItems and then navigate to checkout page
-        console.log(cartItems);
         setCartItems(cartItems);
-        navigation("/customer/checkout", {state: {cartItems: cartItems}});
+        navigation("/customer/checkout", { state: { cartItems: cartItems } });
     };
 
     let quantity = 0;
@@ -101,7 +73,6 @@ function Customer_Cart() {
         quantity += cartItems[i].quantity;
     }
 
-    console.log(dict);
     return (
         <>
             <Customer_Navbar />
@@ -135,25 +106,6 @@ function Customer_Cart() {
                         </div>
                     </div>
 
-                    {/* <div classNmae="flex flex-col">
-                        <div className="flex flex-row">
-                            <p>Checkbox</p>
-                            <p>Seller geh name</p>
-                        </div>
-                        <div className="flex flex-row justify-between">
-                            <div className="flex flex-row">
-                                <p>Checkbox</p>
-                                <p>dig bick</p>
-                            </div>
-
-                            <div className="flex flex-row justify-between border-2 border-blue-700">
-                                <p>RM15.38</p>
-                                <p>2</p>
-                                <p>Rm42.69</p>
-                                <p>Waiting for Payment</p>
-                            </div>
-                        </div>
-                    </div> */}
                     <div className="">
                         {Object.keys(dict).map((seller) => {
                             return (
@@ -164,7 +116,6 @@ function Customer_Cart() {
                                     setTotalCheckoutPrice={
                                         setTotalCheckoutPrice
                                     }
-                                    totalCheckoutPrice={totalCheckoutPrice}
                                 />
                             );
                         })}

@@ -13,6 +13,7 @@ const sellerSchema = new Schema({
     password: { type: String, required: true },
     products: [{ type: Schema.Types.ObjectId, ref: "Product" }],
     orders: [{ type: Schema.Types.ObjectId, ref: "Order" }],
+    pfp: { type: String },
 });
 
 exports.SellerModel = mongoose.model("Seller", sellerSchema);

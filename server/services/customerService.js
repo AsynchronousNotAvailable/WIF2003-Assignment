@@ -213,7 +213,7 @@ exports.getShippingAddress = async (username) => {
         throw new Error("Customer Not Found");
     }
     return customer.shippingAddress || {};
-}
+};
 
 exports.updateShippingAddress = async (username, address) => {
     const customer = await CustomerModel.findOne({ username: username });
@@ -223,7 +223,7 @@ exports.updateShippingAddress = async (username, address) => {
     customer.shippingAddress = address;
     await customer.save();
     return customer;
-}
+};
 
 exports.getCard = async (username) => {
     const customer = await CustomerModel.findOne({ username: username });
@@ -498,6 +498,14 @@ exports.addReview = async (username, productId, title, description, stars) => {
 
     product.reviews.push(newReview);
 
+    // update product average_rating
+    let totalRating = 0;
+    for (let id in product.reviews) {
+        const review = await ReviewModel.findById(product.reviews[id]);
+        totalRating += review.stars;
+    }
+    product.average_rating = (totalRating / product.reviews.length).toFixed(1);
+    console.log(product.average_rating);
     await newReview.save();
     await product.save();
 
