@@ -90,13 +90,13 @@ const SocialLink = styled.a`
 function Login() {
     const [emailAddress, setEmailAddress] = useState("");
     const [password, setPassword] = useState("");
-    const {
-        setIsSeller,
-        userDetails,
-        setUserDetails,
-        
-       
-    } = useContext(GlobalContext);
+    const [selectedOption, setSelectedOption] = useState("Customer");
+    const dropdownOptions = [
+        { label: "Customer", value: "Customer" },
+        { label: "Seller", value: "Seller" },
+    ];
+    const { setIsSeller, userDetails, setUserDetails } =
+        useContext(GlobalContext);
     const [redirectToMarketplace, setRedirectToMarketplace] = useState(false);
     const navigation = useNavigate();
     const { saveCustomer } = useCustomer();
@@ -113,7 +113,7 @@ function Login() {
 
             let response;
 
-            if (loginData.emailAddress.includes("seller")) {
+            if (selectedOption === 'Seller') {
                 response = await axios.post(
                     `http://localhost:8080/api/sellers/login`,
                     loginData
@@ -129,13 +129,13 @@ function Login() {
 
             if (response.status === 200) {
                 if (response.data.customer) {
-                    console.log('save customer');
+                    console.log("save customer");
                     saveCustomer(response.data.customer);
-                    
+
                     navigation("/marketplace");
                 } else {
                     saveSeller(response.data.seller);
-                    
+
                     navigation("/product_management");
                 }
             }
@@ -168,6 +168,56 @@ function Login() {
         navigation("/forgot-password");
     };
 
+    const StyledLabel = styled.label`
+        font-size: 14px;
+        font-weight: Regular;
+        color: #666666;
+        display: block;
+        margin-bottom: 5px;
+    `;
+
+    const StyledSelect = styled.select`
+        border-radius: 12px;
+        border: 1px solid #666666;
+        opacity: 0.35;
+        padding: 10px;
+        height: 40px;
+        width: 100%;
+    `;
+
+    const CustomDropdownContainer = styled.div`
+        width: ${(props) => props.size};
+
+        margin-bottom: 10px;
+        margin-right: 10px;
+
+        &:last-child {
+            margin-right: 0;
+        }
+    `;
+
+
+    const CustomDropdown = ({ title, value, setValue, options, size }) => {
+        const handleChange = (e) => {
+            if (setValue) {
+                setValue(e.target.value);
+            }
+        };
+
+        return (
+            <CustomDropdownContainer size={size}>
+                <StyledLabel>{title}</StyledLabel>
+                <StyledSelect value={value} onChange={handleChange}>
+                    {options.map((option, index) => (
+                        <option key={index} value={option.value}>
+                            {option.label}
+                        </option>
+                    ))}
+                </StyledSelect>
+            </CustomDropdownContainer>
+        );
+    };
+
     return (
         <Container>
             <Content>
@@ -196,6 +246,15 @@ function Login() {
                         placeholder="Enter your password"
                         size="100%"
                     />
+
+                    <CustomDropdown
+                        title="Join us as"
+                        value={selectedOption}
+                        setValue={setSelectedOption}
+                        options={dropdownOptions}
+                        size="100%"
+                    />
+
                     <div style={{ textAlign: "right" }}>
                         <SmallText
                             withOpacity

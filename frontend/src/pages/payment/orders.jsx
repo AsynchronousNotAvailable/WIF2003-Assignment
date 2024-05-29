@@ -7,7 +7,10 @@ import styled from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FloatingChat from "../customer/components/FloatingChat";
-import axios from 'axios';
+import axios from "axios";
+import useCustomer from "../../hooks/useCustomer";
+import AddReviewModal from "./components/ReviewModal";
+import SuccessModal from "./components/successModal";
 
 const Container = styled.div`
     display: flex;
@@ -77,37 +80,52 @@ const Divider = styled.hr`
 export default function Orders() {
     const [chatName, setChatName] = useState("");
     const [activeChatContent, setActiveChatContent] = useState([]);
-    const [products, setProducts] = useState([]);
+    const [productReview, setProductReview] = useState("");
     const [floating, setFloating] = useState(false);
     const toggleFloatingChat = () => {
         setFloating(!floating);
     };
-    const { shopsItemListing, productListing, customer } =
-        useContext(GlobalContext);
-
+    const { getCustomer } = useCustomer();
+    const [customer, setCustomer] = useState(getCustomer());
+    const [orders, setOrders] = useState([]);
+    const [fetchOrder, setFetchOrder] = useState(false);
+    const [reviewModal, setReviewModal] = useState(false);
+    const [successModal, setSuccessModal] = useState(false);
     useEffect(() => {
-        console.log("FROM ORDERS", customer);
-       
         fetchData();
-    }, []);
+    }, [fetchOrder]);
 
     const fetchData = async () => {
-        console.log(customer.username);
         const username = customer.username;
         try {
             const response = await axios.get(
                 `http://localhost:8080/api/customers/${username}/orderHistory`
             );
-            console.log("FROM DATABASE", response.data);
+
             const products = response.data;
-            console.log('products', products);
+            setOrders(products);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const submitReview = async (reviewDetails) => {
+        try {
+            const username = customer.username;
+            const response = await axios.post(
+                `http://localhost:8080/api/customers/${username}/${productReview._id}/addReview`,
+                reviewDetails
+            );
+            if (response.status === 200) {
+                setReviewModal(false);
+                setSuccessModal(true);
+            }
         } catch (error) {
             console.log(error);
         }
     };
 
     const handleChatButtonClick = (name) => {
-        // navigation("/customer/chat");
         handleChatClick(name);
         toggleFloatingChat();
     };
@@ -147,26 +165,44 @@ export default function Orders() {
     const goBackToChatList = () => {
         setChatName("");
     };
-    const { orderHistory, updateOrderStatus } = useContext(GlobalContext);
-    const navigation = useNavigate();
 
-    const handleOrderReceived = (orderId) => {
-        updateOrderStatus(orderId, "Order Received.");
+    const handleOrderReceived = async (orderId) => {
+        try {
+            const customer = getCustomer();
+            const username = customer.username;
+            const receivalDetails = { time_received: new Date() };
+            const response = await axios.put(
+                `http://localhost:8080/api/customers/${username}/${orderId}/orderReceived`,
+                receivalDetails
+            );
+            console.log(response.data);
+            if (response.status === 200) {
+                setFetchOrder(!fetchOrder);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
-    const sortedOrders = orderHistory
+    const sortedOrders = orders
         .slice()
         .sort((a, b) => b.timestamp - a.timestamp);
-
-    // const fetchData = async () => {
-    //     try {
-    //         const response = await axios.fetch
-    //     }
-    // }
 
     return (
         <Container>
             <Customer_Navbar />
+            <SuccessModal
+                isOpen={successModal}
+                cancelModal={() => setSuccessModal(false)}
+                title="Review Submitted"
+                message="Your review has been submitted successfully!"
+                product={productReview}
+            />
+            <AddReviewModal
+                isOpen={reviewModal}
+                cancelModal={() => setReviewModal(false)}
+                submitReview={submitReview}
+            />
             <div style={{ width: "90%", marginTop: "8%" }}>
                 <Text
                     style={{
@@ -184,7 +220,7 @@ export default function Orders() {
                     <Row>
                         <Column width="40%">
                             <Text>
-                                <Light>Order ID: {order.orderId}</Light>
+                                <Light>Order ID: {order._id}</Light>
                             </Text>
                         </Column>
                         <Column width="30%">
@@ -208,12 +244,18 @@ export default function Orders() {
                     <Divider />
                     <Order_List
                         style={{ backgroundColor: "white" }}
-                        items={order.orderItems}
+                        items={order.product}
+                        quantity={order.quantity}
+                        sellerName={order.sellerId.username}
                         handleChatButtonClick={handleChatButtonClick}
+                        setReviewModal={setReviewModal}
+                        setProductReview={setProductReview}
                     />
                     <Divider />
+
                     <Row>
-                        <Column width="85%">
+                        <Column width="65%"></Column>
+                        <Column width="15%">
                             <Text>
                                 <Bold style={{ textAlign: "right" }}>
                                     Order Total
@@ -229,7 +271,7 @@ export default function Orders() {
                                         textAlign: "right",
                                     }}
                                 >
-                                    RM {order.orderPrice.toFixed(2)}
+                                    RM {order.totalPricePerOrder.toFixed(2)}
                                 </Light>
                             </Text>
                         </Column>
@@ -243,9 +285,7 @@ export default function Orders() {
                                     width: "20%",
                                     marginLeft: "auto",
                                 }}
-                                onClick={() =>
-                                    handleOrderReceived(order.orderId)
-                                }
+                                onClick={() => handleOrderReceived(order._id)}
                             >
                                 Order Received
                             </PaymentButton>

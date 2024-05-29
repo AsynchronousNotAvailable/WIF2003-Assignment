@@ -13,8 +13,9 @@ const productSchema = new Schema({
     seller: { type: Schema.Types.ObjectId, ref: "Seller" },
     quantity: { type: Number, required: true },
     createdDateTime: { type: Date, required: true },
-    deleted: { type: Boolean, required: true },
-    image: [{type: String, required: false}]
+    average_rating: { type: Number, required: true, default: 0 },
+    deleted: { type: Boolean, required: true, default: false },
+    image: [{ type: String, required: false }],
 });
 
 exports.ProductModel = mongoose.model("Product", productSchema);

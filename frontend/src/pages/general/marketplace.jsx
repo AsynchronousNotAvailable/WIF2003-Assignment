@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import GlobalState, { GlobalContext } from "../../context";
+import { GlobalContext } from "../../context";
 import Customer_Navbar from "../../components/customer_navbar";
 import { useNavigate } from "react-router-dom";
 import { PieChart } from "@mui/x-charts/PieChart";
 import { Typography, Stack } from "@mui/material";
 import { BarChart } from "@mui/x-charts/BarChart";
-import Seller_NavSidebar from "../../components/seller_sidebar";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import FloatingChat from "../customer/components/FloatingChat";
@@ -13,130 +12,192 @@ import FloatingChatList from "../customer/components/FloatingChatList";
 import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
 import useCustomer from "../../hooks/useCustomer";
+import axios from "axios";
+import Carousel from "react-multi-carousel";
+import Category from "../../components/marketplace/category";
+import "react-multi-carousel/lib/styles.css";
+import Seller from "../../components/marketplace/seller";
 
 function Marketplace() {
     const { shopsItemListing, productListing } = useContext(GlobalContext);
-    const { getCustomer } = useCustomer();
-    const [customer, setCustomer] = useState(getCustomer());
-
+    const [categoryList, setCategoryList] = useState([]);
+    const [sellerList, setSellerList] = useState([]);
+    const navigation = useNavigate();
+    const responsive = {
+        superLargeDesktop: {
+            // the naming can be any, depends on you.
+            breakpoint: { max: 4000, min: 1024 },
+            items: 5,
+            slidesToSlide: 2,
+        },
+        desktop: {
+            breakpoint: { max: 1024, min: 800 },
+            items: 5,
+        },
+        tablet: {
+            breakpoint: { max: 800, min: 464 },
+            items: 2,
+        },
+        mobile: {
+            breakpoint: { max: 464, min: 0 },
+            items: 1,
+        },
+    };
     useEffect(() => {
-        console.log("FROM CONTEXT", customer);
-
-        // fetch data of all products
+        fetchProducts();
+        fetchSellers();
     }, []);
 
-    // const options = productListing.map((option) => {
-    //     const firstLetter = option.name[0].toUpperCase();
-    //     return {
-    //         firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
-    //         ...option,
-    //     };
-    // });
+    const onCategoryClicked = (e) => {
+        console.log(e, displayedProducts);
+
+        setCategoryClicked(e);
+        navigation(`/customer/products`, {
+            state: {
+                displayedProducts: displayedProducts,
+                categoryClicked: e,
+            },
+        });
+    };
+
+    const navigateToShop = (sellerId) => {
+        navigation(`/customer/shop/${sellerId}`, {
+            state: { sellerId: sellerId },
+        });
+    };
+
+    const category = categoryList.map((item) => (
+        <Category
+            category={item.category}
+            url={item.url}
+            onCategoryClicked={onCategoryClicked}
+        />
+    ));
+
+    const mapCategoryImage = (category) => {
+        switch (category) {
+            case "Food":
+                return "https://images.unsplash.com/photo-1579113800032-c38bd7635818?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+
+            case "Clothing":
+                return "https://images.unsplash.com/photo-1467043237213-65f2da53396f?q=80&w=2134&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+
+            case "Stationery":
+                return "https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+        }
+    };
+
+    const fetchProducts = async () => {
+        try {
+            const response = await axios.get(
+                `http://localhost:8080/api/products/marketplace`
+            );
+            const products = response.data;
+
+            setRecommendProduct(products.slice(0, 4));
+            const tempCategory = [];
+            products.forEach((product) => {
+                if (
+                    tempCategory.filter((p) => p.category === product.category)
+                        .length === 0
+                ) {
+                    let category = product.category;
+                    const newCategory = {
+                        category: category,
+                        url: mapCategoryImage(category),
+                    };
+                    tempCategory.push(newCategory);
+                }
+            });
+            setCategoryList(tempCategory);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const fetchSellers = async () => {
+        try {
+            const response = await axios.get(
+                "http://localhost:8080/api/sellers/getAll"
+            );
+            const sellers = response.data.sellers;
+
+            const tempSeller = [];
+            sellers.forEach((seller) => {
+                let name = seller.username;
+
+                const newSeller = {
+                    _id: seller._id,
+                    name: name,
+                    pfp: seller.pfp,
+                };
+
+                tempSeller.push(newSeller);
+            });
+            console.log(tempSeller);
+            setSellerList(tempSeller);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const [categoryClicked, setCategoryClicked] = useState("");
 
-    const [productCategorySetOne, setProductCategorySO] = useState([
-        {
-            name: "Books & Stationery",
-            img: "/booksIcon.png",
-        },
-        {
-            name: "Babies & Toys",
-            img: "/toysIcon.png",
-        },
-        {
-            name: "TV & Home Appliances",
-            img: "/tvIcon.png",
-        },
-        {
-            name: "Home & Lifestyle",
-            img: "/homeIcon.png",
-        },
-        {
-            name: "Food & Beverage",
-            img: "/groceryIcon.png",
-        },
-    ]);
-
-    const [productCategorySetTwo, setProductCategoryST] = useState([
-        {
-            name: "Electronic Accessories",
-            img: "/electronicAcc.png",
-        },
-        {
-            name: "Electronics Devices",
-            img: "/electronicDev.png",
-        },
-        {
-            name: "Women's Fashion",
-            img: "/womenFashion.png",
-        },
-        {
-            name: "Men's Fashion",
-            img: "/menFashion.png",
-        },
-        {
-            name: "Health & Supplements",
-            img: "/healthIcon.png",
-        },
-    ]);
-
     const [recommendProduct, setRecommendProduct] = useState([
-        {
-            id: 6,
-            name: "Notebook",
-            price: 13,
-            rating: 4,
-            img: "/notebook.png",
-            seller: "Koperasi_UM",
-            reviews: [],
-            variations: ["Brown", "Khaki", "Grey"],
-        },
-        {
-            id: 0,
-            name: "Milo 3 in 1",
-            price: 13,
-            rating: 4,
-            seller: "Koperasi_UM",
-            reviews: [],
-            variations: ["Original", "Chocolate", "Vanilla"],
-            img: "/milothreeproduct.jpg",
-        },
-        {
-            id: 4,
-            name: "Iced Coffee",
-            price: 13,
-            rating: 2,
-            img: "/zero_latte.png",
-        },
-        {
-            id: 2,
-            name: "Horlicks",
-            price: 8,
-            rating: 3,
-            img: "/horlickproduct.jpg",
-            seller: "Koperasi_UM",
-            reviews: [],
-            variations: ["Original", "Chocolate", "Vanilla"],
-        },
-        {
-            id: 10,
-            name: "Man United Jersey",
-            price: 13,
-            rating: 4,
-            img: "/jersey.jpg",
-            seller: "Koperasi_UM",
-            reviews: [],
-            variations: ["Black", "Red", "White"],
-            category: "Men's Fashion",
-            description: "This is A Jersey",
-        },
+        // {
+        //     id: 6,
+        //     name: "Notebook",
+        //     price: 13,
+        //     rating: 4,
+        //     img: "/notebook.png",
+        //     seller: "Koperasi_UM",
+        //     reviews: [],
+        //     variations: ["Brown", "Khaki", "Grey"],
+        // },
+        // {
+        //     id: 0,
+        //     name: "Milo 3 in 1",
+        //     price: 13,
+        //     rating: 4,
+        //     seller: "Koperasi_UM",
+        //     reviews: [],
+        //     variations: ["Original", "Chocolate", "Vanilla"],
+        //     img: "/milothreeproduct.jpg",
+        // },
+        // {
+        //     id: 4,
+        //     name: "Iced Coffee",
+        //     price: 13,
+        //     rating: 2,
+        //     img: "/zero_latte.png",
+        // },
+        // {
+        //     id: 2,
+        //     name: "Horlicks",
+        //     price: 8,
+        //     rating: 3,
+        //     img: "/horlickproduct.jpg",
+        //     seller: "Koperasi_UM",
+        //     reviews: [],
+        //     variations: ["Original", "Chocolate", "Vanilla"],
+        // },
+        // {
+        //     id: 10,
+        //     name: "Man United Jersey",
+        //     price: 13,
+        //     rating: 4,
+        //     img: "/jersey.jpg",
+        //     seller: "Koperasi_UM",
+        //     reviews: [],
+        //     variations: ["Black", "Red", "White"],
+        //     category: "Men's Fashion",
+        //     description: "This is A Jersey",
+        // },
     ]);
     const [userSearchInput, setUserSearchInput] = useState("");
     const [displayedProducts, setDisplayedProducts] = useState([]);
 
     const handleSearchChange = (event) => {
-        console.log(event);
         if (event.target.innerText) {
             if (event.target.innerText === "") {
                 setDisplayedProducts(productListing);
@@ -169,116 +230,13 @@ function Marketplace() {
             setDisplayedProducts(matchedProducts);
         }
     };
-    // const handleSearchChange = (event) => {
-    //     if(event.target.value){
-    //         const userInput = event.target.value.toLowerCase();
-    //         setUserSearchInput(userInput);
-    //     const matchedProducts = productListing.filter((product) =>
-    //         product.name.toLowerCase().includes(userInput)
-    //     );
-    //     setDisplayedProducts(matchedProducts);
-    //     }
-    //     else{
-    //         const userInput = " "
-    //         setUserSearchInput(userInput);
-    //     const matchedProducts = productListing.filter((product) =>
-    //         product.name.toLowerCase().includes(userInput)
-    //     );
-    //     setDisplayedProducts(matchedProducts);
-    //     }
-    // };
-    // setUserSearchInput(userInput);
-    // const matchedProducts = productListing.filter((product) =>
-    //     product.name.toLowerCase().includes(userInput)
-    // );
-    // setDisplayedProducts(matchedProducts);
-    // const handleSearchChange = (event) => {
-    //     const userInput = event.target.value.toLowerCase();
-    //     setUserSearchInput(userInput); // Always update the userInput state
-
-    //     // If userInput is empty, set displayedProducts to the entire productListing
-    //     if (userInput.trim() === "") {
-    //         setDisplayedProducts(productListing);
-    //     } else {
-    //         // Filter products based on userInput
-    //         const matchedProducts = productListing.filter((product) =>
-    //             product.name.toLowerCase().includes(userInput)
-    //         );
-    //         setDisplayedProducts(matchedProducts);
-    //     }
-    // };
-
-    const navigation = useNavigate();
 
     const onSearchButtonClick = () => {
         navigation(`/customer/products`, { state: { displayedProducts } });
     };
 
-    const onCategoryClicked = (e) => {
-        console.log(e);
-        setCategoryClicked(e);
-        navigation(`/customer/products`, {
-            state: {
-                displayedProducts: displayedProducts,
-                categoryClicked: e,
-            },
-        });
-    };
-    // handleSortingChange(e)
-    // if (e === "Books & Stationery"){
-    //     const sortedProducts = productListing.filter((product) => product.category === "Books & Stationery")
-    //     console.log(sortedProducts)
-    //     setDisplayedProducts(sortedProducts)
-    // }
-    // console.log(displayedProducts)
-    // navigation(`/customer/products`, {state : {displayedProducts}})
-    // setCategoryClicked(e)
-    // handleSortingChange(e)
-    // navigation(`/customer/products`, {state : {displayedProducts}})
-
-    // const handleSortingChange = (e) => {
-    //     console.log("E from handleSortingChange : " + e)
-    //     if (e === "Books & Stationery"){
-    //         const sortedProducts = productListing.filter((product) => product.category === "Books & Stationery")
-    //         console.log(sortedProducts)
-    //         setDisplayedProducts(sortedProducts)
-    //     }
-    //     navigation(`/customer/products`, {state : {displayedProducts}})
-
-    // }
-
-    //  if (e === "Books & Stationery"){
-    //     const sortedProducts = displayedProducts.filter((product) => product.category === "Books & Stationery")
-    //     console.log("argument passed : " + e)
-    //     console.log("products to be displayed : " + sortedProducts)
-    //     setDisplayedProducts(sortedProducts)
-    //     navigation(`/customer/products`, {state : {displayedProducts}})
-    // }
-    // else if (e === "Food & Beverage"){
-    //     const sortedProducts = displayedProducts.filter((product) => product.category === "Food & Beverage")
-    //     console.log("argument passed : " + e)
-    //     console.log("products to be displayed : " + sortedProducts)
-    //     setDisplayedProducts(sortedProducts)
-    //     navigation(`/customer/products`, {state : {displayedProducts}})
-    // }
-
-    // else{
-    //     console.log(typeof e)
-    //     console.log(e)
-    //     console.log(productListing)
-    //     alert("Choice of Category is not available.")
-    // }
-
-    const navigateToShop = (seller) => {
-        navigation(`/customer/shop/${seller}`, {
-            state: { seller: seller },
-        });
-    };
-
-    const navigateToProductDetails = (productId) => {
-        const product = productListing.find((p) => p.id === productId);
-
-        navigation(`/customer/product/${productId}`, {
+    const navigateToProductDetails = (product) => {
+        navigation(`/customer/product/${product._id}`, {
             state: { product },
         });
     };
@@ -395,7 +353,7 @@ function Marketplace() {
     return (
         <>
             <Customer_Navbar />
-            <main className="mt-24 flex flex-col">
+            <main className="mt-24 flex flex-col w-full ">
                 <section className="flex flex-row w-full gap-2 mb-10 justify-center">
                     <Autocomplete
                         id="free-solo-demo"
@@ -415,7 +373,6 @@ function Marketplace() {
                             <TextField {...params} label="Search" />
                         )}
                     />
-                    {customer && customer.username}
 
                     <button
                         onClick={onSearchButtonClick}
@@ -438,73 +395,32 @@ function Marketplace() {
                         Category
                     </p>
 
-                    <section className="flex flex-col gap-10  justify-center items-center">
-                        <section className="flex flex-row gap-20 py-10">
-                            {productCategorySetOne.map((product) => {
-                                return (
-                                    <section
-                                        className="flex flex-col gap-10 rounded-xl shadow-2xl w-48 h-72 px-5 py-5 justify-center items-center"
-                                        onClick={() =>
-                                            onCategoryClicked(product.name)
-                                        }
-                                    >
-                                        <img
-                                            src={product.img}
-                                            className="border-gray-300 border-2 w-[110px] h-[110px] rounded-full object-right"
-                                        />
-                                        <p className="">{product.name}</p>
-                                    </section>
-                                );
-                            })}
-                        </section>
-                        <section className="flex flex-row">
-                            <section className="flex flex-row justify-between gap-10">
-                                {productCategorySetTwo.map((product) => {
-                                    return (
-                                        <section
-                                            className="flex flex-col gap-10 rounded-xl shadow-2xl w-48 h-72 px-5 py-5 justify-center items-center"
-                                            onClick={() =>
-                                                onCategoryClicked(product.name)
-                                            }
-                                        >
-                                            <img
-                                                src={product.img}
-                                                className="border-gray-500 border-2 w-[110px] h-[110px] rounded-full object-contain"
-                                            />
-                                            <p>{product.name}</p>
-                                        </section>
-                                    );
-                                })}
-                            </section>
-                        </section>
-                    </section>
+                    <Carousel showDots={true} responsive={responsive}>
+                        {category}
+                    </Carousel>
                 </section>
 
-                <section className="flex flex-col px-16 py-10">
+                <section className=" px-16 py-10 ">
                     <p className="text-3xl items-start my-10 font-sans font-semibold ">
                         Meet Syopi Top Sellers
                     </p>
 
-                    <section className="flex flex-col justify-center items-center ">
-                        <section className="flex flex-row gap-10 ">
-                            {Object.keys(shopsItemListing).map((sellers) => {
-                                return (
-                                    <section
-                                        className="flex flex-col justify-center w-64 h-92 rounded-xl shadow-2xl px-10 py-10 items-center hover:bg-slate-100"
-                                        onClick={() => navigateToShop(sellers)}
-                                    >
-                                        <img
-                                            src={shopsItemListing[sellers][0]}
-                                            className="border-gray-500 border-2 w-[110px] h-[110px] rounded-full shadow-2xl object-contain mb-5"
-                                        />
-                                        <p className="font-sans font-light text-xl">
-                                            {sellers}
-                                        </p>
-                                    </section>
-                                );
-                            })}
-                        </section>
-                    </section>
+                    <Carousel
+                        showDots={true}
+                        responsive={responsive}
+                        className=" px-4"
+                    >
+                        {sellerList.map((item) => {
+                            return (
+                                <Seller
+                                    sellerId={item._id}
+                                    name={item.name}
+                                    pfp={item.pfp}
+                                    navigateToShop={navigateToShop}
+                                />
+                            );
+                        })}
+                    </Carousel>
                 </section>
 
                 <section className="flex flex-col px-16 py-10">
@@ -516,13 +432,13 @@ function Marketplace() {
                             return (
                                 <section
                                     onClick={() =>
-                                        navigateToProductDetails(product.id)
+                                        navigateToProductDetails(product)
                                     }
-                                    key={product.id}
                                     className="flex flex-col justify-center w-64 h-92 rounded-xl shadow-2xl px-10 py-10 hover:bg-slate-100"
                                 >
                                     <img
-                                        src={product.img}
+                                        style={{ objectFit: "contain" }}
+                                        src={product.image}
                                         className="h-full object-cover object-center "
                                         alt={product.name}
                                     />
@@ -536,11 +452,12 @@ function Marketplace() {
                                         </span>
                                     </p>
                                     <p className="font-sans text-[#7450DF]">
-                                        RM{product.price}
+                                        RM{product.pricePerUnit}
                                     </p>
                                     <section className="flex flex-row">
                                         <p className="font-sans font-semibold">
-                                            {product.rating}.0/5
+                                            {product.average_rating.toFixed(1)}
+                                            /5
                                         </p>
                                         <Box
                                             sx={{
@@ -549,7 +466,7 @@ function Marketplace() {
                                         >
                                             <Rating
                                                 name="read-only"
-                                                value={product.rating}
+                                                value={product.average_rating}
                                                 readOnly
                                             />
                                         </Box>
@@ -565,7 +482,6 @@ function Marketplace() {
                 >
                     <i className="fa fa-comment"></i>
                 </button>
-                {/* {floating && <FloatingChat activeChat={activeChat}  activeChatContent={activeChatContent}/>} */}
 
                 {floating && (
                     <FloatingChatList

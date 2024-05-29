@@ -111,13 +111,13 @@ exports.getCart = async (username) => {
     return cart;
 };
 
-exports.addToCart = async (username, prodId, quantity) => {
+exports.addToCart = async (username, prodId, selectedVariation, quantity) => {
     if (!checkCustomerByUsername(username)) {
         throw new Error("Customer Not Found");
     }
     const productToAdd = await ProductModel.findById(
         new mongoose.Types.ObjectId(prodId)
-    );
+    ).populate("seller");
     if (!productToAdd) {
         throw new Error("Product Not Found");
     }
@@ -137,14 +137,22 @@ exports.addToCart = async (username, prodId, quantity) => {
     }
 
     if (cart.cartItem.length === 0) {
-        const newItem = { product: productToAdd._id, quantity: quantity };
-        // console.log(newItem);
+        const newItem = {
+            product: productToAdd._id,
+            quantity: quantity,
+            selectedVariation: selectedVariation,
+            seller: productToAdd.seller.username,
+        };
+        console.log(newItem);
         cart.cartItem.push(newItem);
     } else {
         let found = false;
         cart.cartItem.forEach(async (cartItem) => {
             // console.log(cartItem.product, productToAdd._id);
-            if (cartItem.product.equals(productToAdd._id)) {
+            if (
+                cartItem.product.equals(productToAdd._id) &&
+                cartItem.product.selectedVariation === selectedVariation
+            ) {
                 // console.log("yes");
                 cartItem.quantity += quantity;
                 found = true;
@@ -152,7 +160,12 @@ exports.addToCart = async (username, prodId, quantity) => {
         });
 
         if (!found) {
-            const newItem = { product: productToAdd._id, quantity: quantity };
+            const newItem = {
+                product: productToAdd._id,
+                quantity: quantity,
+                selectedVariation: selectedVariation,
+                seller: productToAdd.seller.username,
+            };
             cart.cartItem.push(newItem);
         }
     }
@@ -200,7 +213,7 @@ exports.getShippingAddress = async (username) => {
         throw new Error("Customer Not Found");
     }
     return customer.shippingAddress || {};
-}
+};
 
 exports.updateShippingAddress = async (username, address) => {
     const customer = await CustomerModel.findOne({ username: username });
@@ -210,7 +223,7 @@ exports.updateShippingAddress = async (username, address) => {
     customer.shippingAddress = address;
     await customer.save();
     return customer;
-}
+};
 
 exports.getCard = async (username) => {
     const customer = await CustomerModel.findOne({ username: username });
@@ -485,6 +498,14 @@ exports.addReview = async (username, productId, title, description, stars) => {
 
     product.reviews.push(newReview);
 
+    // update product average_rating
+    let totalRating = 0;
+    for (let id in product.reviews) {
+        const review = await ReviewModel.findById(product.reviews[id]);
+        totalRating += review.stars;
+    }
+    product.average_rating = (totalRating / product.reviews.length).toFixed(1);
+    console.log(product.average_rating);
     await newReview.save();
     await product.save();
 

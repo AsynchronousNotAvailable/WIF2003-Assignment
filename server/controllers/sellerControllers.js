@@ -14,8 +14,17 @@ exports.login = async (req, res) => {
             res.status(500).json({ error: error.message });
         }
     }
+};
 
-}
+exports.getSellers = async (req, res) => {
+    try {
+        const sellers = await SellerService.getSellers();
+        res.json({ sellers });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 exports.getSellerByUsername = async (req, res) => {
     try {
         const username = req.params.username;
@@ -73,10 +82,10 @@ exports.addProduct = async (req, res) => {
             pricePerUnit,
             category,
             review: [],
-            createdDateTime, 
+            createdDateTime,
             quantity,
-            deleted,
-            image
+            avarage_rating: 0,
+            deleted: false
         };
 
         const newProduct = await SellerService.addProduct(
@@ -147,7 +156,6 @@ exports.getOrders = async (req, res) => {
         }
     }
 };
-
 
 exports.getProducts = async (req, res) => {
     try {

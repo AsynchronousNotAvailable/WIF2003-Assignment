@@ -3,9 +3,11 @@ const router = express.Router();
 const sellerController = require("../controllers/sellerControllers");
 router.post("/login", sellerController.login);
 
+router.get("/getAll", sellerController.getSellers);
+
 router.get("/:username", sellerController.getSellerByUsername);
 
-router.post("/new", sellerController.createSeller);
+router.post("/register", sellerController.createSeller);
 
 router.post("/:username/product/new", sellerController.addProduct);
 //delete product

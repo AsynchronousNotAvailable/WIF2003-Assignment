@@ -27,6 +27,11 @@ exports.login = async (loginData) => {
     return seller;
 };
 
+exports.getSellers = async () => {
+    const sellers = await SellerModel.find();
+    return sellers;
+};
+
 exports.getSellerById = async (sellerId) => {
     const seller = await SellerModel.findById(sellerId);
     if (!seller) {
