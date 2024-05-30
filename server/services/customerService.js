@@ -360,6 +360,13 @@ exports.checkout = async (username, payment_method, payment_date) => {
             { new: true }
         );
 
+        //update quantity sold in product
+        await ProductModel.findOneAndUpdate(
+            { _id: newOrder.product },
+            { $inc: { soldQuantity: newOrder.quantity } },
+            { new: true }
+        );
+
         totalTransactionPrice += newOrder.totalPricePerOrder;
         await newOrder.save();
     }

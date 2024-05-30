@@ -16,6 +16,7 @@ const productSchema = new Schema({
     average_rating: { type: Number, required: true, default: 0 },
     deleted: { type: Boolean, required: true, default: false },
     image: [{ type: String, required: false }],
+    soldQuantity: { type: Number, default: 0 },
 });
 
 exports.ProductModel = mongoose.model("Product", productSchema);

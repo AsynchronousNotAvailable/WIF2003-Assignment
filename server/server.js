@@ -3,13 +3,14 @@ const { connect } = require("mongoose");
 const customerRoutes = require("./routes/customerRoutes");
 const sellerRoutes = require("./routes/sellerRoutes");
 const productRoutes = require("./routes/productRoutes");
+const salesRoutes = require("./routes/salesRoutes");
 const app = express();
 
 const PORT = 8080;
 
 //so can parse json request body
-app.use(express.json({limit: '2mb'}));
-app.use(express.urlencoded({limit: '2mb'}));
+app.use(express.json({ limit: "2mb" }));
+app.use(express.urlencoded({ limit: "2mb" }));
 
 const cors = require("cors");
 
@@ -24,11 +25,11 @@ connectDb()
         console.error("Error connecting to database:", err);
     });
 
-
 app.use("/api/customers", customerRoutes);
 app.use("/api/sellers", sellerRoutes);
+app.use("/api/sales", salesRoutes);
 app.use("/api/products", productRoutes);
-// app.use("/api/sales", salesRoutes);
+
 async function connectDb() {
     // const url =
     //     "mongodb+srv://sandbox:sandboxyyds@cluster0.gre7tst.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
