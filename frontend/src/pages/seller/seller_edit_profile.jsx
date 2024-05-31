@@ -50,7 +50,7 @@ function EditSellerProfile() {
   const [lastName, setLastName] = useState(seller.lastName);
   const [emailAddress, setEmailAddress] = useState(seller.email);
   const [username, setUsername] = useState(seller.username);
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(seller.pfp);
   const [isEdit, setIsEdit] = useState(false);
 
   const textColor = isEdit ? "text-black" : "text-[#777980]";
