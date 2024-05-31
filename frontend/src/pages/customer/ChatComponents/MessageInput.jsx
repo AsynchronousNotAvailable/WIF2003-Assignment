@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {BsSend} from 'react-icons/bs'
-import useSendMessage from "./Hooks/useSendMessage";
-
+import useSendMessage from "../ChatComponents/Hooks/useSendMessage"
 const MessageInput = () => {
 	const [message,setMessage] = useState("");
 	const {sendMessage} = useSendMessage();

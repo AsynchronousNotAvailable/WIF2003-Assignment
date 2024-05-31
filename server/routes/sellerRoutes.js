@@ -7,6 +7,9 @@ router.get("/all", sellerController.getAllSellers); //added by kw
 
 router.get('/:sellerId/customers', sellerController.getAllCustomers);
 
+router.get("/getAll", sellerController.getSellers);
+
+
 router.get("/:username", sellerController.getSellerByUsername);
 
 router.post("/register", sellerController.createSeller);

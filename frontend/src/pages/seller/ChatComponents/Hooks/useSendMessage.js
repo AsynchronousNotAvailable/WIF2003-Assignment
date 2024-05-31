@@ -7,7 +7,7 @@ const useSendMessage = () => {
     const selectedCustomerId = selectedCustomer._id
     const sendMessage = async (message) => {
         const payload = {
-            senderId : userDetails.seller._id,
+            senderId : userDetails._id,
             message : message
         }
         try {

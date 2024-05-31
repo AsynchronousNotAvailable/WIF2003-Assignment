@@ -2,7 +2,7 @@ import React, {useContext, useEffect} from 'react'
 import Message from './Message'
 import useGetMessages from './Hooks/useGetMessages'
 import { GlobalContext } from "../../../context";
-import useListenMessages from '../../../Hooks/useListenMessages';
+import useListenMessages from "../../../hooks/useListenMessages.js";
 const Messages = () => {
     //Call the hook here
     //Save conversation

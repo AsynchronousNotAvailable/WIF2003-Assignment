@@ -17,7 +17,7 @@ import DatePicker from "react-datepicker";
 import useSeller from "../../hooks/useSeller";
 import {Component} from 'react';
 function ProductManagement() {
-    const { seller, setSellerProduct, userDetails } = useContext(GlobalContext);
+    const {setSellerProduct, userDetails } = useContext(GlobalContext);
     console.log(userDetails)
     const navigation = useNavigate();
     const [rendered, setRendered] = useState(false);
@@ -39,7 +39,7 @@ function ProductManagement() {
     useEffect(() => {
       const username = seller.username;
       axios
-        .get(`http://localhost:8080/api/sellers/${username}/products`)
+        .get(`http://localhost:5000/api/sellers/${username}/products`)
         .then((response) => {
           setProductData(response.data);
           console.log(response.data);

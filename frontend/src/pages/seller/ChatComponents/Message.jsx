@@ -5,10 +5,10 @@ const Message = ({ message }) => {
     console.log(message);
     
     const { userDetails, selectedCustomer } = useContext(GlobalContext);
-    const isMe = message.senderId === userDetails.seller._id;
+    const isMe = message.senderId === userDetails._id;
     const chatClass = isMe ? "chat chat-end" : "chat chat-start";
     const chatBubbleBg = isMe ? "bg-gray-400" : "bg-sky-500";
-    const chatBubbleName = isMe ? userDetails.seller.username : selectedCustomer.username
+    const chatBubbleName = isMe ? userDetails.username : selectedCustomer.username
 
     return (
         <div className = {`${chatClass}`}>

@@ -4,7 +4,7 @@ import axios from "axios";
 //Must be a seller atp
 const UseGetConversations = () => {
     const {userDetails, allCustomers, setAllCustomers} = useContext(GlobalContext);
-    const sellerId = userDetails.seller._id
+    const sellerId = userDetails._id
     useEffect(() => {
         const getConversations = async () => {
             try {

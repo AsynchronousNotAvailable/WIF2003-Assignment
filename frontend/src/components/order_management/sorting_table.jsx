@@ -2,8 +2,7 @@ import { useTable, useSortBy, usePagination, useGlobalFilter, useFilters, } from
 import React, { useMemo, useState, useEffect, forwardRef, useImperativeHandle, useContext} from 'react'
 import { GlobalContext } from "../../context";
 import axios  from 'axios';
-import useSeller from "../../hooks/useSeller";
-
+import useSeller from '../../hooks/useSeller';
 
 
 let renderCount = 0

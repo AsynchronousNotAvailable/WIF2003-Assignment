@@ -2,7 +2,7 @@ import React from "react";
 
 
 export default function Seller({ sellerId, name, pfp, navigateToShop }) {
-    console.log(sellerId, name, pfp);
+    // console.log(sellerId, name, pfp);
     return (
         <div
             

@@ -26,7 +26,7 @@ function Customer_Cart() {
         const username = customer.username;
         try {
             const response = await axios.get(
-                `http://localhost:8080/api/customers/${username}/cart`
+                `http://localhost:5000/api/customers/${username}/cart`
             );
             
             const cartItems = response.data.cartItem;
@@ -51,7 +51,7 @@ function Customer_Cart() {
         const username = customer.username;
         try {
             const response = await axios.delete(
-                `http://localhost:8080/api/customers/${username}/deleteFromCart/${cartItemId}`
+                `http://localhost:5000/api/customers/${username}/deleteFromCart/${cartItemId}`
             );
 
             if (response.status === 200) {

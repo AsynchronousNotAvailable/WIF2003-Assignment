@@ -149,7 +149,7 @@ const CreditDebitCard = ({ username }) => {
     const fetchCards = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/customers/${username}/getCard`
+          `http://localhost:5000/api/customers/${username}/getCard`
         );
         setCards(response.data);
       } catch (error) {
@@ -162,7 +162,7 @@ const CreditDebitCard = ({ username }) => {
 
   const handleSaveCard = async (cardDetails) => {
     try {
-      const response = await axios.post(`http://localhost:8080/api/customers/${username}/addCard`, cardDetails);
+      const response = await axios.post(`http://localhost:5000/api/customers/${username}/addCard`, cardDetails);
       console.log('Card added successfully', response.data);
       setModalOpen(false);
       setCards((prevCards) => [...prevCards, cardDetails])
@@ -173,7 +173,7 @@ const CreditDebitCard = ({ username }) => {
 
   const handleDeleteCard = async (cardId) => {
     try {
-      await axios.delete(`http://localhost:8080/api/customers/${username}/${cardId}/removeCard`);
+      await axios.delete(`http://localhost:5000/api/customers/${username}/${cardId}/removeCard`);
       setCards((prevCards) => prevCards.filter(card => card._id !== cardId));
       if (selectedCard === cardId) {
         setSelectedCard('');

@@ -11,8 +11,8 @@ export const SocketContextProvider = ({children}) => {
     const [socket,setSocket] = useState(null);
     const [onlineUsers, setOnlineUsers] = useState([])
     const {userDetails} = useContext(GlobalContext)
-    const userId = userDetails?.seller?._id || userDetails?.customer?._id;
-    console.log(`In SocketContextProvider : ${userDetails}` )
+    // const userId = userDetails?.seller?._id || userDetails?.customer?._id;
+    const userId = userDetails?._id
     useEffect(()=>{
         if(userDetails){
             const socket = io("http://localhost:5000", {

@@ -8,7 +8,7 @@ const useSendMessage = () => {
     const sendMessage = async (message) => {
         try {
             const payload = {
-                senderId : customer._id,
+                senderId : userDetails._id,
                 message : message
             }
             const response = await axios.post(`http://localhost:5000/api/messages/send/${selectedSellerId}`, payload)

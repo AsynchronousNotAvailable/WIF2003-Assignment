@@ -4,7 +4,7 @@ import axios from 'axios'
 
 const useGetMessages = () => {
 const {userDetails,messages,setMessages, selectedCustomer} = useContext(GlobalContext)
-const userId = userDetails.seller._id
+const userId = userDetails._id
 const customerId = selectedCustomer._id
     useEffect(() => {
         const getMessages = async () => {

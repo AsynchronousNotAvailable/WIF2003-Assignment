@@ -12,8 +12,7 @@ import useGetConversations from "./Hooks/useGetConversations";
 function Customer_Chat() {
    //ok i put everything as global, for easier look now cuz it looks messy if some is and some isnt
     const {customer,selectedSeller,userDetails,setSelectedSeller,allSellers,setAllSellers} = useContext(GlobalContext);
-    const customerId = customer._id
-    
+        
      // it works wow
 
     const {conversations} = useGetConversations();
@@ -23,7 +22,7 @@ function Customer_Chat() {
         <>
             <Customer_Navbar />
             <div className=" mt-[70px] relative border-2 ">
-                <div className="flex flex-row h-[91vh] ">
+                <div className="flex flex-row  ">
                
                 <Customer_ConversationList />
 

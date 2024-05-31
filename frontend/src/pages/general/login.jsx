@@ -115,12 +115,12 @@ function Login() {
 
             if (selectedOption === 'Seller') {
                 response = await axios.post(
-                    `http://localhost:8080/api/sellers/login`,
+                    `http://localhost:5000/api/sellers/login`,
                     loginData
                 );
             } else {
                 response = await axios.post(
-                    `http://localhost:8080/api/customers/login`,
+                    `http://localhost:5000/api/customers/login`,
                     loginData
                 );
             }
@@ -131,11 +131,11 @@ function Login() {
                 if (response.data.customer) {
                     console.log("save customer");
                     saveCustomer(response.data.customer);
-
+                    setUserDetails(response.data.customer);
                     navigation("/marketplace");
                 } else {
                     saveSeller(response.data.seller);
-
+                    setUserDetails(response.data.seller);
                     navigation("/product_management");
                 }
             }

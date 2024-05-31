@@ -117,7 +117,7 @@ export default function Checkout() {
                 payment_date: new Date(),
             };
             const response = await axios.put(
-                `http://localhost:8080/api/customers/${username}/checkout`, paymentDetails);
+                `http://localhost:5000/api/customers/${username}/checkout`, paymentDetails);
             console.log(response.data);
         } catch (error) {
             console.log(error);
@@ -132,7 +132,7 @@ export default function Checkout() {
         setCustomer({ ...customer, shippingAddress: updatedAddress });
         setModalOpen(false);
         try {
-            const response = await axios.post(`http://localhost:8080/api/customers/${customer.username}/updateShippingAddress`, updatedAddress);
+            const response = await axios.post(`http://localhost:5000/api/customers/${customer.username}/updateShippingAddress`, updatedAddress);
         } catch (error) {
             console.log(error);
         }

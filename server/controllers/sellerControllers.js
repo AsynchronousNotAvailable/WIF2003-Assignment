@@ -17,6 +17,15 @@ exports.login = async (req, res) => {
 
 }
 
+exports.getSellers = async (req, res) => {
+    try {
+        const sellers = await SellerService.getSellers();
+        res.json({ sellers });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 exports.getAllCustomers = async (req, res) => {
     try {
         const { sellerId } = req.params;

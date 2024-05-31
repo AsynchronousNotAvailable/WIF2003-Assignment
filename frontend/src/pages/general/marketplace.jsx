@@ -17,9 +17,9 @@ import Carousel from "react-multi-carousel";
 import Category from "../../components/marketplace/category";
 import "react-multi-carousel/lib/styles.css";
 import Seller from "../../components/marketplace/seller";
-
 function Marketplace() {
-    const { shopsItemListing, productListing } = useContext(GlobalContext);
+    const { shopsItemListing, productListing, userDetails, customer } = useContext(GlobalContext);
+    console.log(userDetails)
     const [categoryList, setCategoryList] = useState([]);
     const [sellerList, setSellerList] = useState([]);
     const navigation = useNavigate();
@@ -90,7 +90,7 @@ function Marketplace() {
     const fetchProducts = async () => {
         try {
             const response = await axios.get(
-                `http://localhost:8080/api/products/marketplace`
+                `http://localhost:5000/api/products/marketplace`
             );
             const products = response.data;
 
@@ -118,7 +118,7 @@ function Marketplace() {
     const fetchSellers = async () => {
         try {
             const response = await axios.get(
-                "http://localhost:8080/api/sellers/getAll"
+                "http://localhost:5000/api/sellers/getAll"
             );
             const sellers = response.data.sellers;
 
@@ -144,55 +144,7 @@ function Marketplace() {
     const [categoryClicked, setCategoryClicked] = useState("");
 
     const [recommendProduct, setRecommendProduct] = useState([
-        // {
-        //     id: 6,
-        //     name: "Notebook",
-        //     price: 13,
-        //     rating: 4,
-        //     img: "/notebook.png",
-        //     seller: "Koperasi_UM",
-        //     reviews: [],
-        //     variations: ["Brown", "Khaki", "Grey"],
-        // },
-        // {
-        //     id: 0,
-        //     name: "Milo 3 in 1",
-        //     price: 13,
-        //     rating: 4,
-        //     seller: "Koperasi_UM",
-        //     reviews: [],
-        //     variations: ["Original", "Chocolate", "Vanilla"],
-        //     img: "/milothreeproduct.jpg",
-        // },
-        // {
-        //     id: 4,
-        //     name: "Iced Coffee",
-        //     price: 13,
-        //     rating: 2,
-        //     img: "/zero_latte.png",
-        // },
-        // {
-        //     id: 2,
-        //     name: "Horlicks",
-        //     price: 8,
-        //     rating: 3,
-        //     img: "/horlickproduct.jpg",
-        //     seller: "Koperasi_UM",
-        //     reviews: [],
-        //     variations: ["Original", "Chocolate", "Vanilla"],
-        // },
-        // {
-        //     id: 10,
-        //     name: "Man United Jersey",
-        //     price: 13,
-        //     rating: 4,
-        //     img: "/jersey.jpg",
-        //     seller: "Koperasi_UM",
-        //     reviews: [],
-        //     variations: ["Black", "Red", "White"],
-        //     category: "Men's Fashion",
-        //     description: "This is A Jersey",
-        // },
+   
     ]);
     const [userSearchInput, setUserSearchInput] = useState("");
     const [displayedProducts, setDisplayedProducts] = useState([]);

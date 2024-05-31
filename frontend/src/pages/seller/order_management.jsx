@@ -32,9 +32,9 @@ function OrderManagement(){
     const getInitialData = async () => {
       const username = seller.username;
       try{
-        console.log(`http://localhost:8080/api/sellers/${username}/orders`);
+        console.log(`http://localhost:5000/api/sellers/${username}/orders`);
         const response = await axios
-        .get(`http://localhost:8080/api/sellers/${username}/orders`);
+        .get(`http://localhost:5000/api/sellers/${username}/orders`);
 
         await Promise.all(response.data.map(async (orders) => {
             const name = await getProductNameById(username, orders.product);
@@ -53,9 +53,9 @@ function OrderManagement(){
 
 
     async function getProductNameById(username, id) {
-        console.log(`http://localhost:8080/api/sellers/${username}/products/${id}`);
+        console.log(`http://localhost:5000/api/sellers/${username}/products/${id}`);
       const response = await axios.get(
-        `http://localhost:8080/api/sellers/${username}/products/${id}`
+        `http://localhost:5000/api/sellers/${username}/products/${id}`
       );
 
       return response.data.name;

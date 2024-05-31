@@ -25,7 +25,7 @@ function Product() {
         try {
             const productId = product._id;
             const response = await axios.get(
-                `http://localhost:8080/api/products/review/${productId}`
+                `http://localhost:5000/api/products/review/${productId}`
             );
             let temp = [];
             const fetchedReviews = response.data;
@@ -61,7 +61,7 @@ function Product() {
             const customer = getCustomer();
             const username = customer.username;
             const response = await axios.post(
-                `http://localhost:8080/api/customers/${username}/addToCart`,
+                `http://localhost:5000/api/customers/${username}/addToCart`,
                 newItem
             );
             console.log(response.data);

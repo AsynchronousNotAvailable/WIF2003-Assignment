@@ -112,7 +112,7 @@ function AddProduct() {
     const username = seller.username; 
     try{
       axios.post(
-        `http://localhost:8080/api/sellers/${username}/product/new`,
+        `http://localhost:5000/api/sellers/${username}/product/new`,
          productObj
     ).then((_) => {
         window.alert("Product added successfully");

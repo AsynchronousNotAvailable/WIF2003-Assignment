@@ -4,8 +4,9 @@ import axios from "axios";
 
 //Universal hook for both customers and sellers
 const useGetConversations =  () => {
-    const {customer, userDetails} = useContext(GlobalContext);
-    const customerId = customer._id
+    const { userDetails} = useContext(GlobalContext);
+    console.log("From UseGetConversations, userDetails._id below")
+    const customerId = userDetails._id;
     const [conversations, setAllConversations] = useState([]);
     useEffect(() => {    
     const getAllConversations = async () => {

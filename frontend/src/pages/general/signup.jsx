@@ -110,6 +110,7 @@ function SignUp() {
             }
             else if (selectedOption === 'Seller') {
                 signUpSeller(userDetails);
+
             }
             
             
@@ -119,7 +120,7 @@ function SignUp() {
     const signUpCustomer = async (userDetails) => {
         try {
             const response = await axios.post(
-                `http://localhost:8080/api/customers/register`,
+                `http://localhost:5000/api/customers/register`,
                 userDetails
             );
             console.log(response);
@@ -137,7 +138,7 @@ function SignUp() {
     const signUpSeller = async (userDetails) => {
         try {
             const response = await axios.post(
-                `http://localhost:8080/api/sellers/register`,
+                `http://localhost:5000/api/sellers/register`,
                 userDetails
             );
             console.log(response);

@@ -28,7 +28,7 @@ const ProductListing = () => {
     const fetchProducts = async (categoryClicked) => {
         try {
             const response = await axios.get(
-                `http://localhost:8080/api/products/marketplace`
+                `http://localhost:5000/api/products/marketplace`
             );
             const products = response.data;
             console.log(products);
