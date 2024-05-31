@@ -18,8 +18,9 @@ import Category from "../../components/marketplace/category";
 import "react-multi-carousel/lib/styles.css";
 import Seller from "../../components/marketplace/seller";
 function Marketplace() {
-    const { shopsItemListing, productListing, userDetails, customer } = useContext(GlobalContext);
-    console.log(userDetails)
+    const { shopsItemListing, productListing, userDetails, customer } =
+        useContext(GlobalContext);
+    console.log(userDetails);
     const [categoryList, setCategoryList] = useState([]);
     const [sellerList, setSellerList] = useState([]);
     const navigation = useNavigate();
@@ -90,7 +91,7 @@ function Marketplace() {
     const fetchProducts = async () => {
         try {
             const response = await axios.get(
-                `http://localhost:5000/api/products/marketplace`
+                `http://localhost:1234/api/products/marketplace`
             );
             const products = response.data;
 
@@ -118,7 +119,7 @@ function Marketplace() {
     const fetchSellers = async () => {
         try {
             const response = await axios.get(
-                "http://localhost:5000/api/sellers/getAll"
+                "http://localhost:1234/api/sellers/getAll"
             );
             const sellers = response.data.sellers;
 
@@ -143,9 +144,7 @@ function Marketplace() {
 
     const [categoryClicked, setCategoryClicked] = useState("");
 
-    const [recommendProduct, setRecommendProduct] = useState([
-   
-    ]);
+    const [recommendProduct, setRecommendProduct] = useState([]);
     const [userSearchInput, setUserSearchInput] = useState("");
     const [displayedProducts, setDisplayedProducts] = useState([]);
 

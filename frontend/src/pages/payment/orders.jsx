@@ -100,7 +100,7 @@ export default function Orders() {
         //change port number
         try {
             const response = await axios.get(
-                `http://localhost:5000/api/customers/${username}/orderHistory`
+                `http://localhost:1234/api/customers/${username}/orderHistory`
             );
 
             const products = response.data;
@@ -114,7 +114,7 @@ export default function Orders() {
         try {
             const username = customer.username;
             const response = await axios.post(
-                `http://localhost:5000/api/customers/${username}/${productReview._id}/addReview`,
+                `http://localhost:1234/api/customers/${username}/${productReview._id}/addReview`,
                 reviewDetails
             );
             if (response.status === 200) {
@@ -173,7 +173,7 @@ export default function Orders() {
             const username = customer.username;
             const receivalDetails = { time_received: new Date() };
             const response = await axios.put(
-                `http://localhost:5000/api/customers/${username}/${orderId}/orderReceived`,
+                `http://localhost:1234/api/customers/${username}/${orderId}/orderReceived`,
                 receivalDetails
             );
             console.log(response.data);

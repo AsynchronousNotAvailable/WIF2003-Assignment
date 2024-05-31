@@ -14,7 +14,7 @@ function Shop() {
     const fetchProducts = async (sellerId) => {
         try {
             const response = await axios.get(
-                `http://localhost:5000/api/products/marketplace`
+                `http://localhost:1234/api/products/marketplace`
             );
             const products = response.data;
 

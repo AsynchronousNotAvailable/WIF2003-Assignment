@@ -113,14 +113,14 @@ function Login() {
 
             let response;
 
-            if (selectedOption === 'Seller') {
+            if (selectedOption === "Seller") {
                 response = await axios.post(
-                    `http://localhost:5000/api/sellers/login`,
+                    `http://localhost:1234/api/sellers/login`,
                     loginData
                 );
             } else {
                 response = await axios.post(
-                    `http://localhost:5000/api/customers/login`,
+                    `http://localhost:1234/api/customers/login`,
                     loginData
                 );
             }
@@ -195,7 +195,6 @@ function Login() {
             margin-right: 0;
         }
     `;
-
 
     const CustomDropdown = ({ title, value, setValue, options, size }) => {
         const handleChange = (e) => {

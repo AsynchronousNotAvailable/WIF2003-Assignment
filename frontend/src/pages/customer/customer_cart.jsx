@@ -26,9 +26,9 @@ function Customer_Cart() {
         const username = customer.username;
         try {
             const response = await axios.get(
-                `http://localhost:5000/api/customers/${username}/cart`
+                `http://localhost:1234/api/customers/${username}/cart`
             );
-            
+
             const cartItems = response.data.cartItem;
             setCartItems(cartItems);
             const updatedDict = {};
@@ -51,7 +51,7 @@ function Customer_Cart() {
         const username = customer.username;
         try {
             const response = await axios.delete(
-                `http://localhost:5000/api/customers/${username}/deleteFromCart/${cartItemId}`
+                `http://localhost:1234/api/customers/${username}/deleteFromCart/${cartItemId}`
             );
 
             if (response.status === 200) {

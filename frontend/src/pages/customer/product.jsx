@@ -9,8 +9,7 @@ import useCustomer from "../../hooks/useCustomer";
 import axios from "axios";
 
 function Product() {
-    const { cartItems, setCartItems } =
-        useContext(GlobalContext);
+    const { cartItems, setCartItems } = useContext(GlobalContext);
     const navigation = useNavigate();
     const location = useLocation();
     const [product, setProduct] = useState(location.state.product);
@@ -25,11 +24,11 @@ function Product() {
         try {
             const productId = product._id;
             const response = await axios.get(
-                `http://localhost:5000/api/products/review/${productId}`
+                `http://localhost:1234/api/products/review/${productId}`
             );
             let temp = [];
             const fetchedReviews = response.data;
-            console.log(fetchedReviews)
+            console.log(fetchedReviews);
             fetchedReviews.map((review) => {
                 const processedReview = {
                     title: review.title,
@@ -39,18 +38,17 @@ function Product() {
                         customer.username === review.customer.username
                             ? "You"
                             : review.customer.username,
-                    customerPfp: review.customer.pfp
+                    customerPfp: review.customer.pfp,
                 };
                 temp.push(processedReview);
             });
-            
+
             setReviews(temp);
         } catch (error) {
             console.log(error);
         }
     };
     const addToCart = async () => {
-
         const newItem = {
             productId: product._id,
             quantity: quantity,
@@ -61,7 +59,7 @@ function Product() {
             const customer = getCustomer();
             const username = customer.username;
             const response = await axios.post(
-                `http://localhost:5000/api/customers/${username}/addToCart`,
+                `http://localhost:1234/api/customers/${username}/addToCart`,
                 newItem
             );
             console.log(response.data);
@@ -81,7 +79,7 @@ function Product() {
         };
         setCartItems((prev) => [...prev, cartItem]);
         console.log(cartItem);
-        navigation("/customer/checkout", {state: {cartItems}});
+        navigation("/customer/checkout", { state: { cartItems } });
     };
 
     const minusQuantity = () => {
@@ -232,15 +230,11 @@ function Product() {
                     <div className="font-sans text-2xl font-bold tracking-wide mt-[50px]">
                         Reviews
                     </div>
-                    <Product_Review
-                        
-                        reviews={reviews}
-                    />
+                    <Product_Review reviews={reviews} />
                 </div>
             </div>
         </>
     );
 }
-
 
 export default Product;

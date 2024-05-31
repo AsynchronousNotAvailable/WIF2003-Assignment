@@ -117,7 +117,9 @@ export default function Checkout() {
                 payment_date: new Date(),
             };
             const response = await axios.put(
-                `http://localhost:5000/api/customers/${username}/checkout`, paymentDetails);
+                `http://localhost:1234/api/customers/${username}/checkout`,
+                paymentDetails
+            );
             console.log(response.data);
         } catch (error) {
             console.log(error);
@@ -132,7 +134,10 @@ export default function Checkout() {
         setCustomer({ ...customer, shippingAddress: updatedAddress });
         setModalOpen(false);
         try {
-            const response = await axios.post(`http://localhost:5000/api/customers/${customer.username}/updateShippingAddress`, updatedAddress);
+            const response = await axios.post(
+                `http://localhost:1234/api/customers/${customer.username}/updateShippingAddress`,
+                updatedAddress
+            );
         } catch (error) {
             console.log(error);
         }
@@ -238,7 +243,18 @@ export default function Checkout() {
                         EDIT
                     </p>
                 </div>
-                <Text style={{ marginRight: "auto" }}> <Bold>{customer.shippingAddress.receiverName} {customer.shippingAddress.receiverPhoneNumber}</Bold> {customer.shippingAddress.street} {customer.shippingAddress.zipCode} {customer.shippingAddress.city} {customer.shippingAddress.state} {customer.shippingAddress.country} </Text>  
+                <Text style={{ marginRight: "auto" }}>
+                    {" "}
+                    <Bold>
+                        {customer.shippingAddress.receiverName}{" "}
+                        {customer.shippingAddress.receiverPhoneNumber}
+                    </Bold>{" "}
+                    {customer.shippingAddress.street}{" "}
+                    {customer.shippingAddress.zipCode}{" "}
+                    {customer.shippingAddress.city}{" "}
+                    {customer.shippingAddress.state}{" "}
+                    {customer.shippingAddress.country}{" "}
+                </Text>
                 <EditAddressModal
                     isOpen={modalOpen}
                     shippingAddress={customer.shippingAddress}

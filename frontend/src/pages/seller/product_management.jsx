@@ -4,30 +4,30 @@ import Seller_NavSidebar from "../../components/seller_sidebar";
 import SortingTable from "../../components/order_management/sorting_table";
 import { useContext } from "react";
 import { GlobalContext } from "../../context";
-import download_icon_blue from "../../assets/download_icon_blue.png"
-import calendar_icon from "../../assets/calendar_icon.png"
-import filter_icon from "../../assets/filter_icon.png"
+import download_icon_blue from "../../assets/download_icon_blue.png";
+import calendar_icon from "../../assets/calendar_icon.png";
+import filter_icon from "../../assets/filter_icon.png";
 import axios from "axios";
-import add_icon from "../../assets/add_icon_white.png"
+import add_icon from "../../assets/add_icon_white.png";
 import { GlobalFilter } from "../../components/order_management/global_filter";
 import { format, setDate } from "date-fns";
 import TableDatePicker from "../../components/order_management/tableDatePicker";
 import ExportCsv from "../../components/order_management/export_csv";
 import DatePicker from "react-datepicker";
 import useSeller from "../../hooks/useSeller";
-import {Component} from 'react';
+import { Component } from "react";
 function ProductManagement() {
-    const {setSellerProduct, userDetails } = useContext(GlobalContext);
-    console.log(userDetails)
+    const { setSellerProduct, userDetails } = useContext(GlobalContext);
+    console.log(userDetails);
     const navigation = useNavigate();
     const [rendered, setRendered] = useState(false);
     const [dateFilter, setDateFilter] = useState({
         startDate: null,
         endDate: null,
     });
-    const [startDate, setStartDate] = useState(null)
-    const [endDate, setEndDate] = useState(null)
-    const [productData, setProductData] = useState(null); 
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+    const [productData, setProductData] = useState(null);
     const sortingTableRef = useRef();
     const { getSeller } = useSeller();
     const [seller, setSeller] = useState(getSeller());
@@ -37,22 +37,18 @@ function ProductManagement() {
     }, [sortingTableRef]);
 
     useEffect(() => {
-      const username = seller.username;
-      axios
-        .get(`http://localhost:5000/api/sellers/${username}/products`)
-        .then((response) => {
-          setProductData(response.data);
-          console.log(response.data);
-        });
+        const username = seller.username;
+        axios
+            .get(`http://localhost:1234/api/sellers/${username}/products`)
+            .then((response) => {
+                setProductData(response.data);
+                console.log(response.data);
+            });
     }, []);
-
-
-    
 
     // useEffect(() => {
     //     console.log('FROM PRODUCT MANAGEMENT', seller);
     // }, []);
-   
 
     const deleteSellerProduct = (index) => {
         const updatedData = sellerProduct.filter((_, i) => i !== index);
@@ -86,87 +82,97 @@ function ProductManagement() {
         console.log(dateFilter);
     }
 
-
     function onAddEditProductClick(isAdd, product) {
-        navigation("/add_product_page", {state: {isAdd: isAdd, product: product}});
+        navigation("/add_product_page", {
+            state: { isAdd: isAdd, product: product },
+        });
     }
 
-
     const PRODUCT_COLUMNS = [
-      {
-        Header: "Product",
-        Footer: "Product",
-        accessor: "name",
-      },
-      {
-        Header: "Category",
-        Footer: "Category",
-        accessor: "category",
-      },
-      {
-        Header: "Stock",
-        Footer: "Stock",
-        accessor: "quantity",
-      },
-      {
-        Header: "Price",
-        Footer: "Price",
-        accessor: "pricePerUnit",
-      },
-      {
-        Header: "Variation",
-        Footer: "Variation",
-        accessor: "variation",
-        Cell: ({ value }) => {
-          return <p className="w-60">{value.join(", ")}</p>;
+        {
+            Header: "Product",
+            Footer: "Product",
+            accessor: "name",
         },
-      },
-      // {
-      //     Header: 'Status',
-      //     Footer: 'Status',
-      //     accessor: 'Status',
-      // },
-      {
-          Header: 'Created Date',
-          Footer: 'Created Date',
-          accessor: 'createdDateTime',
-          Cell: ({ value }) => { return format(new Date(value), 'dd/MM/yyyy') },
-      },
-      {
-        Header: "Action",
-        Footer: "Action",
-        Cell: ({ cell }) => {
-          return (
-            <div className="flex">
-              {/* <button className='mx-2' onClick={() => alert('hi')}>
+        {
+            Header: "Category",
+            Footer: "Category",
+            accessor: "category",
+        },
+        {
+            Header: "Stock",
+            Footer: "Stock",
+            accessor: "quantity",
+        },
+        {
+            Header: "Price",
+            Footer: "Price",
+            accessor: "pricePerUnit",
+        },
+        {
+            Header: "Variation",
+            Footer: "Variation",
+            accessor: "variation",
+            Cell: ({ value }) => {
+                return <p className="w-60">{value.join(", ")}</p>;
+            },
+        },
+        // {
+        //     Header: 'Status',
+        //     Footer: 'Status',
+        //     accessor: 'Status',
+        // },
+        {
+            Header: "Created Date",
+            Footer: "Created Date",
+            accessor: "createdDateTime",
+            Cell: ({ value }) => {
+                return format(new Date(value), "dd/MM/yyyy");
+            },
+        },
+        {
+            Header: "Action",
+            Footer: "Action",
+            Cell: ({ cell }) => {
+                return (
+                    <div className="flex">
+                        {/* <button className='mx-2' onClick={() => alert('hi')}>
                             Edit
                         </button>
                         <button className='mx-2' onClick={() => alert('hi')}>
                             Hide
                         </button> */}
-              <button
-                className="mx-2 mr-0"
-                onClick={() =>{
-                    if(window.confirm("Are you sure you want to delete the product?")){
-                        sortingTableRef.current.handleDeleteData(productData[cell.row.index]._id)
-                    }
-                }
-                }
-              >
-                Delete
-              </button>
-              <button
-                className="mx-2 mr-0"
-                onClick={() =>
-                  {onAddEditProductClick(false, productData[cell.row.index]);}
-                }
-              >
-                Edit
-              </button>
-            </div>
-          );
+                        <button
+                            className="mx-2 mr-0"
+                            onClick={() => {
+                                if (
+                                    window.confirm(
+                                        "Are you sure you want to delete the product?"
+                                    )
+                                ) {
+                                    sortingTableRef.current.handleDeleteData(
+                                        productData[cell.row.index]._id
+                                    );
+                                }
+                            }}
+                        >
+                            Delete
+                        </button>
+                        <button
+                            className="mx-2 mr-0"
+                            onClick={() => {
+                                onAddEditProductClick(
+                                    false,
+                                    productData[cell.row.index]
+                                );
+                            }}
+                        >
+                            Edit
+                        </button>
+                    </div>
+                );
+            },
         },
-      },
     ];
 
     return (
@@ -180,10 +186,14 @@ function ProductManagement() {
                 </div>
                 <div className="flex ms-5 me-2 mb-2">
                     <div className="flex-1 mr-3">
-                        {rendered &&
-                            <GlobalFilter filter={sortingTableRef.current?.globalFilter} setFilter={sortingTableRef.current?.setGlobalFilter} />
-                        }
-
+                        {rendered && (
+                            <GlobalFilter
+                                filter={sortingTableRef.current?.globalFilter}
+                                setFilter={
+                                    sortingTableRef.current?.setGlobalFilter
+                                }
+                            />
+                        )}
                     </div>
 
                     <ExportCsv
@@ -193,7 +203,9 @@ function ProductManagement() {
 
                     <button
                         className="flex-initial w-36 bg-[#7450DF] rounded-lg h-10"
-                        onClick={() => {onAddEditProductClick(true, null)}}
+                        onClick={() => {
+                            onAddEditProductClick(true, null);
+                        }}
                     >
                         <span className="text-white flex ml-4">
                             <img src={add_icon}></img>
@@ -243,7 +255,15 @@ function ProductManagement() {
                     </div>
                 </div>
                 <div className="flex ms-5 me-2 my-2">
-                    {productData && <SortingTable ref={sortingTableRef} columns={PRODUCT_COLUMNS} data={productData} deleteSellerProduct={deleteSellerProduct} dateFilter={dateFilter} />}
+                    {productData && (
+                        <SortingTable
+                            ref={sortingTableRef}
+                            columns={PRODUCT_COLUMNS}
+                            data={productData}
+                            deleteSellerProduct={deleteSellerProduct}
+                            dateFilter={dateFilter}
+                        />
+                    )}
                 </div>
             </div>
         </>

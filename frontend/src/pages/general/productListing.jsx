@@ -28,7 +28,7 @@ const ProductListing = () => {
     const fetchProducts = async (categoryClicked) => {
         try {
             const response = await axios.get(
-                `http://localhost:5000/api/products/marketplace`
+                `http://localhost:1234/api/products/marketplace`
             );
             const products = response.data;
             console.log(products);
@@ -42,9 +42,8 @@ const ProductListing = () => {
 
     const navigation = useNavigate();
     const handleClick = (product) => {
-        
         console.log(product + " Clicked ");
-        navigation(`/customer/product/${product._id}`, { state: {product}  });
+        navigation(`/customer/product/${product._id}`, { state: { product } });
     };
 
     const [chosenSortType, setSortType] = useState("");
@@ -79,8 +78,6 @@ const ProductListing = () => {
 
             setSortedProductsArr(sortedProducts);
         }
-
-        
 
         if (sortedProductsArr.length > 0) {
             console.log(sortedProductsArr);
@@ -120,12 +117,9 @@ const ProductListing = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-10">
                     {sortedProductsArr.length > 0 &&
                         sortedProductsArr.map((product) => (
-                            <section
-                                
-                                onClick={() => handleClick(product)}
-                            >
+                            <section onClick={() => handleClick(product)}>
                                 <img
-                                    style={{objectFit: "contain"}}
+                                    style={{ objectFit: "contain" }}
                                     src={product.image}
                                     className="w-[280px] h-[320px] object-cover"
                                 />
@@ -143,7 +137,6 @@ const ProductListing = () => {
                                 </p>
                             </section>
                         ))}
-                    
                 </div>
             </main>
         </div>

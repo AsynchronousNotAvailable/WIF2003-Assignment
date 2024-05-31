@@ -6,26 +6,23 @@ const productRoutes = require("./routes/productRoutes");
 const salesRoutes = require("./routes/salesRoutes");
 
 const messageRoutes = require("./routes/messageRoutes");
-const { app,server }  = require("./socket");
+const { app, server } = require("./socket");
 const cors = require("cors");
 
 //change port number
-const PORT = 5000;
+const PORT = 1234;
 
 //so can parse json request body
 app.use(express.json({ limit: "2mb" }));
 app.use(express.urlencoded({ limit: "2mb" }));
 
-
 app.use(cors());
-
 
 app.use("/api/customers", customerRoutes);
 app.use("/api/sellers", sellerRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/sales", salesRoutes);
-
 
 connectDb()
     .then(() => {
@@ -36,8 +33,6 @@ connectDb()
     .catch((err) => {
         console.error("Error connecting to database:", err);
     });
-
-
 
 // app.use("/api/sales", salesRoutes);
 async function connectDb() {
