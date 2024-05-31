@@ -275,3 +275,27 @@ exports.getProductById = async (username, productId) => {
 
     return product;
 };
+
+exports.updateProfile = async (username, profileData) => {
+  const seller = await SellerModel.findOne({ username: username });
+
+  if (!seller) {
+    throw new Error("Seller Not Found");
+  }
+
+  const updateSeller = await SellerModel.findByIdAndUpdate(
+    seller._id,
+    {
+      $set: {
+        ...profileData,
+      },
+    },
+    { new: true }
+  );
+
+  if (!updateSeller) {
+    throw new Error("Failed To Update Seller Profile");
+  }
+
+  return updateSeller;
+};

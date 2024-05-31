@@ -20,6 +20,7 @@ import Orders from "../pages/payment/orders";
 import OrderManagement from "../pages/seller/order_management";
 import ProductManagement from "../pages/seller/product_management";
 import AddProduct from "../pages/seller/add_product";
+import EditSellerProfile from "../pages/seller/seller_edit_profile";
 
 function AppNav() {
     return (
@@ -63,6 +64,10 @@ function AppNav() {
                     <Route
                         path="/product_management"
                         element={<ProductManagement />}
+                    />
+                    <Route
+                        path="/seller/profile"
+                        element={<EditSellerProfile />}
                     />
                     <Route path="/add_product_page" element={<AddProduct />} />
                 </Routes>
