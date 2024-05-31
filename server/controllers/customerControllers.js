@@ -1,6 +1,7 @@
 // controllers/customerController.js
 
 const CustomerService = require("../services/customerService");
+const OrderModel = require("../models/order");
 const mongoose = require("mongoose");
 
 exports.login = async (req, res) => {
@@ -8,7 +9,7 @@ exports.login = async (req, res) => {
     try {
         const loginData = req.body;
         const customer = await CustomerService.login(loginData);
-        res.json({ message: "Login Successful", customer: customer });
+        res.json({ customer, role : "customer"});
     } catch (error) {
         if (error.message === "Customer Not Found") {
             res.status(404).json({ error: error.message });
@@ -17,6 +18,62 @@ exports.login = async (req, res) => {
         }
     }
 };
+
+exports.getAllSellers = async (req, res) => {
+    try {
+        const { customerId } = req.params;
+        const sellers = await CustomerService.getAllSellers(customerId);
+        return res.status(200).json(sellers);
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
+
+exports.getAllCustomers = async (req, res) => {
+    try{
+        const customers = await CustomerService.getAllCustomers();
+        return res.status(200).json(customers); //if (customers), sends an array of customers object, if ({customers}), sends an object with a customer
+        //property, containing arrays of customers object
+        /*
+        ({customers}) = 
+        {
+    "customers": [
+        {
+            "_id": "66349b98cf490c204299bdaf",
+            "username": "Xopher",
+            "orders": [
+                "6634b50a46a975b16fbdc9c1",
+                "6634b50b46a975b16fbdc9c5",
+                "66421b3c8494b32b8868208a",
+                "66421b3c8494b32b8868208e"
+            ],
+            "__v": 12
+        }
+    ]
+}
+
+    (customers) = 
+[
+    {
+        "_id": "66349b98cf490c204299bdaf",
+        "username": "Xopher",
+        "orders": [
+            "6634b50a46a975b16fbdc9c1",
+            "6634b50b46a975b16fbdc9c5",
+            "66421b3c8494b32b8868208a",
+            "66421b3c8494b32b8868208e"
+        ],
+        "__v": 12
+    }
+]
+
+        */
+    }
+    catch(error){
+        return res.status(500).json({error: error.message})
+    }
+}
+
 
 exports.getCustomerByUsername = async (req, res) => {
     try {
@@ -64,6 +121,8 @@ exports.createCustomer = async (req, res) => {
 
     
 };
+
+
 
 //get cart
 

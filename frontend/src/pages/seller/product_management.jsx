@@ -17,7 +17,8 @@ import DatePicker from "react-datepicker";
 import useSeller from "../../hooks/useSeller";
 import {Component} from 'react';
 function ProductManagement() {
-    const { setSellerProduct } = useContext(GlobalContext);
+    const { seller, setSellerProduct, userDetails } = useContext(GlobalContext);
+    console.log(userDetails)
     const navigation = useNavigate();
     const [rendered, setRendered] = useState(false);
     const [dateFilter, setDateFilter] = useState({

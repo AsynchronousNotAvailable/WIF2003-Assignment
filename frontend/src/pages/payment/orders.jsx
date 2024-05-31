@@ -97,9 +97,10 @@ export default function Orders() {
 
     const fetchData = async () => {
         const username = customer.username;
+        //change port number
         try {
             const response = await axios.get(
-                `http://localhost:8080/api/customers/${username}/orderHistory`
+                `http://localhost:5000/api/customers/${username}/orderHistory`
             );
 
             const products = response.data;

@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 const customerController = require('../controllers/customerControllers');
 
+router.get('/all', customerController.getAllCustomers); //added by kw
+
+router.get('/:customerId/sellers', customerController.getAllSellers);
+
 router.post('/:login', customerController.login);
 
 router.get('/:username', customerController.getCustomerByUsername);

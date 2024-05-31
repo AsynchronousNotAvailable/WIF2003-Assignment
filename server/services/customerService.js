@@ -22,6 +22,18 @@ async function checkCustomerByUsername(username) {
     return customer;
 }
 
+exports.getAllSellers = async (customerId) => {
+    const orders = await OrderModel.find({ customerId }).populate('sellerId');
+
+    if (!orders || orders.length === 0) {
+        throw new Error('No orders found for the specified customer');
+    }
+
+    const sellers = [...new Set(orders.map(order => order.sellerId))];
+
+    return sellers;
+};
+
 exports.login = async (loginData) => {
     const { emailAddress, password } = loginData;
     const customer = await CustomerModel.findOne({ email: emailAddress });
@@ -33,6 +45,19 @@ exports.login = async (loginData) => {
     }
 
     return customer;
+};
+
+exports.getAllCustomers = async () => {
+    try {
+        const customers = await CustomerModel.find().select("-password -cards -cart -email");
+        if (customers.length === 0) {
+            throw new Error("There are no customers in the database");
+        }
+        return customers;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
 };
 
 exports.getCustomerById = async (customerId) => {
