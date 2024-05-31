@@ -195,3 +195,19 @@ exports.getProductById = async (req, res) => {
     }
   }
 };
+
+exports.editProfile = async (req, res) => {
+  try {
+    const username = req.params.username;
+    const profile = req.body;
+
+    const updatedProfile = await SellerService.updateProfile(username, profile);
+    res.status(200).json(updatedProfile);
+  } catch (error) {
+    if (error.message === "Seller Not Found") {
+      res.status(400).json({ error: error.message });
+    } else {
+      res.status(500).json({ error: error.message });
+    }
+  }
+}

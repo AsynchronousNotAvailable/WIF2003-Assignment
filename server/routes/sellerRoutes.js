@@ -21,4 +21,6 @@ router.get("/:username/products", sellerController.getProducts);
 
 router.get("/:username/products/:productId", sellerController.getProductById); 
 
+router.put("/:username/editProfile", sellerController.editProfile);
+
 module.exports = router;
