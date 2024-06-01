@@ -94,16 +94,12 @@ export default function Checkout() {
         setSelectedPaymentMethod(method);
     };
 
-    const handlePlaceOrder = () => {
+    const handlePlaceOrder = async () => {
         if (selectedPaymentMethod === null) {
             alert("Please select a payment method to proceed.");
-        } else {
-            // addOrders(
-            //     cartItems,
-            //     orderTotal + 5,
-            //     selectedPaymentMethod,
-            //     shippingAddress
-            // );
+        }
+        else {
+            // addOrders(cartItems, orderTotal+5, selectedPaymentMethod, customer.shippingAddress);
             placeOrder();
             navigation("/customer/orders");
         }

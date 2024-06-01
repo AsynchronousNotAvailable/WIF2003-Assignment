@@ -334,6 +334,8 @@ exports.checkout = async (username, payment_method, payment_date) => {
 
     const cart = await CartModel.findById({ _id: customer.cart });
 
+    console.log(cart);
+
     if (!cart) {
         throw new Error("Cart Not Found");
     }
@@ -396,8 +398,8 @@ exports.checkout = async (username, payment_method, payment_date) => {
         await newOrder.save();
     }
 
-    // console.log("LIST");
-    // console.log(orderList, sellerList, totalTransactionPrice);
+    console.log("LIST");
+    console.log(orderList, sellerList, totalTransactionPrice);
     if (
         orderList.length === 0 ||
         sellerList.length === 0 ||
