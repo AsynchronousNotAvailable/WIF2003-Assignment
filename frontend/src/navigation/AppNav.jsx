@@ -21,6 +21,7 @@ import OrderManagement from "../pages/seller/order_management";
 import ProductManagement from "../pages/seller/product_management";
 import AddProduct from "../pages/seller/add_product";
 import EditSellerProfile from "../pages/seller/seller_edit_profile";
+import WishlistPage from "../pages/customer/WishlistComponent/WishlistPage";
 
 function AppNav() {
     return (
@@ -49,6 +50,7 @@ function AppNav() {
                         path="/customer/analysis"
                         element={<CustomerAnalysis />}
                     />
+                    <Route path = "/customer/wishlist" element = {<WishlistPage />} />
                     <Route path="/customer_chat" element={<Customer_Chat />} /> 
                     <Route path="/seller" element={<Seller_Home />} />
                     <Route

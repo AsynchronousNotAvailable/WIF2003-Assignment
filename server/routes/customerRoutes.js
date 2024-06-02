@@ -2,9 +2,17 @@ const express = require('express');
 const router = express.Router();
 const customerController = require('../controllers/customerControllers');
 
+
+
 router.get('/all', customerController.getAllCustomers); //added by kw
 
 router.get('/:customerId/sellers', customerController.getAllSellers);
+
+router.post('/wishlist/add', customerController.addToWishlist);
+
+router.delete('/wishlist/delete/:userId/:productId', customerController.deleteProductFromWishlist);
+
+router.get('/wishlist/get/:userId', customerController.getWishlist);
 
 router.post('/:login', customerController.login);
 

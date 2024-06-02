@@ -23,6 +23,7 @@ import Seller_NavSidebar from '../../components/seller_sidebar';
 
 
 const App = () => {
+    const navigate = useNavigate();
  
       const orderStatusSummary = [
         { label: 'Received', value: 900, color : "#17BF6B" },
@@ -164,12 +165,16 @@ const months = ['Jan', 'Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','N
                 </section>
 
                 <section className = "flex flex-row  justify- h-[200px] items-center gap-10 justify-between ">
-                    <section className = "flex flex-col w-1/4  shadow-[0_3px_10px_rgb(0,0,0,0.2)]  rounded-xl h-full justify-center items-center ">
-                        <img src = "/deliveryIcon.png" style = {{width : '80px'}}/>
+                    <section className = "flex flex-col w-1/4  shadow-[0_3px_10px_rgb(0,0,0,0.2)]  rounded-xl h-full justify-center items-center"
+                    onClick = {() => navigate('/customer/orders')}
+                    >
+                        <img src = "/deliveryIcon.png" style = {{width : '80px'}} className='cursor-pointer'/>
                         <p className = "font-sans font-semibold mt-[20px]">Order Status</p> </section>
 
-                    <section className = "flex flex-col w-1/4 shadow-[0_3px_10px_rgb(0,0,0,0.2)]  rounded-xl h-full justify-center items-center">
-                        <img src = "/OrderIcon.png" style = {{width : '50px'}}/>
+                    <section className = "flex flex-col w-1/4 shadow-[0_3px_10px_rgb(0,0,0,0.2)]  rounded-xl h-full justify-center items-center"
+                    onClick = {() => navigate ('/customer/wishlist')}
+                    >
+                        <img src = "/OrderIcon.png" style = {{width : '50px'}} className = "cursor-pointer"/>
                         <p className = "font-sans font-semibold mt-[20px]">Wishlist </p>
                     </section>
 

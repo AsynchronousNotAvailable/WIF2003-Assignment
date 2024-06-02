@@ -32,49 +32,42 @@ exports.getAllSellers = async (req, res) => {
 exports.getAllCustomers = async (req, res) => {
     try{
         const customers = await CustomerService.getAllCustomers();
-        return res.status(200).json(customers); //if (customers), sends an array of customers object, if ({customers}), sends an object with a customer
-        //property, containing arrays of customers object
-        /*
-        ({customers}) = 
-        {
-    "customers": [
-        {
-            "_id": "66349b98cf490c204299bdaf",
-            "username": "Xopher",
-            "orders": [
-                "6634b50a46a975b16fbdc9c1",
-                "6634b50b46a975b16fbdc9c5",
-                "66421b3c8494b32b8868208a",
-                "66421b3c8494b32b8868208e"
-            ],
-            "__v": 12
-        }
-    ]
-}
-
-    (customers) = 
-[
-    {
-        "_id": "66349b98cf490c204299bdaf",
-        "username": "Xopher",
-        "orders": [
-            "6634b50a46a975b16fbdc9c1",
-            "6634b50b46a975b16fbdc9c5",
-            "66421b3c8494b32b8868208a",
-            "66421b3c8494b32b8868208e"
-        ],
-        "__v": 12
-    }
-]
-
-        */
+        return res.status(200).json(customers); 
     }
     catch(error){
         return res.status(500).json({error: error.message})
     }
 }
 
+exports.addToWishlist = async (req,res) => {
+    try {
+        const {userId,productId} = req.body
+        const customer = await CustomerService.addProductToWishlist(userId,productId)
+        return res.status(200).json(customer);
+    } catch (error) {
+        return res.status(500).json({error : error.message})
+    }
+}
 
+exports.getWishlist = async(req,res) => {
+    try {
+      const {userId} = req.params
+      const wishlist = await CustomerService.getWishlist(userId)
+      return res.status(200).json(wishlist)  
+    } catch (error) {
+        return res.status(500).json({error : error.message})
+    }
+}
+
+exports.deleteProductFromWishlist = async (req,res) => {
+    try {
+        const {userId, productId} = req.params
+        const updatedWishlist = await CustomerService.deleteProductFromWishlist(userId,productId)
+        return res.status(200).json(updatedWishlist);
+    } catch (error) {
+        return res.status(500).json({error : error.message})
+    }
+}
 exports.getCustomerByUsername = async (req, res) => {
     try {
         const username = req.params.username;

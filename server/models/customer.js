@@ -21,6 +21,14 @@ const customerSchema = new Schema({
         receiverName: { type: String, default: "" },
         receiverPhoneNumber: { type: String, default: "" },
     },
+    wishlist : [
+        {
+            type : Schema.Types.ObjectId,
+            ref : "Product",
+            default : []
+        }
+    ]
 });
 
 exports.CustomerModel = mongoose.model("Customer", customerSchema);
+
