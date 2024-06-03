@@ -79,7 +79,7 @@ function Product() {
             console.log(response.data);
             if (response.status === 201) {
                 window.alert("Item added to cart successfully!");
-                navigation("/customer/cart");
+                // navigation("/customer/cart");
             }
         } catch (error) {
             console.log(error);
@@ -93,7 +93,7 @@ function Product() {
         };
         setCartItems((prev) => [...prev, cartItem]);
         console.log(cartItem);
-        navigation("/customer/checkout", { state: { cartItems } });
+        navigation("/customer/checkout", { state: { cartItems: [cartItem] } });
     };
 
     const minusQuantity = () => {

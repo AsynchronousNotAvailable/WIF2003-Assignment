@@ -69,8 +69,6 @@ const PaymentContent = styled.div`
 `;
 
 export default function Checkout() {
-    const { shippingAddress, setShippingAddress, addOrders, orderHistory } =
-        useContext(GlobalContext);
     const location = useLocation();
     const [cartItems, setCartItems] = useState(location.state.cartItems);
     const navigation = useNavigate();
