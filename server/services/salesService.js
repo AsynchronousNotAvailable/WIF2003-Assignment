@@ -22,6 +22,124 @@ exports.topSellingCategory = async (sellerId) => {
     return stats;
 };
 
+exports.bestSellingProducts = async () => {
+    const orders = await OrderModel.find()
+        .populate("product")
+        .select("product quantity totalPricePerOrder");
+
+    let productRevenueMap = {};
+
+    // Iterate over each order to accumulate statistics per product
+    for (let order of orders) {
+        const product = order.product;
+        const productId = product._id.toString();
+        const totalPricePerOrder = order.totalPricePerOrder;
+
+        // If the product is not already in the map, initialize its stats
+        if (!productRevenueMap[productId]) {
+            productRevenueMap[productId] = {
+                productId: productId,
+                productImg : product.image[0],
+                productName: product.name,
+                totalQuantitySold: 0,
+                totalRevenue: 0,
+                pricePerUnit : product.pricePerUnit
+            };
+        }
+
+        // Update the accumulated stats for the product
+        productRevenueMap[productId].totalQuantitySold += order.quantity;
+        productRevenueMap[productId].totalRevenue += totalPricePerOrder;
+    }
+
+    // Convert the accumulated stats object into an array of product stats
+    let cleanedProductStats = Object.values(productRevenueMap);
+
+    cleanedProductStats.sort((a, b) => b.totalQuantitySold - a.totalQuantitySold);
+    let top3Products = cleanedProductStats.slice(0,3);
+    return top3Products
+    }
+
+
+exports.monthlySales = async () => {
+    try {
+        const orders = await OrderModel.find();
+        let stats = {};
+    for (let order of orders) {
+        const month = order.time_placed.getMonth() + 1;
+        let processedMonth = month;
+        switch (month) {
+            case 1:
+                processedMonth = "January";
+                break;
+            case 2:
+                processedMonth = "February";
+                break;
+            case 3:
+                processedMonth = "March";
+                break;
+            case 4:
+                processedMonth = "April";
+                break;
+            case 5:
+                processedMonth = "May";
+                break;
+            case 6:
+                processedMonth = "June";
+                break;
+            case 7:
+                processedMonth = "July";
+                break;
+            case 8:
+                processedMonth = "August";
+                break;
+            case 9:
+                processedMonth = "September";
+                break;
+            case 10:
+                processedMonth = "October";
+                break;
+            case 11:
+                processedMonth = "November";
+                break;
+            case 12:
+                processedMonth = "December";
+                break;
+        }
+
+        console.log(month);
+        if (!stats[processedMonth]) {
+            stats[processedMonth] = order.totalPricePerOrder;
+        } else {
+            stats[processedMonth] += order.totalPricePerOrder;
+        }
+    }
+
+    return stats;
+
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+exports.orderCategories = async () => {
+    try {
+        const orders = await OrderModel.find().populate("product");
+        let stats = {};
+        for(let order of orders){
+            const category = order.product.category;
+            if(!stats[category]){
+                stats[category] = 1;
+            }
+            else {
+                stats[category]++;
+            }
+        }
+        return stats;
+    } catch (error) {
+        throw new Error (error)
+    }
+}
 exports.topWishlistedProducts = async (sellerId) => {
     try {
         const sellerObjectId = new mongoose.Types.ObjectId(sellerId);
