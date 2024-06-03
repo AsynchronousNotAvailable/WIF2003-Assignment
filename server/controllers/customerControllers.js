@@ -267,7 +267,6 @@ exports.checkOut = async (req, res) => {
         //clear cart
     } catch (error) {
         res.status(500).json({ error: error.message });
-        console.log(error.message)
     }
 };
 
