@@ -9,7 +9,8 @@ import useCustomer from "../../hooks/useCustomer";
 import axios from "axios";
 
 function Product() {
-    const { cartItems, setCartItems } = useContext(GlobalContext);
+    const [wishlistedProduct, setWishlistedProduct] = useState("");
+    const { cartItems, setCartItems,userDetails} = useContext(GlobalContext);
     const navigation = useNavigate();
     const location = useLocation();
     const [product, setProduct] = useState(location.state.product);
@@ -20,6 +21,19 @@ function Product() {
     const { getCustomer } = useCustomer();
     const customer = getCustomer();
 
+    const addToWishlist = async (userId, productId) => {
+        try {
+            const reqData = {
+                userId : userId,
+                productId : productId
+            }
+            const res = await axios.post("http://localhost:1234/api/customers/wishlist/add",reqData);
+            setWishlistedProduct(productId);
+            console.log(res.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
     const fetchProductReviews = async () => {
         try {
             const productId = product._id;
@@ -210,10 +224,15 @@ function Product() {
                                 </div>
                             </button>
 
+                            <button onClick = {() => addToWishlist(userDetails._id,product._id)}
+                            className = {`hover:fill-red-600 ${wishlistedProduct === product._id ? "fill-red-600" : "text-gray-400"}`}
+                            >
                             <img
                                 src="/heartIcon.svg"
-                                className="w-[20px] ml-[20px] h-[20px] fill-red-600"
+                                className="w-[20px] ml-[20px] h-[20px] "
                             />
+                            </button>
+                            
                         </div>
 
                         <div className="flex flex-row items-center">

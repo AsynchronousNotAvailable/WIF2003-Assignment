@@ -9,11 +9,79 @@ const { TransactionModel } = require("../models/transaction.js");
 const { SellerModel } = require("../models/seller.js");
 const { ReviewModel } = require("../models/review.js");
 const { CardModel } = require("../models/card.js");
+const { getWishlist } = require("../controllers/customerControllers.js");
 
 //support function to validate registration, wont throw exception to controller
 async function checkCustomerByEmail(email) {
     const customer = await CustomerModel.findOne({ email: email });
     return customer;
+}
+
+exports.addProductToWishlist = async (userId, productId) => {
+    try {
+      const customer = await CustomerModel.findById(userId);
+      if (!customer) {
+        throw new Error("Customer not found in the database.");
+      }
+  
+      const product = await ProductModel.findById(productId);
+      if (!product) {
+        throw new Error("Product not found in the database.");
+      }
+
+      if (customer.wishlist.includes(product._id)) {
+        return { message: "Product already in wishlist", customer };
+      }
+  
+      customer.wishlist.push(product._id);
+      await customer.save();
+  
+      return { message: "Product added to wishlist", customer };
+    } catch (error) {
+      console.error("Error adding product to wishlist:", error);
+      return { message: "An error occurred while adding product to wishlist", error: error.message };
+    }
+  }
+
+exports.getWishlist = async(userId) => {
+    try {
+        const wishlistData = await CustomerModel.findById(userId).select('wishlist').populate({
+            path: 'wishlist',
+            populate: {
+                path: 'seller',
+                model: 'Seller' // Replace with your seller model name
+            }
+        });
+        if (!wishlistData) {
+            throw new Error("Customer is not found in DB!");
+        }
+        const wishlist = wishlistData.wishlist;
+        return wishlist;
+
+    } catch (error) {
+        return {message : "An error occured while retrieving wishlist", error : error.message}
+    }
+}
+
+exports.deleteProductFromWishlist = async (userId,productId) => {
+    try {
+        const customer = await CustomerModel.findById(userId);
+        if(!customer){
+            throw new Error ("Customer is not found in DB!");
+        }
+        const product = customer.wishlist.find(product => product._id == productId);
+        if(!product){
+            throw new Error ("Product is not found in wishlist!");
+        }
+        const updatedWishlist = customer.wishlist.filter((wishlistProduct) => wishlistProduct._id != productId)
+        customer.wishlist = updatedWishlist;
+        await customer.save();
+        const updatedCustomerWishlist = await getWishlist(userId);
+        return updatedCustomerWishlist;
+
+    } catch (error) {
+        return {message : "An error occured while deleting product from wishlist", error : error.message}
+    }
 }
 
 //support function to get user data by its username, wont throw exception to controller
