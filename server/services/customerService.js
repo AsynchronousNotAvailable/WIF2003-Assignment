@@ -17,6 +17,187 @@ async function checkCustomerByEmail(email) {
     return customer;
 }
 
+exports.purchaseHistory = async (customerId) => {
+    try {
+        const customerObjectId = new mongoose.Types.ObjectId(customerId);
+        const orders = await OrderModel.find({customerId : customerObjectId}).populate("product sellerId")
+        if(!orders){
+            throw new Error("No orders found for the specified customer")
+        }
+        const cleanedOrders = []
+        for(let order of orders){
+            const cleanedOrder = {
+                name : order.product.name,
+                img : order.product.image,
+                sellerName : order.sellerId.username,
+                quantity : order.quantity,
+                pricePerUnit : order.product.pricePerUnit,
+                totalPricePerOrder : order.totalPricePerOrder,
+                orderPlacedDate : order.time_placed,
+                orderReceivedDate : order.time_received || "Pending",
+            }
+            cleanedOrders.push(cleanedOrder)
+        }
+        return cleanedOrders
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+exports.orderStatusCategory = async (customerId) => {
+    try {
+        const customerObjectId = new mongoose.Types.ObjectId(customerId);
+        const orders = await OrderModel.find({ customerId: customerObjectId }).select("status");
+        let stats = {};
+        for(let order of orders){
+            if(!stats[order.status]){
+                stats[order.status] = 1
+            }
+            else {
+                stats[order.status] += 1
+            }
+        }
+        return stats
+
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+exports.purchaseCategory = async (customerId) => {
+    try {
+        const customerObjectId = new mongoose.Types.ObjectId(customerId)
+        const orders = await OrderModel.find({ customerId: customerObjectId }).populate('product')
+        let stats = {}
+        for(let order of orders){
+            const category = order.product.category
+            if(!stats[category]){
+                stats[category] = 1
+            }
+            else {
+                stats[category] += 1
+            }
+        }
+        return stats
+    } catch (error) {
+        throw new Error (error)
+    }
+}
+exports.monthlyPurchase = async (customerId) => {
+    try {
+        const customerObjectId = new mongoose.Types.ObjectId(customerId);
+        const orders = await OrderModel.find({ customerId: customerObjectId });
+        let stats = {};
+        for(let order of orders){
+            const month = order.time_placed.getMonth() + 1;
+            let processedMonth = month;
+            switch (month) {
+                case 1:
+                    processedMonth = "January";
+                    break;
+                case 2:
+                    processedMonth = "February";
+                    break;
+                case 3:
+                    processedMonth = "March";
+                    break;
+                case 4:
+                    processedMonth = "April";
+                    break;
+                case 5:
+                    processedMonth = "May";
+                    break;
+                case 6:
+                    processedMonth = "June";
+                    break;
+                case 7:
+                    processedMonth = "July";
+                    break;
+                case 8:
+                    processedMonth = "August";
+                    break;
+                case 9:
+                    processedMonth = "September";
+                    break;
+                case 10:
+                    processedMonth = "October";
+                    break;
+                case 11:
+                    processedMonth = "November";
+                    break;
+                case 12:
+                    processedMonth = "December";
+                    break;
+            }
+            if (!stats[processedMonth]) {
+                stats[processedMonth] = order.totalPricePerOrder;
+            } else {
+                stats[processedMonth] += order.totalPricePerOrder;
+            }
+        }
+        return stats;
+        
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+// exports.revenuePerMonth = async (sellerId) => {
+//     const sellerObjectId = new mongoose.Types.ObjectId(sellerId);
+//     const orders = await OrderModel.find({ sellerId: sellerObjectId });
+//     let stats = {};
+//     for (let order of orders) {
+//         const month = order.time_placed.getMonth() + 1;
+//         let processedMonth = month;
+//         switch (month) {
+//             case 1:
+//                 processedMonth = "January";
+//                 break;
+//             case 2:
+//                 processedMonth = "February";
+//                 break;
+//             case 3:
+//                 processedMonth = "March";
+//                 break;
+//             case 4:
+//                 processedMonth = "April";
+//                 break;
+//             case 5:
+//                 processedMonth = "May";
+//                 break;
+//             case 6:
+//                 processedMonth = "June";
+//                 break;
+//             case 7:
+//                 processedMonth = "July";
+//                 break;
+//             case 8:
+//                 processedMonth = "August";
+//                 break;
+//             case 9:
+//                 processedMonth = "September";
+//                 break;
+//             case 10:
+//                 processedMonth = "October";
+//                 break;
+//             case 11:
+//                 processedMonth = "November";
+//                 break;
+//             case 12:
+//                 processedMonth = "December";
+//                 break;
+//         }
+
+//         console.log(month);
+//         if (!stats[processedMonth]) {
+//             stats[processedMonth] = order.totalPricePerOrder;
+//         } else {
+//             stats[processedMonth] += order.totalPricePerOrder;
+//         }
+//     }
+
+//     return stats;
+// };
+
 exports.addProductToWishlist = async (userId, productId) => {
     try {
       const customer = await CustomerModel.findById(userId);

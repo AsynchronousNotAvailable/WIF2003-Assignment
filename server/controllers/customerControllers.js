@@ -19,6 +19,47 @@ exports.login = async (req, res) => {
     }
 };
 
+exports.purchaseHistory = async (req,res) => {
+    try {
+        const {customerId} = req.params;
+        const purchaseHistory = await CustomerService.purchaseHistory(customerId);
+        return res.status(200).json(purchaseHistory)
+    } catch (error) {
+        return res.status(500).json({error : error.message})
+    }
+}
+
+exports.purchaseCategory = async (req,res) => {
+    try {
+        const {customerId} = req.params;
+        const purchaseCategory = await CustomerService.purchaseCategory(customerId);
+        return res.status(200).json(purchaseCategory)
+    } catch (error) {
+        return res.status(500).json({error : error.message})
+    }
+}
+
+exports.orderStatusCategory = async (req,res) => {
+    try {
+        const {customerId} = req.params;
+        const orderStatusMap = await CustomerService.orderStatusCategory(customerId);
+        return res.status(200).json(orderStatusMap);
+    } catch (error) {
+        return res.status(500).json({error : error.message})
+    }
+}
+
+exports.monthlyPurchase = async (req,res) => {
+    try{
+        const {customerId} = req.params;
+        const monthlyPurchase = await CustomerService.monthlyPurchase(customerId);
+        return res.status(200).json(monthlyPurchase);
+    }
+    catch(err){
+        return res.status(500).json({error : err.message})
+    }
+}
+
 exports.getAllSellers = async (req, res) => {
     try {
         const { customerId } = req.params;

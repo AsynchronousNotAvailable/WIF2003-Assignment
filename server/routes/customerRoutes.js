@@ -44,4 +44,11 @@ router.post("/:username/:productId/addReview", customerController.addReview);
 //delete review ??
 router.delete("/:username/:productId/:reviewId/deleteReview", customerController.deleteReview);
 //add order received timestamp??
+router.get("/analysis/:customerId/monthlypurchase", customerController.monthlyPurchase);
+
+router.get("/analysis/:customerId/orderStatusCategory", customerController.orderStatusCategory);
+
+router.get("/analysis/:customerId/purchaseCategory", customerController.purchaseCategory)
+
+router.get("/analysis/:customerId/purchaseHistory", customerController.purchaseHistory)
 module.exports = router;

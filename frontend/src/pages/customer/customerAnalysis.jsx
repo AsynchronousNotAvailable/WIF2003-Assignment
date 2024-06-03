@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { GlobalContext } from "../../context";
+import React, { useState,useContext, useEffect } from 'react'
+
 import Customer_Navbar from '../../components/customer_navbar';
 import { Route, useNavigate } from "react-router-dom";
 import { ChartContainer, ResponsiveChartContainer } from '@mui/x-charts';
@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import { PieChart } from '@mui/x-charts/PieChart';
 import { LineChart } from '@mui/x-charts/LineChart';
-
+import axios from 'axios';
 
 import {
   LinePlot,
@@ -18,33 +18,85 @@ import {
   markElementClasses,
 } from '@mui/x-charts/LineChart';
 import Seller_NavSidebar from '../../components/seller_sidebar';
+import { GlobalContext } from '../../context';
 
 
 
 
 const App = () => {
     const navigate = useNavigate();
- 
-      const orderStatusSummary = [
-        { label: 'Received', value: 900, color : "#17BF6B" },
-        { label: 'On Delivery', value: 200, color : "#FFC632"},
-        { label: 'Rejected', value: 10, color : "#ED3333" },
-       
-      ];
+    const [monthlyPurchaseAmount, setMonthlyPurchaseAmount] = useState("")
+    const [orderStatusCategory, setOrderStatusCategory] = useState("")
+    const [purchaseCategory, setPurchaseCategory] = useState("")
+    const [purchaseHistory, setPurchaseHistory] = useState("")
+    const {userDetails} = useContext(GlobalContext)
+    const customerId = userDetails._id
 
-      const productCategorySummary = [
-        { label: 'Electronics', value: 200, color : "#2961FF" },
-        { label: 'Health & Wellness', value: 400, color : "#7450DF"},
-        { label: 'Skincare', value: 100, color : "#FF6869" },
+    useEffect(() => {
+        const fetchMonthlyPurchaseAmount = async () => {
+            try {
+                const res = await axios.get(`http://localhost:1234/api/customers/analysis/${customerId}/monthlypurchase`)
+                setMonthlyPurchaseAmount(res.data)    
+                console.log(res.data)
+            } catch (error) {
+                throw new Error(error)
+            }
+        }
+        const fetchOrderStatusCategory = async () => {
+            try {
+                const res = await axios.get(`http://localhost:1234/api/customers/analysis/${customerId}/orderStatusCategory`)
+                setOrderStatusCategory(res.data)
+            } catch (error) {
+                throw new Error(error)
+            }
+        }
+        const fetchPurchaseCategory = async () => {
+            try {
+                const res = await axios.get(`http://localhost:1234/api/customers/analysis/${customerId}/purchaseCategory`)
+                setPurchaseCategory(res.data)
+            } catch (error) {
+                throw new Error(error)
+            }
+        }
+        const fetchPurchaseHistory = async () => {
+            try {
+                const res = await axios.get(`http://localhost:1234/api/customers/analysis/${customerId}/purchaseHistory`)
+                setPurchaseHistory(res.data)
+            } catch (error) {
+                throw new Error(error)
+            }
+        }
+        fetchMonthlyPurchaseAmount()
+        fetchOrderStatusCategory()
+        fetchPurchaseCategory()
+        fetchPurchaseHistory()
+    } , [])
+    
+    
+    const yValues = Object.values(monthlyPurchaseAmount)
+    const xLabels = Object.keys(monthlyPurchaseAmount)
+    
+    const orderStatusSummary = Object.entries(orderStatusCategory).map(([key, value]) => {
+        return {label:key, value : value}
+    })
+    console.log(orderStatusSummary)
+
+    
+    const productCategorySummary = Object.entries(purchaseCategory).map(([key,value]) => {
+        return {label : key, value : value}
+    })
+    
+    //   const productCategorySummary = [
+    //     { label: 'Electronics', value: 200, color : "#2961FF" },
+    //     { label: 'Health & Wellness', value: 400, color : "#7450DF"},
+    //     { label: 'Skincare', value: 100, color : "#FF6869" },
        
-      ];
+    //   ];
       
 const [ratingValue, setRatingValue] = useState(4);
 
 
 
-const purchaseHistoryData = [200,100,150,500,20,50,200,10,300,400,132,12]
-const months = ['Jan', 'Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec']
 
     return (
         <div className = "overflow-hidden h-screen">
@@ -61,13 +113,19 @@ const months = ['Jan', 'Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','N
             </section>
             <section className = "flex flex-row">
             <LineChart
-                width={600}
-                height={250}
-                series={[
-                    { data: purchaseHistoryData, label: 'Purchase Amount (RM)' }
-                ]}
-                xAxis={[{ scaleType: 'point', data: months }]}
-                />
+                        xAxis={[{ 
+                            scaleType : "band",
+                            data: xLabels }]}
+                        series={[
+                            {
+
+                            data: yValues, label: 'Purchase Amount', color : "#2961FF"
+                            },
+                        ]}
+                        width={500}
+                        height={250}
+                        />
+
 
             </section>
 
@@ -77,7 +135,7 @@ const months = ['Jan', 'Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','N
                 <section className = "flex flex-row w-full gap-10">
                     <section className = " flex flex-col font-sans flex-1 shadow-[0_3px_10px_rgb(0,0,0,0.2)] p-5  h-[300px] rounded-xl">
                     <p className = "font-sans font-bold">Order Status Pie Chart</p>
-                    <p className = "font-sans text-[#616262]">Shows the order summary of your shop</p>
+                    <p className = "font-sans text-[#616262]">Shows your order status summary</p>
                     
                     <PieChart
                     className = ""
@@ -99,7 +157,7 @@ const months = ['Jan', 'Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','N
                     </section>
                     <section className = "flex flex-col font-sans flex-1  shadow-[0_3px_10px_rgb(0,0,0,0.2)] p-5 h-[300px] rounded-xl">
                     <span className = "font-sans font-bold">Most Frequently Bought Product Categories</span>
-                    <p className = "font-sans text-[#616262]">Shows the most frequently product categories of your shop</p>
+                    <p className = "font-sans text-[#616262]">Shows your most frequently bought product categories</p>
                     <PieChart
                         series={[      
                             {
