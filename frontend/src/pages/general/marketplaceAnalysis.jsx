@@ -57,7 +57,7 @@ function MarketplaceAnalysis() {
         },
     ];
     return (
-        <>
+        <div className = "overflow-hidden h-screen">
             <Customer_Navbar />
             <main className="mt-10 p-20 flex flex-col gap-5">
                 <section className=" w-full font-sans font-bold text-3xl">
@@ -170,7 +170,7 @@ function MarketplaceAnalysis() {
                     </section>
                 </section>
             </main>
-        </>
+        </div>
     );
 }
 

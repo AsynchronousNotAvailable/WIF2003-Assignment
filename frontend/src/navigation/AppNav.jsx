@@ -22,6 +22,10 @@ import ProductManagement from "../pages/seller/product_management";
 import AddProduct from "../pages/seller/add_product";
 import EditSellerProfile from "../pages/seller/seller_edit_profile";
 import WishlistPage from "../pages/customer/WishlistComponent/WishlistPage";
+import PurchaseHistoryPage from "../pages/customer/PurchaseHistoryComponents/PurchaseHistoryPage";
+import PopularProductAnalysisPage from "../pages/seller/components/PopularProductAnalysisComponents/PopularProductAnalysisPage";
+import ProductInteractivityAnalysisPage from "../pages/seller/components/PopularProductAnalysisComponents/ProductInteractivityAnalysisPage";
+import CustomerSegmentationPage from "../pages/seller/components/CustomerSegmentationComponents/CustomerSegmentationPage";
 
 function AppNav() {
     return (
@@ -51,20 +55,23 @@ function AppNav() {
                         element={<CustomerAnalysis />}
                     />
                     <Route path = "/customer/wishlist" element = {<WishlistPage />} />
+                    <Route path = "/customer/purchase_history" element = {<PurchaseHistoryPage />} />
                     <Route path="/customer_chat" element={<Customer_Chat />} /> 
                     <Route path="/seller" element={<Seller_Home />} />
                     <Route
                         path="/seller/analysis"
                         element={<SellerAnalysis />}
                     />
-
+                    <Route path = "/seller/analysis/customer_segmentation" element = {<CustomerSegmentationPage />} />
+                    <Route path = "/seller/analysis/popular_products" element = {<PopularProductAnalysisPage />} />
+                    <Route path = "/seller/analysis/interacted_products" element = {<ProductInteractivityAnalysisPage />} />
                     <Route path="/seller_chat" element={<Seller_Chat />} />
                     <Route
-                        path="/order_management"
+                        path="/seller/order_management"
                         element={<OrderManagement />}
                     />
                     <Route
-                        path="/product_management"
+                        path="/seller/product_management"
                         element={<ProductManagement />}
                     />
                     <Route

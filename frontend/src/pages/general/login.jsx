@@ -136,7 +136,7 @@ function Login() {
                 } else {
                     saveSeller(response.data.seller);
                     setUserDetails(response.data.seller);
-                    navigation("/product_management");
+                    navigation("/seller/product_management");
                 }
             }
         } catch (error) {

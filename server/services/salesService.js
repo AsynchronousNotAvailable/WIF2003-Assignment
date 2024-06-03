@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const { OrderModel } = require("../models/order.js");
 const { ProductModel } = require("../models/product.js");
+const { CustomerModel } = require("../models/customer.js");
+const { CartModel } = require("../models/cart.js");
 
 exports.topSellingCategory = async (sellerId) => {
     const sellerObjectId = new mongoose.Types.ObjectId(sellerId);
@@ -18,6 +20,150 @@ exports.topSellingCategory = async (sellerId) => {
     }
 
     return stats;
+};
+
+exports.topWishlistedProducts = async (sellerId) => {
+    try {
+        const sellerObjectId = new mongoose.Types.ObjectId(sellerId);
+
+        // Find all customers and populate their wishlists
+        const customerInfo = await CustomerModel.find().populate("wishlist");
+        const carts = await CartModel.find();
+        let topWishlistedProducts = [];
+        let productWishlistCount = {};
+        let productCartMap = {};
+
+        for(let cart of carts){
+            for(let item of cart.cartItem){
+                const productId = item.product.toString();
+                if(!productCartMap[productId]){
+                    productCartMap[productId] = 1;
+                }
+                else {
+                    productCartMap[productId]++;
+                }
+            }
+        }
+
+        console.log(productCartMap)
+        // Iterate through each customer
+        for (let customer of customerInfo) {
+            const customerWishlist = customer.wishlist;
+
+            // Iterate through each product in the customer's wishlist
+            for (let productId of customerWishlist) {
+                // Find the product from the ProductModel based on the productId
+                const product = await ProductModel.findById(productId);
+                const stringedProductId = product._id.toString();
+                console.log("Current Product ID [String]", stringedProductId);
+                console.log("Product Cart Map result below")
+                console.log(productCartMap[stringedProductId])
+                // Check if the product's seller matches the provided sellerId
+                if (product.seller.equals(sellerObjectId)) {
+                    if(!productWishlistCount[stringedProductId]){
+                        productWishlistCount[stringedProductId] = 1;
+                    }
+                    else {
+                        productWishlistCount[stringedProductId]++;
+                    }
+                    // Include the product in the list of top wishlisted products
+                    topWishlistedProducts.push({
+                        productId: product._id,
+                        productName: product.name,
+                        productImage: product.image[0],
+                        wishlistCount : productWishlistCount[stringedProductId],
+                        cartCount : productCartMap[stringedProductId] || 0
+                        
+                    });
+                }
+            }
+        }
+        return topWishlistedProducts;
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
+exports.customerStats = async (sellerId) => {
+    try {
+        const orders = await OrderModel.find({ sellerId: sellerId }).populate("customerId");
+        let customerStats = [];
+        let customerOrderMap = {};
+        for(let order of orders){
+            console.log("Getting current Order")
+            console.log(order.customerId._id)
+            const customerStringId = order.customerId._id.toString();
+            console.log("Customer Name")
+            console.log(order.customerId.username)
+            //find if it is not in the map
+            if (!customerOrderMap[customerStringId]){
+                customerOrderMap[customerStringId] = {
+                    customerId : customerStringId,
+                    name: order.customerId.username,
+                    img : order.customerId.pfp,
+                    totalOrders : 1,
+                    totalSpent : order.totalPricePerOrder,
+                    lastOrder : order.time_placed,
+                }
+                customerStats.push(customerOrderMap[customerStringId]);
+            }
+            // if it is in the map, update the stats
+            else {
+                customerOrderMap[customerStringId].totalOrders++;
+                customerOrderMap[customerStringId].totalSpent += order.totalPricePerOrder;
+
+                if(order.time_placed > customerOrderMap[customerStringId].lastOrder){
+                    customerOrderMap[customerStringId].lastOrder = order.time_placed;
+                }
+                const index = customerStats.findIndex(customer => customer.customerId === customerStringId);
+                // Update the specific fields in the existing entry with the updated values
+                customerStats[index].totalOrders = customerOrderMap[customerStringId].totalOrders;
+                customerStats[index].totalSpent = customerOrderMap[customerStringId].totalSpent;
+                customerStats[index].lastOrder = customerOrderMap[customerStringId].lastOrder;
+            }
+        }
+        return customerStats;
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+exports.topSellingProducts = async (sellerId) => {
+    const sellerObjectId = new mongoose.Types.ObjectId(sellerId);
+    const orders = await OrderModel.find({ sellerId: sellerObjectId })
+        .populate("product")
+        .select("product quantity totalPricePerOrder");
+
+    let productRevenueMap = {};
+
+    // Iterate over each order to accumulate statistics per product
+    for (let order of orders) {
+        const product = order.product;
+        const productId = product._id.toString();
+        const totalPricePerOrder = order.totalPricePerOrder;
+
+        // If the product is not already in the map, initialize its stats
+        if (!productRevenueMap[productId]) {
+            productRevenueMap[productId] = {
+                productId: productId,
+                productName: product.name,
+                productImg: product.image[0],
+                totalQuantitySold: 0,
+                totalRevenue: 0
+            };
+        }
+
+        // Update the accumulated stats for the product
+        productRevenueMap[productId].totalQuantitySold += order.quantity;
+        productRevenueMap[productId].totalRevenue += totalPricePerOrder;
+    }
+
+    // Convert the accumulated stats object into an array of product stats
+    let cleanedProductStats = Object.values(productRevenueMap);
+
+    cleanedProductStats.sort((a, b) => b.totalQuantitySold - a.totalQuantitySold);
+    let top3Products = cleanedProductStats.slice(0,3);
+    return top3Products
 };
 
 exports.orderStatusForSeller = async (sellerId) => {

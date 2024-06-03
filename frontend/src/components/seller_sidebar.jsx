@@ -21,15 +21,15 @@ function Seller_NavSidebar() {
     navigation("/seller/profile");
   };
   const goToChat = () => {
-    navigation("/seller_chat");
+    navigation("/seller/seller_chat");
   };
   const toOrderManagement = () => {
     setSellerNavBarSelected("OrderMgmt");
-    navigation("/order_management");
+    navigation("/seller/order_management");
   };
   const toProductManagement = () => {
     setSellerNavBarSelected("ProductMgmt");
-    navigation("/product_management");
+    navigation("/seller/product_management");
   };
   return (
     <div class="font-inter">

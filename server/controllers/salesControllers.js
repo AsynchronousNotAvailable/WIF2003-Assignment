@@ -1,6 +1,6 @@
 const SalesService = require("../services/salesService");
 
-exports.getTopSellingStats = async (req, res) => {
+exports.getTopSellingCategoryStats = async (req, res) => {
     try {
         const sellerId = req.params.sellerId;
         const stats = await SalesService.topSellingCategory(sellerId);
@@ -10,6 +10,35 @@ exports.getTopSellingStats = async (req, res) => {
     }
 };
 
+exports.getTopSellingProducts = async (req,res) => {
+    try {
+        const {sellerId} = req.params;
+        const productStats = await SalesService.topSellingProducts(sellerId);
+        return res.status(200).json(productStats)
+    } catch (error) {
+        return res.status(500).json({error : error.message})
+    }
+}
+
+exports.getTopWishlistedProducts = async (req,res) => {
+    try {
+        const {sellerId} = req.params;
+        const topWishlistedProducts = await SalesService.topWishlistedProducts(sellerId);
+        return res.status(200).json(topWishlistedProducts)
+    } catch (error) {
+        return res.status(500).json({error : error.message})
+    }
+}
+
+exports.getCustomerStats = async (req,res) => {
+    try {
+        const {sellerId} = req.params;
+        const customerStats = await SalesService.customerStats(sellerId);
+        return res.status(200).json(customerStats)
+    } catch (error) {
+        return res.status(500).json({error : error.message})
+    }
+}
 exports.getOrderStatusStats = async (req, res) => {
     try {
         const sellerId = req.params.sellerId;
@@ -29,7 +58,6 @@ exports.getReviewStats = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
-
 
 exports.getRevenueStats = async (req, res) => {
     try {
