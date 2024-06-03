@@ -94,16 +94,11 @@ export default function Checkout() {
         setSelectedPaymentMethod(method);
     };
 
-    const handlePlaceOrder = () => {
+    const handlePlaceOrder = async () => {
         if (selectedPaymentMethod === null) {
             alert("Please select a payment method to proceed.");
-        } else {
-            // addOrders(
-            //     cartItems,
-            //     orderTotal + 5,
-            //     selectedPaymentMethod,
-            //     shippingAddress
-            // );
+        }
+        else {
             placeOrder();
             navigation("/customer/orders");
         }
@@ -115,6 +110,7 @@ export default function Checkout() {
             const paymentDetails = {
                 payment_method: selectedPaymentMethod,
                 payment_date: new Date(),
+                shipping_address: customer.shippingAddress,
             };
             const response = await axios.put(
                 `http://localhost:1234/api/customers/${username}/checkout`,

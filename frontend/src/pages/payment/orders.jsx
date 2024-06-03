@@ -186,8 +186,19 @@ export default function Orders() {
     };
 
     const sortedOrders = orders
-        .slice()
-        .sort((a, b) => b.timestamp - a.timestamp);
+    .slice()
+    .sort((a, b) => {
+        if (a.status === b.status) {
+            return b.timestamp - a.timestamp;
+        }
+        if (a.status === "Received") {
+            return 1;
+        }
+        if (b.status === "Received") {
+            return -1;
+        }
+        return 0;
+    });
 
     return (
         <Container>
@@ -217,6 +228,7 @@ export default function Orders() {
                 </Text>
             </div>
             {sortedOrders.map((order, index) => (
+                console.log(sortedOrders),
                 <Wrapper key={index} style={{ marginBottom: "20px" }}>
                     <Row>
                         <Column width="40%">
@@ -277,7 +289,7 @@ export default function Orders() {
                             </Text>
                         </Column>
                     </Row>
-                    {order.status !== "Order Received." && (
+                    {order.status !== "Received" && (
                         <Row>
                             <PaymentButton
                                 style={{

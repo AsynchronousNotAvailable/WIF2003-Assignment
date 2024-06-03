@@ -402,6 +402,8 @@ exports.checkout = async (username, payment_method, payment_date) => {
 
     const cart = await CartModel.findById({ _id: customer.cart });
 
+    console.log(cart);
+
     if (!cart) {
         throw new Error("Cart Not Found");
     }
@@ -419,7 +421,7 @@ exports.checkout = async (username, payment_method, payment_date) => {
         }
 
         const totalPricePerOrder =
-            cartItemProduct.pricePerUnit * cartItem.quantity;
+            cartItemProduct.pricePerUnit * cartItem.quantity + 5;
 
         const newOrderData = {
             customerId: customer._id,
@@ -433,6 +435,7 @@ exports.checkout = async (username, payment_method, payment_date) => {
                     timeZone: "Asia/Singapore",
                 })
             ),
+            shippingAddress: customer.shippingAddress,
         };
 
         const newOrder = new OrderModel(newOrderData);
@@ -464,8 +467,8 @@ exports.checkout = async (username, payment_method, payment_date) => {
         await newOrder.save();
     }
 
-    // console.log("LIST");
-    // console.log(orderList, sellerList, totalTransactionPrice);
+    console.log("LIST");
+    console.log(orderList, sellerList, totalTransactionPrice);
     if (
         orderList.length === 0 ||
         sellerList.length === 0 ||
