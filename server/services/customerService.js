@@ -353,7 +353,7 @@ exports.checkout = async (username, payment_method, payment_date) => {
         }
 
         const totalPricePerOrder =
-            cartItemProduct.pricePerUnit * cartItem.quantity;
+            cartItemProduct.pricePerUnit * cartItem.quantity + 5;
 
         const newOrderData = {
             customerId: customer._id,
@@ -367,6 +367,7 @@ exports.checkout = async (username, payment_method, payment_date) => {
                     timeZone: "Asia/Singapore",
                 })
             ),
+            shippingAddress: customer.shippingAddress,
         };
 
         const newOrder = new OrderModel(newOrderData);

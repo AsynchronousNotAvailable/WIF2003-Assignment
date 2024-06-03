@@ -216,7 +216,7 @@ export default function Orders() {
                     Orders
                 </Text>
             </div>
-            {products.map((order, index) => (
+            {orders.map((order, index) => (
                 <Wrapper key={index} style={{ marginBottom: "20px" }}>
                     <Row>
                         <Column width="40%">

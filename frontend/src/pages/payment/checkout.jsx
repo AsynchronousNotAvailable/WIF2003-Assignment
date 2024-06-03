@@ -111,6 +111,7 @@ export default function Checkout() {
             const paymentDetails = {
                 payment_method: selectedPaymentMethod,
                 payment_date: new Date(),
+                shipping_address: customer.shippingAddress,
             };
             const response = await axios.put(
                 `http://localhost:1234/api/customers/${username}/checkout`,
