@@ -99,7 +99,6 @@ export default function Checkout() {
             alert("Please select a payment method to proceed.");
         }
         else {
-            // addOrders(cartItems, orderTotal+5, selectedPaymentMethod, customer.shippingAddress);
             placeOrder();
             navigation("/customer/orders");
         }
