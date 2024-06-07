@@ -248,7 +248,8 @@ exports.getProductById = async (req, res) => {
 };
 
 exports.editProfile = async (req, res) => {
-  try {
+    try {
+        console.log('hiiii');
     const username = req.params.username;
     const profile = req.body;
 

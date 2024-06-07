@@ -71,6 +71,7 @@ const PaymentContent = styled.div`
 export default function Checkout() {
     const location = useLocation();
     const [cartItems, setCartItems] = useState(location.state.cartItems);
+    const [isBuyNow, setIsBuyNow] = useState(location.state.buyNow);
     const navigation = useNavigate();
 
     const totalItems = cartItems.reduce(
@@ -95,16 +96,54 @@ export default function Checkout() {
     const handlePlaceOrder = async () => {
         if (selectedPaymentMethod === null) {
             alert("Please select a payment method to proceed.");
+        } else {
+            if (isBuyNow) {
+                buyNow();
+            } else {
+                placeOrder();
+            }
+            // navigation("/customer/orders");
         }
-        else {
-            placeOrder();
-            navigation("/customer/orders");
+    };
+
+    const buyNow = async () => {
+        try {
+            const username = customer.username;
+            if (selectedPaymentMethod === "TnG E-Wallet") {
+                setSelectedPaymentMethod("TNG");
+            }
+            const paymentDetails = {
+                payment_method: selectedPaymentMethod,
+                payment_date: new Date(),
+                shipping_address: customer.shippingAddress,
+            };
+
+            const purchaseDetails = {
+                productDetails: {
+                    id: cartItems[0].product._id,
+                    quantity: cartItems[0].quantity,
+                },
+                paymentDetails,
+            };
+            console.log(purchaseDetails);
+            const response = await axios.post(
+                `http://localhost:1234/api/customers/${username}/buyNow`,
+                purchaseDetails
+            );
+            if (response.status === 201) {
+                navigation("/customer/orders");
+            }
+        } catch (error) {
+            console.log(error);
         }
     };
 
     const placeOrder = async () => {
         try {
             const username = customer.username;
+            if (selectedPaymentMethod === "TnG E-Wallet") {
+                selectedPaymentMethod = "TNG";
+            }
             const paymentDetails = {
                 payment_method: selectedPaymentMethod,
                 payment_date: new Date(),

@@ -5,11 +5,11 @@ const OrderModel = require("../models/order");
 const mongoose = require("mongoose");
 
 exports.login = async (req, res) => {
-    console.log('login');
+    console.log("login");
     try {
         const loginData = req.body;
         const customer = await CustomerService.login(loginData);
-        res.json({ customer, role : "customer"});
+        res.json({ customer, role: "customer" });
     } catch (error) {
         if (error.message === "Customer Not Found") {
             res.status(404).json({ error: error.message });
@@ -19,46 +19,53 @@ exports.login = async (req, res) => {
     }
 };
 
-exports.purchaseHistory = async (req,res) => {
+exports.purchaseHistory = async (req, res) => {
     try {
-        const {customerId} = req.params;
-        const purchaseHistory = await CustomerService.purchaseHistory(customerId);
-        return res.status(200).json(purchaseHistory)
+        const { customerId } = req.params;
+        const purchaseHistory = await CustomerService.purchaseHistory(
+            customerId
+        );
+        return res.status(200).json(purchaseHistory);
     } catch (error) {
-        return res.status(500).json({error : error.message})
+        return res.status(500).json({ error: error.message });
     }
-}
+};
 
-exports.purchaseCategory = async (req,res) => {
+exports.purchaseCategory = async (req, res) => {
     try {
-        const {customerId} = req.params;
-        const purchaseCategory = await CustomerService.purchaseCategory(customerId);
-        return res.status(200).json(purchaseCategory)
+        const { customerId } = req.params;
+        const purchaseCategory = await CustomerService.purchaseCategory(
+            customerId
+        );
+        return res.status(200).json(purchaseCategory);
     } catch (error) {
-        return res.status(500).json({error : error.message})
+        return res.status(500).json({ error: error.message });
     }
-}
+};
 
-exports.orderStatusCategory = async (req,res) => {
+exports.orderStatusCategory = async (req, res) => {
     try {
-        const {customerId} = req.params;
-        const orderStatusMap = await CustomerService.orderStatusCategory(customerId);
+        const { customerId } = req.params;
+        const orderStatusMap = await CustomerService.orderStatusCategory(
+            customerId
+        );
         return res.status(200).json(orderStatusMap);
     } catch (error) {
-        return res.status(500).json({error : error.message})
+        return res.status(500).json({ error: error.message });
     }
-}
+};
 
-exports.monthlyPurchase = async (req,res) => {
-    try{
-        const {customerId} = req.params;
-        const monthlyPurchase = await CustomerService.monthlyPurchase(customerId);
+exports.monthlyPurchase = async (req, res) => {
+    try {
+        const { customerId } = req.params;
+        const monthlyPurchase = await CustomerService.monthlyPurchase(
+            customerId
+        );
         return res.status(200).json(monthlyPurchase);
+    } catch (err) {
+        return res.status(500).json({ error: err.message });
     }
-    catch(err){
-        return res.status(500).json({error : err.message})
-    }
-}
+};
 
 exports.getAllSellers = async (req, res) => {
     try {
@@ -71,44 +78,49 @@ exports.getAllSellers = async (req, res) => {
 };
 
 exports.getAllCustomers = async (req, res) => {
-    try{
-        const customers = await CustomerService.getAllCustomers();
-        return res.status(200).json(customers); 
-    }
-    catch(error){
-        return res.status(500).json({error: error.message})
-    }
-}
-
-exports.addToWishlist = async (req,res) => {
     try {
-        const {userId,productId} = req.body
-        const customer = await CustomerService.addProductToWishlist(userId,productId)
+        const customers = await CustomerService.getAllCustomers();
+        return res.status(200).json(customers);
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
+
+exports.addToWishlist = async (req, res) => {
+    try {
+        const { userId, productId } = req.body;
+        const customer = await CustomerService.addProductToWishlist(
+            userId,
+            productId
+        );
         return res.status(200).json(customer);
     } catch (error) {
-        return res.status(500).json({error : error.message})
+        return res.status(500).json({ error: error.message });
     }
-}
+};
 
-exports.getWishlist = async(req,res) => {
+exports.getWishlist = async (req, res) => {
     try {
-      const {userId} = req.params
-      const wishlist = await CustomerService.getWishlist(userId)
-      return res.status(200).json(wishlist)  
+        const { userId } = req.params;
+        const wishlist = await CustomerService.getWishlist(userId);
+        return res.status(200).json(wishlist);
     } catch (error) {
-        return res.status(500).json({error : error.message})
+        return res.status(500).json({ error: error.message });
     }
-}
+};
 
-exports.deleteProductFromWishlist = async (req,res) => {
+exports.deleteProductFromWishlist = async (req, res) => {
     try {
-        const {userId, productId} = req.params
-        const updatedWishlist = await CustomerService.deleteProductFromWishlist(userId,productId)
+        const { userId, productId } = req.params;
+        const updatedWishlist = await CustomerService.deleteProductFromWishlist(
+            userId,
+            productId
+        );
         return res.status(200).json(updatedWishlist);
     } catch (error) {
-        return res.status(500).json({error : error.message})
+        return res.status(500).json({ error: error.message });
     }
-}
+};
 exports.getCustomerByUsername = async (req, res) => {
     try {
         const username = req.params.username;
@@ -124,7 +136,6 @@ exports.getCustomerByUsername = async (req, res) => {
 };
 
 exports.createCustomer = async (req, res) => {
-   
     try {
         console.log(req.body);
         const { firstName, lastName, username, email, password } = req.body;
@@ -149,14 +160,10 @@ exports.createCustomer = async (req, res) => {
             res.status(409).json(error.message);
         } else {
             res.status(500).json(error.message);
-            console.log(error)
+            console.log(error);
         }
     }
-
-    
 };
-
-
 
 //get cart
 
@@ -200,7 +207,10 @@ exports.updateShippingAddress = async (req, res) => {
     const username = req.params.username;
     const address = req.body;
     try {
-        const customer = await CustomerService.updateShippingAddress(username, address);
+        const customer = await CustomerService.updateShippingAddress(
+            username,
+            address
+        );
         res.status(200).json(customer);
     } catch (error) {
         console.log(error.message);
@@ -227,7 +237,7 @@ exports.getCard = async (req, res) => {
 
 // add Card
 exports.addCard = async (req, res) => {
-    console.log("add card")
+    console.log("add card");
     try {
         const username = req.params.username;
         const cardDetails = req.body;
@@ -241,7 +251,7 @@ exports.addCard = async (req, res) => {
         } else if (error.message === "Duplicate Card Found") {
             res.status(409).json({ error: error.message });
         } else {
-            console.log(error.message)
+            console.log(error.message);
             res.status(500).json({ error: error.message });
         }
     }
@@ -296,6 +306,7 @@ exports.checkOut = async (req, res) => {
     try {
         const username = req.params.username;
         const { payment_method, payment_date } = req.body;
+        console.log(payment_method);
         const payment = await CustomerService.checkout(
             username,
             payment_method,
@@ -307,6 +318,23 @@ exports.checkOut = async (req, res) => {
         //create transaction
         //clear cart
     } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+exports.buyNow = async (req, res) => {
+    try {
+        const username = req.params.username;
+        const { productDetails, paymentDetails } = req.body;
+        const purchase = await CustomerService.buyNow(
+            username,
+            productDetails,
+            paymentDetails
+        );
+
+        res.status(201).json(purchase);
+    } catch (error) {
+        console.log(error);
         res.status(500).json({ error: error.message });
     }
 };

@@ -20,74 +20,77 @@ async function checkCustomerByEmail(email) {
 exports.purchaseHistory = async (customerId) => {
     try {
         const customerObjectId = new mongoose.Types.ObjectId(customerId);
-        const orders = await OrderModel.find({customerId : customerObjectId}).populate("product sellerId")
-        if(!orders){
-            throw new Error("No orders found for the specified customer")
+        const orders = await OrderModel.find({
+            customerId: customerObjectId,
+        }).populate("product sellerId");
+        if (!orders) {
+            throw new Error("No orders found for the specified customer");
         }
-        const cleanedOrders = []
-        for(let order of orders){
+        const cleanedOrders = [];
+        for (let order of orders) {
             const cleanedOrder = {
-                name : order.product.name,
-                img : order.product.image,
-                sellerName : order.sellerId.username,
-                quantity : order.quantity,
-                pricePerUnit : order.product.pricePerUnit,
-                totalPricePerOrder : order.totalPricePerOrder,
-                orderPlacedDate : order.time_placed,
-                orderReceivedDate : order.time_received || "Pending",
-            }
-            cleanedOrders.push(cleanedOrder)
+                name: order.product.name,
+                img: order.product.image,
+                sellerName: order.sellerId.username,
+                quantity: order.quantity,
+                pricePerUnit: order.product.pricePerUnit,
+                totalPricePerOrder: order.totalPricePerOrder,
+                orderPlacedDate: order.time_placed,
+                orderReceivedDate: order.time_received || "Pending",
+            };
+            cleanedOrders.push(cleanedOrder);
         }
-        return cleanedOrders
+        return cleanedOrders;
     } catch (error) {
-        throw new Error(error)
+        throw new Error(error);
     }
-}
+};
 exports.orderStatusCategory = async (customerId) => {
     try {
         const customerObjectId = new mongoose.Types.ObjectId(customerId);
-        const orders = await OrderModel.find({ customerId: customerObjectId }).select("status");
+        const orders = await OrderModel.find({
+            customerId: customerObjectId,
+        }).select("status");
         let stats = {};
-        for(let order of orders){
-            if(!stats[order.status]){
-                stats[order.status] = 1
-            }
-            else {
-                stats[order.status] += 1
+        for (let order of orders) {
+            if (!stats[order.status]) {
+                stats[order.status] = 1;
+            } else {
+                stats[order.status] += 1;
             }
         }
-        return stats
-
+        return stats;
     } catch (error) {
-        throw new Error(error)
+        throw new Error(error);
     }
-}
+};
 
 exports.purchaseCategory = async (customerId) => {
     try {
-        const customerObjectId = new mongoose.Types.ObjectId(customerId)
-        const orders = await OrderModel.find({ customerId: customerObjectId }).populate('product')
-        let stats = {}
-        for(let order of orders){
-            const category = order.product.category
-            if(!stats[category]){
-                stats[category] = 1
-            }
-            else {
-                stats[category] += 1
+        const customerObjectId = new mongoose.Types.ObjectId(customerId);
+        const orders = await OrderModel.find({
+            customerId: customerObjectId,
+        }).populate("product");
+        let stats = {};
+        for (let order of orders) {
+            const category = order.product.category;
+            if (!stats[category]) {
+                stats[category] = 1;
+            } else {
+                stats[category] += 1;
             }
         }
-        return stats
+        return stats;
     } catch (error) {
-        throw new Error (error)
+        throw new Error(error);
     }
-}
+};
 exports.monthlyPurchase = async (customerId) => {
     try {
         const customerObjectId = new mongoose.Types.ObjectId(customerId);
         const orders = await OrderModel.find({ customerId: customerObjectId });
         let stats = {};
-        for(let order of orders){
+        for (let order of orders) {
             const month = order.time_placed.getMonth() + 1;
             let processedMonth = month;
             switch (month) {
@@ -135,11 +138,10 @@ exports.monthlyPurchase = async (customerId) => {
             }
         }
         return stats;
-        
     } catch (error) {
-        throw new Error(error)
+        throw new Error(error);
     }
-}
+};
 
 // exports.revenuePerMonth = async (sellerId) => {
 //     const sellerObjectId = new mongoose.Types.ObjectId(sellerId);
@@ -200,70 +202,83 @@ exports.monthlyPurchase = async (customerId) => {
 
 exports.addProductToWishlist = async (userId, productId) => {
     try {
-      const customer = await CustomerModel.findById(userId);
-      if (!customer) {
-        throw new Error("Customer not found in the database.");
-      }
-  
-      const product = await ProductModel.findById(productId);
-      if (!product) {
-        throw new Error("Product not found in the database.");
-      }
+        const customer = await CustomerModel.findById(userId);
+        if (!customer) {
+            throw new Error("Customer not found in the database.");
+        }
 
-      if (customer.wishlist.includes(product._id)) {
-        return { message: "Product already in wishlist", customer };
-      }
-  
-      customer.wishlist.push(product._id);
-      await customer.save();
-  
-      return { message: "Product added to wishlist", customer };
+        const product = await ProductModel.findById(productId);
+        if (!product) {
+            throw new Error("Product not found in the database.");
+        }
+
+        if (customer.wishlist.includes(product._id)) {
+            return { message: "Product already in wishlist", customer };
+        }
+
+        customer.wishlist.push(product._id);
+        await customer.save();
+
+        return { message: "Product added to wishlist", customer };
     } catch (error) {
-      console.error("Error adding product to wishlist:", error);
-      return { message: "An error occurred while adding product to wishlist", error: error.message };
+        console.error("Error adding product to wishlist:", error);
+        return {
+            message: "An error occurred while adding product to wishlist",
+            error: error.message,
+        };
     }
-  }
+};
 
-exports.getWishlist = async(userId) => {
+exports.getWishlist = async (userId) => {
     try {
-        const wishlistData = await CustomerModel.findById(userId).select('wishlist').populate({
-            path: 'wishlist',
-            populate: {
-                path: 'seller',
-                model: 'Seller' // Replace with your seller model name
-            }
-        });
+        const wishlistData = await CustomerModel.findById(userId)
+            .select("wishlist")
+            .populate({
+                path: "wishlist",
+                populate: {
+                    path: "seller",
+                    model: "Seller", // Replace with your seller model name
+                },
+            });
         if (!wishlistData) {
             throw new Error("Customer is not found in DB!");
         }
         const wishlist = wishlistData.wishlist;
         return wishlist;
-
     } catch (error) {
-        return {message : "An error occured while retrieving wishlist", error : error.message}
+        return {
+            message: "An error occured while retrieving wishlist",
+            error: error.message,
+        };
     }
-}
+};
 
-exports.deleteProductFromWishlist = async (userId,productId) => {
+exports.deleteProductFromWishlist = async (userId, productId) => {
     try {
         const customer = await CustomerModel.findById(userId);
-        if(!customer){
-            throw new Error ("Customer is not found in DB!");
+        if (!customer) {
+            throw new Error("Customer is not found in DB!");
         }
-        const product = customer.wishlist.find(product => product._id == productId);
-        if(!product){
-            throw new Error ("Product is not found in wishlist!");
+        const product = customer.wishlist.find(
+            (product) => product._id == productId
+        );
+        if (!product) {
+            throw new Error("Product is not found in wishlist!");
         }
-        const updatedWishlist = customer.wishlist.filter((wishlistProduct) => wishlistProduct._id != productId)
+        const updatedWishlist = customer.wishlist.filter(
+            (wishlistProduct) => wishlistProduct._id != productId
+        );
         customer.wishlist = updatedWishlist;
         await customer.save();
         const updatedCustomerWishlist = await getWishlist(userId);
         return updatedCustomerWishlist;
-
     } catch (error) {
-        return {message : "An error occured while deleting product from wishlist", error : error.message}
+        return {
+            message: "An error occured while deleting product from wishlist",
+            error: error.message,
+        };
     }
-}
+};
 
 //support function to get user data by its username, wont throw exception to controller
 async function checkCustomerByUsername(username) {
@@ -272,13 +287,13 @@ async function checkCustomerByUsername(username) {
 }
 
 exports.getAllSellers = async (customerId) => {
-    const orders = await OrderModel.find({ customerId }).populate('sellerId');
+    const orders = await OrderModel.find({ customerId }).populate("sellerId");
 
     if (!orders || orders.length === 0) {
-        throw new Error('No orders found for the specified customer');
+        throw new Error("No orders found for the specified customer");
     }
 
-    const sellers = [...new Set(orders.map(order => order.sellerId))];
+    const sellers = [...new Set(orders.map((order) => order.sellerId))];
 
     return sellers;
 };
@@ -298,7 +313,9 @@ exports.login = async (loginData) => {
 
 exports.getAllCustomers = async () => {
     try {
-        const customers = await CustomerModel.find().select("-password -cards -cart -email");
+        const customers = await CustomerModel.find().select(
+            "-password -cards -cart -email"
+        );
         if (customers.length === 0) {
             throw new Error("There are no customers in the database");
         }
@@ -697,6 +714,67 @@ exports.checkout = async (username, payment_method, payment_date) => {
     // console.log({ findTransaction, cart });
 
     return { findTransaction, cart };
+};
+
+exports.buyNow = async (username, buyProduct, paymentDetails) => {
+    // console.log(buyProduct, paymentDetails);
+    const customer = await CustomerModel.findOne({ username: username });
+    if (!customer) {
+        throw new Error("Customer Not Found");
+    }
+
+    const product = await ProductModel.findById(buyProduct.id);
+    if (!product) {
+        throw new Error("Product Not Found");
+    }
+
+    const newOrderData = {
+        customerId: customer._id,
+        sellerId: product.seller,
+        product: product._id,
+        quantity: buyProduct.quantity,
+        totalPricePerOrder: product.pricePerUnit * buyProduct.quantity,
+        status: "Pending",
+        time_placed: new Date(
+            new Date(paymentDetails.payment_date).toLocaleString("en-US", {
+                timeZone: "Asia/Singapore",
+            })
+        ),
+        shippingAddress: paymentDetails.shippingAddress,
+    };
+
+    const newOrder = await OrderModel.create( newOrderData );
+    if (!newOrder) {
+        throw new Error("Failed to create order");
+    }
+
+    customer.orders.push(new mongoose.Types.ObjectId(newOrder._id));
+
+    const newTransactionData = {
+        sellers: [product.seller],
+        payment_date: new Date(
+            new Date(paymentDetails.payment_date).toLocaleString("en-US", {
+                timeZone: "Asia/Singapore",
+            })
+        ),
+        customer: customer._id,
+        orders: [newOrder._id],
+        payment_status: "Paid",
+        payment_method: paymentDetails.payment_method,
+        totalTransactionPrice:
+            product.pricePerUnit * buyProduct.quantity,
+    };
+
+    console.log(newTransactionData);
+
+    const purchase = await TransactionModel.create( newTransactionData );
+    if (!purchase) {
+        throw new Error("Failed to create purchase");
+    }
+    await customer.save();
+    await newOrder.save();
+    await purchase.save();
+    return purchase;
 };
 
 exports.orderReceived = async (username, orderId, time_received) => {

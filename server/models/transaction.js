@@ -12,11 +12,10 @@ const transactionSchema = new Schema({
         type: String,
         enum: [
             "Online Banking",
-            "Credit Card",
-            "Debit Card",
+            "Credit/Debit Card",
             "TNG",
             "Cash On Delivery",
-        ],        
+        ],
         required: true,
     },
     totalTransactionPrice: { type: Number, required: true },

@@ -93,7 +93,7 @@ function Product() {
         };
         setCartItems((prev) => [...prev, cartItem]);
         console.log(cartItem);
-        navigation("/customer/checkout", { state: { cartItems: [cartItem] } });
+        navigation("/customer/checkout", { state: { cartItems: [cartItem], buyNow: true } });
     };
 
     const minusQuantity = () => {

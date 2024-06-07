@@ -136,7 +136,7 @@ function AddProduct() {
         console.log(productObj);
         axios
             .put(
-                `http://localhost:8080/api/sellers/${username}/${productID}/edit`,
+                `http://localhost:1234/api/sellers/${username}/${productID}/edit`,
                 productObj
             )
             .then((_) => {

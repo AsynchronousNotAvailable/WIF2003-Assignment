@@ -85,8 +85,9 @@ function EditSellerProfile() {
       pfp: image,
     };
     try {
+      console.log(obj);
       axios
-        .put(`http://localhost:8080/api/sellers/${username}/editProfile`, obj)
+        .put(`http://localhost:1234/api/sellers/${username}/editProfile`, obj)
         .then((response) => {
           window.alert("Profile edited successfully");
           saveSeller(response.data);

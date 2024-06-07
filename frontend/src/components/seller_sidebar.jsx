@@ -21,7 +21,7 @@ function Seller_NavSidebar() {
     navigation("/seller/profile");
   };
   const goToChat = () => {
-    navigation("/seller/seller_chat");
+    navigation("/seller_chat");
   };
   const toOrderManagement = () => {
     setSellerNavBarSelected("OrderMgmt");

@@ -23,9 +23,9 @@ function SortingTable(props, ref){
     
     function handleDeleteData(productID){
         const username = seller.username; 
-        axios.delete(`http://localhost:8080/api/sellers/${username}/${productID}/delete`).then((_) => {
+        axios.delete(`http://localhost:1234/api/sellers/${username}/${productID}/delete`).then((_) => {
             window.alert("Product is delete successfully.")
-            axios.get(`http://localhost:8080/api/sellers/${username}/products`).then((response) => {
+            axios.get(`http://localhost:1234/api/sellers/${username}/products`).then((response) => {
                 setData(response.data);
             });
         })

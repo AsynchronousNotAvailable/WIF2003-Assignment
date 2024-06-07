@@ -47,7 +47,7 @@ function Checkout_Item_List({ checkoutItems }) {
                                     }}
                                 >
                                     <Image
-                                        src={checkoutItem.img}
+                                        src={checkoutItem.product.image}
                                         alt="Product Image"
                                     />
                                     <SmallText>{checkoutItem.product.name}</SmallText>

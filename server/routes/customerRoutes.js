@@ -35,6 +35,8 @@ router.post("/:username/addCard", customerController.addCard);
 router.delete("/:username/:cardId/removeCard", customerController.removeCard);
 
 router.put('/:username/checkout', customerController.checkOut);
+
+router.post('/:username/buyNow', customerController.buyNow);
 //order received
 router.put("/:username/:orderId/orderReceived", customerController.orderReceived);
 //retrive order history
