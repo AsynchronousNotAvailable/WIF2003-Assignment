@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import Customer_Navbar from "../../components/customer_navbar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { GlobalContext } from "../../context";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
@@ -17,21 +17,21 @@ import Product from "../customer/product";
 const ProductListing = () => {
     const { cartItems, setCartItems, productListing, setProductListing } =
         useContext(GlobalContext);
-    const location = useLocation();
-    const { displayedProducts, categoryClicked } = location.state;
-
+    
+    const { category } = useParams();
     useEffect(() => {
-        console.log(categoryClicked);
-        fetchProducts(categoryClicked);
+        console.log(category);
+        fetchProducts(category);
     }, []);
 
     const fetchProducts = async (categoryClicked) => {
+        console.log(categoryClicked);
         try {
             const response = await axios.get(
                 `http://localhost:1234/api/products/marketplace`
             );
             const products = response.data;
-            console.log(products);
+            
             setProductListing(products);
 
             handleSortingChange(products, categoryClicked);
@@ -53,7 +53,7 @@ const ProductListing = () => {
     const handleSortingChange = (products, e) => {
         // console.log("E from handleSortingChange " + e);
         let sortingPreference = "";
-        if (categoryClicked) {
+        if (e) {
             sortingPreference = e;
         } else {
             sortingPreference = e.target.value;
@@ -95,7 +95,7 @@ const ProductListing = () => {
                     <section>
                         <label for="sortType">Sort by :</label>
                         <select
-                            onChange={(e) => handleSortingChange(e)}
+                            // onChange={(e) => handleSortingChange(e)}
                             name="sortType"
                             id="sortType"
                         >

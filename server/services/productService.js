@@ -27,7 +27,9 @@ exports.getProductReviews = async (productId) => {
         let reviews = [];
         for (id in reviewIds) {
             console.log(id);
-            const review = await ReviewModel.findById(reviewIds[id]).populate("customer");
+            const review = await ReviewModel.findById(reviewIds[id]).populate(
+                "customer"
+            );
             if (!review) {
                 throw new Error("Review Not Found");
             }
@@ -35,6 +37,22 @@ exports.getProductReviews = async (productId) => {
         }
 
         return reviews;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
+
+exports.getOneProduct = async (productId) => {
+    try {
+        const product = await ProductModel.findById(
+            new mongoose.Types.ObjectId(productId)
+        ).populate("seller");
+
+        if (!product) {
+            throw new Error("product not found");
+        }
+
+        return product;
     } catch (error) {
         throw new Error(error.message);
     }

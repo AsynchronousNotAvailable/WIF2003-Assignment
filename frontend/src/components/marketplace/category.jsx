@@ -22,25 +22,11 @@ const styles = {
     p: {
         padding: "10px",
     }
-    // button: {
-    //     border: "none",
-    //     outline: "0",
-    //     padding: "12px",
-    //     color: "white",
-    //     backgroundColor: "#000",
-    //     textAlign: "center",
-    //     cursor: "pointer",
-    //     width: "100%",
-    //     fontSize: "18px",
-        
-    // },
-    // buttonHover: {
-    //     opacity: "0.7",
-    // },
+
 };
 
 export default function Category({ category, url, onCategoryClicked }) {
-    console.log(category, url);
+ 
     return (
         <div style={styles.card}>
             <img

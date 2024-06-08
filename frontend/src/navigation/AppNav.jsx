@@ -38,13 +38,13 @@ function AppNav() {
                         element={<MarketplaceAnalysis />}
                     />
                     <Route path="/marketplace" element={<Marketplace />} />
-                    <Route path="/customer/shop/:seller" element={<Shop />} />
+                    <Route path="/customer/shop/:sellerId" element={<Shop />} />
                     <Route
-                        path="/customer/products"
+                        path="/customer/products/:category"
                         element={<ProductListing />}
                     />
 
-                    <Route path="/customer/product/:id" element={<Product />} />
+                    <Route path="/customer/product/:productId" element={<Product />} />
                     <Route path="/signup" element={<SignUp />} />
                     <Route path="/editprofile" element={<EditProfile />} />
                     <Route path="/customer/cart" element={<Customer_Cart />} />

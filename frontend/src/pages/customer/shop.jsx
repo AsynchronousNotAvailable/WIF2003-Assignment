@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import {  useNavigate, useParams } from "react-router-dom";
 import Customer_Navbar from "../../components/customer_navbar";
 import axios from "axios";
 function Shop() {
-    const location = useLocation();
+    const { sellerId } = useParams();
     const [seller, setSeller] = useState();
     const [shopItems, setShopItems] = useState([]);
     const navigation = useNavigate();
     useEffect(() => {
-        fetchProducts(location.state.sellerId);
+        fetchProducts(sellerId);
     }, []);
 
     const fetchProducts = async (sellerId) => {
@@ -21,6 +21,8 @@ function Shop() {
             const productsForSeller = products.filter(
                 (product) => product.seller._id === sellerId
             );
+
+            console.log(products);
 
             setSeller(productsForSeller[0].seller.username);
             adjustLayout(productsForSeller);

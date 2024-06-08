@@ -11,7 +11,7 @@ export default function Seller({ sellerId, name, pfp, navigateToShop }) {
         >
             <img
                 src={pfp}
-                className="border-gray-500 border-2 w-[110px] h-[110px] rounded-full shadow-2xl object-contain mb-5"
+                className="object-cover border-gray-500 border-2 w-[110px] h-[110px] rounded-full shadow-2xl mb-5"
             />
             <p className="font-sans font-light text-xl">{name}</p>
         </div>

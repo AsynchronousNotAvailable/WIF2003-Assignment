@@ -110,11 +110,12 @@ function AddProduct() {
         setTags(() => event.target.value);
     }
     function handleCancelClick() {
-        navigation("/product_management");
+        navigation("/seller/product_management");
     }
 
     function addSellerProduct(productObj) {
         const username = seller.username;
+        console.log(productObj);
         try {
             axios
                 .post(

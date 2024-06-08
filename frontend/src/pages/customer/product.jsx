@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import Customer_Navbar from "../../components/customer_navbar";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { GlobalContext } from "../../context";
 import Product_Review from "./components/Product_Review";
 import Box from "@mui/material/Box";
@@ -10,12 +10,14 @@ import axios from "axios";
 
 function Product() {
     const [wishlistedProduct, setWishlistedProduct] = useState("");
-    const { cartItems, setCartItems,userDetails} = useContext(GlobalContext);
+    const { cartItems, setCartItems, userDetails } = useContext(GlobalContext);
     const navigation = useNavigate();
-    const location = useLocation();
-    const [product, setProduct] = useState(location.state.product);
+    // const location = useLocation();
+    const { productId } = useParams();
+    const [product, setProduct] = useState({});
     const [reviews, setReviews] = useState([]);
-    // console.log(product); //not really right
+    const [rating, setRating] = useState(0);
+   
     const [variation, setVariation] = useState("");
     const [quantity, setQuantity] = useState(0);
     const { getCustomer } = useCustomer();
@@ -24,25 +26,43 @@ function Product() {
     const addToWishlist = async (userId, productId) => {
         try {
             const reqData = {
-                userId : userId,
-                productId : productId
-            }
-            const res = await axios.post("http://localhost:1234/api/customers/wishlist/add",reqData);
+                userId: userId,
+                productId: productId,
+            };
+            const res = await axios.post(
+                "http://localhost:1234/api/customers/wishlist/add",
+                reqData
+            );
             setWishlistedProduct(productId);
-            console.log(res.data);
+            
         } catch (error) {
             console.log(error);
         }
-    }
+    };
+    const fetchProduct = async () => {
+        try {
+         
+            const response = await axios.get(
+                `http://localhost:1234/api/products/${productId}`
+            );
+
+            
+            setProduct(response.data);
+            setRating(response.data.average_rating);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     const fetchProductReviews = async () => {
         try {
-            const productId = product._id;
+            // const productId = product._id;
             const response = await axios.get(
                 `http://localhost:1234/api/products/review/${productId}`
             );
             let temp = [];
             const fetchedReviews = response.data;
-            console.log(fetchedReviews);
+            
             fetchedReviews.map((review) => {
                 const processedReview = {
                     title: review.title,
@@ -76,7 +96,7 @@ function Product() {
                 `http://localhost:1234/api/customers/${username}/addToCart`,
                 newItem
             );
-            console.log(response.data);
+         
             if (response.status === 201) {
                 window.alert("Item added to cart successfully!");
                 // navigation("/customer/cart");
@@ -92,8 +112,10 @@ function Product() {
             variation,
         };
         setCartItems((prev) => [...prev, cartItem]);
-        console.log(cartItem);
-        navigation("/customer/checkout", { state: { cartItems: [cartItem], buyNow: true } });
+   
+        navigation("/customer/checkout", {
+            state: { cartItems: [cartItem], buyNow: true },
+        });
     };
 
     const minusQuantity = () => {
@@ -121,8 +143,13 @@ function Product() {
     };
 
     useEffect(() => {
+        fetchProduct();
         fetchProductReviews();
     }, []);
+
+    if (!product) {
+        return <div>Loading...</div>;
+    }
     return (
         <>
             <Customer_Navbar />
@@ -154,19 +181,23 @@ function Product() {
                                 className="hover:underline hover:text-black"
                             >
                                 <span className="font-sans text-md font-semibold tracking-wide text-black">
-                                    {product.seller.username}
+                                    {product &&
+                                        product.seller &&
+                                        product.seller.username}
                                 </span>
                             </a>
                         </p>
                     </div>
                     <div className="flex flex-row font-sans font-semibold mt-[5px]">
                         <p className="">
-                            {product.average_rating.toFixed(1)}/5
+                            {rating && rating.toFixed(1)}
+                            /5
                         </p>
                         <Box sx={{ "& > legend": { mt: 2 } }}>
                             <Rating
                                 name="read-only"
-                                value={product.average_rating.toFixed(1)}
+                                value={rating && rating.toFixed(1)}
+                                precision={0.1}
                                 readOnly
                             />
                         </Box>
@@ -179,22 +210,24 @@ function Product() {
                     </p>
                     <div className="flex flex-col mt-[20px]">
                         <h4 className="font-sans mb-[10px]">Variation</h4>
-                        <div className="flex flex-row justify-between w-full">
-                            {product.variation.map((v, index) => (
-                                <div
-                                    key={index}
-                                    className={`flex flex-row px-4 py-2 
+                        <div className="flex flex-row gap-2 justify-left w-full">
+                            {product &&
+                                product.variation &&
+                                product.variation.map((v, index) => (
+                                    <div
+                                        key={index}
+                                        className={`flex flex-row px-4 py-2 
                                                  rounded-lg w-[150px] border border-gray-400 variation-item cursor-pointer 
                                                  ${
                                                      variation.includes(v)
                                                          ? "bg-blue-800 text-white"
                                                          : "hover:bg-blue-800 hover:text-white transition-colors duration-500"
                                                  }`}
-                                    onClick={() => toggleSelection(v)}
-                                >
-                                    {v}
-                                </div>
-                            ))}
+                                        onClick={() => toggleSelection(v)}
+                                    >
+                                        {v}
+                                    </div>
+                                ))}
                         </div>
                     </div>
                     <div className="flex flex-row mt-[50px]">
@@ -224,15 +257,21 @@ function Product() {
                                 </div>
                             </button>
 
-                            <button onClick = {() => addToWishlist(userDetails._id,product._id)}
-                            className = {`hover:fill-red-600 ${wishlistedProduct === product._id ? "fill-red-600" : "text-gray-400"}`}
+                            <button
+                                onClick={() =>
+                                    addToWishlist(userDetails._id, product._id)
+                                }
+                                className={`hover:fill-red-600 ${
+                                    wishlistedProduct === product._id
+                                        ? "fill-red-600"
+                                        : "text-gray-400"
+                                }`}
                             >
-                            <img
-                                src="/heartIcon.svg"
-                                className="w-[20px] ml-[20px] h-[20px] "
-                            />
+                                <img
+                                    src="/heartIcon.svg"
+                                    className="w-[20px] ml-[20px] h-[20px] "
+                                />
                             </button>
-                            
                         </div>
 
                         <div className="flex flex-row items-center">

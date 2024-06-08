@@ -176,7 +176,7 @@ export default function Orders() {
                 `http://localhost:1234/api/customers/${username}/${orderId}/orderReceived`,
                 receivalDetails
             );
-            console.log(response.data);
+        
             if (response.status === 200) {
                 setFetchOrder(!fetchOrder);
             }
@@ -228,7 +228,7 @@ export default function Orders() {
                 </Text>
             </div>
             {sortedOrders.map((order, index) => (
-                console.log(sortedOrders),
+              
                 <Wrapper key={index} style={{ marginBottom: "20px" }}>
                     <Row>
                         <Column width="40%">

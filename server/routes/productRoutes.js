@@ -6,4 +6,6 @@ router.get("/marketplace", productController.getAllProducts);
 //fetch review for product
 
 router.get("/review/:productId", productController.getProductReviews);
+
+router.get("/:productId", productController.getOneProduct);
 module.exports = router;

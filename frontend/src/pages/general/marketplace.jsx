@@ -2,25 +2,21 @@ import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../../context";
 import Customer_Navbar from "../../components/customer_navbar";
 import { useNavigate } from "react-router-dom";
-import { PieChart } from "@mui/x-charts/PieChart";
-import { Typography, Stack } from "@mui/material";
-import { BarChart } from "@mui/x-charts/BarChart";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import FloatingChat from "../customer/components/FloatingChat";
 import FloatingChatList from "../customer/components/FloatingChatList";
 import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
-import useCustomer from "../../hooks/useCustomer";
 import axios from "axios";
 import Carousel from "react-multi-carousel";
 import Category from "../../components/marketplace/category";
 import "react-multi-carousel/lib/styles.css";
 import Seller from "../../components/marketplace/seller";
 function Marketplace() {
-    const { shopsItemListing, productListing, userDetails, customer } =
+    const { productListing } =
         useContext(GlobalContext);
-    console.log(userDetails);
+
     const [categoryList, setCategoryList] = useState([]);
     const [sellerList, setSellerList] = useState([]);
     const navigation = useNavigate();
@@ -50,10 +46,10 @@ function Marketplace() {
     }, []);
 
     const onCategoryClicked = (e) => {
-        console.log(e, displayedProducts);
+    
 
         setCategoryClicked(e);
-        navigation(`/customer/products`, {
+        navigation(`/customer/products/${e}`, {
             state: {
                 displayedProducts: displayedProducts,
                 categoryClicked: e,
@@ -85,6 +81,12 @@ function Marketplace() {
 
             case "Stationery":
                 return "https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+
+            case "Health":
+                return "https://images.unsplash.com/photo-1717457779569-a22db519853a?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+
+            case "Electronics":
+                return "https://images.unsplash.com/photo-1550009158-9ebf69173e03?q=80&w=3001&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
         }
     };
 
@@ -135,7 +137,7 @@ function Marketplace() {
 
                 tempSeller.push(newSeller);
             });
-            console.log(tempSeller);
+        
             setSellerList(tempSeller);
         } catch (error) {
             console.log(error);
@@ -153,7 +155,7 @@ function Marketplace() {
             if (event.target.innerText === "") {
                 setDisplayedProducts(productListing);
             } else {
-                console.log("innerText");
+            
                 const userInput = event.target.innerText.toLowerCase();
                 setUserSearchInput(userInput);
                 const matchedProducts = productListing.filter((product) =>
@@ -165,9 +167,9 @@ function Marketplace() {
             if (event.target.value === "") {
                 setDisplayedProducts(productListing);
             } else {
-                console.log("target value");
+       
                 const userInput = event.target.value.toLowerCase();
-                console.log(userInput);
+             
                 setUserSearchInput(userInput);
                 const matchedProducts = productListing.filter((product) =>
                     product.name.toLowerCase().includes(userInput)
@@ -311,9 +313,9 @@ function Marketplace() {
                         disableClearable={true}
                         freeSolo
                         sx={{ width: 600 }}
-                        onChange={(event, newValue) => {
-                            console.log(newValue);
-                        }}
+                        // onChange={(event, newValue) => {
+                        //     console.log(newValue);
+                        // }}
                         inputValue={userSearchInput}
                         value={userSearchInput}
                         onInputChange={(newInputValue) =>
@@ -385,7 +387,7 @@ function Marketplace() {
                                     onClick={() =>
                                         navigateToProductDetails(product)
                                     }
-                                    className="flex flex-col justify-center w-64 h-92 rounded-xl shadow-2xl px-10 py-10 hover:bg-slate-100"
+                                    className="flex flex-col gap-2 justify-center w-64 h-92 rounded-xl shadow-2xl px-10 py-10 hover:bg-slate-100"
                                 >
                                     <img
                                         style={{ objectFit: "contain" }}
@@ -405,7 +407,7 @@ function Marketplace() {
                                     <p className="font-sans text-[#7450DF]">
                                         RM{product.pricePerUnit}
                                     </p>
-                                    <section className="flex flex-row">
+                                    <section className="flex flex-row gap-2">
                                         <p className="font-sans font-semibold">
                                             {product.average_rating.toFixed(1)}
                                             /5
@@ -419,6 +421,11 @@ function Marketplace() {
                                                 name="read-only"
                                                 value={product.average_rating}
                                                 readOnly
+                                                precision={0.1}
+                                                style={{
+                                                    fontSize: "15px",
+                                                    verticalAlign: "middle",
+                                                }}
                                             />
                                         </Box>
                                     </section>

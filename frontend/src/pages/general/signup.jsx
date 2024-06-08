@@ -102,7 +102,14 @@ function SignUp() {
             alert("Passwords do not match");
         } else {
             // API call to create a new user
-            setUserDetails({ username, firstName, lastName, email, password });
+            const userDetails = {
+                username,
+                firstName,
+                lastName,
+                email,
+                password,
+            };
+           
             console.log(userDetails);
 
             if (selectedOption === "Customer") {
@@ -142,8 +149,8 @@ function SignUp() {
                 navigation("/");
             }
         } catch (error) {
-            console.log(error);
-            window.alert(error.response.data);
+            console.log(error.response.data);
+            window.alert(error.response.data.error);
         }
     };
 

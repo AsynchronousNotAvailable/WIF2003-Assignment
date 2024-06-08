@@ -114,8 +114,10 @@ exports.addProduct = async (username, newProductData) => {
         if (checkDupProduct) {
             throw new Error("Duplicate Product Found");
         }
+        console.log(newProductData);
         const newProduct = new ProductModel({
             ...newProductData,
+            image: newProductData.image,
             seller: seller._id,
         });
 
