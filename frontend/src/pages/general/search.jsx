@@ -2,27 +2,19 @@ import React, { useContext, useEffect, useState } from "react";
 import Customer_Navbar from "../../components/customer_navbar";
 import { useNavigate, useParams } from "react-router-dom";
 import { GlobalContext } from "../../context";
-import { useLocation } from "react-router-dom";
-import axios from "axios";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import EditIcon from "@mui/icons-material/Edit";
-import Divider from "@mui/material/Divider";
-import ArchiveIcon from "@mui/icons-material/Archive";
-import FileCopyIcon from "@mui/icons-material/FileCopy";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import Product from "../customer/product";
 
-const ProductListing = () => {
-    const { cartItems, setCartItems, productListing, setProductListing } =
-        useContext(GlobalContext);
-    const [sortType, setSortType] = useState("");
-    const { category } = useParams();
+import axios from "axios";
+
+const Search = () => {
+    const [productListing, setProductListing] = useState([]);
+    const [chosenSortType, setSortType] = useState("");
+    const [sortedProductsArr, setSortedProductsArr] = useState([]);
+    const [sortStatus, setSortStatus] = useState(false);
+    const { query } = useParams();
     useEffect(() => {
-        console.log(category);
-        fetchProducts(category);
-    }, [sortType]);
+        console.log(query);
+        fetchProducts(query);
+    }, []);
 
     const fetchProducts = async (categoryClicked) => {
         console.log(categoryClicked);
@@ -34,25 +26,7 @@ const ProductListing = () => {
 
             setProductListing(products);
 
-            let sortedProducts = [];
-            for (let i = 0; i < products.length; i++) {
-                console.log(products[i], categoryClicked);
-
-                if (products[i].category === categoryClicked) {
-                    console.log("SET");
-                    sortedProducts.push(products[i]);
-                }
-            }
-
-            if (sortType === "" || sortType === "PriceLTH") {
-                sortedProducts.sort((a, b) => a.pricePerUnit - b.pricePerUnit);
-            } else if (sortType === "PriceHTL") {
-                sortedProducts.sort((a, b) => b.pricePerUnit - a.pricePerUnit);
-            }
-
-            setSortedProductsArr(sortedProducts);
-
-            // handleSortingChange(products, categoryClicked, "PriceLTH");
+            handleSortingChange(products, query);
         } catch (error) {
             console.log(error);
         }
@@ -64,26 +38,27 @@ const ProductListing = () => {
         navigation(`/customer/product/${product._id}`, { state: { product } });
     };
 
-    const [sortedProductsArr, setSortedProductsArr] = useState([]);
+    const handleSortingChange = (products, query) => {
+        // console.log("E from handleSortingChange " + e);
+        let sortingPreference = query;
 
-    const handleSortingChange = (sortBy) => {
-        // console.log("E from handleSortingChange " + sortBy);
-        // let sortingPreference = sortBy;
-        // if (sortingPreference === "PriceLTH") {
-        //     console.log("Sorting by Price [Low to High]");
-        //     const sortedProducts = sortedProductsArr.sort(
-        //         (a, b) => a.pricePerUnit - b.pricePerUnit
-        //     );
-        //     console.log(sortedProducts);
-        //     setSortedProductsArr(sortedProducts);
-        // }
-        // else if(sortingPreference === "PriceHTL") {
-        //     console.log("Sorting by Price [High to Low]");
-        //     const sortedProducts = sortedProductsArr.sort(
-        //         (a, b) => b.pricePerUnit - a.pricePerUnit
-        //     );
-        //     setSortedProductsArr(sortedProducts);
-        // }
+        // console.log(sortingPreference);
+        // console.log(sortingPreference === e);
+        if (sortingPreference === query) {
+            console.log(products);
+            const matchedProducts = products.filter((product) =>
+                product.name.toLowerCase().includes(query)
+            );
+            // const sortedProducts = productListing.filter(
+            //     (product) => product.category === "Food"
+            // );
+
+            setSortedProductsArr(matchedProducts);
+        }
+
+        if (sortedProductsArr.length > 0) {
+            console.log(sortedProductsArr);
+        }
     };
 
     return (
@@ -97,7 +72,7 @@ const ProductListing = () => {
                     <section>
                         <label for="sortType">Sort by :</label>
                         <select
-                            onChange={(e) => setSortType(e.target.value)}
+                            // onChange={(e) => handleSortingChange(e)}
                             name="sortType"
                             id="sortType"
                         >
@@ -145,4 +120,4 @@ const ProductListing = () => {
     );
 };
 
-export default ProductListing;
+export default Search;

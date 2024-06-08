@@ -26,6 +26,7 @@ import PurchaseHistoryPage from "../pages/customer/PurchaseHistoryComponents/Pur
 import PopularProductAnalysisPage from "../pages/seller/components/PopularProductAnalysisComponents/PopularProductAnalysisPage";
 import ProductInteractivityAnalysisPage from "../pages/seller/components/PopularProductAnalysisComponents/ProductInteractivityAnalysisPage";
 import CustomerSegmentationPage from "../pages/seller/components/CustomerSegmentationComponents/CustomerSegmentationPage";
+import Search from "../pages/general/search";
 
 function AppNav() {
     return (
@@ -43,8 +44,14 @@ function AppNav() {
                         path="/customer/products/:category"
                         element={<ProductListing />}
                     />
-
-                    <Route path="/customer/product/:productId" element={<Product />} />
+                    <Route
+                        path="/customer/products/search/:query"
+                        element={<Search />}
+                    />
+                    <Route
+                        path="/customer/product/:productId"
+                        element={<Product />}
+                    />
                     <Route path="/signup" element={<SignUp />} />
                     <Route path="/editprofile" element={<EditProfile />} />
                     <Route path="/customer/cart" element={<Customer_Cart />} />
@@ -54,17 +61,32 @@ function AppNav() {
                         path="/customer/analysis"
                         element={<CustomerAnalysis />}
                     />
-                    <Route path = "/customer/wishlist" element = {<WishlistPage />} />
-                    <Route path = "/customer/purchase_history" element = {<PurchaseHistoryPage />} />
-                    <Route path="/customer_chat" element={<Customer_Chat />} /> 
+                    <Route
+                        path="/customer/wishlist"
+                        element={<WishlistPage />}
+                    />
+                    <Route
+                        path="/customer/purchase_history"
+                        element={<PurchaseHistoryPage />}
+                    />
+                    <Route path="/customer_chat" element={<Customer_Chat />} />
                     <Route path="/seller" element={<Seller_Home />} />
                     <Route
                         path="/seller/analysis"
                         element={<SellerAnalysis />}
                     />
-                    <Route path = "/seller/analysis/customer_segmentation" element = {<CustomerSegmentationPage />} />
-                    <Route path = "/seller/analysis/popular_products" element = {<PopularProductAnalysisPage />} />
-                    <Route path = "/seller/analysis/interacted_products" element = {<ProductInteractivityAnalysisPage />} />
+                    <Route
+                        path="/seller/analysis/customer_segmentation"
+                        element={<CustomerSegmentationPage />}
+                    />
+                    <Route
+                        path="/seller/analysis/popular_products"
+                        element={<PopularProductAnalysisPage />}
+                    />
+                    <Route
+                        path="/seller/analysis/interacted_products"
+                        element={<ProductInteractivityAnalysisPage />}
+                    />
                     <Route path="/seller_chat" element={<Seller_Chat />} />
                     <Route
                         path="/seller/order_management"

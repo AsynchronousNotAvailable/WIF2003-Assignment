@@ -155,7 +155,7 @@ function Marketplace() {
             if (event.target.innerText === "") {
                 setDisplayedProducts(productListing);
             } else {
-            
+                
                 const userInput = event.target.innerText.toLowerCase();
                 setUserSearchInput(userInput);
                 const matchedProducts = productListing.filter((product) =>
@@ -177,15 +177,13 @@ function Marketplace() {
                 setDisplayedProducts(matchedProducts);
             }
         } else {
-            const matchedProducts = productListing.filter((product) =>
-                product.name.toLowercAse().includes(userSearchInput)
-            );
-            setDisplayedProducts(matchedProducts);
+            setUserSearchInput("");
+            
         }
     };
 
     const onSearchButtonClick = () => {
-        navigation(`/customer/products`, { state: { displayedProducts } });
+        navigation(`/customer/products/search/${userSearchInput}`, { state: { displayedProducts } });
     };
 
     const navigateToProductDetails = (product) => {
