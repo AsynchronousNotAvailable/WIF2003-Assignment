@@ -12,12 +12,12 @@ const Search = () => {
     const [sortStatus, setSortStatus] = useState(false);
     const { query } = useParams();
     useEffect(() => {
-        console.log(query);
+     
         fetchProducts(query);
     }, []);
 
     const fetchProducts = async (categoryClicked) => {
-        console.log(categoryClicked);
+       
         try {
             const response = await axios.get(
                 `http://localhost:1234/api/products/marketplace`
@@ -34,18 +34,17 @@ const Search = () => {
 
     const navigation = useNavigate();
     const handleClick = (product) => {
-        console.log(product + " Clicked ");
+   
         navigation(`/customer/product/${product._id}`, { state: { product } });
     };
 
     const handleSortingChange = (products, query) => {
-        // console.log("E from handleSortingChange " + e);
+        
         let sortingPreference = query;
 
-        // console.log(sortingPreference);
-        // console.log(sortingPreference === e);
+       
         if (sortingPreference === query) {
-            console.log(products);
+   
             const matchedProducts = products.filter((product) =>
                 product.name.toLowerCase().includes(query)
             );
@@ -56,9 +55,7 @@ const Search = () => {
             setSortedProductsArr(matchedProducts);
         }
 
-        if (sortedProductsArr.length > 0) {
-            console.log(sortedProductsArr);
-        }
+       
     };
 
     return (

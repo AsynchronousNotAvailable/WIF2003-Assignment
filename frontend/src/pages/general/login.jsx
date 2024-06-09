@@ -188,7 +188,7 @@ function Login() {
     const CustomDropdownContainer = styled.div`
         width: ${(props) => props.size};
 
-        margin-bottom: 10px;
+        margin-bottom: 50px;
         margin-right: 10px;
 
         &:last-child {
@@ -254,7 +254,7 @@ function Login() {
                         size="100%"
                     />
 
-                    <div style={{ textAlign: "right" }}>
+                    {/* <div style={{ textAlign: "right" }}>
                         <SmallText
                             withOpacity
                             onClick={handleForgotPassword}
@@ -266,7 +266,7 @@ function Login() {
                         >
                             Forgot Password?
                         </SmallText>
-                    </div>
+                    </div> */}
                     <div
                         style={{
                             display: "flex",

@@ -53,4 +53,6 @@ router.get("/analysis/:customerId/orderStatusCategory", customerController.order
 router.get("/analysis/:customerId/purchaseCategory", customerController.purchaseCategory)
 
 router.get("/analysis/:customerId/purchaseHistory", customerController.purchaseHistory)
+
+router.put("/:username/editProfile", customerController.editProfile);
 module.exports = router;

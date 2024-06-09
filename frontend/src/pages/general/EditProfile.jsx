@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import { GlobalContext } from "../../context";
 import { useNavigate } from "react-router-dom";
 import CustomInput from "./CustomInput";
 import CustomButton from "./CustomButton";

@@ -20,12 +20,12 @@ const ProductListing = () => {
     const [sortType, setSortType] = useState("");
     const { category } = useParams();
     useEffect(() => {
-        console.log(category);
+       
         fetchProducts(category);
     }, [sortType]);
 
     const fetchProducts = async (categoryClicked) => {
-        console.log(categoryClicked);
+        
         try {
             const response = await axios.get(
                 `http://localhost:1234/api/products/marketplace`
@@ -36,10 +36,10 @@ const ProductListing = () => {
 
             let sortedProducts = [];
             for (let i = 0; i < products.length; i++) {
-                console.log(products[i], categoryClicked);
+               
 
                 if (products[i].category === categoryClicked) {
-                    console.log("SET");
+                    
                     sortedProducts.push(products[i]);
                 }
             }
@@ -60,31 +60,13 @@ const ProductListing = () => {
 
     const navigation = useNavigate();
     const handleClick = (product) => {
-        console.log(product + " Clicked ");
+       
         navigation(`/customer/product/${product._id}`, { state: { product } });
     };
 
     const [sortedProductsArr, setSortedProductsArr] = useState([]);
 
-    const handleSortingChange = (sortBy) => {
-        // console.log("E from handleSortingChange " + sortBy);
-        // let sortingPreference = sortBy;
-        // if (sortingPreference === "PriceLTH") {
-        //     console.log("Sorting by Price [Low to High]");
-        //     const sortedProducts = sortedProductsArr.sort(
-        //         (a, b) => a.pricePerUnit - b.pricePerUnit
-        //     );
-        //     console.log(sortedProducts);
-        //     setSortedProductsArr(sortedProducts);
-        // }
-        // else if(sortingPreference === "PriceHTL") {
-        //     console.log("Sorting by Price [High to Low]");
-        //     const sortedProducts = sortedProductsArr.sort(
-        //         (a, b) => b.pricePerUnit - a.pricePerUnit
-        //     );
-        //     setSortedProductsArr(sortedProducts);
-        // }
-    };
+    
 
     return (
         <div>

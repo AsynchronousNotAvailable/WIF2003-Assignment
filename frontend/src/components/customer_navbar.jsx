@@ -38,6 +38,10 @@ function Customer_Navbar() {
         navigation("/customer/orders");
     }
 
+    const goToProfile = () => { 
+        navigation("/customer/profile");
+    }
+
     return (
         <nav class="bg-[#5489FC] fixed w-full z-20 top-0 start-0 border-b border-gray-200">
             <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -67,6 +71,13 @@ function Customer_Navbar() {
                         onClick={goToCart}
                     >
                         <i class="fa-solid fa-cart-shopping text-white"></i>
+                    </div>
+
+                    <div
+                        class="cursor-pointer px-2 py-1 hover:bg-[#45b9dc] rounded-lg"
+                        onClick={goToProfile}
+                    >
+                        <i class="fa-solid fa-user text-white"></i>
                     </div>
 
                     <button
@@ -122,9 +133,9 @@ function Customer_Navbar() {
                             <button
                                 type="button"
                                 class="text-white  bg-[#5489FC] hover:bg-[#45b9dc] font-medium rounded-lg text-md px-4 py-2 text-center"
-                                onClick = {goToMarketAnalysis}
+                                onClick={goToMarketAnalysis}
                             >
-                                Marketplace Analysis 
+                                Marketplace Analysis
                             </button>
                         </li>
 
@@ -132,9 +143,9 @@ function Customer_Navbar() {
                             <button
                                 type="button"
                                 class="text-white  bg-[#5489FC] hover:bg-[#45b9dc] font-medium rounded-lg text-md px-4 py-2 text-center"
-                                onClick = {goToUserAnalysis}
+                                onClick={goToUserAnalysis}
                             >
-                                User Analysis 
+                                User Analysis
                             </button>
                         </li>
                     </ul>

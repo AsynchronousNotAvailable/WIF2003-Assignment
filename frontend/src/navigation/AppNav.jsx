@@ -27,6 +27,7 @@ import PopularProductAnalysisPage from "../pages/seller/components/PopularProduc
 import ProductInteractivityAnalysisPage from "../pages/seller/components/PopularProductAnalysisComponents/ProductInteractivityAnalysisPage";
 import CustomerSegmentationPage from "../pages/seller/components/CustomerSegmentationComponents/CustomerSegmentationPage";
 import Search from "../pages/general/search";
+import EditCustomerProfile from "../pages/customer/customer_edit_profile";
 
 function AppNav() {
     return (
@@ -70,6 +71,10 @@ function AppNav() {
                         element={<PurchaseHistoryPage />}
                     />
                     <Route path="/customer_chat" element={<Customer_Chat />} />
+                    <Route
+                        path="/customer/profile"
+                        element={<EditCustomerProfile />}
+                    />
                     <Route path="/seller" element={<Seller_Home />} />
                     <Route
                         path="/seller/analysis"

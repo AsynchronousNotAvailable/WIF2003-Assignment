@@ -897,3 +897,28 @@ exports.deleteReview = async (productId, reviewId) => {
 
     return product;
 };
+
+
+exports.updateProfile = async (username, profileData) => {
+    const customer = await CustomerModel.findOne({ username: username });
+
+    if (!customer) {
+        throw new Error("Seller Not Found");
+    }
+
+    const updateCustomer = await CustomerModel.findByIdAndUpdate(
+        customer._id,
+        {
+            $set: {
+                ...profileData,
+            },
+        },
+        { new: true }
+    );
+
+    if (!updateCustomer) {
+        throw new Error("Failed To Update Customer Profile");
+    }
+
+    return updateCustomer;
+};
