@@ -20,7 +20,10 @@ function OrderManagement() {
     const { getSeller } = useSeller();
     const [seller, setSeller] = useState(getSeller());
     const [sellerOrder, setSellerOrder] = useState(null);
-
+    const [filter, setFilter] = useState("");
+    const handleFilterChange = (e) => {
+        setFilter(e.target.value);
+    };
     useEffect(() => {
         setRendered(() => true);
     }, [sortingTableRef]);
@@ -35,6 +38,7 @@ function OrderManagement() {
 
             await Promise.all(
                 response.data.map(async (orders) => {
+                    console.log(orders.product);
                     const name = await getProductNameById(
                         username,
                         orders.product
@@ -45,7 +49,7 @@ function OrderManagement() {
                 setSellerOrder(response.data);
             });
         } catch (e) {
-            console.log(e.toString());
+            console.log(e);
         }
     };
 
@@ -54,6 +58,7 @@ function OrderManagement() {
     }, []);
 
     async function getProductNameById(username, id) {
+        console.log(username, id);
         console.log(
             `http://localhost:1234/api/sellers/${username}/products/${id}`
         );

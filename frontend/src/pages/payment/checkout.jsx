@@ -102,7 +102,7 @@ export default function Checkout() {
             } else {
                 placeOrder();
             }
-            // navigation("/customer/orders");
+            
         }
     };
 
@@ -149,11 +149,12 @@ export default function Checkout() {
                 payment_date: new Date(),
                 shipping_address: customer.shippingAddress,
             };
+            console.log(paymentDetails);
             const response = await axios.put(
                 `http://localhost:1234/api/customers/${username}/checkout`,
                 paymentDetails
             );
-            console.log(response.data);
+            navigation("/customer/orders");
         } catch (error) {
             console.log(error);
         }

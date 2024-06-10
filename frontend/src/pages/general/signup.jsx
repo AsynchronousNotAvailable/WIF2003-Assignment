@@ -109,7 +109,7 @@ function SignUp() {
                 email,
                 password,
             };
-           
+
             console.log(userDetails);
 
             if (selectedOption === "Customer") {
@@ -122,8 +122,9 @@ function SignUp() {
 
     const signUpCustomer = async (userDetails) => {
         try {
+            console.log("customer");
             const response = await axios.post(
-                `http://localhost:1234/api/customers/register`,
+                `http://localhost:1234/api/customers/signup`,
                 userDetails
             );
             console.log(response);

@@ -5,7 +5,7 @@ const OrderModel = require("../models/order");
 const mongoose = require("mongoose");
 
 exports.login = async (req, res) => {
-    console.log("login");
+    console.log("sihai");
     try {
         const loginData = req.body;
         const customer = await CustomerService.login(loginData);
@@ -380,7 +380,7 @@ exports.addReview = async (req, res) => {
         const username = req.params.username;
 
         const { title, description, stars } = req.body;
-
+        console.log(title, description, stars);
         const productReview = await CustomerService.addReview(
             username,
             productId,
@@ -388,6 +388,8 @@ exports.addReview = async (req, res) => {
             description,
             stars
         );
+
+        
 
         res.status(200).json(productReview);
     } catch (error) {

@@ -1,11 +1,12 @@
 import React, {useEffect, useState, useContext} from 'react'
 import { GlobalContext } from '../../../../context';
 import axios from 'axios';
+import useSeller from '../../../../hooks/useSeller';
 
 const SinglePopularProduct = () => {
   const [popularProducts,setPopularProducts] = useState([]);
-  const {userDetails} = useContext(GlobalContext);
-  const sellerId = userDetails._id;
+  const { getSeller } = useSeller();
+  const sellerId = getSeller()._id;
 
   useEffect( () => {
     const fetchPopularProducts = async () => {

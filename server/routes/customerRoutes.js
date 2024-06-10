@@ -14,11 +14,11 @@ router.delete('/wishlist/delete/:userId/:productId', customerController.deletePr
 
 router.get('/wishlist/get/:userId', customerController.getWishlist);
 
-router.post('/:login', customerController.login);
+router.post('/login', customerController.login);
 
 router.get('/:username', customerController.getCustomerByUsername);
 
-router.post('/register', customerController.createCustomer);
+router.post('/signup', customerController.createCustomer);
 
 router.post('/:username/addToCart', customerController.addToCart);
 

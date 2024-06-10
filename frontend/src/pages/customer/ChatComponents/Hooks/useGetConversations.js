@@ -1,12 +1,16 @@
 import { useEffect, useState, useContext } from "react";
 import { GlobalContext } from "../../../../context";
 import axios from "axios";
+import useCustomer from "../../../../hooks/useCustomer";
 
 //Universal hook for both customers and sellers
 const useGetConversations = () => {
-    const { userDetails } = useContext(GlobalContext);
+    
+  
+    const { getCustomer } = useCustomer();
     console.log("From UseGetConversations, userDetails._id below");
-    const customerId = userDetails._id;
+    
+    const customerId = getCustomer()._id;
     const [conversations, setAllConversations] = useState([]);
     useEffect(() => {
         const getAllConversations = async () => {

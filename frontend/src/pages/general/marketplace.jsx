@@ -25,7 +25,7 @@ function Marketplace() {
     const {selectedSeller, setSelectedSeller} = useContext(GlobalContext);
     const {conversations} = useGetConversations();
     console.log(conversations);
-    useListenMessages();
+
     const [chatList, setChatList] = useState("");
     const {allChats} = useGetAllChats()
 

@@ -665,15 +665,15 @@ exports.checkout = async (username, payment_method, payment_date) => {
         await newOrder.save();
     }
 
-    console.log("LIST");
-    console.log(orderList, sellerList, totalTransactionPrice);
-    if (
-        orderList.length === 0 ||
-        sellerList.length === 0 ||
-        totalTransactionPrice === 0
-    ) {
-        throw new Error("Transaction Error");
-    }
+    // console.log("LIST");
+    // console.log(orderList, sellerList, totalTransactionPrice);
+    // if (
+    //     orderList.length === 0 ||
+    //     sellerList.length === 0 ||
+    //     totalTransactionPrice === 0
+    // ) {
+    //     throw new Error("Transaction Error");
+    // }
 
     const newTransactionData = {
         sellers: sellerList,

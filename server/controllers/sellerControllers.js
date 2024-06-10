@@ -193,6 +193,7 @@ exports.editProduct = async (req, res) => {
 
 exports.getOrders = async (req, res) => {
     try {
+       
         const username = req.params.username;
         const orders = await SellerService.getOrders(username);
 
@@ -235,6 +236,7 @@ exports.getProductById = async (req, res) => {
       username,
       productId
     );
+    console.log(product);
     res.status(200).json(product);
   } catch (error) {
     if (

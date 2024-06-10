@@ -1,10 +1,11 @@
 import React, {useState,useContext,useEffect} from 'react'
 import { GlobalContext } from '../../../context'
 import axios from 'axios'
+import useCustomer from '../../../hooks/useCustomer'
 
 const SinglePurchaseHistory = () => {
-  const {userDetails} = useContext(GlobalContext)
-  const customerId = userDetails._id
+  const { getCustomer } = useCustomer();
+  const customerId = getCustomer()._id;
   const [purchaseHistory, setPurchaseHistory] = useState("")
 
   useEffect( () => {
@@ -80,7 +81,7 @@ const SinglePurchaseHistory = () => {
           </div>
 
           <div className = "font-sans font-semibold text-lg ">
-            {purchase.totalPricePerOrder}
+            {purchase.totalPricePerOrder.toFixed(2)}
           </div>
 
           <div className = "font-sans font-semibold text-lg ">
@@ -117,7 +118,7 @@ const SinglePurchaseHistory = () => {
     : 
     (
       <div className = "text-5xl font-bold font-sans">
-        No purchases made. Excite the economy bro.
+        
       </div>
     )
   )

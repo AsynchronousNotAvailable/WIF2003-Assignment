@@ -4,11 +4,12 @@ import axios from 'axios';
 import { GlobalContext } from '../../../context';
 import { MdDeleteForever } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
+import useCustomer from '../../../hooks/useCustomer';
 
 const WishlistPage = () => {
     const [wishlist, setWishlist] = useState([]);
-    const { userDetails } = useContext(GlobalContext);
-    const userId = userDetails._id;
+    const { getCustomer } = useCustomer();
+    const userId = getCustomer()._id;
 
     useEffect(() => {
         const fetchWishlist = async () => {

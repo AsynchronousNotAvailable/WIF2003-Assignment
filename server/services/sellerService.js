@@ -225,7 +225,7 @@ exports.updateProduct = async (username, productId, updateProductData) => {
 
 exports.getOrders = async (username) => {
     const seller = await SellerModel.findOne({ username: username });
-
+    console.log(username, seller);
     if (!seller) {
         throw new Error("Seller Not Found");
     }

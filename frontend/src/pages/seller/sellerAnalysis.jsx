@@ -19,6 +19,7 @@ import {
 import Seller_NavSidebar from '../../components/seller_sidebar';
 import axios from 'axios';
 import { keyframes } from '@emotion/react';
+import useSeller from '../../hooks/useSeller';
 
 
 
@@ -29,8 +30,8 @@ const App = () => {
     const [orderStatusSummary, setOrderStatusSummary] = useState([]);
     const [ratingSummary, setRatingSummary] = useState("")
     const [revenuePerMonth, setRevenuePerMonth] = useState([])
-    const {userDetails} = useContext(GlobalContext);
-    const sellerId = userDetails._id;
+    const { getSeller } = useSeller();
+    const sellerId = getSeller()._id;
 
     useEffect( () => {
         try {
@@ -111,7 +112,7 @@ const newVisitor = [1000,2300,1500,7000,7200,3070,4350]
 const yValues = revenuePerMonth.map(item => item.value);
 
 const xLabels = [
-"May","June"
+"April", "May","June"
 ];
     return (
         <div className = "overflow-hidden h-screen">

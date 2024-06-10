@@ -1,11 +1,12 @@
 import React, {useState,useEffect,useContext} from 'react'
 import { GlobalContext } from '../../../../context';
 import axios from 'axios';
+import useSeller from '../../../../hooks/useSeller';
 
 const SingleInteractedProduct = () => {
   const [interactedProducts,setInteractedProducts] = useState([]);
-  const {userDetails} = useContext(GlobalContext);
-  const sellerId = userDetails._id;
+  const { getSeller } = useSeller();
+  const sellerId = getSeller()._id;
 
   useEffect( () => {
     const fetchInteractedProducts = async () => {

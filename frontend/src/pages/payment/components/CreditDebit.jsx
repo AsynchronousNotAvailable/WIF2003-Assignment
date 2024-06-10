@@ -207,7 +207,7 @@ const CreditDebitCard = ({ username }) => {
             setModalOpen(false);
             setCards((prevCards) => [...prevCards, cardDetails]);
         } catch (error) {
-            console.log(error);
+            window.alert(`Error adding card: ${error.response.data.error}`, );
         }
     };
 

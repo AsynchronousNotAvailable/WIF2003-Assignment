@@ -1,10 +1,12 @@
 import React, {useEffect,useContext, useState} from 'react'
 import { GlobalContext } from '../context'
 import axios from 'axios';
+import useCustomer from './useCustomer';
 
 const useGetAllChats = () => {
-    const {userDetails} = useContext(GlobalContext);
-    const userId = userDetails._id;
+    const { userDetails } = useContext(GlobalContext);
+    const { getCustomer } = useCustomer();
+    const userId = getCustomer()._id;
     const [allChats,setAllChats] = useState([]);
 
     useEffect( () => {

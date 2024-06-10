@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-
+import seller_default_pfp from "../../../assets/default_seller_image.png";
 function Product_Review({ reviews }) {
     return (
         <>
@@ -8,7 +8,12 @@ function Product_Review({ reviews }) {
                     <div className="flex-col p-6   rounded-md">
                         <div className="flex flex-row items-center gap-10">
                             <img
-                                src={review.customerPfp}
+                                src={
+                                    review.customerPfp == undefined ||
+                                    review.customerPfp == ""
+                                        ? seller_default_pfp
+                                        : review.customerPfp
+                                }
                                 alt=""
                                 className=" object-cover rounded-full w-20 h-20"
                             />
