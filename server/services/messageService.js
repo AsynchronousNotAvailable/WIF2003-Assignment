@@ -88,13 +88,13 @@ catch (error) {
 exports.getChats = async (userId) => {
     try {
         //Can be customer or seller
-        let currentUser = CustomerModel.find(userId);
+        let currentUser = await CustomerModel.findById(userId);
         if(currentUser){
             let chats = await ConversationModel.find({customerId : userId}).populate("sellerId customerId messages");
             return chats;
         }
         else {
-            currentUser = SellerModel.find(userId);
+            currentUser = await SellerModel.findById(userId);
             if(currentUser){
                 let chats = await ConversationModel.find({sellerId : userId}).populate("sellerId customerId messages");
                 return chats;
@@ -104,7 +104,7 @@ exports.getChats = async (userId) => {
             }
         }
 
-        
+
 
     } catch (error) {
         throw new Error(error);

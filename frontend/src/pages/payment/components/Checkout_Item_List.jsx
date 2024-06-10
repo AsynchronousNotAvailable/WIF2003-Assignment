@@ -32,6 +32,7 @@ const Image = styled.img`
 `;
 
 function Checkout_Item_List({ checkoutItems }) {
+    console.log(checkoutItems);
     return (
         <div>
             {checkoutItems && checkoutItems.length > 0 ? (
