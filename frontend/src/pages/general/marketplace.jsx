@@ -13,9 +13,21 @@ import Carousel from "react-multi-carousel";
 import Category from "../../components/marketplace/category";
 import "react-multi-carousel/lib/styles.css";
 import Seller from "../../components/marketplace/seller";
+import useGetConversations from "../customer/ChatComponents/Hooks/useGetConversations";
+import useListenMessages from "../../hooks/useListenMessages";
+import useGetMessages from "../customer/ChatComponents/Hooks/useGetMessages";
+import useGetAllChats from "../../hooks/useGetAllChats";
+import Message from "../customer/ChatComponents/Message";
+
 function Marketplace() {
     const { productListing } =
         useContext(GlobalContext);
+    const {selectedSeller, setSelectedSeller} = useContext(GlobalContext);
+    const {conversations} = useGetConversations();
+    console.log(conversations);
+    useListenMessages();
+    const [chatList, setChatList] = useState("");
+    const {allChats} = useGetAllChats()
 
     const [categoryList, setCategoryList] = useState([]);
     const [sellerList, setSellerList] = useState([]);
@@ -194,6 +206,7 @@ function Marketplace() {
 
     const [floating, setFloating] = useState(false);
     const toggleFloatingChat = () => {
+        setChatList(allChats)
         setFloating(!floating);
     };
     const [activeChat, setActiveChat] = useState("");
@@ -202,100 +215,49 @@ function Marketplace() {
         // navigation("/customer/chat");
         toggleFloatingChat();
     };
-    const { orderHistory } = useContext(GlobalContext);
 
-    const fetchChatListFromOrders = () => {
-        let chatLists = [];
-        orderHistory.map((order) => {
-            const chatHeader = {
-                active: false,
-                name: order.orderItems[0].seller,
-                pfp:
-                    order.orderItems[0].seller === "Koperasi_UM"
-                        ? "/seller3.png"
-                        : order.orderItems[0].seller === "KK_Mart_UM"
-                        ? "/seller4.png"
-                        : order.orderItems[0].seller === "Zus_Coffee_UM"
-                        ? "/seller5.png"
-                        : "/seller1.png",
-                last_message:
-                    order.orderItems[0].seller === "Koperasi_UM"
-                        ? "Hello! I am Wen Thing from Koperasi UM."
-                        : order.orderItems[0].seller === "KK_Mart_UM"
-                        ? "Hello! I am Kar Weng from KK Mart UM."
-                        : order.orderItems[0].seller === "Zus_Coffee_UM"
-                        ? "Hello! I am Weng Hong from Zus Coffee UM."
-                        : "Hello! I am Chen Kang from Sports Direct UM.",
-            };
-            chatLists.push(chatHeader);
-        });
-        setChatList(chatLists);
-    };
-
-    useEffect(() => {
-        fetchChatListFromOrders();
-    }, []);
-
-    const [chatList, setChatList] = useState([
-        // {
-        //     active: true,
-        //     pfp: "/seller3.png",
-        //     name: "Koperasi_UM",
-        //     last_message: "Hello! I am Wen Thing from Koperasi UM.",
-        // },
-        // {
-        //     active: false,
-        //     pfp: "/seller4.png",
-        //     name: "KK_Mart_UM",
-        //     last_message: "Hello! I am Kar Weng from KK Mart UM.",
-        // },
-        // {
-        //     active: false,
-        //     pfp: "/seller1.png",
-        //     name: "UM_Sports_Direct",
-        //     last_message: "Hello! I am Chen Kang from KK Mart UM.",
-        // },
-        // {
-        //     active: false,
-        //     pfp: "/seller5.png",
-        //     name: "Zus_Coffee_UM",
-        //     last_message: "Hello! I am Weng Hong from Zus Coffee UM.",
-        // },
-    ]);
+   
+   
 
     const [chatName, setChatName] = useState("");
     const handleChatClick = (name) => {
         setChatName(name);
-        if (name === "Koperasi_UM") {
-            setActiveChatContent([
-                {
-                    type: "SELLER",
-                    text: "Hello! I am Wen Thing from Koperasi UM. How may I assist you today?",
-                },
-            ]);
-        } else if (name === "KK_Mart_UM") {
-            setActiveChatContent([
-                {
-                    type: "SELLER",
-                    text: "Hello! I am Kar Weng from KK Mart UM. It is my pleasure to help you. How may I assist you today?",
-                },
-            ]);
-        } else if (name === "UM_Sports_Direct") {
-            setActiveChatContent([
-                {
-                    type: "SELLER",
-                    text: "Hello! I am Wen Thing from Koperasi UM. It is my pleasure to help you. How may I assist you today?",
-                },
-            ]);
-        } else if (name === "Zus_Coffee_UM") {
-            setActiveChatContent([
-                {
-                    type: "SELLER",
-                    text: "Hello! I am Weng Hong from Zus. It is my pleasure to help you. How may I assist you today?",
-                },
-            ]);
-        }
-    };
+        const conversation = allChats.find((chat) => chat.sellerId.username === name);
+        setSelectedSeller(conversation.sellerId)
+        console.log(conversation);
+        setActiveChatContent(conversation)
+
+    }
+    //     // if (name === "Koperasi_UM") {
+    //     //     setActiveChatContent([
+    //     //         {
+    //     //             type: "SELLER",
+    //     //             text: "Hello! I am Wen Thing from Koperasi UM. How may I assist you today?",
+    //     //         },
+    //     //     ]);
+    //     // } else if (name === "KK_Mart_UM") {
+    //     //     setActiveChatContent([
+    //     //         {
+    //     //             type: "SELLER",
+    //     //             text: "Hello! I am Kar Weng from KK Mart UM. It is my pleasure to help you. How may I assist you today?",
+    //     //         },
+    //     //     ]);
+    //     // } else if (name === "UM_Sports_Direct") {
+    //     //     setActiveChatContent([
+    //     //         {
+    //     //             type: "SELLER",
+    //     //             text: "Hello! I am Wen Thing from Koperasi UM. It is my pleasure to help you. How may I assist you today?",
+    //     //         },
+    //     //     ]);
+    //     // } else if (name === "Zus_Coffee_UM") {
+    //     //     setActiveChatContent([
+    //     //         {
+    //     //             type: "SELLER",
+    //     //             text: "Hello! I am Weng Hong from Zus. It is my pleasure to help you. How may I assist you today?",
+    //     //         },
+    //     //     ]);
+    //     // }
+    // };
 
     const goBackToChatList = () => {
         setChatName("");

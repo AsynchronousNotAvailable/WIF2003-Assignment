@@ -1,31 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import useGetMessages from "../ChatComponents/Hooks/useGetMessages";
+import useGetAllChats from "../../../hooks/useGetAllChats";
 
+import Message from "../ChatComponents/Message";
+import { GlobalContext } from "../../../context";
+import useListenMessages from "../../../hooks/useListenMessages";
 function FloatingChatList({ chatList, handleChatClick }) {
+    useListenMessages()
+    console.log(chatList);
     const goToFloatingChatContent = (name) => {
-        console.log(name);
         handleChatClick(name);
         
     };
-    // const chatList = [
-    //     {
-    //         active: true,
-    //         pfp: require("../../assets/wenthing.jpeg"),
-    //         name: "Wen Thing",
-    //         last_message: "How much is the battery charger?",
-    //     },
-    //     {
-    //         active: false,
-    //         pfp: require("../../assets/karweng.jpeg"),
-    //         name: "Kar Weng",
-    //         last_message: "I see alright.",
-    //     },
-    //     {
-    //         active: false,
-    //         pfp: require("../../assets/chenkang.jpg"),
-    //         name: "Chen Kang",
-    //         last_message: "Will the product be delivered today?",
-    //     },
-    // ];
+
     return (
         <div className="fixed bg-white bottom-5 right-20 flex flex-col rounded-tl-lg rounded-tr-lg w-80 h-96 shadow-2xl">
             <div className="flex h-10 bg-slate-400 shadow-lg w-full px-5 py-2 rounded-tl-lg rounded-tr-lg">
@@ -34,9 +21,9 @@ function FloatingChatList({ chatList, handleChatClick }) {
             {chatList.map((chat) => (
                 <ChatList
                     active={chat.active}
-                    pfp={chat.pfp}
-                    name={chat.name}
-                    last_message={chat.last_message}
+                    pfp={chat.sellerId.pfp}
+                    name={chat.sellerId.username}
+                    last_message={chat.messages[chat.messages.length - 1].message}
                     goToFloatingChatContent={goToFloatingChatContent}
                 />
             ))}
@@ -52,7 +39,9 @@ function ChatList({
     name,
     last_message,
     goToFloatingChatContent,
+    
 }) {
+    useListenMessages();
     return (
         
             <div

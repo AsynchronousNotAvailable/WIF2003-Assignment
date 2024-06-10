@@ -16,6 +16,15 @@ exports.sendMessage = async (req, res) => {
     }
 }
 
+exports.getChats = async (req,res) => {
+    const {userId} = req.params;
+    try {
+        const chats = await MessageService.getChats(userId);
+        return res.status(200).json(chats);
+    } catch (error) {
+        return res.status(500).json({error : error.message});
+    }
+}
 
 exports.getMessages = async (req, res) => {
     const {userId:senderId,tochatId: userToChatId} = req.params; 

@@ -85,6 +85,31 @@ catch (error) {
 }
 }
 
+exports.getChats = async (userId) => {
+    try {
+        //Can be customer or seller
+        let currentUser = CustomerModel.find(userId);
+        if(currentUser){
+            let chats = await ConversationModel.find({customerId : userId}).populate("sellerId customerId messages");
+            return chats;
+        }
+        else {
+            currentUser = SellerModel.find(userId);
+            if(currentUser){
+                let chats = await ConversationModel.find({sellerId : userId}).populate("sellerId customerId messages");
+                return chats;
+            }
+            else {
+                throw new Error("User not found");
+            }
+        }
+
+        
+
+    } catch (error) {
+        throw new Error(error);
+    }
+}
 exports.getMessage = async (senderId, receiverId) => {
     try {
             
