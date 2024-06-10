@@ -11,6 +11,7 @@ import axios from "axios";
 import useCustomer from "../../hooks/useCustomer";
 import AddReviewModal from "./components/ReviewModal";
 import SuccessModal from "./components/successModal";
+import useGetAllChats from "../../hooks/useGetAllChats";
 
 const Container = styled.div`
     display: flex;
@@ -85,6 +86,9 @@ export default function Orders() {
     const toggleFloatingChat = () => {
         setFloating(!floating);
     };
+    const { setSelectedSeller } = useContext(GlobalContext);
+    const {allChats} = useGetAllChats()
+    console.log(allChats);
     const { getCustomer } = useCustomer();
     const [customer, setCustomer] = useState(getCustomer());
     const [orders, setOrders] = useState([]);
@@ -104,6 +108,7 @@ export default function Orders() {
             );
 
             const products = response.data;
+            console.log(products);
             setOrders(products);
         } catch (error) {
             console.log(error);
@@ -127,41 +132,31 @@ export default function Orders() {
     };
 
     const handleChatButtonClick = (name) => {
-        handleChatClick(name);
-        toggleFloatingChat();
-    };
-    const handleChatClick = (name) => {
+        console.log(name);
         setChatName(name);
-        if (name === "Koperasi_UM") {
-            setActiveChatContent([
-                {
-                    type: "SELLER",
-                    text: "Hello! This is Koperasi UM Customer Service. Anything enquiries?",
-                },
-            ]);
-        } else if (name === "KK_Mart_UM") {
-            setActiveChatContent([
-                {
-                    type: "SELLER",
-                    text: "Hello! This is KK Mart Customer Service. Anything enquiries?",
-                },
-            ]);
-        } else if (name === "UM_Sports_Direct") {
-            setActiveChatContent([
-                {
-                    type: "SELLER",
-                    text: "Hello! This is UM Sport Direct Customer Service. Anything enquiries?",
-                },
-            ]);
-        } else if (name === "Zus_Coffee_UM") {
-            setActiveChatContent([
-                {
-                    type: "SELLER",
-                    text: "Hello! This is Zus Coffee UM Customer Service. Anything enquiries?",
-                },
-            ]);
-        }
+        toggleFloatingChat();
+        handleChatClick(name);
     };
+   
+    const handleChatClick = (name) => {
+            setChatName(name);
+            console.log(name);
+            console.log(allChats);
+            const conversation = allChats.find((chat) => chat.sellerId.username === name);
+            if(conversation){
+                console.log(conversation);
+                setSelectedSeller(conversation.sellerId)
+                setActiveChatContent(conversation)
+            }
+            else {
+                setSelectedSeller(name);
+                setActiveChatContent([])
+            }
+           
+    
+        }
+        
+    
 
     const goBackToChatList = () => {
         setChatName("");
@@ -199,6 +194,8 @@ export default function Orders() {
         }
         return 0;
     });
+
+    console.log(sortedOrders)
 
     return (
         <Container>
@@ -260,7 +257,7 @@ export default function Orders() {
                         items={order.product}
                         quantity={order.quantity}
                         sellerName={order.sellerId.username}
-                        handleChatButtonClick={handleChatButtonClick}
+                        handleChatButtonClick={() => {handleChatClick(order.sellerId.username)}}
                         setReviewModal={setReviewModal}
                         setProductReview={setProductReview}
                     />

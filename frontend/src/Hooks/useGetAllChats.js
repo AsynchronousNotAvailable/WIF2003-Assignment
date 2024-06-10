@@ -21,7 +21,7 @@ const useGetAllChats = () => {
         fetchAllChats();
     }
     
-    ,[])
+    ,[userId])
     return {allChats};
 }
 

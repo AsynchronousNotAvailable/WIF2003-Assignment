@@ -25,7 +25,6 @@ function Marketplace() {
     const {selectedSeller, setSelectedSeller} = useContext(GlobalContext);
     const {conversations} = useGetConversations();
     console.log(conversations);
-    useListenMessages();
     const [chatList, setChatList] = useState("");
     const {allChats} = useGetAllChats()
 
@@ -228,36 +227,7 @@ function Marketplace() {
         setActiveChatContent(conversation)
 
     }
-    //     // if (name === "Koperasi_UM") {
-    //     //     setActiveChatContent([
-    //     //         {
-    //     //             type: "SELLER",
-    //     //             text: "Hello! I am Wen Thing from Koperasi UM. How may I assist you today?",
-    //     //         },
-    //     //     ]);
-    //     // } else if (name === "KK_Mart_UM") {
-    //     //     setActiveChatContent([
-    //     //         {
-    //     //             type: "SELLER",
-    //     //             text: "Hello! I am Kar Weng from KK Mart UM. It is my pleasure to help you. How may I assist you today?",
-    //     //         },
-    //     //     ]);
-    //     // } else if (name === "UM_Sports_Direct") {
-    //     //     setActiveChatContent([
-    //     //         {
-    //     //             type: "SELLER",
-    //     //             text: "Hello! I am Wen Thing from Koperasi UM. It is my pleasure to help you. How may I assist you today?",
-    //     //         },
-    //     //     ]);
-    //     // } else if (name === "Zus_Coffee_UM") {
-    //     //     setActiveChatContent([
-    //     //         {
-    //     //             type: "SELLER",
-    //     //             text: "Hello! I am Weng Hong from Zus. It is my pleasure to help you. How may I assist you today?",
-    //     //         },
-    //     //     ]);
-    //     // }
-    // };
+    
 
     const goBackToChatList = () => {
         setChatName("");

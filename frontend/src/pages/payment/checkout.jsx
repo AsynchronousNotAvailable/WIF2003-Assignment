@@ -69,8 +69,12 @@ const PaymentContent = styled.div`
 `;
 
 export default function Checkout() {
+    const {userDetails,selectedSeller} = useContext(GlobalContext);
+    console.log(selectedSeller);
+    const userId = userDetails.id;
     const location = useLocation();
     const [cartItems, setCartItems] = useState(location.state.cartItems);
+    console.log(cartItems);
     const [isBuyNow, setIsBuyNow] = useState(location.state.buyNow);
     const navigation = useNavigate();
 
@@ -88,6 +92,7 @@ export default function Checkout() {
 
     const { getCustomer } = useCustomer();
     const [customer, setCustomer] = useState(getCustomer());
+    console.log(customer);
 
     const handlePaymentMethodClick = (method) => {
         setSelectedPaymentMethod(method);
@@ -131,6 +136,13 @@ export default function Checkout() {
                 purchaseDetails
             );
             if (response.status === 201) {
+                console.log(cartItems[0])
+                const reqBody = {
+                    message : "Thank you for your purchase! Your order is being processed.",
+                    senderId : cartItems[0].product.seller._id,
+                }
+                const response = await axios.post(`http://localhost:1234/api/messages/send/${customer._id}`, reqBody);
+                console.log(response.data);
                 navigation("/customer/orders");
             }
         } catch (error) {

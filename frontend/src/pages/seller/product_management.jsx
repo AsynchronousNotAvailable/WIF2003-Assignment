@@ -1,9 +1,9 @@
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import React, { useState, useRef, useCallback, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Seller_NavSidebar from "../../components/seller_sidebar";
 import SortingTable from "../../components/order_management/sorting_table";
-import { useContext } from "react";
 import { GlobalContext } from "../../context";
+import useGetAllChats from "../../hooks/useGetAllChats";
 import download_icon_blue from "../../assets/download_icon_blue.png";
 import calendar_icon from "../../assets/calendar_icon.png";
 import filter_icon from "../../assets/filter_icon.png";
@@ -16,9 +16,14 @@ import ExportCsv from "../../components/order_management/export_csv";
 import DatePicker from "react-datepicker";
 import useSeller from "../../hooks/useSeller";
 import { Component } from "react";
+import FloatingChat from "./ChatComponents/FloatingChat";
+import FloatingChatList from "./ChatComponents/FloatingChatList";
+
 function ProductManagement() {
-    const { setSellerProduct, userDetails } = useContext(GlobalContext);
+    const {setSelectedSeller,setSellerProduct, userDetails, selectedCustomer, setSelectedCustomer } = useContext(GlobalContext);
     console.log(userDetails);
+    const {allChats} = useGetAllChats();
+    console.log(allChats);
     const navigation = useNavigate();
     const [rendered, setRendered] = useState(false);
     const [dateFilter, setDateFilter] = useState({
@@ -31,7 +36,7 @@ function ProductManagement() {
     const sortingTableRef = useRef();
     const { getSeller } = useSeller();
     const [seller, setSeller] = useState(getSeller());
-
+    const [chatList, setChatList] = useState("");
     useEffect(() => {
         setRendered(() => true);
     }, [sortingTableRef]);
@@ -49,6 +54,34 @@ function ProductManagement() {
     // useEffect(() => {
     //     console.log('FROM PRODUCT MANAGEMENT', seller);
     // }, []);
+
+    const [floating, setFloating] = useState(false);
+    const toggleFloatingChat = () => {
+        setChatList(allChats)
+        setFloating(!floating);
+    };
+    const [activeChat, setActiveChat] = useState("");
+    const [activeChatContent, setActiveChatContent] = useState([]);
+    const handleChatButtonClick = () => {
+        // navigation("/customer/chat");
+        toggleFloatingChat();
+    };
+
+   
+    const [chatName, setChatName] = useState("");
+    const handleChatClick = (name) => {
+        setChatName(name);
+        const conversation = allChats.find((chat) => chat.customerId.username === name);
+        setSelectedCustomer(conversation.customerId)
+        console.log(conversation);
+        setActiveChatContent(conversation)
+
+    }
+
+    const goBackToChatList = () => {
+        setChatName("");
+    };
+
 
     const deleteSellerProduct = (index) => {
         const updatedData = sellerProduct.filter((_, i) => i !== index);
@@ -265,6 +298,26 @@ function ProductManagement() {
                         />
                     )}
                 </div>
+                <button
+                    className="fixed bottom-10 right-10 bg-blue-500 text-white px-4 py-2 rounded-full shadow-md hover:bg-blue-600"
+                    onClick={handleChatButtonClick}
+                >
+                    <i className="fa fa-comment"></i>
+                </button>
+
+                {floating && (
+                    <FloatingChatList
+                        chatList={chatList}
+                        handleChatClick={handleChatClick}
+                    />
+                )}
+                {chatName !== "" && (
+                    <FloatingChat
+                        activeChat={chatName}
+                        activeChatContent={activeChatContent}
+                        goBackToChatList={goBackToChatList}
+                    />
+                )}
             </div>
         </>
     );

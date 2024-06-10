@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Chat_Content from "./Chat_Content";
 import Message from "../ChatComponents/Message";
 import useSendMessage from "../ChatComponents/Hooks/useSendMessage";
 import useListenMessages from "../../../hooks/useListenMessages";
