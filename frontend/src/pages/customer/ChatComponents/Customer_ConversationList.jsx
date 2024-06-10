@@ -5,17 +5,16 @@ import { GlobalContext } from "../../../context";
 
 const Customer_ConversationList = () => {
     const {customer,selectedSeller,setSelectedSeller,allSellers,setAllSellers} = useContext(GlobalContext);
-   
+   console.log(allSellers);
     // console.log(selectedSeller)
     const handleClickedSeller = (sellerId) => {
-        console.log(sellerId);
         const targetedSeller = allSellers.find((seller) => seller._id === sellerId)
+        console.log(targetedSeller);
         setSelectedSeller(targetedSeller)
     }
     return (
         <div className="flex flex-col w-72  bg-slate-100 border-r-[1px] py-5 gap-5 ">
             {allSellers.map((seller) => {
-                const pfpLink = `https://avatar.iran.liara.run/username?username=${seller.username}`
 
                 return(
                     <div className = 
@@ -23,8 +22,8 @@ const Customer_ConversationList = () => {
 
                     key = {seller._id} 
                     onClick = {() => handleClickedSeller(seller._id)}>
-                        <div className = " w-1/4  flex">
-                        <img src = {pfpLink} className = "" />
+                        <div className = " w-1/4 rounded-full flex">
+                        <img src = {seller.pfp} className = "rounded-full" />
                         </div>
                     <div className = "font-sans font-semibold ">
                     <p>{seller.username}</p>    

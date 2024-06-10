@@ -21,13 +21,16 @@ function Customer_Chat() {
     return (
         <>
             <Customer_Navbar />
-            <div className=" mt-[70px] relative border-2 ">
-                <div className="flex flex-row  ">
+            <div className=" mt-[70px] relative h-[93vh] border-2">
+                <div className="flex flex-row h-full">
                
                 <Customer_ConversationList />
 
-                <div className = "  flex flex-col flex-1 relative border-2 pt-5 h-full ">
+                <div className = "  flex flex-col flex-1 relative pt-5 h-full border-2 border-yellow-600">
+                    <div className = "flex-1 overflow-y-auto px-5">
                     <Messages/>
+ 
+                    </div>
                    <div className = "mt-auto  ">
                     <MessageInput />
                    </div>

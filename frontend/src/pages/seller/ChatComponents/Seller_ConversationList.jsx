@@ -21,7 +21,6 @@ const Seller_ConversationList = () => {
         return (
             <div className="flex flex-col w-72 border-r-[1px]  gap-5 ">
             {allCustomers.map((customer) => {
-                const pfpLink = `https://avatar.iran.liara.run/username?username=${customer.username}`
 
                 return(
                     <div className = 
@@ -29,10 +28,9 @@ const Seller_ConversationList = () => {
 
                     key = {selectedCustomer._id} 
                     onClick = {() => handleClickedCustomer(customer)}>
-                        <div className = " flex w-1/4">
-                        <div className = {`avatar ${isOnline ? "online placeholder" : ""}`}>
-                        <img src = {pfpLink} className = {`avatar ${isOnline? "online placeholder" : ""}`} />
-                        </div>
+                        <div className = "  w-1/4 rounded-full flex">
+                        <img src = {customer.pfp} className = "rounded-full" />
+                        
                         </div>
                     <div className = "font-sans font-semibold ">
                     <p>{customer.username}</p>    

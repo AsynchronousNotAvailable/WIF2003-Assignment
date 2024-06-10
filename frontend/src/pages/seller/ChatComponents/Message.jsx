@@ -5,16 +5,18 @@ const Message = ({ message }) => {
     console.log(message);
     
     const { userDetails, selectedCustomer } = useContext(GlobalContext);
+    console.log(userDetails);
+    console.log(selectedCustomer);
     const isMe = message.senderId === userDetails._id;
     const chatClass = isMe ? "chat chat-end" : "chat chat-start";
     const chatBubbleBg = isMe ? "bg-gray-400" : "bg-sky-500";
     const chatBubbleName = isMe ? userDetails.username : selectedCustomer.username
-
+    const chatPfp = isMe ? userDetails.pfp : selectedCustomer.pfp
     return (
         <div className = {`${chatClass}`}>
             <div className = "chat-image avatar">
                 <div className = "w-10 rounded-full">
-                    <img src= "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                    <img src= {chatPfp} />
                 </div>
             </div>
             <div className = "chat-header">

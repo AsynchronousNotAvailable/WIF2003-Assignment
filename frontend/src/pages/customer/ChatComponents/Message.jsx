@@ -8,12 +8,13 @@ const Message = ({ message }) => {
     const chatClass = isMe ? "chat chat-end" : "chat chat-start";
     const chatBubbleBg = isMe ? "bg-gray-400" : "bg-sky-500";
     const chatBubbleName = isMe ? userDetails.username : selectedSeller.username
+    const chatPfp = isMe ? userDetails.pfp : selectedSeller.pfp
 
     return (
         <div className = {`${chatClass}`}>
             <div className = "chat-image avatar">
                 <div className = "w-10 rounded-full">
-                    <img src= "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                    <img src= {chatPfp} />
                 </div>
             </div>
             <div className = "chat-header">
