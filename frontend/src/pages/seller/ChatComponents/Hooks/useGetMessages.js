@@ -1,11 +1,13 @@
 import React, { useEffect, useContext } from "react";
 import { GlobalContext } from "../../../../context";
 import axios from "axios";
+import useSeller from "../../../../hooks/useSeller";
 
 const useGetMessages = () => {
     const { userDetails, messages, setMessages, selectedCustomer } =
         useContext(GlobalContext);
-    const userId = userDetails._id;
+    const { getSeller } = useSeller();
+    const userId = getSeller()._id;
     const customerId = selectedCustomer._id;
     useEffect(() => {
         const getMessages = async () => {

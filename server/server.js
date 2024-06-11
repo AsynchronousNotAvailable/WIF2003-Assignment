@@ -13,8 +13,8 @@ const cors = require("cors");
 const PORT = 1234;
 
 //so can parse json request body
-app.use(express.json({ limit: "2mb" }));
-app.use(express.urlencoded({ limit: "2mb" }));
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb" }));
 
 app.use(cors());
 
@@ -39,7 +39,7 @@ async function connectDb() {
     // const url =
     //     "mongodb+srv://sandbox:sandboxyyds@cluster0.gre7tst.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
     const url =
-        "mongodb+srv://syopi:syopiyyds@cluster0.kdyzyta.mongodb.net/syopi?retryWrites=true&w=majority&appName=Cluster0";
+        "mongodb+srv://web:webyyds@cluster0.twtsgo2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0/test";
     try {
         await connect(url, {
             useNewUrlParser: true,

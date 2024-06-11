@@ -67,7 +67,7 @@ const SinglePopularProduct = () => {
     : 
     (
       <div className = "text-5xl font-bold font-sans">
-        No Top Selling Products. Make more sales bro.
+        
       </div>
     )
   )

@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from "react";
 import { GlobalContext } from "../../../../context";
 import axios from "axios";
 import useSeller from "../../../../hooks/useSeller";
-
+import seller_default_pfp from "../../../../assets/default_seller_image.png";
 const SingleCustomer = () => {
     const { getSeller } = useSeller();
     const sellerId = getSeller()._id;
@@ -61,8 +61,12 @@ const SingleCustomer = () => {
 
                     <div className="">
                         <img
-                            src={customer.img}
-                            className="rounded-xl max-w-[250px] max-h-[200px]"
+                            src={
+                                customer.img == undefined || customer.img == ""
+                                    ? seller_default_pfp
+                                    : customer.img
+                            }
+                            className="rounded-full w-[100px] h-[100px] object-cover"
                         />
                     </div>
 
@@ -103,9 +107,7 @@ const SingleCustomer = () => {
             ))}
         </div>
     ) : (
-        <div className="text-5xl font-bold font-sans">
-            No Customer Analysis. Make more sales bro.
-        </div>
+        <div className="text-5xl font-bold font-sans"></div>
     );
 };
 

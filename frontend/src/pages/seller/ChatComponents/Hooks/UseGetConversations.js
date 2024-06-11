@@ -1,11 +1,13 @@
 import { useEffect, useContext, useState } from "react";
 import { GlobalContext } from "../../../../context";
 import axios from "axios";
+import useSeller from "../../../../hooks/useSeller";
 //Must be a seller atp
 const UseGetConversations = () => {
     const { userDetails, allCustomers, setAllCustomers } =
         useContext(GlobalContext);
-    const sellerId = userDetails._id;
+    const { getSeller } = useSeller();
+    const sellerId = getSeller()._id;
     useEffect(() => {
         const getConversations = async () => {
             try {
