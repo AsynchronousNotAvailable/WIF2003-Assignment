@@ -9,8 +9,9 @@ const useGetMessages = () => {
 
     const selectedSellerId = selectedSeller._id;
     console.log(
-        `Customer : ${userDetails.username} selectedSeller : ${selectedSeller}`
+        `Customer : ${userDetails.username} `
     );
+    console.log(selectedSeller);
     //http://localhost:1234/api/messages/get/66349c22cf490c204299bdb7
     useEffect(() => {
         const getMessages = async () => {
@@ -24,6 +25,8 @@ const useGetMessages = () => {
             }
         };
         getMessages();
+
+        return (() => setMessages([]));
     }, [selectedSeller]);
 
     return { messages };

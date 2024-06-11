@@ -22,7 +22,8 @@ import Message from "../customer/ChatComponents/Message";
 function Marketplace() {
     const { productListing } =
         useContext(GlobalContext);
-    const {selectedSeller, setSelectedSeller} = useContext(GlobalContext);
+    const { selectedSeller, setSelectedSeller, messages } = useContext(GlobalContext);
+    console.log(messages);
     const {conversations} = useGetConversations();
     console.log(conversations);
 
