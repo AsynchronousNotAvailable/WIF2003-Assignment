@@ -24,7 +24,7 @@ function FloatingChatList({ chatList, handleChatClick }) {
                     active={chat?.active}
                     pfp={chat?.customerId.pfp}
                     name={chat?.customerId.username}
-                    last_message={chat?.messages[chat.messages.length - 1].message}
+                    // last_message={chat?.messages[chat.messages.length - 1].message}
                     goToFloatingChatContent={goToFloatingChatContent}
                 />
             ))}
