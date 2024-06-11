@@ -1,12 +1,8 @@
 import React, { useContext } from 'react';
 import { GlobalContext } from '../../../context';
 const Message = ({ message }) => {
-    console.log("Message Component in Seller is ran");
-    console.log(message);
     
     const { userDetails, selectedCustomer } = useContext(GlobalContext);
-    console.log(userDetails);
-    console.log(selectedCustomer);
     const isMe = message.senderId === userDetails._id;
     const chatClass = isMe ? "chat chat-end" : "chat chat-start";
     const chatBubbleBg = isMe ? "bg-gray-400" : "bg-sky-500";

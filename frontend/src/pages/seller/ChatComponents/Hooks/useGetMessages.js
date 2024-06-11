@@ -6,6 +6,7 @@ import useSeller from "../../../../hooks/useSeller";
 const useGetMessages = () => {
     const { userDetails, messages, setMessages, selectedCustomer } =
         useContext(GlobalContext);
+    console.log(selectedCustomer);
     const { getSeller } = useSeller();
     const userId = getSeller()._id;
     const customerId = selectedCustomer._id;

@@ -6,7 +6,8 @@ import default_seller_image from '../../../assets/default_seller_image.png';
 const Seller_ConversationList = () => {
     const {allCustomers} = UseGetConversations()
     const {selectedCustomer, setSelectedCustomer} = useContext(GlobalContext)
-    console.log(allCustomers)
+    console.log(allCustomers);
+    console.log(selectedCustomer)
 
     const {onlineUsers} = useSocketContext()
     const isOnline = onlineUsers.includes(selectedCustomer._id)
@@ -29,7 +30,7 @@ const Seller_ConversationList = () => {
                                 ? "bg-sky-500"
                                 : ""
                         }`}
-                        key={selectedCustomer._id}
+                        key={customer._id}
                         onClick={() => handleClickedCustomer(customer)}
                     >
                         <div className="  w-1/4 rounded-full flex">

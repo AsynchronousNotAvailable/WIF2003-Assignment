@@ -18,12 +18,13 @@ function FloatingChatList({ chatList, handleChatClick }) {
             <div className="flex h-10 bg-slate-400 shadow-lg w-full px-5 py-2 rounded-tl-lg rounded-tr-lg">
                 <h1 className="font-sans font-semibold">Messages</h1>
             </div>
-            {chatList.map((chat) => (
+            
+            { chatList.map((chat) => (
                 <ChatList
-                    active={chat.active}
-                    pfp={chat.customerId.pfp}
-                    name={chat.customerId.username}
-                    last_message={chat.messages[chat.messages.length - 1].message}
+                    active={chat?.active}
+                    pfp={chat?.customerId.pfp}
+                    name={chat?.customerId.username}
+                    last_message={chat?.messages[chat.messages.length - 1].message}
                     goToFloatingChatContent={goToFloatingChatContent}
                 />
             ))}
