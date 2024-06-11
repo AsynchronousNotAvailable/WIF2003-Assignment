@@ -146,8 +146,9 @@ function OrderManagement() {
                 </div>
                 <div className="flex ms-5 me-2 mb-2">
                     <div className="flex-1 mr-3">
-                        {rendered && (
+                        {rendered && sellerOrder && (
                             <GlobalFilter
+                                rendered ={rendered}
                                 filter={sortingTableRef.current?.globalFilter}
                                 setFilter={
                                     sortingTableRef.current?.setGlobalFilter

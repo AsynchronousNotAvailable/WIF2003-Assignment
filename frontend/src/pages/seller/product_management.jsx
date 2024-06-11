@@ -219,7 +219,7 @@ function ProductManagement() {
                 </div>
                 <div className="flex ms-5 me-2 mb-2">
                     <div className="flex-1 mr-3">
-                        {rendered && (
+                        {rendered && productData && (
                             <GlobalFilter
                                 filter={sortingTableRef.current?.globalFilter}
                                 setFilter={
