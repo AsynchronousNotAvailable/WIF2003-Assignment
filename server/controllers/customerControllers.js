@@ -5,7 +5,6 @@ const OrderModel = require("../models/order");
 const mongoose = require("mongoose");
 
 exports.login = async (req, res) => {
-    console.log("sihai");
     try {
         const loginData = req.body;
         const customer = await CustomerService.login(loginData);

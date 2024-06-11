@@ -96,20 +96,21 @@ const SinglePurchaseHistory = () => {
             })}  
           </div>
 
-          <div className = "font-sans font-semibold text-lg ">
-            {typeof purchase.orderReceivedDate === 'String' ? "purchase.orderReceivedDate" : 
-            new Date (purchase.orderReceivedDate).toLocaleString("en-US", {
-              month: 'short',
-              day: '2-digit',
-              year: 'numeric',
-              hour: '2-digit',
-              minute: '2-digit',
-              second : "2-digit",
-              hour12 : false,
-              timeZone: 'Asia/Kuala_Lumpur'
-          })
-            }
-          </div>
+          <div className="font-sans font-semibold text-lg">
+  {isNaN(new Date(purchase.orderReceivedDate)) ? "To be Confirmed" : 
+    new Date(purchase.orderReceivedDate).toLocaleString("en-US", {
+      month: 'short',
+      day: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false,
+      timeZone: 'Asia/Kuala_Lumpur'
+    })
+  }
+</div>
+
 
           </div>
       ))}

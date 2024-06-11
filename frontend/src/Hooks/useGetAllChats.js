@@ -7,7 +7,14 @@ const useGetAllChats = () => {
     const { userDetails } = useContext(GlobalContext);
     const { getCustomer } = useCustomer();
     const {getSeller} = useSeller();
-    const userId = userDetails._id === getSeller()._id ? getSeller()._id : getCustomer()._id;
+    console.log(userDetails);
+    let userId;
+    if(!getSeller()){
+        userId = getCustomer()._id;
+    }
+    else {
+        userId = getSeller()._id;
+    }
     const [allChats,setAllChats] = useState([]);
 
     useEffect( () => {

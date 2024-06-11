@@ -20,7 +20,7 @@ import useGetAllChats from "../../hooks/useGetAllChats";
 import Message from "../customer/ChatComponents/Message";
 
 function Marketplace() {
-    const { productListing } =
+    const { productListing,userDetails } =
         useContext(GlobalContext);
     const { selectedSeller, setSelectedSeller, messages } = useContext(GlobalContext);
     console.log(messages);
