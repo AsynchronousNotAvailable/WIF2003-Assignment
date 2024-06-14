@@ -14,6 +14,7 @@ const StyledInput = styled.input`
     opacity: 0.35;
     padding: 10px;
     width: 100%;
+   
 `
 const CustomInputContainer = styled.div`
     width: ${(props) => props.size};
@@ -47,6 +48,7 @@ const CustomInput = ({
                 defaultValue={value}
                 onChange={handleChange} // Updated to use setValue
                 placeholder={placeholder}
+                required={true}
             />
         </CustomInputContainer>
     );

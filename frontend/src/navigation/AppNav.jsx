@@ -1,15 +1,11 @@
 // AppNav.jsx
-import React, { useContext } from "react";
-import { GlobalContext } from "../context";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Landing from "../pages/general/landing";
 import Login from "../pages/general/login";
 import SignUp from "../pages/general/signup";
 import Seller_Home from "../pages/seller/seller_home";
-import Customer_Navbar from "../components/customer_navbar";
-import Seller_Chat from "../pages/seller/seller_chat";
-import Seller_NavSidebar from "../components/seller_sidebar";
-import Customer_Chat from "../pages/customer/customer_chat";
+import Seller_Chat from "../pages/seller/ChatComponents/seller_chat";
+import Customer_Chat from "../pages/customer/ChatComponents/customer_chat";
 import MarketplaceAnalysis from "../pages/general/marketplaceAnalysis";
 import SellerAnalysis from "../pages/seller/sellerAnalysis";
 import ProductListing from "../pages/general/productListing";
@@ -24,10 +20,16 @@ import Orders from "../pages/payment/orders";
 import OrderManagement from "../pages/seller/order_management";
 import ProductManagement from "../pages/seller/product_management";
 import AddProduct from "../pages/seller/add_product";
+import EditSellerProfile from "../pages/seller/seller_edit_profile";
+import WishlistPage from "../pages/customer/WishlistComponent/WishlistPage";
+import PurchaseHistoryPage from "../pages/customer/PurchaseHistoryComponents/PurchaseHistoryPage";
+import PopularProductAnalysisPage from "../pages/seller/components/PopularProductAnalysisComponents/PopularProductAnalysisPage";
+import ProductInteractivityAnalysisPage from "../pages/seller/components/PopularProductAnalysisComponents/ProductInteractivityAnalysisPage";
+import CustomerSegmentationPage from "../pages/seller/components/CustomerSegmentationComponents/CustomerSegmentationPage";
+import Search from "../pages/general/search";
+import EditCustomerProfile from "../pages/customer/customer_edit_profile";
 
 function AppNav() {
-    const { isAuth, isSeller } = useContext(GlobalContext);
-
     return (
         <>
             <Router>
@@ -38,14 +40,19 @@ function AppNav() {
                         element={<MarketplaceAnalysis />}
                     />
                     <Route path="/marketplace" element={<Marketplace />} />
-                    <Route path="/customer/shop/:seller" element={<Shop />} />
-                    {/* <Route path="/login" element={<Login />} /> */}
+                    <Route path="/customer/shop/:sellerId" element={<Shop />} />
                     <Route
-                        path="/customer/products"
+                        path="/customer/products/:category"
                         element={<ProductListing />}
                     />
-
-                    <Route path="/customer/product/:id" element={<Product />} />
+                    <Route
+                        path="/customer/products/search/:query"
+                        element={<Search />}
+                    />
+                    <Route
+                        path="/customer/product/:productId"
+                        element={<Product />}
+                    />
                     <Route path="/signup" element={<SignUp />} />
                     <Route path="/editprofile" element={<EditProfile />} />
                     <Route path="/customer/cart" element={<Customer_Cart />} />
@@ -55,70 +62,52 @@ function AppNav() {
                         path="/customer/analysis"
                         element={<CustomerAnalysis />}
                     />
+                    <Route
+                        path="/customer/wishlist"
+                        element={<WishlistPage />}
+                    />
+                    <Route
+                        path="/customer/purchase_history"
+                        element={<PurchaseHistoryPage />}
+                    />
                     <Route path="/customer_chat" element={<Customer_Chat />} />
+                    <Route
+                        path="/customer/profile"
+                        element={<EditCustomerProfile />}
+                    />
                     <Route path="/seller" element={<Seller_Home />} />
                     <Route
                         path="/seller/analysis"
                         element={<SellerAnalysis />}
                     />
-
+                    <Route
+                        path="/seller/analysis/customer_segmentation"
+                        element={<CustomerSegmentationPage />}
+                    />
+                    <Route
+                        path="/seller/analysis/popular_products"
+                        element={<PopularProductAnalysisPage />}
+                    />
+                    <Route
+                        path="/seller/analysis/interacted_products"
+                        element={<ProductInteractivityAnalysisPage />}
+                    />
                     <Route path="/seller_chat" element={<Seller_Chat />} />
                     <Route
-                        path="/order_management"
+                        path="/seller/order_management"
                         element={<OrderManagement />}
                     />
                     <Route
-                        path="/product_management"
+                        path="/seller/product_management"
                         element={<ProductManagement />}
+                    />
+                    <Route
+                        path="/seller/profile"
+                        element={<EditSellerProfile />}
                     />
                     <Route path="/add_product_page" element={<AddProduct />} />
                 </Routes>
-                {/* {!isAuth ? (
-                <Routes>
-                    <Route path="/" element={<Landing />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/signup" element={<SignUp />} />
-                </Routes>
-            ) : isSeller ? (
-                    <Routes>
-                    
-                    <Route path="/seller" element={<Seller_Home />} />
-                </Routes>
-            ) : (
-                <Routes>
-                    <Route path="/customer" element={<Customer_Home />} />
-                </Routes>
-            )} */}
             </Router>
-        </>
-    );
-}
-
-function AuthenticatedRoutes({ isSeller }) {
-    return (
-        <Routes>
-            {isSeller ? (
-                <Route path="/" element={<SellerRoutes />} />
-            ) : (
-                <Route path="/" element={<CustomerRoutes />} />
-            )}
-        </Routes>
-    );
-}
-
-function SellerRoutes() {
-    return (
-        <>
-            <Route path="/" element={<Seller_Home />} />
-            {/* Add more seller-specific routes here */}
-        </>
-    );
-}
-
-function CustomerRoutes() {
-    return (
-        <>
-            <Route path="/" element={<Marketplace />} />
         </>
     );
 }

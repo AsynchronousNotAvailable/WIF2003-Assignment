@@ -32,6 +32,7 @@ const Image = styled.img`
 `;
 
 function Checkout_Item_List({ checkoutItems }) {
+    console.log(checkoutItems);
     return (
         <div>
             {checkoutItems && checkoutItems.length > 0 ? (
@@ -47,19 +48,22 @@ function Checkout_Item_List({ checkoutItems }) {
                                     }}
                                 >
                                     <Image
-                                        src={checkoutItem.img}
+                                        src={checkoutItem.product.image}
                                         alt="Product Image"
                                     />
-                                    <SmallText>{checkoutItem.name}</SmallText>
+                                    <SmallText>{checkoutItem.product.name}</SmallText>
                                 </Column>
                                 <Column width="15%">
                                     <SmallText>
-                                        {checkoutItem.variation}
+                                        {checkoutItem.selectedVariation}
                                     </SmallText>
                                 </Column>
                                 <Column width="15%">
                                     <SmallText>
-                                        RM {checkoutItem.price.toFixed(2)}
+                                        RM{" "}
+                                        {checkoutItem.product.pricePerUnit.toFixed(
+                                            2
+                                        )}
                                     </SmallText>
                                 </Column>
                                 <Column width="15%">
@@ -71,7 +75,7 @@ function Checkout_Item_List({ checkoutItems }) {
                                     <SmallText>
                                         RM{" "}
                                         {(
-                                            checkoutItem.price *
+                                            checkoutItem.product.pricePerUnit *
                                             checkoutItem.quantity
                                         ).toFixed(2)}
                                     </SmallText>

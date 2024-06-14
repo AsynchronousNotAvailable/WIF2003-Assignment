@@ -1,47 +1,96 @@
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import React, { useState, useRef, useCallback, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import Seller_NavSidebar from '../../components/seller_sidebar';
-import SortingTable from "../../components/order_management/sorting_table"
-import { useContext } from "react";
+import Seller_NavSidebar from "../../components/seller_sidebar";
+import SortingTable from "../../components/order_management/sorting_table";
 import { GlobalContext } from "../../context";
-import download_icon_blue from "../../assets/download_icon_blue.png"
-import calendar_icon from "../../assets/calendar_icon.png"
-import filter_icon from "../../assets/filter_icon.png"
-import add_icon from "../../assets/add_icon_white.png"
+import useGetAllChats from "../../hooks/useGetAllChats";
+import download_icon_blue from "../../assets/download_icon_blue.png";
+import calendar_icon from "../../assets/calendar_icon.png";
+import filter_icon from "../../assets/filter_icon.png";
+import axios from "axios";
+import add_icon from "../../assets/add_icon_white.png";
 import { GlobalFilter } from "../../components/order_management/global_filter";
-import { format, setDate } from 'date-fns'
+import { format, setDate } from "date-fns";
 import TableDatePicker from "../../components/order_management/tableDatePicker";
 import ExportCsv from "../../components/order_management/export_csv";
 import DatePicker from "react-datepicker";
+import useSeller from "../../hooks/useSeller";
+import { Component } from "react";
+import FloatingChat from "./ChatComponents/FloatingChat";
+import FloatingChatList from "./ChatComponents/FloatingChatList";
+
 function ProductManagement() {
+    const {setSelectedSeller,setSellerProduct, userDetails, selectedCustomer, setSelectedCustomer } = useContext(GlobalContext);
+    console.log(userDetails);
+    const {allChats} = useGetAllChats();
+    console.log(allChats);
     const navigation = useNavigate();
     const [rendered, setRendered] = useState(false);
     const [dateFilter, setDateFilter] = useState({
         startDate: null,
-        endDate: null
+        endDate: null,
     });
-    const [startDate, setStartDate] = useState(null)
-    const [endDate, setEndDate] = useState(null)
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+    const [productData, setProductData] = useState(null);
     const sortingTableRef = useRef();
-
+    const { getSeller } = useSeller();
+    const [seller, setSeller] = useState(getSeller());
+    const [chatList, setChatList] = useState("");
     useEffect(() => {
         setRendered(() => true);
     }, [sortingTableRef]);
-    
-    function onExportClick() {
+
+    useEffect(() => {
+        const username = seller.username;
+        axios
+            .get(`http://localhost:1234/api/sellers/${username}/products`)
+            .then((response) => {
+                setProductData(response.data);
+                console.log(response.data);
+            });
+    }, []);
+
+    // useEffect(() => {
+    //     console.log('FROM PRODUCT MANAGEMENT', seller);
+    // }, []);
+
+    const [floating, setFloating] = useState(false);
+    const toggleFloatingChat = () => {
+        setChatList(allChats)
+        setFloating(!floating);
+    };
+    const [activeChat, setActiveChat] = useState("");
+    const [activeChatContent, setActiveChatContent] = useState([]);
+    const handleChatButtonClick = () => {
+        // navigation("/customer/chat");
+        toggleFloatingChat();
+    };
+
+   
+    const [chatName, setChatName] = useState("");
+    const handleChatClick = (name) => {
+        setChatName(name);
+        const conversation = allChats.find((chat) => chat.customerId.username === name);
+        setSelectedCustomer(conversation.customerId)
+        console.log(conversation);
+        setActiveChatContent(conversation)
 
     }
 
-    const {setSellerProduct} =  useContext(GlobalContext)
+    const goBackToChatList = () => {
+        setChatName("");
+    };
+
 
     const deleteSellerProduct = (index) => {
-        const updatedData = sellerProduct.filter((_,i) => i !== index);
+        const updatedData = sellerProduct.filter((_, i) => i !== index);
         console.log(index);
         console.log(updatedData);
         setSellerProduct(updatedData);
         console.log(sellerProduct);
-    }
-    
+    };
+
     // useEffect(() => {
 
     // }, [sellerProduct]);
@@ -50,88 +99,115 @@ function ProductManagement() {
 
     function handleStartDateChange(date) {
         setStartDate(() => date);
-        setDateFilter({ ...dateFilter, startDate: date })
-        console.log(dateFilter)
+        setDateFilter({ ...dateFilter, startDate: date });
+        console.log(dateFilter);
     }
 
     function deleteDate() {
         setStartDate(null);
         setEndDate(null);
-        setDateFilter({ ...dateFilter, startDate: null, endDate: null })
+        setDateFilter({ ...dateFilter, startDate: null, endDate: null });
     }
 
     function handleEndDateChange(date) {
         setEndDate(() => date);
-        setDateFilter({ ...dateFilter, endDate: date })
-        console.log(dateFilter)
+        setDateFilter({ ...dateFilter, endDate: date });
+        console.log(dateFilter);
     }
 
-
-    function onAddProductClick() {
-        navigation("/add_product_page");
+    function onAddEditProductClick(isAdd, product) {
+        navigation("/add_product_page", {
+            state: { isAdd: isAdd, product: product },
+        });
     }
 
     const PRODUCT_COLUMNS = [
         {
-            Header: 'Product',
-            Footer: 'Product',
-            accessor: 'Product',
+            Header: "Product",
+            Footer: "Product",
+            accessor: "name",
         },
         {
-            Header: 'SKU',
-            Footer: 'SKU',
-            accessor: 'SKU'
-
+            Header: "Category",
+            Footer: "Category",
+            accessor: "category",
         },
         {
-            Header: 'Category',
-            Footer: 'Category',
-            accessor: 'Category',
+            Header: "Stock",
+            Footer: "Stock",
+            accessor: "quantity",
         },
         {
-            Header: 'Stock',
-            Footer: 'Stock',
-            accessor: 'Stock',
+            Header: "Price",
+            Footer: "Price",
+            accessor: "pricePerUnit",
         },
         {
-            Header: 'Price',
-            Footer: 'Price',
-            accessor: 'Price',
+            Header: "Variation",
+            Footer: "Variation",
+            accessor: "variation",
+            Cell: ({ value }) => {
+                return <p className="w-60">{value.join(", ")}</p>;
+            },
+        },
+        // {
+        //     Header: 'Status',
+        //     Footer: 'Status',
+        //     accessor: 'Status',
+        // },
+        {
+            Header: "Created Date",
+            Footer: "Created Date",
+            accessor: "createdDateTime",
+            Cell: ({ value }) => {
+                return format(new Date(value), "dd/MM/yyyy");
+            },
         },
         {
-            Header: 'Status',
-            Footer: 'Status',
-            accessor: 'Status',
-        },
-        {
-            Header: 'Added',
-            Footer: 'Added',
-            accessor: 'Added',
-            Cell: ({ value }) => { return format(new Date(value), 'dd/MM/yyyy') },
-        },
-        {
-            Header: 'Action',
-            Footer: 'Action',
-            accessor: 'action',
-            Cell: ({cell}) => {
+            Header: "Action",
+            Footer: "Action",
+            Cell: ({ cell }) => {
                 return (
-                    <div className='flex'>
+                    <div className="flex">
                         {/* <button className='mx-2' onClick={() => alert('hi')}>
                             Edit
                         </button>
                         <button className='mx-2' onClick={() => alert('hi')}>
                             Hide
                         </button> */}
-                        <button className='mx-2 mr-0' onClick={() => sortingTableRef.current.handleDeleteData(cell.row.index)}>
+                        <button
+                            className="mx-2 mr-0"
+                            onClick={() => {
+                                if (
+                                    window.confirm(
+                                        "Are you sure you want to delete the product?"
+                                    )
+                                ) {
+                                    sortingTableRef.current.handleDeleteData(
+                                        productData[cell.row.index]._id
+                                    );
+                                }
+                            }}
+                        >
                             Delete
                         </button>
+                        <button
+                            className="mx-2 mr-0"
+                            onClick={() => {
+                                onAddEditProductClick(
+                                    false,
+                                    productData[cell.row.index]
+                                );
+                            }}
+                        >
+                            Edit
+                        </button>
                     </div>
-                )
-            }
-        }
-    ]
+                );
+            },
+        },
+    ];
 
-    const selected = [true, false, false, false]
     return (
         <>
             <Seller_NavSidebar />
@@ -143,19 +219,31 @@ function ProductManagement() {
                 </div>
                 <div className="flex ms-5 me-2 mb-2">
                     <div className="flex-1 mr-3">
-                        {rendered &&
-                            <GlobalFilter filter={sortingTableRef.current.globalFilter} setFilter={sortingTableRef.current.setGlobalFilter} />
-                        }
-
+                        {rendered && productData && (
+                            <GlobalFilter
+                                filter={sortingTableRef.current?.globalFilter}
+                                setFilter={
+                                    sortingTableRef.current?.setGlobalFilter
+                                }
+                            />
+                        )}
                     </div>
 
-                    <ExportCsv data={sellerProduct} fileName={'seller_product'}></ExportCsv>
-                    
+                    <ExportCsv
+                        data={sellerProduct}
+                        fileName={"seller_product"}
+                    ></ExportCsv>
+
                     <button
                         className="flex-initial w-36 bg-[#7450DF] rounded-lg h-10"
-                        onClick={onAddProductClick}
+                        onClick={() => {
+                            onAddEditProductClick(true, null);
+                        }}
                     >
-                        <span className='text-white flex ml-4'><img src={add_icon}></img><p className="ml-1">Add Product</p></span>
+                        <span className="text-white flex ml-4">
+                            <img src={add_icon}></img>
+                            <p className="ml-1">Add Product</p>
+                        </span>
                     </button>
                 </div>
                 <div className="flex ms-5 me-2 max-w-full relative">
@@ -170,42 +258,68 @@ function ProductManagement() {
                         {/* <button className="mx-2 mr-0 h-10 border-2 border-border-grey rounded-lg w-32">
                             <span className='flex ml-2'><img src={calendar_icon}></img><p className='text-border-100 text-textGrey-400 ml-1'>Select Date</p></span>
                         </button> */}
-                        <span className="w-28 mr-3 inline-block"><p>Start Date: </p>
-                            <DatePicker className="border-2 border-color-border-100 rounded-lg pl-4 w-28" selected={startDate} onChange={handleStartDateChange} dateFormat="dd/MM/YYYY" />
+                        <span className="w-28 mr-3 inline-block">
+                            <p>Start Date: </p>
+                            <DatePicker
+                                className="border-2 border-color-border-100 rounded-lg pl-4 w-28"
+                                selected={startDate}
+                                onChange={handleStartDateChange}
+                                dateFormat="dd/MM/YYYY"
+                            />
                         </span>
-                        <span className="w-28 inline-block	"><p>End Date: </p>
-                            <DatePicker className="border-2 border-color-border-100 rounded-lg pl-4 w-28" selected={endDate} onChange={handleEndDateChange} dateFormat="dd/MM/YYYY" />
+                        <span className="w-28 inline-block	">
+                            <p>End Date: </p>
+                            <DatePicker
+                                className="border-2 border-color-border-100 rounded-lg pl-4 w-28"
+                                selected={endDate}
+                                onChange={handleEndDateChange}
+                                dateFormat="dd/MM/YYYY"
+                            />
                         </span>
-                        <button className="mt-5 ml-2 w-24 rounded-lg bg-[#7450DF] rounded-lg h-8" onClick={deleteDate}><p className="text-white ">Clear</p></button>
+                        <button
+                            className="mt-5 ml-2 w-24 rounded-lg bg-[#7450DF] rounded-lg h-8"
+                            onClick={deleteDate}
+                        >
+                            <p className="text-white ">Clear</p>
+                        </button>
                         {/* <button className="mx-2 mr-0 h-10 border-2 border-border-grey rounded-lg w-24">
                             <span className='flex ml-4'><img src={filter_icon}></img><p className='text-border-100 text-textGrey-400 ml-1'>Filter</p></span>
                         </button> */}
                     </div>
                 </div>
                 <div className="flex ms-5 me-2 my-2">
-                    <SortingTable ref={sortingTableRef} columns={PRODUCT_COLUMNS} data={sellerProduct} deleteSellerProduct={deleteSellerProduct} dateFilter={dateFilter} />
-                    {/* <table className="w-full">
-                    <thead className="border-2 border-border-grey">
-                        <tr>
-                            <th className="">Order ID</th>
-                            <th className="">Product</th>
-                            <th className="">Date</th>
-                            <th className="">Customer</th>
-                            <th className="">Total</th>
-                            <th className="">Payment</th>
-                            <th className="">Status</th>
-                            <th className="">Action</th>
-                        </tr>
-                    </thead>
-                    <tr>
-                        <td>abcd</td>
-                        <td>defgh</td>
-                    </tr>
-                </table> */}
+                    {productData && (
+                        <SortingTable
+                            ref={sortingTableRef}
+                            columns={PRODUCT_COLUMNS}
+                            data={productData}
+                            deleteSellerProduct={deleteSellerProduct}
+                            dateFilter={dateFilter}
+                        />
+                    )}
                 </div>
+                <button
+                    className="fixed bottom-10 right-10 bg-blue-500 text-white px-4 py-2 rounded-full shadow-md hover:bg-blue-600"
+                    onClick={handleChatButtonClick}
+                >
+                    <i className="fa fa-comment"></i>
+                </button>
+
+                {floating && (
+                    <FloatingChatList
+                        chatList={chatList}
+                        handleChatClick={handleChatClick}
+                    />
+                )}
+                {chatName !== "" && (
+                    <FloatingChat
+                        activeChat={chatName}
+                        activeChatContent={activeChatContent}
+                        goBackToChatList={goBackToChatList}
+                    />
+                )}
             </div>
         </>
     );
 }
-
-export default ProductManagement; 
+export default ProductManagement;

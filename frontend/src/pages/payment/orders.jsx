@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Customer_Navbar from "../../components/customer_navbar";
 import Order_List from "./components/orderList";
 import { GlobalContext } from "../../context";
@@ -7,6 +7,11 @@ import styled from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FloatingChat from "../customer/components/FloatingChat";
+import axios from "axios";
+import useCustomer from "../../hooks/useCustomer";
+import AddReviewModal from "./components/ReviewModal";
+import SuccessModal from "./components/successModal";
+import useGetAllChats from "../../hooks/useGetAllChats";
 
 const Container = styled.div`
     display: flex;
@@ -76,66 +81,137 @@ const Divider = styled.hr`
 export default function Orders() {
     const [chatName, setChatName] = useState("");
     const [activeChatContent, setActiveChatContent] = useState([]);
+    const [productReview, setProductReview] = useState("");
     const [floating, setFloating] = useState(false);
     const toggleFloatingChat = () => {
         setFloating(!floating);
     };
+    const { setSelectedSeller } = useContext(GlobalContext);
+    const {allChats} = useGetAllChats()
+    console.log(allChats);
+    const { getCustomer } = useCustomer();
+    const [customer, setCustomer] = useState(getCustomer());
+    const [orders, setOrders] = useState([]);
+    const [fetchOrder, setFetchOrder] = useState(false);
+    const [reviewModal, setReviewModal] = useState(false);
+    const [successModal, setSuccessModal] = useState(false);
+    useEffect(() => {
+        fetchData();
+    }, [fetchOrder]);
 
-    const handleChatButtonClick = (name) => {
-        // navigation("/customer/chat");
-        handleChatClick(name);
-        toggleFloatingChat();
-    };
-    const handleChatClick = (name) => {
-        setChatName(name);
-        if (name === "Koperasi_UM") {
-            setActiveChatContent([
-                {
-                    type: "SELLER",
-                    text: "Hello! This is Koperasi UM Customer Service. Anything enquiries?",
-                },
-            ]);
-        } else if (name === "KK_Mart_UM") {
-            setActiveChatContent([
-                {
-                    type: "SELLER",
-                    text: "Hello! This is KK Mart Customer Service. Anything enquiries?",
-                },
-            ]);
-        } else if (name === "UM_Sports_Direct") {
-            setActiveChatContent([
-                {
-                    type: "SELLER",
-                    text: "Hello! This is UM Sport Direct Customer Service. Anything enquiries?",
-                },
-            ]);
-        } else if (name === "Zus_Coffee_UM") {
-            setActiveChatContent([
-                {
-                    type: "SELLER",
-                    text: "Hello! This is Zus Coffee UM Customer Service. Anything enquiries?",
-                },
-            ]);
+    const fetchData = async () => {
+        const username = customer.username;
+        //change port number
+        try {
+            const response = await axios.get(
+                `http://localhost:1234/api/customers/${username}/orderHistory`
+            );
+
+            const products = response.data;
+            console.log(products);
+            setOrders(products);
+        } catch (error) {
+            console.log(error);
         }
     };
+
+    const submitReview = async (reviewDetails) => {
+        try {
+            const username = customer.username;
+            const response = await axios.post(
+                `http://localhost:1234/api/customers/${username}/${productReview._id}/addReview`,
+                reviewDetails
+            );
+            if (response.status === 200) {
+                setReviewModal(false);
+                setSuccessModal(true);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const handleChatButtonClick = (name) => {
+        console.log(name);
+        setChatName(name);
+        toggleFloatingChat();
+        handleChatClick(name);
+    };
+   
+    const handleChatClick = (name) => {
+            setChatName(name);
+            console.log(name);
+            console.log(allChats);
+            const conversation = allChats.find((chat) => chat.sellerId.username === name);
+            if(conversation){
+                console.log(conversation);
+                setSelectedSeller(conversation.sellerId)
+                setActiveChatContent(conversation)
+            }
+            else {
+                setSelectedSeller(name);
+                setActiveChatContent([])
+            }
+           
+    
+        }
+        
+    
 
     const goBackToChatList = () => {
         setChatName("");
     };
-    const { orderHistory, updateOrderStatus } = useContext(GlobalContext);
-    const navigation = useNavigate();
 
-    const handleOrderReceived = (orderId) => {
-        updateOrderStatus(orderId, "Order Received.");
+    const handleOrderReceived = async (orderId) => {
+        try {
+            const customer = getCustomer();
+            const username = customer.username;
+            const receivalDetails = { time_received: new Date() };
+            const response = await axios.put(
+                `http://localhost:1234/api/customers/${username}/${orderId}/orderReceived`,
+                receivalDetails
+            );
+        
+            if (response.status === 200) {
+                setFetchOrder(!fetchOrder);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
-    const sortedOrders = orderHistory
-        .slice()
-        .sort((a, b) => b.timestamp - a.timestamp);
+    const sortedOrders = orders
+    .slice()
+    .sort((a, b) => {
+        if (a.status === b.status) {
+            return b.timestamp - a.timestamp;
+        }
+        if (a.status === "Received") {
+            return 1;
+        }
+        if (b.status === "Received") {
+            return -1;
+        }
+        return 0;
+    });
+
+    console.log(sortedOrders)
 
     return (
         <Container>
             <Customer_Navbar />
+            <SuccessModal
+                isOpen={successModal}
+                cancelModal={() => setSuccessModal(false)}
+                title="Review Submitted"
+                message="Your review has been submitted successfully!"
+                product={productReview}
+            />
+            <AddReviewModal
+                isOpen={reviewModal}
+                cancelModal={() => setReviewModal(false)}
+                submitReview={submitReview}
+            />
             <div style={{ width: "90%", marginTop: "8%" }}>
                 <Text
                     style={{
@@ -149,11 +225,12 @@ export default function Orders() {
                 </Text>
             </div>
             {sortedOrders.map((order, index) => (
+              
                 <Wrapper key={index} style={{ marginBottom: "20px" }}>
                     <Row>
                         <Column width="40%">
                             <Text>
-                                <Light>Order ID: {order.orderId}</Light>
+                                <Light>Order ID: {order._id}</Light>
                             </Text>
                         </Column>
                         <Column width="30%">
@@ -177,12 +254,18 @@ export default function Orders() {
                     <Divider />
                     <Order_List
                         style={{ backgroundColor: "white" }}
-                        items={order.orderItems}
-                        handleChatButtonClick={handleChatButtonClick}
+                        items={order.product}
+                        quantity={order.quantity}
+                        sellerName={order.sellerId.username}
+                        handleChatButtonClick={() => {handleChatClick(order.sellerId.username)}}
+                        setReviewModal={setReviewModal}
+                        setProductReview={setProductReview}
                     />
                     <Divider />
+
                     <Row>
-                        <Column width="85%">
+                        <Column width="65%"></Column>
+                        <Column width="15%">
                             <Text>
                                 <Bold style={{ textAlign: "right" }}>
                                     Order Total
@@ -198,12 +281,12 @@ export default function Orders() {
                                         textAlign: "right",
                                     }}
                                 >
-                                    RM {order.orderPrice.toFixed(2)}
+                                    RM {order.totalPricePerOrder.toFixed(2)}
                                 </Light>
                             </Text>
                         </Column>
                     </Row>
-                    {order.status !== "Order Received." && (
+                    {order.status !== "Received" && (
                         <Row>
                             <PaymentButton
                                 style={{
@@ -212,9 +295,7 @@ export default function Orders() {
                                     width: "20%",
                                     marginLeft: "auto",
                                 }}
-                                onClick={() =>
-                                    handleOrderReceived(order.orderId)
-                                }
+                                onClick={() => handleOrderReceived(order._id)}
                             >
                                 Order Received
                             </PaymentButton>
